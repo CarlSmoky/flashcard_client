@@ -1,7 +1,10 @@
+import Nav from "./Nav";
 
-function App() {
+
+const App = () => {
   return (
     <div className="App">
+      <Nav/>
       <h1>Flashcard</h1>
     </div>
   );
