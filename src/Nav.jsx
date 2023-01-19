@@ -42,17 +42,19 @@ const Wrapper = styled.nav`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-content: stretch;
   width: 100vw;
   height: 9rem;
-  position: fixed;
-  border: .4rem solid var(--black-primary);
+  position: sticky;
+  border-top: .4rem solid var(--black-primary);
+  border-left: .4rem solid var(--black-primary);
+  border-bottom: .4rem solid var(--black-primary);
 
   .logo {
     padding: 1rem;
-    width: 8rem;
-    max-width: 10rem;
+    min-width: 6.5rem;
     height: 7rem;
-    border-right: .3rem solid var(--black-primary);
+    border-right: .4rem solid var(--black-primary);
 
     div {
       margin: 1.2rem;
@@ -67,20 +69,19 @@ const Wrapper = styled.nav`
     margin: auto 0;
     padding-left: 1rem;
     font-size: 3rem;
-    width: 40rem;
-    max-width: 60rem;
+    min-width: 50rem;
+    /* max-width: 60rem; */
     text-align: left;
     line-height: 0;
   }
 
   .links {
-    width: 100rem;
-    max-width: 150rem;
+    width: 123rem;
     display: flex;
     flex-direction: row;
     justify-content: center;
     background: var(--secondary-color);
-    border-left: .3rem solid var(--black-primary);
+    border-left: .4rem solid var(--black-primary);
 
     a {
       margin: auto 0;
@@ -96,10 +97,11 @@ const Wrapper = styled.nav`
 
   .search {
     margin: auto 0;
-    width: 10rem;
+    min-width: 9rem;
     height: 7rem;
     padding: 1rem 0 1rem 0;
-    border-left: .3rem solid var(--black-primary);
+    border-left: .4rem solid var(--black-primary);
+    border-right: .4rem solid var(--black-primary);
     div {
       margin: 1.2rem;
       text-align: center;
