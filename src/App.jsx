@@ -1,8 +1,13 @@
+import Nav from "./Nav"
+import GlobalStyles from "./global-style"
 
-function App() {
+
+const App = () => {
   return (
     <div className="App">
-      <h1>Flashcard</h1>
+      <GlobalStyles/>
+      <Nav/>
+      
     </div>
   );
 }
