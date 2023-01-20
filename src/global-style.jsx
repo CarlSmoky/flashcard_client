@@ -8,7 +8,8 @@ const GlobalStyles = createGlobalStyle`
   --white-primary: #fff;
   --black-primary: #2E2E2E;
   --black-secondary: #3E3E3E;
-  --mainBorder: 1px solid red;
+  --side-column-border: 0.4rem;
+  --side-column-width: 8.5rem;
   
   --primary-font: 'Syncopate';
   --secondary-font: 'Roboto Mono';
