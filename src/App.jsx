@@ -9,9 +9,6 @@ const App = () => {
   return (
     <div className="App">
       <GlobalStyles/>
-      {/* <Nav/>
-      <Home />
-      <Footer /> */}
       <Grid/>
     </div>
   );
