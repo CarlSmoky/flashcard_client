@@ -31,6 +31,7 @@ const Wrapper = styled.nav`
   align-content: stretch;
   /* want to use variable here*/
   width: calc(100vw - 9.3rem - 9.3rem);
+  min-width: 70rem;
   height: 9rem;
   position: sticky;
   border-bottom: var(--side-column-border) solid var(--black-primary);
@@ -38,7 +39,7 @@ const Wrapper = styled.nav`
   h1 {
     margin: auto 0;
     padding-left: 1rem;
-    font-size: 3rem;
+    font-size: 2rem;
     text-align: left;
     line-height: 0;
   }
@@ -49,11 +50,12 @@ const Wrapper = styled.nav`
     justify-content: center;
     background: var(--secondary-color);
     border-left: var(--side-column-border) solid var(--black-primary);
+    padding: 2rem;
 
     a {
       margin: auto 0;
       width: 8rem;
-      padding: 3rem;
+      padding: 2rem;
       font-size: 1.3rem;
       :hover {
         transform: scaleX(1.4) scaleY(1.6);
