@@ -33,24 +33,22 @@ const Wrapper = styled.nav`
   width: calc(100vw - 9.3rem - 9.3rem);
   height: 9rem;
   position: sticky;
-  border-bottom: .4rem solid var(--black-primary);
+  border-bottom: var(--side-column-border) solid var(--black-primary);
 
   h1 {
     margin: auto 0;
     padding-left: 1rem;
     font-size: 3rem;
-    /* min-width: 50rem; */
     text-align: left;
     line-height: 0;
   }
 
   .links {
-    /* width: 123rem; */
     display: flex;
     flex-direction: row;
     justify-content: center;
     background: var(--secondary-color);
-    border-left: .4rem solid var(--black-primary);
+    border-left: var(--side-column-border) solid var(--black-primary);
 
     a {
       margin: auto 0;

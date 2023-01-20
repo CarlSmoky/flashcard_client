@@ -37,20 +37,20 @@ const Wrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   width: 100vw;
-  border-top: .4rem solid var(--black-primary);
-  border-bottom: .4rem solid var(--black-primary);
+  border-top: var(--side-column-border) solid var(--black-primary);
+  border-bottom: var(--side-column-border) solid var(--black-primary);
   
   .left {
-    min-width: var(--side-grid);
+    min-width: var(--side-column-width);
     height: 100rem;
-    border-right: var(--grid-border) solid var(--black-primary);
-    border-left: var(--grid-border) solid var(--black-primary);
+    border-right: var(--side-column-border) solid var(--black-primary);
+    border-left: var(--side-column-border) solid var(--black-primary);
 
     .logo {
     padding: 1rem;
     min-width: 6.5rem;
     height: 7rem;
-    border-bottom: .4rem solid var(--black-primary);
+    border-bottom: var(--side-column-border) solid var(--black-primary);
 
       div {
         margin: 1.2rem;
@@ -67,21 +67,21 @@ const Wrapper = styled.div`
       height: 7rem;
       position: fixed;
       bottom: 0;
-      border-top: .4rem solid var(--black-primary);
+      border-top: var(--side-column-border) solid var(--black-primary);
     }
   }
 
   .right {
-    min-width: var(--side-grid);
+    min-width: var(--side-column-width);
     height: 100rem;
-    border-right: .4rem solid var(--black-primary);
-    border-left: .4rem solid var(--black-primary);
+    border-right: var(--side-column-border) solid var(--black-primary);
+    border-left: var(--side-column-border) solid var(--black-primary);
 
     .search {
       padding: 1rem;
       min-width: 6.5rem;
       height: 7rem;
-      border-bottom: .4rem solid var(--black-primary);
+      border-bottom: var(--side-column-border) solid var(--black-primary);
 
       div {
         margin: 1.2rem;
@@ -100,7 +100,7 @@ const Wrapper = styled.div`
       height: 9rem;
       position: fixed;
       bottom: 0;
-      border-top: .4rem solid var(--black-primary);
+      border-top: var(--side-column-border) solid var(--black-primary);
     }
   }
 
