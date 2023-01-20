@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { BsCardText } from 'react-icons/bs'
 import { BiSearch } from 'react-icons/bi'
 import Nav from './Nav'
+import Home from './Home'
 
 const Grid = () => {
   return (
@@ -13,10 +14,12 @@ const Grid = () => {
           <BsCardText />
         </div>
         </div>
+        <div className="middle"></div>
         <div className="bottom"></div>
       </div>
       <div className="center">
       <Nav/>
+      <Home/>
       </div>
       <div className="right">
         <div className="search">
@@ -27,7 +30,6 @@ const Grid = () => {
         <div className="middle"></div>
         <div className="bottom"></div>
       </div>
-
     </Wrapper>
   )
 }
@@ -42,7 +44,7 @@ const Wrapper = styled.div`
   
   .left {
     min-width: var(--side-column-width);
-    height: 100rem;
+    height: 90rem;
     border-right: var(--side-column-border) solid var(--black-primary);
     border-left: var(--side-column-border) solid var(--black-primary);
 
@@ -61,19 +63,21 @@ const Wrapper = styled.div`
       }
     }
 
+    .middle {
+      height: 71.6rem;
+    }
+
     .bottom {
       padding: 1rem;
       min-width: 6.5rem;
       height: 7rem;
-      position: fixed;
-      bottom: 0;
       border-top: var(--side-column-border) solid var(--black-primary);
     }
   }
 
   .right {
     min-width: var(--side-column-width);
-    height: 100rem;
+    height: 90rem;
     border-right: var(--side-column-border) solid var(--black-primary);
     border-left: var(--side-column-border) solid var(--black-primary);
 
@@ -94,12 +98,14 @@ const Wrapper = styled.div`
         }
       }
     }
+
+    .middle {
+      height: 71.6rem;
+    }
     
     .bottom {
       min-width: 8.5rem;
       height: 9rem;
-      position: fixed;
-      bottom: 0;
       border-top: var(--side-column-border) solid var(--black-primary);
     }
   }
