@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import Footer from './Footer'
 
 const Home = () => {
   return (
@@ -24,6 +25,7 @@ const Home = () => {
               <p></p>
             </div>
           </div>
+          <Footer/>
       </ Wrapper>
     </>
   )
@@ -34,7 +36,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   width: calc(100vw - 9.3rem - 9.3rem);
-  height: 65rem;
+  height: 79rem;
   
   .header {
     height: 10rem;
@@ -65,6 +67,7 @@ const Wrapper = styled.div`
       width: 33%;
       height: 30rem;
       border: .3rem solid var(--black-primary);
+      background: var(--primary-color);
     }
     .card-3 {
       width: 34%;
