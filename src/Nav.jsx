@@ -1,18 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-import { BsCardText } from 'react-icons/bs';
-import { BiSearch } from 'react-icons/bi';
-
-
 
 const Nav = () => {
   return (
     <Wrapper className="nav">
-      <div className="logo">
-        <div>
-          <BsCardText />
-        </div>
-      </div>
       <h1>Flashcard</h1>
       <div className="links">
         <a href="#home">
@@ -29,11 +20,6 @@ const Nav = () => {
           <span>Login</span>
         </a>
       </div>
-      <div className="search">
-        <div>
-          <BiSearch />
-        </div>
-      </div>
     </Wrapper>
   )
 }
@@ -43,40 +29,23 @@ const Wrapper = styled.nav`
   flex-direction: row;
   justify-content: space-between;
   align-content: stretch;
-  width: 100vw;
+  /* want to use variable here*/
+  width: calc(100vw - 9.3rem - 9.3rem);
   height: 9rem;
   position: sticky;
-  border-top: .4rem solid var(--black-primary);
-  border-left: .4rem solid var(--black-primary);
   border-bottom: .4rem solid var(--black-primary);
 
-  .logo {
-    padding: 1rem;
-    min-width: 6.5rem;
-    height: 7rem;
-    border-right: .4rem solid var(--black-primary);
-
-    div {
-      margin: 1.2rem;
-      text-align: center;
-      svg {
-        font-size: 4rem;
-      }
-    }
-
-  }
   h1 {
     margin: auto 0;
     padding-left: 1rem;
     font-size: 3rem;
-    min-width: 50rem;
-    /* max-width: 60rem; */
+    /* min-width: 50rem; */
     text-align: left;
     line-height: 0;
   }
 
   .links {
-    width: 123rem;
+    /* width: 123rem; */
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -94,25 +63,5 @@ const Wrapper = styled.nav`
       }
     }
   }
-
-  .search {
-    margin: auto 0;
-    min-width: 9rem;
-    height: 7rem;
-    padding: 1rem 0 1rem 0;
-    border-left: .4rem solid var(--black-primary);
-    border-right: .4rem solid var(--black-primary);
-    div {
-      margin: 1.2rem;
-      text-align: center;
-      svg {
-        font-size: 4rem;
-      }
-      :hover {
-        transform: scaleX(1.4) scaleY(1.6);
-      }
-  }
-}
 `
-
 export default Nav
