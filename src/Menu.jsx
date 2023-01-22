@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Footer from './Footer'
 
-const Home = () => {
+const Menu = () => {
   return (
     <>
       <Wrapper>
@@ -78,4 +78,4 @@ const Wrapper = styled.div`
   }
 `
 
-export default Home
+export default Menu
