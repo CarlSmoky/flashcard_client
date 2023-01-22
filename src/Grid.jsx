@@ -3,9 +3,10 @@ import styled from 'styled-components'
 import { BsCardText } from 'react-icons/bs'
 import { BiSearch } from 'react-icons/bi'
 import Nav from './Nav'
-import Home from './Home'
+import Menu from './Menu'
 
-const Grid = () => {
+const Grid = ({content}) => {
+  
   return (
     <Wrapper>
       <div className="left">
@@ -19,7 +20,7 @@ const Grid = () => {
       </div>
       <div className="center">
       <Nav/>
-      <Home/>
+      {content === "menu" && <Menu/>}
       </div>
       <div className="right">
         <div className="search">
