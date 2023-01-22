@@ -1,15 +1,12 @@
-// import Nav from "./Nav"
-// import Home from "./Home"
-// import Footer from "./Footer"
-import Grid from "./Grid"
 import GlobalStyles from "./global-style"
-
+import Home from "./pages/Home"
 
 const App = () => {
+
   return (
     <div className="App">
       <GlobalStyles/>
-      <Grid/>
+      <Home content='menu'/>
     </div>
   );
 }
