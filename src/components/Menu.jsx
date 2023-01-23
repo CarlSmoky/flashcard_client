@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import Footer from './Footer'
 
 const Menu = () => {
   return (
@@ -25,7 +24,6 @@ const Menu = () => {
               <p></p>
             </div>
           </div>
-          <Footer/>
       </ Wrapper>
     </>
   )
@@ -34,7 +32,7 @@ const Menu = () => {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   width: calc(100vw - 9.3rem - 9.3rem);
   height: 79rem;
   
