@@ -9,21 +9,6 @@ import Footer from './Footer'
 
 const Grid = ({ content }) => {
 
-  const target = useRef();
-  const [height, setHeight] = useState();
-  
-  const getListSize = () => {
-    const newHeight = target.current.clientHeight;
-    setHeight(newHeight);
-  };
-  
-  useEffect(() => {
-    const initialHeight = target.current.offsetHeight;
-    setHeight(initialHeight);
-    window.addEventListener("resize", getListSize);
-  }, []);
-
-  
 return (
   <Wrapper >
     <div className="left">
@@ -32,14 +17,13 @@ return (
           <BsCardText />
         </div>
       </div>
-      <div className="middle" style={{ height: height }}></div>
+      <div className="middle"></div>
       <div className="bottom"></div>
     </div>
-    <div className="center" ref={target}>
+    <div className="center">
       <Nav />
       {content === "menu" && <Menu />}
       {content === "decks" && <Decks />}
-      <h1>{height}</h1>
       <Footer />
     </div>
     <div className="right">
@@ -48,8 +32,7 @@ return (
           <BiSearch />
         </div>
       </div>
-      <div className="middle" style={{ height: height }}>
-        <h1>hihihihi</h1>
+      <div className="middle">
       </div>
       <div className="bottom"></div>
     </div>
@@ -66,6 +49,9 @@ const Wrapper = styled.div`
   border-bottom: var(--side-column-border) solid var(--black-primary);
   
   .left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     min-width: var(--side-column-width);
     height: {height};
     border-right: var(--side-column-border) solid var(--black-primary);
@@ -95,8 +81,10 @@ const Wrapper = styled.div`
   }
 
   .right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     min-width: var(--side-column-width);
-    /* height: {height}; */
     border-right: var(--side-column-border) solid var(--black-primary);
     border-left: var(--side-column-border) solid var(--black-primary);
 
