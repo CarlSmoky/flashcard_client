@@ -1,10 +1,10 @@
 import React from 'react'
-import Grid from '../components/Grid'
+import Frame from '../components/Frame'
 
 const DeckList = ({content}) => {
-  // console.log("decks",content);
+
   return (
-    <Grid content={content}/>
+    <Frame content={content}/>
   )
 }
 

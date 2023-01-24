@@ -10,7 +10,6 @@ const Footer = () => {
 }
 
 const StyledFooter = styled.footer`
-  width: calc(100vw - 9.3rem - 9.3rem);
   height: 9rem;
   border-top: var(--side-column-border) solid var(--black-primary);
     

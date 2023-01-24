@@ -1,7 +1,7 @@
-import React from 'react'
 import styled from 'styled-components'
 
 const Menu = () => {
+
   return (
     <>
       <Wrapper>
@@ -32,8 +32,7 @@ const Menu = () => {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  width: calc(100vw - 9.3rem - 9.3rem);
+  justify-content: flex-start;
   height: 79rem;
   
   .header {
@@ -54,7 +53,7 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
-    width: calc(100vw - 9.3rem - 9.3rem);
+    
     .card-1 {
       width: 34%;
       height: 30rem;
