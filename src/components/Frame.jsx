@@ -1,4 +1,3 @@
-import React, { useRef, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { BsCardText } from 'react-icons/bs'
 import { BiSearch } from 'react-icons/bi'
@@ -7,7 +6,7 @@ import Menu from './Menu'
 import Decks from './Decks'
 import Footer from './Footer'
 
-const Grid = ({ content }) => {
+const Frame = ({ content }) => {
 
 return (
   <Wrapper >
@@ -119,4 +118,4 @@ const Wrapper = styled.div`
   
 `
 
-export default Grid
+export default Frame
