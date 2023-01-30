@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
+
 const DeckItem = ({id, deckName, user_id}) => {
   return (
     <Card>
@@ -10,6 +11,12 @@ const DeckItem = ({id, deckName, user_id}) => {
 }
 
 const Card = styled.div`
+  width: 30%;
+  height: 20rem;
+  margin: 1rem 1rem 1rem 0;
+  border: var(--side-column-border) solid var(--black-primary);
+  background: var(--tertiary-color);
+  border-radius: 5px;
 `
 
 export default DeckItem
