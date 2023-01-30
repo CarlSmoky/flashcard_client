@@ -17,6 +17,13 @@ const Card = styled.div`
   border: var(--side-column-border) solid var(--black-primary);
   background: var(--tertiary-color);
   border-radius: 5px;
+  
+  transition: all 0.5s ease-in-out;
+  
+  &:hover {
+    box-shadow: 0 3px 3px var(--black-secondary);
+    cursor: pointer;
+  }
 `
 
 export default DeckItem
