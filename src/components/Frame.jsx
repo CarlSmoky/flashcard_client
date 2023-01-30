@@ -3,7 +3,7 @@ import { BsCardText } from 'react-icons/bs'
 import { BiSearch } from 'react-icons/bi'
 import Nav from './Nav'
 import Menu from './Menu'
-import Decks from './Decks'
+import DeckList from './DeckList'
 import Footer from './Footer'
 
 const Frame = ({ content }) => {
@@ -22,7 +22,7 @@ return (
     <div className="center">
       <Nav />
       {content === "menu" && <Menu />}
-      {content === "decks" && <Decks />}
+      {content === "decklist" && <DeckList />}
       <Footer />
     </div>
     <div className="right">
