@@ -5,6 +5,7 @@ const GlobalStyles = createGlobalStyle`
   --primary-color: #FFE3CE;
   --secondary-color: #DAF6CC;
   --tertiary-color: #C0C4E9;
+  --quaternary-color: #C2F4FF;
   --white-primary: #fff;
   --black-primary: #2E2E2E;
   --black-secondary: #3E3E3E;
