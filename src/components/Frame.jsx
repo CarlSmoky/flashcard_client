@@ -4,6 +4,7 @@ import { BiSearch } from 'react-icons/bi'
 import Nav from './Nav'
 import Menu from './Menu'
 import DeckList from './DeckList'
+import Card from './Card'
 import Footer from './Footer'
 
 const Frame = ({ content }) => {
@@ -23,6 +24,7 @@ return (
       <Nav />
       {content === "menu" && <Menu />}
       {content === "decklist" && <DeckList />}
+      {content === "card" && <Card />}
       <Footer />
     </div>
     <div className="right">

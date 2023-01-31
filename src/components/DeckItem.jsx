@@ -1,11 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom';
 
 
-const DeckItem = ({id, deckName, user_id}) => {
+
+const DeckItem = ({ id, deckName, user_id }) => {
+
   return (
-    <Card>
-      <h1>{deckName}</h1>
+    <Card >
+      <Link to={`/deck/${id}`}>
+        <ClickArea>
+          <h1>{deckName}</h1>
+        </ClickArea>
+      </Link>
     </Card>
   )
 }
@@ -18,12 +25,22 @@ const Card = styled.div`
   background: var(--tertiary-color);
   border-radius: 5px;
   
-  transition: all 0.5s ease-in-out;
+  transition: all 0.3s ease-in-out;
   
   &:hover {
     box-shadow: 0 3px 3px var(--black-secondary);
     cursor: pointer;
   }
+
+  &:active {
+  transform: translateY(4px);
+}
+`
+
+const ClickArea =  styled.div`
+  width: 30%;
+  height: 20rem;
+  margin: 0;
 `
 
 export default DeckItem
