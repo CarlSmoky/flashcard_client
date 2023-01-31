@@ -24,6 +24,10 @@ const Card = styled.div`
     box-shadow: 0 3px 3px var(--black-secondary);
     cursor: pointer;
   }
+
+  &:active {
+  transform: translateY(4px);
+}
 `
 
 export default DeckItem
