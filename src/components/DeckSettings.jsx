@@ -1,12 +1,27 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import axios from 'axios'
 import { useNavigate } from "react-router-dom";
 import { RxCross2 } from 'react-icons/rx'
 
-const DeckSettings = ({ setNumCard, deckName }) => {
+const DeckSettings = ({ setNumCard, id }) => {
 
   const [length, setLength] = useState(0);
-  const [message, setMessage] = useState("")
+  const [message, setMessage] = useState("");
+  const [deck, setDecks] = useState("");
+  const {deck_name} = deck;
+  
+
+  useEffect(() => {
+    axios.get(`api/deck/${id}`)
+    .then(res => {
+      const deckById = res.data;
+      setDecks(deckById);
+    })
+    .catch (err => {
+      console.log(err)
+    })
+  }, []);
 
   const onChange = (e) => setLength(e.target.value);
 
@@ -30,7 +45,7 @@ const DeckSettings = ({ setNumCard, deckName }) => {
           <h3>You Select...</h3>
           <RxCross2 onClick={routeChange}/>
         </Header>
-        <Title>{deckName}</Title>
+        {deck && <Title>{deck_name}</Title>}
         <label>Cards: </label>
         <input
           onChange={onChange}
