@@ -8,7 +8,7 @@ const DeckItem = ({ id, deckName, user_id }) => {
 
   return (
     <Card >
-      <Link to={`/deck/${deckName}`}>
+      <Link to={`/deck/${id}`}>
         <ClickArea>
           <h1>{deckName}</h1>
         </ClickArea>
