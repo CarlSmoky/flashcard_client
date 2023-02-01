@@ -4,12 +4,12 @@ import DeckSettings from './DeckSettings';
 import { useParams } from 'react-router-dom'
 
 const Card = () => {
-  const { id } = useParams();
+  const { deckName } = useParams();
   const [numCard, setNumCard] = useState(0);
 
   return (
     <>
-    {numCard === 0 && <DeckSettings setNumCard={setNumCard} id={id}/>}
+    {numCard === 0 && <DeckSettings setNumCard={setNumCard} deckName={deckName}/>}
     <StyledCard>
       Card
     </StyledCard>
