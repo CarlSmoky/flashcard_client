@@ -14,7 +14,7 @@ const App = () => {
         <Route path ="/" element={<Frame content='menu'/>}/>
         <Route path ="/decklist" element={<Frame content='decklist'/>}/>
         {/* <Route path ="/search" element={<Search />}/> */}
-        <Route path ="/deck/:id" element={<Frame content='card'/>}/>
+        <Route path ="/deck/:deckName" element={<Frame content='card'/>}/>
       </Routes>
       </BrowserRouter>
       {/* <DeckSettings/> */}
