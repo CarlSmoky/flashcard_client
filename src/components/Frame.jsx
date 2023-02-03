@@ -24,7 +24,7 @@ return (
       <Nav />
       {content === "menu" && <Menu />}
       {content === "decklist" && <DeckList />}
-      {content === "card" && <Cards />}
+      {content === "cards" && <Cards />}
       <Footer />
     </div>
     <div className="right">
