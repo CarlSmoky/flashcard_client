@@ -80,7 +80,6 @@ const CardFront = styled.div`
   background-color: var(--quaternary-color);
   height: 100%;
   width: 100%;
-  z-index: -100;
   ${absoluteStyle}
 
   h4 {
@@ -88,20 +87,6 @@ const CardFront = styled.div`
   }
   p {
     ${cardSideContentStyle}
-  }
-
-  div {
-    cursor: pointer;
-    height: 3rem;
-    text-align: right;
-  }
-
-  svg {
-    font-size: 2rem;
-    margin: auto 0;
-    line-height: 0;
-    padding: .5rem;
-    
   }
   
 `;

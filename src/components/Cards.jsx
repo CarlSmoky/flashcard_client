@@ -12,12 +12,14 @@ const Cards = () => {
   const [numCard, setNumCard] = useState(0);
 
   const [deck, setDeck] = useState("");
+
   const { deck_name } = deck;
 
   const [flashcarddata, setFlashcarddata] = useState([]);
 
   useEffect(() => {
     axios.get(`api/deck/${id}`)
+
       .then(res => {
         const deckById = res.data;
         setDeck(deckById);
@@ -25,6 +27,7 @@ const Cards = () => {
       .catch(err => {
         console.log(err)
       })
+
   }, []);
 
   useEffect(() => {
@@ -65,6 +68,7 @@ const Cards = () => {
 
       <CardStyle>
         <Button>
+
         {current > 0 ? (
           <MdArrowBackIosNew onClick={previousCard} />
         ) : (
@@ -85,15 +89,18 @@ const Cards = () => {
         </Button>
 
       </CardStyle>
+
     </>
   )
 }
+
 
 const CardStyle = styled.article`
   display: flex;
   flex-direction: row;
   justify-content: center;
   height: 40rem;
+
   background: var(--white);
   z-index: -1;
 `
