@@ -1,15 +1,42 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
-import DeckSettings from './DeckSettings'
 import { useParams } from 'react-router-dom'
+import DeckSettings from './DeckSettings'
+import CardsHeader from './CardsHeader'
 import Card from "./Card";
+import { MdArrowForwardIos, MdArrowBackIosNew } from 'react-icons/md'
 
 const Cards = () => {
   const { id } = useParams();
   const [numCard, setNumCard] = useState(0);
 
+  const [deck, setDeck] = useState("");
+  const { deck_name } = deck;
+
   const [flashcarddata, setFlashcarddata] = useState([]);
+
+  useEffect(() => {
+    axios.get(`api/deck/${id}`)
+      .then(res => {
+        const deckById = res.data;
+        setDeck(deckById);
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }, []);
+
+  useEffect(() => {
+    axios.get(`api/card/deck/${id}`)
+      .then(res => {
+        const flashcardDataByDeckId = res.data;
+        setFlashcarddata(flashcardDataByDeckId);
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }, [numCard]);
 
   const cards = flashcarddata.map((card) => {
     return <Card card={card} key={card.id} />;
@@ -25,64 +52,61 @@ const Cards = () => {
   function nextCard() {
     setCurrent(current + 1);
   }
-  
-
-  useEffect(() => {
-    axios.get(`api/card/deck/${id}`)
-    .then(res => {
-      const flashcardDataByDeckId = res.data;
-      setFlashcarddata(flashcardDataByDeckId);
-    })
-    .catch (err => {
-      console.log(err)
-    })
-  }, [numCard]);
 
   return (
     <>
-    {numCard === 0 && <DeckSettings setNumCard={setNumCard} id={id}/>}
-    <Wrapper>
-      {/* number of cards */}
-      {numCard > 0 && flashcarddata && flashcarddata.length > 0 ? (
-        <div className="cardNumber">
-          Card {current + 1} of {flashcarddata.length}
-        </div>
-      ) : (
-        ""
-      )}
-      {/* /number of cards */}
+      {/* Before start */}
+      {numCard === 0 && <DeckSettings setNumCard={setNumCard} deckName={deck_name} id={id} />}
 
-      {/* render cards */}
-      {flashcarddata && flashcarddata.length > 0 ? cards[current] : loading}
-      {/* /render cards */}
-      {/* render nav buttons */}
-      <div className="nav">
+      <CardsHeader
+        flashcarddata={flashcarddata} deck_name={deck_name}
+        current={current}
+      />
+
+      <CardStyle>
+        <Button>
         {current > 0 ? (
-          <button onClick={previousCard}>Previous card</button>
+          <MdArrowBackIosNew onClick={previousCard} />
         ) : (
-          <button className="disabled" disabled>
-            Previous card
-          </button>
+          <MdArrowBackIosNew className='disabled' disabled />
         )}
+        </Button>
+
+        {/* render cards */}
+        {flashcarddata && flashcarddata.length > 0 ? cards[current] : loading}
+        {/* /render cards */}
+        
+        <Button>
         {current < flashcarddata.length - 1 ? (
-          <button onClick={nextCard}>Next card</button>
+          <MdArrowForwardIos onClick={nextCard} />
         ) : (
-          <button className="disabled" disabled>
-            Next card
-          </button>
+          <MdArrowForwardIos className='disabled' disabled />
         )}
-        {/* /render nav buttons */}
-      </div>
-    </Wrapper>
+        </Button>
+
+      </CardStyle>
     </>
   )
 }
 
-const Wrapper = styled.div`
-  width: 100%;
+const CardStyle = styled.article`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   height: 40rem;
-  background: var(--quaternary-color);
+  background: var(--white);
   z-index: -1;
+`
+
+const Button = styled.div`
+margin: auto;
+  svg {
+    font-size: 4rem;
+  }
+
+  .disabled {
+    color: red;
+  }
 `
 
 export default Cards
