@@ -1,13 +1,18 @@
 import React, { useState } from "react"
 import styled, { css } from "styled-components"
+import CardHeader from './CardHeader'
 
 export default function Card({ card }) {
   const [side, setSide] = useState();
+  const [fillStar, setFillStar] = useState(false);
 
-  function handleClick() {
-    console.log("clicked!");
+  const handleClick = e => {
     setSide(!side);
-    console.log(side);
+  }
+
+  const clickStar = e => {
+    e.stopPropagation();
+    setFillStar(!fillStar);
   }
 
   return (
@@ -15,11 +20,11 @@ export default function Card({ card }) {
     <StyledCard>
       <CardInner className={`card ${side ? "side" : ""}`} onClick={handleClick}>
         <CardFront>
-          <h4>Term</h4>
+          <CardHeader title="Term" clickStar={clickStar} fillStar={fillStar}/>
           <p>{card.term}</p>
         </CardFront>
         <CardBack>
-        <h4>Definition</h4>
+        <CardHeader title="Definition" clickStar={clickStar} fillStar={fillStar}/>
           <p>{card.definition}</p>
         </CardBack>
       </CardInner>
@@ -40,7 +45,6 @@ const CardInner = styled.div`
 const StyledCard = styled.div`
   background-color: transparent;
   width: 80%;
-  height: 60%;
   perspective: 1000px;
   margin: 2rem auto;
 
