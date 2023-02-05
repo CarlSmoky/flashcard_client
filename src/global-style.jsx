@@ -23,6 +23,7 @@ body {
   color: var(--black-primary);
   line-height: 1.7;
   text-decoration: none;
+  user-select: none
 }
 
 *,
