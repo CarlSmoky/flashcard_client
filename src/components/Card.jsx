@@ -2,11 +2,12 @@ import React, { useState } from "react"
 import styled, { css } from "styled-components"
 import CardHeader from './CardHeader'
 
-export default function Card({ card }) {
+export default function Card({ card, showingModal }) {
   const [side, setSide] = useState();
   const [fillStar, setFillStar] = useState(false);
 
   const handleClick = e => {
+    if (showingModal) { return; }
     setSide(!side);
   }
 
@@ -21,11 +22,11 @@ export default function Card({ card }) {
       <CardInner className={`card ${side ? "side" : ""}`} onClick={handleClick}>
         <CardFront>
           <CardHeader title="Term" clickStar={clickStar} fillStar={fillStar}/>
-          <p>{card.term}</p>
+          <p className={!showingModal ? "textSelectEnable" : ""}>{card.term}</p>
         </CardFront>
         <CardBack>
         <CardHeader title="Definition" clickStar={clickStar} fillStar={fillStar}/>
-          <p>{card.definition}</p>
+          <p className={!showingModal ? "textSelectEnable" : ""}>{card.definition}</p>
         </CardBack>
       </CardInner>
     </StyledCard>
@@ -67,6 +68,7 @@ const cardSideTitleStyle = css`
   font-size: 1.5rem;
   text-align: left;
   margin: 1rem 0 0 2rem;
+  user-select: none;
 `
 
 const cardSideContentStyle = css`
@@ -74,6 +76,10 @@ const cardSideContentStyle = css`
   text-align: left;
   margin: 2rem;
   height: 80%;
+
+  &.textSelectEnable {
+  user-select: text;
+  }
 `
 
 const CardFront = styled.div`
