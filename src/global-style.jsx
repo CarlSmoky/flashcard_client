@@ -65,6 +65,12 @@ li {
   padding: 0;
 }
 
+button {
+  padding: 0;
+  border: none;
+  background: none;
+}
+
 .App {
   text-align: center;
 }
