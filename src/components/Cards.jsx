@@ -9,13 +9,14 @@ import { MdArrowForwardIos, MdArrowBackIosNew } from 'react-icons/md'
 
 const Cards = () => {
   const { id } = useParams();
+  const [start, setStart] = useState(false);
+  const [flashcarddata, setFlashcarddata] = useState([]);
   const [numCard, setNumCard] = useState(0);
 
   const [deck, setDeck] = useState("");
 
   const { deck_name } = deck;
 
-  const [flashcarddata, setFlashcarddata] = useState([]);
 
   useEffect(() => {
     axios.get(`api/deck/${id}`)
@@ -39,10 +40,10 @@ const Cards = () => {
       .catch(err => {
         console.log(err)
       })
-  }, [numCard]);
+  }, []);
 
   const cards = flashcarddata.map((card) => {
-    return <Card card={card} key={card.id} />;
+    return <Card card={card} key={card.id} start={start} />;
   });
 
   const loading = <div className="loading">Loading flashcard content...</div>;
@@ -59,33 +60,36 @@ const Cards = () => {
   return (
     <>
       {/* Before start */}
-      {numCard === 0 && <DeckSettings setNumCard={setNumCard} deckName={deck_name} id={id} />}
+      {!start && <DeckSettings setNumCard={setNumCard} deckName={deck_name} setStart={setStart} totalCards={flashcarddata.length} />}
 
       <CardsHeader
-        flashcarddata={flashcarddata} deck_name={deck_name}
+        className={`${!start && 'blur'}`}
+        flashcarddata={flashcarddata}
+        deck_name={deck_name}
         current={current}
       />
 
-      <CardStyle>
-        <Button>
 
-        {current > 0 ? (
-          <MdArrowBackIosNew onClick={previousCard} />
-        ) : (
-          <MdArrowBackIosNew className='disabled' disabled />
-        )}
+      <CardStyle className={`${!start && 'blur'}`}>
+
+        <Button>
+          {current > 0 ? (
+            <MdArrowBackIosNew onClick={previousCard} />
+          ) : (
+            <MdArrowBackIosNew className='disabled' disabled />
+          )}
         </Button>
 
         {/* render cards */}
         {flashcarddata && flashcarddata.length > 0 ? cards[current] : loading}
         {/* /render cards */}
-        
+
         <Button>
-        {current < flashcarddata.length - 1 ? (
-          <MdArrowForwardIos onClick={nextCard} />
-        ) : (
-          <MdArrowForwardIos className='disabled' disabled />
-        )}
+          {current < flashcarddata.length - 1 ? (
+            <MdArrowForwardIos onClick={nextCard} />
+          ) : (
+            <MdArrowForwardIos className='disabled' disabled />
+          )}
         </Button>
 
       </CardStyle>
@@ -103,6 +107,10 @@ const CardStyle = styled.article`
 
   background: var(--white);
   z-index: -1;
+
+  &.blur {
+    filter: blur(2rem);
+  }
 `
 
 const Button = styled.div`

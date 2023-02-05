@@ -1,20 +1,24 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useNavigate } from "react-router-dom";
 import { RxCross2 } from 'react-icons/rx'
 
-const DeckSettings = ({ setNumCard, deckName }) => {
+const DeckSettings = ({ setNumCard, deckName, setStart, totalCards}) => {
 
-  const [length, setLength] = useState(0);
-  const [message, setMessage] = useState("");
-  
+  const [numCards, setNumCards] = useState(0);
 
-  const onChange = (e) => setLength(e.target.value);
+  useEffect(() => {
+    setNumCards(totalCards);
+  }, [totalCards]);
+
+  const onChange = (e) => {
+    setNumCards(e.target.value)
+  };
 
   const handleSubmitClick = (e) => {
     e.preventDefault();
-    if (length === 0) setMessage("Set a number of cards here")
-    setNumCard(length);
+    setNumCard(numCards);
+    setStart(true);
   }
 
   // When cancel button clicked, back to /decklist
@@ -38,11 +42,10 @@ const DeckSettings = ({ setNumCard, deckName }) => {
           id="length"
           type="number"
           name="length"
-          min="0"
-          max="100"
-          placeholder="0"
+          min="1"
+          max={totalCards}
+          value={numCards}
         />
-        {message && <p>{message}</p>}
         <ButtonContainer>
           <button type="submit">Start</button>
         </ButtonContainer>
@@ -71,6 +74,7 @@ const Wrapper = styled.div`
   height: 30rem;
   background: var(--primary-color);
   border: var(--side-column-border) solid var(--black-primary);
+  border-radius: 1rem;
   z-index: 100;
 `
 
