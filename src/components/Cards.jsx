@@ -111,7 +111,7 @@ const CardStyle = styled.article`
   &.blur {
     filter: blur(2rem);
   }
-`
+`;
 
 const Button = styled.button`
 margin: auto;
@@ -122,6 +122,6 @@ margin: auto;
   .disabled {
     color: red;
   }
-`
+`;
 
 export default Cards
