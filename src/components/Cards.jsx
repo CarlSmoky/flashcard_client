@@ -43,7 +43,7 @@ const Cards = () => {
   }, []);
 
   const cards = flashcarddata.map((card) => {
-    return <Card card={card} key={card.id} start={start} />;
+    return <Card card={card} key={card.id} showingModal={!start} />;
   });
 
   const loading = <div className="loading">Loading flashcard content...</div>;
@@ -72,7 +72,7 @@ const Cards = () => {
 
       <CardStyle className={`${!start && 'blur'}`}>
 
-        <Button>
+        <Button disabled={!start}>
           {current > 0 ? (
             <MdArrowBackIosNew onClick={previousCard} />
           ) : (
@@ -84,7 +84,7 @@ const Cards = () => {
         {flashcarddata && flashcarddata.length > 0 ? cards[current] : loading}
         {/* /render cards */}
 
-        <Button>
+        <Button disabled={!start}>
           {current < flashcarddata.length - 1 ? (
             <MdArrowForwardIos onClick={nextCard} />
           ) : (
@@ -113,7 +113,7 @@ const CardStyle = styled.article`
   }
 `
 
-const Button = styled.div`
+const Button = styled.button`
 margin: auto;
   svg {
     font-size: 4rem;
