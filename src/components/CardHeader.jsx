@@ -5,7 +5,7 @@ import { AiTwotoneStar, AiOutlineStar } from 'react-icons/ai'
 const CardHeader = ({title, clickStar, fillStar}) => {
   return (
     <Wrapper>
-      <h4>{title}</h4>
+      <CardSideTitle>{title}</CardSideTitle>
       <div onClick={clickStar}>
         {fillStar ? <AiTwotoneStar /> : <AiOutlineStar />}
       </div>
@@ -29,10 +29,15 @@ const Wrapper = styled.div`
     margin: auto 0;
     line-height: 0;
     padding: .5rem;
-    
   }
-`
+`;
 
+const CardSideTitle = styled.h3`
+  font-size: 1.5rem;
+  text-align: left;
+  margin: 1rem 0 0 2rem;
+  user-select: none;
+`;
 
 
 export default CardHeader

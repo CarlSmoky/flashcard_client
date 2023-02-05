@@ -22,11 +22,11 @@ export default function Card({ card, showingModal }) {
       <CardInner className={`card ${side ? "side" : ""}`} onClick={handleClick}>
         <CardFront>
           <CardHeader title="Term" clickStar={clickStar} fillStar={fillStar}/>
-          <p className={!showingModal ? "textSelectEnable" : ""}>{card.term}</p>
+          <Content className={!showingModal ? "textSelectEnable" : ""}>{card.term}</Content>
         </CardFront>
         <CardBack>
         <CardHeader title="Definition" clickStar={clickStar} fillStar={fillStar}/>
-          <p className={!showingModal ? "textSelectEnable" : ""}>{card.definition}</p>
+          <Content className={!showingModal ? "textSelectEnable" : ""}>{card.definition}</Content>
         </CardBack>
       </CardInner>
     </StyledCard>
@@ -62,16 +62,16 @@ const absoluteStyle = css`
   border-radius: 1rem;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-`;
-
-const cardSideTitleStyle = css`
-  font-size: 1.5rem;
-  text-align: left;
-  margin: 1rem 0 0 2rem;
-  user-select: none;
 `
 
-const cardSideContentStyle = css`
+const CardFront = styled.div`
+  background-color: var(--quaternary-color);
+  height: 100%;
+  width: 100%;
+  ${absoluteStyle}
+`;
+
+const Content = styled.p`
   font-size: 2rem;
   text-align: left;
   margin: 2rem;
@@ -80,21 +80,6 @@ const cardSideContentStyle = css`
   &.textSelectEnable {
   user-select: text;
   }
-`
-
-const CardFront = styled.div`
-  background-color: var(--quaternary-color);
-  height: 100%;
-  width: 100%;
-  ${absoluteStyle}
-
-  h4 {
-    ${cardSideTitleStyle}
-  }
-  p {
-    ${cardSideContentStyle}
-  }
-  
 `;
 
 const CardBack = styled.div`
@@ -102,11 +87,4 @@ const CardBack = styled.div`
   color: white;
   transform: rotateY(180deg);
   ${absoluteStyle}
-
-  h4 {
-    ${cardSideTitleStyle}
-  }
-  p {
-    ${cardSideContentStyle}
-  }
 `;
