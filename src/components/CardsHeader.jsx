@@ -2,10 +2,10 @@ import React from 'react'
 import styled from "styled-components"
 
 
-const CardsHeader = ({ deck_name, flashcarddata, current }) => {
+const CardsHeader = ({ deck_name, flashcarddata, current, className }) => {
 
   return (
-      <CardHeaderStyle>
+      <CardHeaderStyle className={className}>
       <Header>{deck_name}</Header>
         {flashcarddata && flashcarddata.length > 0 ? (
             <CardCount>
@@ -21,6 +21,10 @@ const CardsHeader = ({ deck_name, flashcarddata, current }) => {
 const CardHeaderStyle = styled.div`
   width: 80%;
   margin: 2rem auto 0;
+
+  &.blur {
+    filter: blur(2rem);
+  }
 `
 
 const Header = styled.h4`
