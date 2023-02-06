@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import styled, { css } from "styled-components"
 import CardHeader from './CardHeader'
+import Button from "./Button";
 
 export default function Card({ card, showingModal }) {
   const [side, setSide] = useState();
@@ -21,12 +22,33 @@ export default function Card({ card, showingModal }) {
     <StyledCard>
       <CardInner className={`card ${side ? "side" : ""}`} onClick={handleClick}>
         <CardFront>
-          <CardHeader title="Term" clickStar={clickStar} fillStar={fillStar}/>
-          <Content className={!showingModal ? "textSelectEnable" : ""}>{card.term}</Content>
+          <CardHeader
+            title="Term"
+            clickStar={clickStar}
+            fillStar={fillStar}
+          />
+          <Content
+            className={!showingModal ? "textSelectEnable" : ""}>{card.term}
+          </Content>
+          <ButtonWrapper>
+          <Button text="Learning" color="black"/>
+          <Button text="Know" color="black"/>
+          </ButtonWrapper>
         </CardFront>
+
         <CardBack>
-        <CardHeader title="Definition" clickStar={clickStar} fillStar={fillStar}/>
-          <Content className={!showingModal ? "textSelectEnable" : ""}>{card.definition}</Content>
+        <CardHeader
+          title="Definition"
+          clickStar={clickStar}
+          fillStar={fillStar}
+        />
+          <Content
+            className={!showingModal ? "textSelectEnable" : ""}>{card.definition}
+          </Content>
+          <ButtonWrapper>
+          <Button text="Learning" color="white"/>
+          <Button text="Know" color="white"/>
+          </ButtonWrapper>
         </CardBack>
       </CardInner>
     </StyledCard>
@@ -75,7 +97,7 @@ const Content = styled.p`
   font-size: 2rem;
   text-align: left;
   margin: 2rem;
-  height: 80%;
+  height: 60%;
 
   &.textSelectEnable {
   user-select: text;
@@ -88,3 +110,9 @@ const CardBack = styled.div`
   transform: rotateY(180deg);
   ${absoluteStyle}
 `;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`
