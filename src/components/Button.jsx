@@ -31,11 +31,24 @@ const ButtonStyle = styled.button`
   &.black {
     border: 2px solid var(--black-primary); 
     color: var(--black-primary);
+
+    &:hover {
+    box-shadow: 0 3px 3px var(--black-secondary);
+    cursor: pointer;
+    } 
   }
 
   &.white {
     border: 2px solid var(--white-primary); 
     color: var(--white-primary);
+
+    &:hover {
+    box-shadow: 0 3px 3px var(--white-primary);
+    }
+  }
+
+  &:active {
+  transform: translateY(4px);
   }
 `
 
