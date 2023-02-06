@@ -114,14 +114,29 @@ const CardStyle = styled.article`
 `;
 
 const Button = styled.button`
-margin: auto;
-  svg {
-    font-size: 4rem;
-  }
+  margin: auto;
+  
+    svg {
+      font-size: 4rem;
+      padding: .2rem;
+      border-radius: 50%;
+      transition: all .3s;
 
-  .disabled {
-    color: red;
-  }
+      &:hover {
+      background: var(--black-secondary);
+      color: white;
+    }
+    }
+
+    .disabled {
+      color: transparent;
+      
+      &:hover {
+      background: transparent;
+      }
+    }
+
+    
 `;
 
 export default Cards
