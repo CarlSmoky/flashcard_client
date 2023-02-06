@@ -84,6 +84,10 @@ const absoluteStyle = css`
   border-radius: 1rem;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+  &:hover {
+    box-shadow: 0 3px 3px var(--black-secondary);
+    cursor: pointer;
+  }
 `
 
 const CardFront = styled.div`
