@@ -6,9 +6,9 @@ const CardHeader = ({title, clickStar, fillStar}) => {
   return (
     <Wrapper>
       <CardSideTitle>{title}</CardSideTitle>
-      <div onClick={clickStar}>
+      <StarWrapper onClick={clickStar}>
         {fillStar ? <AiTwotoneStar /> : <AiOutlineStar />}
-      </div>
+      </StarWrapper>
     </Wrapper>
   )
 }
@@ -17,7 +17,9 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+`;
 
+const StarWrapper = styled.div`
   div {
     cursor: pointer;
     height: 3rem;
@@ -26,16 +28,15 @@ const Wrapper = styled.div`
 
   svg {
     font-size: 2rem;
-    margin: auto 0;
-    line-height: 0;
     padding: .5rem;
+    margin: .4rem .4rem 0 .4rem;
   }
 `;
 
 const CardSideTitle = styled.h3`
   font-size: 1.5rem;
   text-align: left;
-  margin: 1rem 0 0 2rem;
+  margin: auto 2rem;
   user-select: none;
 `;
 
