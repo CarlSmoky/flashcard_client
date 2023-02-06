@@ -23,7 +23,7 @@ const ButtonStyle = styled.button`
   border-radius: .5rem;
   width: 45%;
   padding: 1rem;
-  margin: 1rem;
+  margin: 1rem 2rem;
   color: transparent;
   color: var(--black-primary);
   cursor: pointer;
