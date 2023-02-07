@@ -27,13 +27,14 @@ const CardHeaderStyle = styled.div`
   }
 `
 
-const Header = styled.h4`
+const Header = styled.h2`
   font-size: 2rem;
   text-align: left;
 `
 
-const CardCount = styled.h4`
+const CardCount = styled.span`
   font-size: 1.5rem;
+  font-weight: bold;
 `
 
 
