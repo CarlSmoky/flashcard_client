@@ -11,7 +11,6 @@ const Button = ({ text, color }) => {
 
   return (
     <ButtonStyle
-      className={color}
       onClick={clickButtonHandle}
     >
       {text}
@@ -27,25 +26,12 @@ const ButtonStyle = styled.button`
   color: transparent;
   color: var(--black-primary);
   cursor: pointer;
-
-  &.black {
-    border: 2px solid var(--black-primary); 
-    color: var(--black-primary);
+  border: 2px solid var(--black-primary); 
 
     &:hover {
     box-shadow: 0 3px 3px var(--black-secondary);
     cursor: pointer;
-    } 
-  }
-
-  &.white {
-    border: 2px solid var(--white-primary); 
-    color: var(--white-primary);
-
-    &:hover {
-    box-shadow: 0 3px 3px var(--white-primary);
-    }
-  }
+    }   
 
   &:active {
   transform: translateY(4px);
