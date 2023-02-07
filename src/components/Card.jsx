@@ -31,8 +31,8 @@ export default function Card({ card, showingModal }) {
             className={!showingModal ? "textSelectEnable" : ""}>{card.term}
           </Content>
           <ButtonWrapper>
-          <Button text="Learning" color="black"/>
-          <Button text="Know" color="black"/>
+          <Button text="Learning" />
+          <Button text="Know" />
           </ButtonWrapper>
         </CardFront>
 
@@ -46,8 +46,8 @@ export default function Card({ card, showingModal }) {
             className={!showingModal ? "textSelectEnable" : ""}>{card.definition}
           </Content>
           <ButtonWrapper>
-          <Button text="Learning" color="white"/>
-          <Button text="Know" color="white"/>
+          <Button text="Learning" />
+          <Button text="Know" />
           </ButtonWrapper>
         </CardBack>
       </CardInner>
@@ -84,6 +84,7 @@ const absoluteStyle = css`
   border-radius: 1rem;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+  color: var(--black-secondary);
   &:hover {
     box-shadow: 0 3px 3px var(--black-secondary);
     cursor: pointer;
