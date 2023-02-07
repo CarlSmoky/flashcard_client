@@ -74,9 +74,9 @@ const Cards = () => {
 
         <Button disabled={!start}>
           {current > 0 ? (
-            <MdArrowBackIosNew onClick={previousCard} />
+            <MdArrowBackIosNew onClick={previousCard} alt="previous_button"/>
           ) : (
-            <MdArrowBackIosNew className='disabled' disabled />
+            <MdArrowBackIosNew className='disabled' alt="previous_button" disabled />
           )}
         </Button>
 
@@ -86,9 +86,9 @@ const Cards = () => {
 
         <Button disabled={!start}>
           {current < flashcarddata.length - 1 ? (
-            <MdArrowForwardIos onClick={nextCard} />
+            <MdArrowForwardIos onClick={nextCard} alt="next_button"/>
           ) : (
-            <MdArrowForwardIos className='disabled' disabled />
+            <MdArrowForwardIos className='disabled' alt="next_button" disabled />
           )}
         </Button>
 
