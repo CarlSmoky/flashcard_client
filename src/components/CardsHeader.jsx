@@ -20,6 +20,7 @@ const CardsHeader = ({ deck_name, flashcarddata, current, className }) => {
 
 const CardHeaderStyle = styled.div`
   width: 80%;
+  max-width: 70rem;
   margin: 2rem auto 0;
 
   &.blur {

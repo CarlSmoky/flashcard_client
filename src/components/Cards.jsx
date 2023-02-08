@@ -103,7 +103,7 @@ const CardStyle = styled.article`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  height: 40rem;
+  height: 45rem;
 
   background: var(--white);
   z-index: -1;

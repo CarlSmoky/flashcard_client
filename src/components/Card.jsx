@@ -62,14 +62,14 @@ const CardInner = styled.div`
   text-align: center;
   transition: transform 0.4s;
   transform-style: preserve-3d;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 `;
 
 const StyledCard = styled.div`
   background-color: transparent;
   width: 80%;
+  max-width: 70rem;
   perspective: 1000px;
-  margin: 2rem auto;
+  margin: 3rem 0 5rem;
 
   ${CardInner}.side {
     transform: rotateY(-180deg);
@@ -85,8 +85,9 @@ const absoluteStyle = css`
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   color: var(--black-secondary);
+  
   &:hover {
-    box-shadow: 0 3px 3px var(--black-secondary);
+    box-shadow: .5rem .5rem;
     cursor: pointer;
   }
 `

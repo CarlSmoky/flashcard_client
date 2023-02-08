@@ -27,10 +27,16 @@ const ButtonStyle = styled.button`
   color: var(--black-primary);
   cursor: pointer;
   border: 2px solid var(--black-primary); 
+  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
 
     &:hover {
-    box-shadow: 0 3px 3px var(--black-secondary);
-    cursor: pointer;
+      box-shadow: 0px 0px 0px 0px;
+      top: 5px;
+      left: 5px;
     }   
 
   &:active {
