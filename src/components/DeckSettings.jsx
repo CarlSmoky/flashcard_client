@@ -89,6 +89,7 @@ const Header = styled.div`
   
   svg {
     font-size: 2rem;
+    cursor: pointer;
   }
 `
 const Heading = styled.span`
