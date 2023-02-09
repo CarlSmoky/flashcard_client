@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useNavigate } from "react-router-dom";
 import { RxCross2 } from 'react-icons/rx'
+import Button from './Button';
 
 const DeckSettings = ({ setNumCard, deckName, setStart, totalCards}) => {
 
@@ -32,23 +33,23 @@ const DeckSettings = ({ setNumCard, deckName, setStart, totalCards}) => {
     <Wrapper>
       <form onSubmit={handleSubmitClick} type="post">
         <Header>
-          <h3>You Select...</h3>
+          <Heading>You Select...</Heading>
           <RxCross2 onClick={routeChange}/>
         </Header>
         {deckName && <Title>{deckName}</Title>}
-        <label>Cards: </label>
+        <Label htmlFor="numCards">Cards: </Label>
         <input
           onChange={onChange}
-          id="length"
+          id="numCards"
           type="number"
-          name="length"
+          name="numCards"
           min="1"
           max={totalCards}
           value={numCards}
         />
-        <ButtonContainer>
-          <button type="submit">Start</button>
-        </ButtonContainer>
+        <ButtonWrapper>
+          <Button text="Start" />
+        </ButtonWrapper>
       </form>
     </Wrapper>
   )
@@ -80,20 +81,32 @@ const Wrapper = styled.div`
 
 const Header = styled.div`
   display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 38rem;
-    height: 5rem;
-    margin: 1rem;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 38rem;
+  height: 15%;
+  margin: 1rem;
+  
+  svg {
+    font-size: 2rem;
+  }
 `
-
+const Heading = styled.span`
+  font-size: 1.5rem;
+`
 const Title = styled.h2`
-  height: 10rem;
+  font-size: 2rem;
+  height: 25%;
 `
 
-const ButtonContainer = styled.div`
-  height: 10rem;
-  margin-top: 2rem;
+const Label = styled.label`
+  font-size: 2rem;
+`
+
+
+const ButtonWrapper = styled.div`
+  height: 3rem;
+  margin: 4rem 0;
 `
 
 export default DeckSettings
