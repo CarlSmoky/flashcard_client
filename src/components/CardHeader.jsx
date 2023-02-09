@@ -35,6 +35,7 @@ const StarWrapper = styled.div`
 
 const CardSideTitle = styled.h3`
   font-size: 1.5rem;
+  font-family: var(--tertiary-font);
   text-align: left;
   margin: auto 2rem;
   user-select: none;
