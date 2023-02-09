@@ -14,6 +14,7 @@ const GlobalStyles = createGlobalStyle`
   
   --primary-font: 'Syncopate';
   --secondary-font: 'Roboto Mono';
+  --tertiary-font: 'Poller One';
 }
 
 body {
