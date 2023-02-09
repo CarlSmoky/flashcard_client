@@ -7,7 +7,7 @@ const CardHeader = ({title, clickStar, fillStar}) => {
     <Wrapper>
       <CardSideTitle>{title}</CardSideTitle>
       <StarWrapper onClick={clickStar}>
-        {fillStar ? <AiTwotoneStar /> : <AiOutlineStar />}
+        {fillStar ? <AiTwotoneStar className="filledStar" /> : <AiOutlineStar />}
       </StarWrapper>
     </Wrapper>
   )
@@ -30,6 +30,10 @@ const StarWrapper = styled.div`
     font-size: 2rem;
     padding: .5rem;
     margin: .4rem .4rem 0 .4rem;
+
+    &.filledStar {
+    color: gold;
+    }
   }
 `;
 
