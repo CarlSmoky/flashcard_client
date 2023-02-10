@@ -123,7 +123,8 @@ const Button = styled.button`
       transition: all .3s;
 
       &:hover {
-      background: var(--black-secondary);
+      background: var(--grey-primary);
+      opacity: 0.6;
       color: white;
     }
     }

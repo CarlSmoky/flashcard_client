@@ -101,8 +101,8 @@ const Title = styled.h2`
 `
 
 const Label = styled.label`
-  font-size: 2rem;
-  font-family: var(--secondary-font);
+  font-size: 1.5rem;
+  /* font-family: var(--secondary-font); */
 `
 
 
