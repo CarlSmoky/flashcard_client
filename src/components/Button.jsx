@@ -1,7 +1,7 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
-const Button = ({ text, color }) => {
+const Button = ({ text, disabled }) => {
 
   const clickButtonHandle = e => {
     e.stopPropagation();
@@ -12,6 +12,7 @@ const Button = ({ text, color }) => {
   return (
     <ButtonStyle
       onClick={clickButtonHandle}
+      disabled={disabled}
     >
       {text}
     </ButtonStyle>
@@ -34,15 +35,28 @@ const ButtonStyle = styled.button`
   -webkit-user-select: none;
   touch-action: manipulation;
 
-    &:hover {
+  ${({ disabled }) => {
+  return disabled
+    ? css`
+      
+    `
+    :css`
+      &:hover {
       box-shadow: 0px 0px 0px 0px;
       top: 5px;
       left: 5px;
-    }   
+      }
 
-  &:active {
-  transform: translateY(4px);
-  }
+      &:active {
+        transform: translateY(4px);
+      }
+    `
+}}
+
+
+  
+
+  /*  */
 `
 
 export default Button

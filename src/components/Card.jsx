@@ -31,8 +31,8 @@ export default function Card({ card, showingModal }) {
             className={!showingModal ? "textSelectEnable" : ""}>{card.term}
           </Content>
           <ButtonWrapper>
-          <Button text="Learning" />
-          <Button text="Know" />
+          <Button text="Learning" disabled={showingModal}/>
+          <Button text="Know" disabled={showingModal}/>
           </ButtonWrapper>
         </CardFront>
 
@@ -42,8 +42,8 @@ export default function Card({ card, showingModal }) {
           clickStar={clickStar}
           fillStar={fillStar}
         />
-          <Content
-            className={!showingModal ? "textSelectEnable" : ""}>{card.definition}
+          <Content>
+            {card.definition}
           </Content>
           <ButtonWrapper>
           <Button text="Learning" />
