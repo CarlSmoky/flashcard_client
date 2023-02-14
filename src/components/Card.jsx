@@ -19,9 +19,9 @@ export default function Card({ card, showingModal }) {
 
   return (
 
-    <StyledCard>
+    <StyledCard >
       <CardInner className={`card ${side ? "side" : ""}`} onClick={handleClick}>
-        <CardFront>
+        <CardFront disabled={showingModal}>
           <CardHeader
             title="Term"
             clickStar={clickStar}
@@ -31,23 +31,23 @@ export default function Card({ card, showingModal }) {
             className={!showingModal ? "textSelectEnable" : ""}>{card.term}
           </Content>
           <ButtonWrapper>
-          <Button text="Learning" disabled={showingModal}/>
-          <Button text="Know" disabled={showingModal}/>
+            <Button text="Learning" disabled={showingModal} />
+            <Button text="Know" disabled={showingModal} />
           </ButtonWrapper>
         </CardFront>
 
         <CardBack>
-        <CardHeader
-          title="Definition"
-          clickStar={clickStar}
-          fillStar={fillStar}
-        />
+          <CardHeader
+            title="Definition"
+            clickStar={clickStar}
+            fillStar={fillStar}
+          />
           <Content>
             {card.definition}
           </Content>
           <ButtonWrapper>
-          <Button text="Learning" />
-          <Button text="Know" />
+            <Button text="Learning" />
+            <Button text="Know" />
           </ButtonWrapper>
         </CardBack>
       </CardInner>
@@ -85,11 +85,6 @@ const absoluteStyle = css`
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   color: var(--black-secondary);
-  
-  &:hover {
-    box-shadow: .5rem .5rem;
-    cursor: pointer;
-  }
 `
 
 const CardFront = styled.div`
@@ -97,6 +92,19 @@ const CardFront = styled.div`
   height: 100%;
   width: 100%;
   ${absoluteStyle}
+
+  ${({ disabled }) => {
+    return disabled
+      ? css`
+      
+    `
+      : css`
+      &:hover {
+        box-shadow: .5rem .5rem;
+        cursor: pointer;
+      }
+    `
+  }}
 `;
 
 const Content = styled.p`
@@ -116,6 +124,11 @@ const CardBack = styled.div`
   color: white;
   transform: rotateY(180deg);
   ${absoluteStyle}
+
+  &:hover {
+    box-shadow: .5rem .5rem;
+    cursor: pointer;
+  }
 `;
 
 const ButtonWrapper = styled.div`
