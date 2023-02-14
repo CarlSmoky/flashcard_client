@@ -4,21 +4,21 @@ import { useNavigate } from "react-router-dom";
 import { RxCross2 } from 'react-icons/rx'
 import Button from './Button';
 
-const DeckSettings = ({ setNumCard, deckName, setStart, totalCards}) => {
+const DeckSettings = ({ setNumCards, deckName, setStart, totalCards}) => {
 
-  const [numCards, setNumCards] = useState(0);
+  const [settingNumCards, setsettingNumCards] = useState(0);
 
   useEffect(() => {
-    setNumCards(totalCards);
+    setsettingNumCards(totalCards);
   }, [totalCards]);
 
   const onChange = (e) => {
-    setNumCards(e.target.value)
+    setsettingNumCards(e.target.value)
   };
 
   const handleSubmitClick = (e) => {
     e.preventDefault();
-    setNumCard(numCards);
+    setNumCards(settingNumCards);
     setStart(true);
   }
 
@@ -45,7 +45,7 @@ const DeckSettings = ({ setNumCard, deckName, setStart, totalCards}) => {
           name="numCards"
           min="1"
           max={totalCards}
-          value={numCards}
+          value={settingNumCards}
         />
         <ButtonWrapper>
           <Button text="Start" />

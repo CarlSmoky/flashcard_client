@@ -5,7 +5,6 @@ const Button = ({ text, disabled }) => {
 
   const clickButtonHandle = e => {
     e.stopPropagation();
-    console.log("clicked", e.target);
   }
 
 

@@ -11,7 +11,7 @@ const Cards = () => {
   const { id } = useParams();
   const [start, setStart] = useState(false);
   const [flashcarddata, setFlashcarddata] = useState([]);
-  const [numCard, setNumCard] = useState(0);
+  const [numCards, setNumCards] = useState(0);
 
   const [deck, setDeck] = useState("");
 
@@ -29,7 +29,7 @@ const Cards = () => {
         console.log(err)
       })
 
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     axios.get(`api/card/deck/${id}`)
@@ -40,7 +40,13 @@ const Cards = () => {
       .catch(err => {
         console.log(err)
       })
-  }, []);
+  }, [id]);
+
+  useEffect(() => {
+    const shuffleFlashCard = flashcarddata.sort(() => Math.random() - 0.5).slice(0, numCards);
+    setFlashcarddata(shuffleFlashCard);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [numCards, start])
 
   const cards = flashcarddata.map((card) => {
     return <Card card={card} key={card.id} showingModal={!start} />;
@@ -57,10 +63,12 @@ const Cards = () => {
     setCurrent(current + 1);
   }
 
+
+
   return (
     <>
       {/* Before start */}
-      {!start && <DeckSettings setNumCard={setNumCard} deckName={deck_name} setStart={setStart} totalCards={flashcarddata.length} />}
+      {!start && <DeckSettings setNumCards={setNumCards} deckName={deck_name} setStart={setStart} totalCards={flashcarddata.length} />}
 
       <CardsHeader
         className={`${!start && 'blur'}`}
