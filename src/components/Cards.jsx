@@ -42,6 +42,12 @@ const Cards = () => {
       })
   }, [id]);
 
+  useEffect(() => {
+    const shuffleFlashCard = flashcarddata.sort(() => Math.random() - 0.5).slice(0, numCards);
+    setFlashcarddata(shuffleFlashCard);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [numCards, start])
+
   const cards = flashcarddata.map((card) => {
     return <Card card={card} key={card.id} showingModal={!start} />;
   });
@@ -57,7 +63,7 @@ const Cards = () => {
     setCurrent(current + 1);
   }
 
-  console.log(numCards);
+
 
   return (
     <>
