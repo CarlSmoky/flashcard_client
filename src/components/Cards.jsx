@@ -17,8 +17,19 @@ const Cards = () => {
 
   const { deck_name } = deck;
 
+  // navigation in cards
+  const [current, setCurrent] = useState(0);
+  const previousCard = () => {
+    setCurrent(current - 1);
+  }
+  const nextCard = () => {
+    setCurrent(current + 1);
+  }
+
 
   useEffect(() => {
+
+    // Need to change to axios.all
     axios.get(`api/deck/${id}`)
 
       .then(res => {
@@ -29,10 +40,7 @@ const Cards = () => {
         console.log(err)
       })
 
-  }, [id]);
-
-  useEffect(() => {
-    axios.get(`api/card/deck/${id}`)
+      axios.get(`api/card/deck/${id}`)
       .then(res => {
         const flashcardDataByDeckId = res.data;
         setFlashcarddata(flashcardDataByDeckId);
@@ -40,7 +48,10 @@ const Cards = () => {
       .catch(err => {
         console.log(err)
       })
+
   }, [id]);
+
+  
 
   useEffect(() => {
     const shuffleFlashCard = flashcarddata.sort(() => Math.random() - 0.5).slice(0, numCards);
@@ -49,21 +60,15 @@ const Cards = () => {
   }, [numCards, start])
 
   const cards = flashcarddata.map((card) => {
-    return <Card card={card} key={card.id} showingModal={!start} />;
+    return <Card
+              card={card}
+              key={card.id}
+              showingModal={!start}
+              nextCard={nextCard}
+            />;
   });
 
   const loading = <div className="loading">Loading flashcard content...</div>;
-
-  // navigation in cards
-  const [current, setCurrent] = useState(0);
-  function previousCard() {
-    setCurrent(current - 1);
-  }
-  function nextCard() {
-    setCurrent(current + 1);
-  }
-
-
 
   return (
     <>
