@@ -3,7 +3,7 @@ import styled, { css } from "styled-components"
 import CardHeader from './CardHeader'
 import Button from "./Button";
 
-export default function Card({ card, showingModal }) {
+const Card = ({ card, showingModal, nextCard }) => {
   const [side, setSide] = useState();
   const [fillStar, setFillStar] = useState(false);
 
@@ -31,8 +31,8 @@ export default function Card({ card, showingModal }) {
             className={!showingModal ? "textSelectEnable" : ""}>{card.term}
           </Content>
           <ButtonWrapper>
-            <Button text="Learning" disabled={showingModal} />
-            <Button text="Know" disabled={showingModal} />
+            <Button text="Learning" disabled={showingModal} nextCard={nextCard}/>
+            <Button text="Know" disabled={showingModal} nextCard={nextCard}/>
           </ButtonWrapper>
         </CardFront>
 
@@ -46,14 +46,16 @@ export default function Card({ card, showingModal }) {
             {card.definition}
           </Content>
           <ButtonWrapper>
-            <Button text="Learning" />
-            <Button text="Know" />
+            <Button text="Learning" nextCard={nextCard}/>
+            <Button text="Know" nextCard={nextCard}/>
           </ButtonWrapper>
         </CardBack>
       </CardInner>
     </StyledCard>
   );
 }
+
+export default Card
 
 const CardInner = styled.div`
   position: relative;

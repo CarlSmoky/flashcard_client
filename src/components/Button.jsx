@@ -1,12 +1,13 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-const Button = ({ text, disabled }) => {
+const Button = ({ text, disabled, nextCard, type }) => {
 
   const clickButtonHandle = e => {
     e.stopPropagation();
+    if (text === "Start") { return; }
+      nextCard();
   }
-
 
   return (
     <ButtonStyle
@@ -51,11 +52,6 @@ const ButtonStyle = styled.button`
       }
     `
 }}
-
-
-  
-
-  /*  */
 `
 
 export default Button
