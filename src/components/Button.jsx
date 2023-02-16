@@ -1,12 +1,12 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-const Button = ({ text, disabled, nextCard, type }) => {
+const Button = ({ text, disabled, nextCard, isEndCard }) => {
 
   const clickButtonHandle = e => {
     e.stopPropagation();
     if (text === "Start") { return; }
-      nextCard();
+    if (!isEndCard) { nextCard(); }
   }
 
   return (
