@@ -3,7 +3,7 @@ import styled, { css } from "styled-components"
 import CardHeader from './CardHeader'
 import Button from "./Button";
 
-const Card = ({ card, showingModal, nextCard }) => {
+const Card = ({ card, showingModal, nextCard, isEndCard }) => {
   const [side, setSide] = useState();
   const [fillStar, setFillStar] = useState(false);
 
@@ -31,8 +31,8 @@ const Card = ({ card, showingModal, nextCard }) => {
             className={!showingModal ? "textSelectEnable" : ""}>{card.term}
           </Content>
           <ButtonWrapper>
-            <Button text="Learning" disabled={showingModal} nextCard={nextCard}/>
-            <Button text="Know" disabled={showingModal} nextCard={nextCard}/>
+            <Button text="Learning" disabled={showingModal} nextCard={nextCard} isEndCard={isEndCard}/>
+            <Button text="Know" disabled={showingModal} nextCard={nextCard} isEndCard={isEndCard}/>
           </ButtonWrapper>
         </CardFront>
 
@@ -46,8 +46,8 @@ const Card = ({ card, showingModal, nextCard }) => {
             {card.definition}
           </Content>
           <ButtonWrapper>
-            <Button text="Learning" nextCard={nextCard}/>
-            <Button text="Know" nextCard={nextCard}/>
+            <Button text="Learning" nextCard={nextCard} isEndCard={isEndCard}/>
+            <Button text="Know" nextCard={nextCard} isEndCard={isEndCard}/>
           </ButtonWrapper>
         </CardBack>
       </CardInner>
