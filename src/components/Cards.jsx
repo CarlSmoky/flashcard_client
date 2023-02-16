@@ -12,9 +12,7 @@ const Cards = () => {
   const [start, setStart] = useState(false);
   const [flashcarddata, setFlashcarddata] = useState([]);
   const [numCards, setNumCards] = useState(0);
-
   const [deck, setDeck] = useState("");
-
   const { deck_name } = deck;
 
   // navigation in cards
@@ -65,6 +63,7 @@ const Cards = () => {
               key={card.id}
               showingModal={!start}
               nextCard={nextCard}
+              isEndCard={current === flashcarddata.length - 1}
             />;
   });
 
