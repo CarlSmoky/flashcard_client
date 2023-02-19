@@ -3,18 +3,20 @@ import styled, { css } from "styled-components"
 import CardHeader from './CardHeader'
 import Button from "./Button";
 
-const Card = ({ card, showingModal, nextCard, isEndCard }) => {
+const Card = ({
+    card,
+    showingModal,
+    nextCard,
+    isEndCard,
+    setIsLearning,
+    toggleFillStar
+  }) => {
+
   const [side, setSide] = useState();
-  const [fillStar, setFillStar] = useState(false);
 
   const handleClick = e => {
     if (showingModal) { return; }
     setSide(!side);
-  }
-
-  const clickStar = e => {
-    e.stopPropagation();
-    setFillStar(!fillStar);
   }
 
   return (
@@ -24,30 +26,58 @@ const Card = ({ card, showingModal, nextCard, isEndCard }) => {
         <CardFront disabled={showingModal}>
           <CardHeader
             title="Term"
-            clickStar={clickStar}
-            fillStar={fillStar}
-          />
+            toggleFillStar={toggleFillStar}
+            fillStar={card.fillStar}
+            cardId={card.id}
+          /> 
           <Content
             className={!showingModal ? "textSelectEnable" : ""}>{card.term}
           </Content>
           <ButtonWrapper>
-            <Button text="Learning" disabled={showingModal} nextCard={nextCard} isEndCard={isEndCard}/>
-            <Button text="Know" disabled={showingModal} nextCard={nextCard} isEndCard={isEndCard}/>
+            <Button
+              text="Learning"
+              disabled={showingModal}
+              nextCard={nextCard}
+              isEndCard={isEndCard}
+              setIsLearning={setIsLearning}
+              cardId={card.id}
+            />
+            <Button
+              text="Know"
+              disabled={showingModal}
+              nextCard={nextCard}
+              isEndCard={isEndCard}
+              setIsLearning={setIsLearning}
+              cardId={card.id}
+            />
           </ButtonWrapper>
         </CardFront>
 
         <CardBack>
           <CardHeader
             title="Definition"
-            clickStar={clickStar}
-            fillStar={fillStar}
+            toggleFillStar={toggleFillStar}
+            fillStar={card.fillStar}
+            cardId={card.id}
           />
           <Content>
             {card.definition}
           </Content>
           <ButtonWrapper>
-            <Button text="Learning" nextCard={nextCard} isEndCard={isEndCard}/>
-            <Button text="Know" nextCard={nextCard} isEndCard={isEndCard}/>
+            <Button
+              text="Learning"
+              nextCard={nextCard}
+              isEndCard={isEndCard}
+              setIsLearning={setIsLearning}
+              cardId={card.id}
+            />
+            <Button
+              text="Know"
+              nextCard={nextCard}
+              isEndCard={isEndCard}
+              setIsLearning={setIsLearning}
+              cardId={card.id}
+            />
           </ButtonWrapper>
         </CardBack>
       </CardInner>

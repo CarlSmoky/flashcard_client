@@ -15,6 +15,21 @@ const Cards = () => {
   const [deck, setDeck] = useState("");
   const { deck_name } = deck;
 
+  //update stats
+  // const updateStates = (isLearning, fillStar) => {
+  //   const newObj = {
+  //   id: flashcarddata[current].id,
+  //   user_id: 1,
+  //   deck_id: flashcarddata[current].deck_id,
+  //   learning: isLearning,
+  //   star: fillStar,
+  //   }
+  //   const key = flashcarddata[current].id;
+  //   const updateObj = {[key]: newObj}
+  //   setStatus(prev => ({...prev, ...updateObj}));
+  // }
+
+
   // navigation in cards
   const [current, setCurrent] = useState(0);
   const previousCard = () => {
@@ -23,7 +38,6 @@ const Cards = () => {
   const nextCard = () => {
     setCurrent(current + 1);
   }
-
 
   useEffect(() => {
 
@@ -41,7 +55,8 @@ const Cards = () => {
       axios.get(`api/card/deck/${id}`)
       .then(res => {
         const flashcardDataByDeckId = res.data;
-        setFlashcarddata(flashcardDataByDeckId);
+        const formattedCardData = formatFlashcardData(flashcardDataByDeckId);
+        setFlashcarddata(formattedCardData);
       })
       .catch(err => {
         console.log(err)
@@ -49,7 +64,41 @@ const Cards = () => {
 
   }, [id]);
 
-  
+  const formatFlashcardData = (rawAPIData) => {
+    return rawAPIData.map((card) => {
+      return {
+        id: card.id,
+        deckId: card.deck_id,
+        term: card.term,
+        definition: card.definition,
+        createdAt: card.created_at,
+        fillStar: false,
+        isLearning: true
+      }
+    })
+  }
+
+  const toggleFillStar = (cardId, value) => {
+    // find the card with cardId
+    let prevFlashCards = [...flashcarddata];
+    prevFlashCards.forEach((card, i) => {
+      if (card.id === cardId) {
+        prevFlashCards[i].fillStar = value;
+      }
+    });
+    setFlashcarddata(prevFlashCards);
+  }
+
+  const setIsLearning = (cardId, value) => {
+    let prevFlashCards = [...flashcarddata];
+    prevFlashCards.forEach((card, i) => {
+      if (card.id === cardId) {
+        prevFlashCards[i].isLearning = value;
+      }
+    });
+    setFlashcarddata(prevFlashCards);
+  }
+
 
   useEffect(() => {
     const shuffleFlashCard = flashcarddata.sort(() => Math.random() - 0.5).slice(0, numCards);
@@ -64,11 +113,14 @@ const Cards = () => {
               showingModal={!start}
               nextCard={nextCard}
               isEndCard={current === flashcarddata.length - 1}
+              setIsLearning={setIsLearning}
+              toggleFillStar={toggleFillStar}
             />;
   });
 
   const loading = <div className="loading">Loading flashcard content...</div>;
 
+  console.log(flashcarddata);
   return (
     <>
       {/* Before start */}
@@ -98,7 +150,7 @@ const Cards = () => {
 
         <Button disabled={!start}>
           {current < flashcarddata.length - 1 ? (
-            <MdArrowForwardIos onClick={nextCard} alt="next_button"/>
+            <MdArrowForwardIos onClick={nextCard} alt="next_button" />
           ) : (
             <MdArrowForwardIos className='disabled' alt="next_button" disabled />
           )}
@@ -109,7 +161,6 @@ const Cards = () => {
     </>
   )
 }
-
 
 const CardStyle = styled.article`
   display: flex;
