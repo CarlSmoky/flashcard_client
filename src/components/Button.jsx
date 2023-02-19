@@ -1,7 +1,14 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-const Button = ({ text, disabled, nextCard, isEndCard, updateStates,fillStar }) => {
+const Button = ({
+  text,
+  disabled,
+  nextCard,
+  isEndCard,
+  setIsLearning,
+  cardId
+}) => {
 
   const clickButtonHandle = e => {
     e.stopPropagation();
@@ -9,9 +16,9 @@ const Button = ({ text, disabled, nextCard, isEndCard, updateStates,fillStar }) 
     const isLearning = e.target.innerHTML === "Learning";
     if (!isEndCard) { 
       nextCard();
-      updateStates(isLearning, fillStar);
+      setIsLearning(cardId, isLearning);
     }
-    else updateStates(isLearning, fillStar);
+    else setIsLearning(cardId, isLearning);
   }
 
   return (
