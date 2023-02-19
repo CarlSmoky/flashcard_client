@@ -1,13 +1,29 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { AiTwotoneStar, AiOutlineStar } from 'react-icons/ai'
 
-const CardHeader = ({title, clickStar, fillStar}) => {
+const CardHeader = ({
+  title,
+  fillStar,
+  toggleFillStar,
+  cardId,
+}) => {
+  const [displayFilledStar, setDisplayFilledStar] = useState(false);
+  
+  useEffect(() => {
+    setDisplayFilledStar(fillStar)
+  }, [fillStar])
+
+  const clickStar = e => {
+    e.stopPropagation();
+    toggleFillStar(cardId, !fillStar)
+  }
+
   return (
     <Wrapper>
       <CardSideTitle>{title}</CardSideTitle>
       <StarWrapper onClick={clickStar}>
-        {fillStar ? <AiTwotoneStar className="filledStar" /> : <AiOutlineStar />}
+        {displayFilledStar ? <AiTwotoneStar className="filledStar" /> : <AiOutlineStar />}
       </StarWrapper>
     </Wrapper>
   )
