@@ -1,43 +1,35 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import styled, { css } from "styled-components"
 import CardHeader from './CardHeader'
 import Button from "./Button";
 
-const Card = ({ card, showingModal, nextCard, isEndCard, updateStates, status, toggleFillStar }) => {
+const Card = ({
+    card,
+    showingModal,
+    nextCard,
+    isEndCard,
+    setIsLearning,
+    toggleFillStar
+  }) => {
+
   const [side, setSide] = useState();
-  const [fillStar, setFillStar] = useState(false);
 
   const handleClick = e => {
     if (showingModal) { return; }
     setSide(!side);
   }
 
-  const clickStar = e => {
-    e.stopPropagation();
-    setFillStar(!fillStar);
-    toggleFillStar(status.id, !fillStar)
-  }
-
-  useEffect(() => {
-    console.log("status",status);
-    console.log("fillStar",fillStar);
-  }, [status])
-
   return (
 
     <StyledCard >
       <CardInner className={`card ${side ? "side" : ""}`} onClick={handleClick}>
         <CardFront disabled={showingModal}>
-          {status ? <CardHeader
+          <CardHeader
             title="Term"
-            clickStar={clickStar}
-            fillStar={`${status.star} && ${fillStar} || ${status.star}`}
-          /> : <CardHeader
-          title="Term"
-          clickStar={clickStar}
-          fillStar={fillStar}
-        />
-          }
+            toggleFillStar={toggleFillStar}
+            fillStar={card.fillStar}
+            cardId={card.id}
+          /> 
           <Content
             className={!showingModal ? "textSelectEnable" : ""}>{card.term}
           </Content>
@@ -47,16 +39,16 @@ const Card = ({ card, showingModal, nextCard, isEndCard, updateStates, status, t
               disabled={showingModal}
               nextCard={nextCard}
               isEndCard={isEndCard}
-              updateStates={updateStates}
-              fillStar={fillStar}
+              setIsLearning={setIsLearning}
+              cardId={card.id}
             />
             <Button
               text="Know"
               disabled={showingModal}
               nextCard={nextCard}
               isEndCard={isEndCard}
-              updateStates={updateStates}
-              fillStar={fillStar}
+              setIsLearning={setIsLearning}
+              cardId={card.id}
             />
           </ButtonWrapper>
         </CardFront>
@@ -64,8 +56,9 @@ const Card = ({ card, showingModal, nextCard, isEndCard, updateStates, status, t
         <CardBack>
           <CardHeader
             title="Definition"
-            clickStar={clickStar}
-            fillStar={fillStar}
+            toggleFillStar={toggleFillStar}
+            fillStar={card.fillStar}
+            cardId={card.id}
           />
           <Content>
             {card.definition}
@@ -75,15 +68,15 @@ const Card = ({ card, showingModal, nextCard, isEndCard, updateStates, status, t
               text="Learning"
               nextCard={nextCard}
               isEndCard={isEndCard}
-              updateStates={updateStates}
-              fillStar={fillStar}
+              setIsLearning={setIsLearning}
+              cardId={card.id}
             />
             <Button
               text="Know"
               nextCard={nextCard}
               isEndCard={isEndCard}
-              updateStates={updateStates}
-              fillStar={fillStar}
+              setIsLearning={setIsLearning}
+              cardId={card.id}
             />
           </ButtonWrapper>
         </CardBack>
