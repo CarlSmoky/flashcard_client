@@ -14,21 +14,20 @@ const Cards = () => {
   const [numCards, setNumCards] = useState(0);
   const [deck, setDeck] = useState("");
   const { deck_name } = deck;
-  const [status, setStatus] = useState({});
 
   //update stats
-  const updateStates = (isLearning, fillStar) => {
-    const newObj = {
-    id: flashcarddata[current].id,
-    user_id: 1,
-    deck_id: flashcarddata[current].deck_id,
-    learning: isLearning,
-    star: fillStar,
-    }
-    const key = flashcarddata[current].id;
-    const updateObj = {[key]: newObj}
-    setStatus(prev => ({...prev, ...updateObj}));
-  }
+  // const updateStates = (isLearning, fillStar) => {
+  //   const newObj = {
+  //   id: flashcarddata[current].id,
+  //   user_id: 1,
+  //   deck_id: flashcarddata[current].deck_id,
+  //   learning: isLearning,
+  //   star: fillStar,
+  //   }
+  //   const key = flashcarddata[current].id;
+  //   const updateObj = {[key]: newObj}
+  //   setStatus(prev => ({...prev, ...updateObj}));
+  // }
 
 
   // navigation in cards
@@ -38,11 +37,6 @@ const Cards = () => {
   }
   const nextCard = () => {
     setCurrent(current + 1);
-  }
-
-  const nextAndUpdate = () => {
-    nextCard();
-    updateStates(true, false)
   }
 
   useEffect(() => {
@@ -86,10 +80,20 @@ const Cards = () => {
 
   const toggleFillStar = (cardId, value) => {
     // find the card with cardId
-    let prevFlashCards = flashcarddata;
+    let prevFlashCards = [...flashcarddata];
     prevFlashCards.forEach((card, i) => {
       if (card.id === cardId) {
         prevFlashCards[i].fillStar = value;
+      }
+    });
+    setFlashcarddata(prevFlashCards);
+  }
+
+  const setIsLearning = (cardId, value) => {
+    let prevFlashCards = [...flashcarddata];
+    prevFlashCards.forEach((card, i) => {
+      if (card.id === cardId) {
+        prevFlashCards[i].isLearning = value;
       }
     });
     setFlashcarddata(prevFlashCards);
@@ -109,15 +113,10 @@ const Cards = () => {
               showingModal={!start}
               nextCard={nextCard}
               isEndCard={current === flashcarddata.length - 1}
-              updateStates={updateStates}
-              status={status[card.id]}
+              setIsLearning={setIsLearning}
               toggleFillStar={toggleFillStar}
             />;
   });
-
-  useEffect(() => {
-    console.log(status)
-  }, [status])
 
   const loading = <div className="loading">Loading flashcard content...</div>;
 
@@ -151,7 +150,7 @@ const Cards = () => {
 
         <Button disabled={!start}>
           {current < flashcarddata.length - 1 ? (
-            <MdArrowForwardIos onClick={nextAndUpdate} alt="next_button" />
+            <MdArrowForwardIos onClick={nextCard} alt="next_button" />
           ) : (
             <MdArrowForwardIos className='disabled' alt="next_button" disabled />
           )}
