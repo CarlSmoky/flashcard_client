@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from 'react'
+import { useEffect, useState} from 'react'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
 
@@ -26,7 +26,6 @@ const useApplicationData = () => {
         const flashcardDataByDeckId = res.data;
         const formattedCardData = formatFlashcardData(flashcardDataByDeckId);
         setFlashcarddata(formattedCardData);
-        console.log(formattedCardData);
       })
       .catch(err => {
         console.log(err)
@@ -50,22 +49,6 @@ const useApplicationData = () => {
         }
       };
     }, initialValue);
-  }
-
-  const toggleFillStar = (cardId, value) => {
-    // TODO: check if this works, maybe simplify to two lines
-    // TODO: combine with setIsLearing by passing key as arg
-    let card = {...flashcarddata[cardId]};
-    card.fillStar = value
-    let updateObj = {[cardId]: card};
-    setFlashcarddata(prev => ({...prev, ...updateObj}));
-  }
-
-  const setIsLearning = (cardId, value) => {
-    let card = {...flashcarddata[cardId]};
-    card.isLearning = value
-    let updateObj = {[cardId]: card};
-    setFlashcarddata(prev => ({...prev, ...updateObj}));
   }
 
   const setCardProperty = (cardId, property, value )  => {
