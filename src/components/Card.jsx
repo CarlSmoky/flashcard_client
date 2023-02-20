@@ -8,8 +8,7 @@ const Card = ({
     showingModal,
     nextCard,
     isEndCard,
-    setIsLearning,
-    toggleFillStar
+    setCardProperty
   }) => {
 
   const [side, setSide] = useState();
@@ -26,7 +25,7 @@ const Card = ({
         <CardFront disabled={showingModal}>
           <CardHeader
             title="Term"
-            toggleFillStar={toggleFillStar}
+            setCardProperty={setCardProperty}
             fillStar={card.fillStar}
             cardId={card.id}
           /> 
@@ -39,7 +38,7 @@ const Card = ({
               disabled={showingModal}
               nextCard={nextCard}
               isEndCard={isEndCard}
-              setIsLearning={setIsLearning}
+              setCardProperty={setCardProperty}
               cardId={card.id}
             />
             <Button
@@ -47,7 +46,7 @@ const Card = ({
               disabled={showingModal}
               nextCard={nextCard}
               isEndCard={isEndCard}
-              setIsLearning={setIsLearning}
+              setCardProperty={setCardProperty}
               cardId={card.id}
             />
           </ButtonWrapper>
@@ -56,7 +55,7 @@ const Card = ({
         <CardBack>
           <CardHeader
             title="Definition"
-            toggleFillStar={toggleFillStar}
+            setCardProperty={setCardProperty}
             fillStar={card.fillStar}
             cardId={card.id}
           />
@@ -68,14 +67,14 @@ const Card = ({
               text="Learning"
               nextCard={nextCard}
               isEndCard={isEndCard}
-              setIsLearning={setIsLearning}
+              setCardProperty={setCardProperty}
               cardId={card.id}
             />
             <Button
               text="Know"
               nextCard={nextCard}
               isEndCard={isEndCard}
-              setIsLearning={setIsLearning}
+              setCardProperty={setCardProperty}
               cardId={card.id}
             />
           </ButtonWrapper>

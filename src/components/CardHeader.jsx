@@ -5,7 +5,7 @@ import { AiTwotoneStar, AiOutlineStar } from 'react-icons/ai'
 const CardHeader = ({
   title,
   fillStar,
-  toggleFillStar,
+  setCardProperty,
   cardId,
 }) => {
   const [displayFilledStar, setDisplayFilledStar] = useState(false);
@@ -16,7 +16,7 @@ const CardHeader = ({
 
   const clickStar = e => {
     e.stopPropagation();
-    toggleFillStar(cardId, !fillStar)
+    setCardProperty(cardId, 'fillStar',!fillStar)
   }
 
   return (

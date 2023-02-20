@@ -6,7 +6,7 @@ const Button = ({
   disabled,
   nextCard,
   isEndCard,
-  setIsLearning,
+  setCardProperty,
   cardId
 }) => {
 
@@ -16,9 +16,8 @@ const Button = ({
     const isLearning = e.target.innerHTML === "Learning";
     if (!isEndCard) { 
       nextCard();
-      setIsLearning(cardId, isLearning);
     }
-    else setIsLearning(cardId, isLearning);
+    setCardProperty(cardId, 'isLearning',isLearning);
   }
 
   return (
