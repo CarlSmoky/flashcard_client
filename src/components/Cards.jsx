@@ -43,8 +43,6 @@ const Cards = () => {
               nextCard={nextCard}
               isEndCard={current === selectedCardIndices.length - 1}
               setCardProperty={setCardProperty}
-              // setIsLearning={setIsLearning}
-              // toggleFillStar={toggleFillStar}
             />;
   });
 
