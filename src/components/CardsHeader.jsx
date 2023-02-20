@@ -2,14 +2,14 @@ import React from 'react'
 import styled from "styled-components"
 
 
-const CardsHeader = ({ deck_name, flashcarddata, current, className }) => {
-
+const CardsHeader = ({ deck_name, selectedCardIndices, current, className }) => {
+console.log("selectedCardIndices", selectedCardIndices);
   return (
       <CardHeaderStyle className={className}>
       <Header>{deck_name}</Header>
-        {flashcarddata && flashcarddata.length > 0 ? (
+        {selectedCardIndices && selectedCardIndices.length > 0 ? (
             <CardCount>
-              {current + 1} / {flashcarddata.length}
+              {current + 1} / {selectedCardIndices.length}
             </CardCount>
         ) : (
           ""

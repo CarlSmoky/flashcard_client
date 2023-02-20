@@ -11,24 +11,10 @@ const Cards = () => {
   const { id } = useParams();
   const [start, setStart] = useState(false);
   const [flashcarddata, setFlashcarddata] = useState([]);
+  const [selectedCardIndices, setSelectedCardIndices] = useState([]);
   const [numCards, setNumCards] = useState(0);
   const [deck, setDeck] = useState("");
   const { deck_name } = deck;
-
-  //update stats
-  // const updateStates = (isLearning, fillStar) => {
-  //   const newObj = {
-  //   id: flashcarddata[current].id,
-  //   user_id: 1,
-  //   deck_id: flashcarddata[current].deck_id,
-  //   learning: isLearning,
-  //   star: fillStar,
-  //   }
-  //   const key = flashcarddata[current].id;
-  //   const updateObj = {[key]: newObj}
-  //   setStatus(prev => ({...prev, ...updateObj}));
-  // }
-
 
   // navigation in cards
   const [current, setCurrent] = useState(0);
@@ -57,6 +43,7 @@ const Cards = () => {
         const flashcardDataByDeckId = res.data;
         const formattedCardData = formatFlashcardData(flashcardDataByDeckId);
         setFlashcarddata(formattedCardData);
+        console.log(formattedCardData);
       })
       .catch(err => {
         console.log(err)
@@ -65,54 +52,54 @@ const Cards = () => {
   }, [id]);
 
   const formatFlashcardData = (rawAPIData) => {
-    return rawAPIData.map((card) => {
+    const initialValue = {};
+    return rawAPIData.reduce((obj, card) => {
       return {
-        id: card.id,
-        deckId: card.deck_id,
-        term: card.term,
-        definition: card.definition,
-        createdAt: card.created_at,
-        fillStar: false,
-        isLearning: true
-      }
-    })
+        ...obj,
+        [card.id]: {
+          id: card.id,
+          deckId: card.deck_id,
+          term: card.term,
+          definition: card.definition,
+          createdAt: card.created_at,
+          fillStar: false,
+          isLearning: true
+        }
+      };
+    }, initialValue);
   }
 
   const toggleFillStar = (cardId, value) => {
-    // find the card with cardId
-    let prevFlashCards = [...flashcarddata];
-    prevFlashCards.forEach((card, i) => {
-      if (card.id === cardId) {
-        prevFlashCards[i].fillStar = value;
-      }
-    });
-    setFlashcarddata(prevFlashCards);
+    // TODO: check if this works, maybe simplify to two lines
+    // TODO: combine with setIsLearing by passing key as arg
+    let card = {...flashcarddata[cardId]};
+    card.fillStar = value
+    let updateObj = {[cardId]: card};
+    setFlashcarddata(prev => ({...prev, ...updateObj}));
   }
 
   const setIsLearning = (cardId, value) => {
-    let prevFlashCards = [...flashcarddata];
-    prevFlashCards.forEach((card, i) => {
-      if (card.id === cardId) {
-        prevFlashCards[i].isLearning = value;
-      }
-    });
-    setFlashcarddata(prevFlashCards);
+    let card = {...flashcarddata[cardId]};
+    card.isLearning = value
+    let updateObj = {[cardId]: card};
+    setFlashcarddata(prev => ({...prev, ...updateObj}));
   }
 
-
   useEffect(() => {
-    const shuffleFlashCard = flashcarddata.sort(() => Math.random() - 0.5).slice(0, numCards);
-    setFlashcarddata(shuffleFlashCard);
+    const keys = Object.keys(flashcarddata).sort(() => Math.random() - 0.5).slice(0, numCards);
+    setSelectedCardIndices(keys);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [numCards, start])
 
-  const cards = flashcarddata.map((card) => {
+  const cards = selectedCardIndices.map((id) => {
+    let card = flashcarddata[id];
+    
     return <Card
               card={card}
               key={card.id}
               showingModal={!start}
               nextCard={nextCard}
-              isEndCard={current === flashcarddata.length - 1}
+              isEndCard={current === selectedCardIndices.length - 1}
               setIsLearning={setIsLearning}
               toggleFillStar={toggleFillStar}
             />;
@@ -120,15 +107,15 @@ const Cards = () => {
 
   const loading = <div className="loading">Loading flashcard content...</div>;
 
-  console.log(flashcarddata);
+  console.log(selectedCardIndices);
   return (
     <>
       {/* Before start */}
-      {!start && <DeckSettings setNumCards={setNumCards} deckName={deck_name} setStart={setStart} totalCards={flashcarddata.length} />}
+      {!start && <DeckSettings setNumCards={setNumCards} deckName={deck_name} setStart={setStart} totalCards={Object.keys(flashcarddata).length} />}
 
       <CardsHeader
         className={`${!start && 'blur'}`}
-        flashcarddata={flashcarddata}
+        selectedCardIndices={selectedCardIndices}
         deck_name={deck_name}
         current={current}
       />
@@ -145,11 +132,11 @@ const Cards = () => {
         </Button>
 
         {/* render cards */}
-        {flashcarddata && flashcarddata.length > 0 ? cards[current] : loading}
+        {selectedCardIndices && selectedCardIndices.length > 0 ? cards[current] : loading}
         {/* /render cards */}
 
         <Button disabled={!start}>
-          {current < flashcarddata.length - 1 ? (
+          {current < selectedCardIndices.length - 1 ? (
             <MdArrowForwardIos onClick={nextCard} alt="next_button" />
           ) : (
             <MdArrowForwardIos className='disabled' alt="next_button" disabled />
