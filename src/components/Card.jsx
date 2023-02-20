@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 import styled, { css } from "styled-components"
-import CardHeader from './CardHeader'
-import Button from "./Button";
+import CardWrapper from './CardWrapper'
 
 const Card = ({
     card,
@@ -23,61 +22,25 @@ const Card = ({
     <StyledCard >
       <CardInner className={`card ${side ? "side" : ""}`} onClick={handleClick}>
         <CardFront disabled={showingModal}>
-          <CardHeader
+          <CardWrapper
             title="Term"
+            card={card}
+            showingModal={showingModal}
+            nextCard={nextCard}
+            isEndCard={isEndCard}
             setCardProperty={setCardProperty}
-            fillStar={card.fillStar}
-            cardId={card.id}
-          /> 
-          <Content
-            className={!showingModal ? "textSelectEnable" : ""}>{card.term}
-          </Content>
-          <ButtonWrapper>
-            <Button
-              text="Learning"
-              disabled={showingModal}
-              nextCard={nextCard}
-              isEndCard={isEndCard}
-              setCardProperty={setCardProperty}
-              cardId={card.id}
-            />
-            <Button
-              text="Know"
-              disabled={showingModal}
-              nextCard={nextCard}
-              isEndCard={isEndCard}
-              setCardProperty={setCardProperty}
-              cardId={card.id}
-            />
-          </ButtonWrapper>
+          />
         </CardFront>
 
         <CardBack>
-          <CardHeader
+        <CardWrapper
             title="Definition"
+            card={card}
+            showingModal={showingModal}
+            nextCard={nextCard}
+            isEndCard={isEndCard}
             setCardProperty={setCardProperty}
-            fillStar={card.fillStar}
-            cardId={card.id}
           />
-          <Content>
-            {card.definition}
-          </Content>
-          <ButtonWrapper>
-            <Button
-              text="Learning"
-              nextCard={nextCard}
-              isEndCard={isEndCard}
-              setCardProperty={setCardProperty}
-              cardId={card.id}
-            />
-            <Button
-              text="Know"
-              nextCard={nextCard}
-              isEndCard={isEndCard}
-              setCardProperty={setCardProperty}
-              cardId={card.id}
-            />
-          </ButtonWrapper>
         </CardBack>
       </CardInner>
     </StyledCard>
@@ -138,18 +101,6 @@ const CardFront = styled.div`
   }}
 `;
 
-const Content = styled.p`
-  font-size: 2rem;
-  text-align: left;
-  margin: 2rem;
-  height: 60%;
-  font-family: var(--secondary-font);
-
-  &.textSelectEnable {
-  user-select: text;
-  }
-`;
-
 const CardBack = styled.div`
   background-color: var(--tertiary-color);
   color: white;
@@ -162,8 +113,3 @@ const CardBack = styled.div`
   }
 `;
 
-const ButtonWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`

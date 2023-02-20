@@ -3,7 +3,7 @@ import styled from "styled-components"
 
 
 const CardsHeader = ({ deck_name, selectedCardIndices, current, className }) => {
-console.log("selectedCardIndices", selectedCardIndices);
+
   return (
       <CardHeaderStyle className={className}>
       <Header>{deck_name}</Header>

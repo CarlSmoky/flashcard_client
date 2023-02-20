@@ -48,7 +48,6 @@ const Cards = () => {
 
   const loading = <div className="loading">Loading flashcard content...</div>;
 
-  console.log(selectedCardIndices);
   return (
     <>
       {/* Before start */}
