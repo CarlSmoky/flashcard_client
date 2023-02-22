@@ -5,7 +5,15 @@ import { useParams } from 'react-router-dom'
 const useApplicationData = () => {
 
   const { id } = useParams();
-  const [flashcarddata, setFlashcarddata] = useState([]);
+  const [flashcarddata, setFlashcarddata] = useState({1: {
+    id: 1,
+    deckId: 1,
+    term: 'term',
+    definition: 'definition',
+    createdAt: 'created_at',
+    fillStar: false,
+    isLearning: true
+  }});
   const [deck, setDeck] = useState("");
 
   useEffect(() => {
