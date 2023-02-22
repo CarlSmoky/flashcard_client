@@ -12,6 +12,10 @@ const CardWrapper = ({
   setCardProperty
 }) => {
   
+  const displaySide = (title) => {
+    return title ==="Term" ? card.term : card.definition;
+  }
+
   return (
     <>
       <CardHeader
@@ -21,7 +25,8 @@ const CardWrapper = ({
         cardId={card.id}
       />
       <Content
-        className={!showingModal ? "textSelectEnable" : ""}>{card.term}
+        className={!showingModal ? "textSelectEnable" : ""}>
+        {displaySide(title)}
       </Content>
       <ButtonWrapper>
         <Button

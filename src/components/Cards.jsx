@@ -14,8 +14,8 @@ const Cards = () => {
   } = useApplicationData();
   
   const [start, setStart] = useState(false);
-  const [selectedCardIndices, setSelectedCardIndices] = useState([]);
-  const [numCards, setNumCards] = useState(0);
+  const [selectedCardIndices, setSelectedCardIndices] = useState([1]);
+  const [numCards, setNumCards] = useState(1);
   const { deck_name } = deck;
 
   // navigation in cards
@@ -33,9 +33,10 @@ const Cards = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [numCards, start])
 
+  console.log("flashcarddata:", flashcarddata);
+  console.log("id:", selectedCardIndices[0]);
   const cards = selectedCardIndices.map((id) => {
     let card = flashcarddata[id];
-    
     return <Card
               card={card}
               key={card.id}
@@ -48,6 +49,7 @@ const Cards = () => {
 
   const loading = <div className="loading">Loading flashcard content...</div>;
 
+  console.log("Cards:",cards);
   return (
     <>
       {/* Before start */}
