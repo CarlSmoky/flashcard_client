@@ -7,21 +7,23 @@ const Button = ({
   nextCard,
   isEndCard,
   setCardProperty,
-  cardId
+  cardId,
+  isLearning
 }) => {
 
   const clickButtonHandle = e => {
     e.stopPropagation();
     if (text === "Start") { return; }
     const isLearning = e.target.innerHTML === "Learning";
-    if (!isEndCard) { 
+    if (!isEndCard) {
       nextCard();
     }
-    setCardProperty(cardId, 'isLearning',isLearning);
+    setCardProperty(cardId, 'isLearning', isLearning);
   }
 
   return (
     <ButtonStyle
+      selected={isLearning}
       onClick={clickButtonHandle}
       disabled={disabled}
     >
@@ -46,23 +48,43 @@ const ButtonStyle = styled.button`
   -webkit-user-select: none;
   touch-action: manipulation;
 
+  & {
+    color: ${props => props.selected ? "var(--white-primary)" : ""};
+    background: ${props => props.selected ? "var(--black-primary)" : ""};
+    }
+
   ${({ disabled }) => {
-  return disabled
-    ? css`
+    return disabled
+      ? css`
       
-    `
-    :css`
-      &:hover {
-      box-shadow: 0px 0px 0px 0px;
-      top: 5px;
-      left: 5px;
+      `
+      : css`
+
+      &::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 4px;
+        transform: scaleX(0);
+        bottom: 0;
+        left: 0;
+        background-color: var(--primary-color);
+        transform-origin: bottom right;
+        transition: transform 0.25s ease-out;
+      }
+
+      &:hover::after {
+        transform: scaleX(1);
+        transform-origin: bottom left;
       }
 
       &:active {
-        transform: translateY(4px);
+        box-shadow: 0px 0px 0px 0px;
+        top: 5px;
+        left: 5px;
       }
     `
-}}
+  }}
 `
 
 export default Button

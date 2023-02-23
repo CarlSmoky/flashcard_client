@@ -3,12 +3,12 @@ import styled, { css } from "styled-components"
 import CardWrapper from './CardWrapper'
 
 const Card = ({
-    card,
-    showingModal,
-    nextCard,
-    isEndCard,
-    setCardProperty
-  }) => {
+  card,
+  showingModal,
+  nextCard,
+  isEndCard,
+  setCardProperty
+}) => {
 
   const [side, setSide] = useState();
 
@@ -33,7 +33,7 @@ const Card = ({
         </CardFront>
 
         <CardBack>
-        <CardWrapper
+          <CardWrapper
             title="Definition"
             card={card}
             showingModal={showingModal}
@@ -79,6 +79,7 @@ const absoluteStyle = css`
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   color: var(--black-secondary);
+  box-shadow: .5rem .5rem;
 `
 
 const CardFront = styled.div`
@@ -94,7 +95,6 @@ const CardFront = styled.div`
     `
       : css`
       &:hover {
-        box-shadow: .5rem .5rem;
         cursor: pointer;
       }
     `
@@ -108,7 +108,6 @@ const CardBack = styled.div`
   ${absoluteStyle}
 
   &:hover {
-    box-shadow: .5rem .5rem;
     cursor: pointer;
   }
 `;

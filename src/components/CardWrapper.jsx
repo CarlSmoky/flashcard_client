@@ -36,6 +36,7 @@ const CardWrapper = ({
           isEndCard={isEndCard}
           setCardProperty={setCardProperty}
           cardId={card.id}
+          isLearning={card.isLearning}
         />
         <Button
           text="Know"
@@ -44,6 +45,7 @@ const CardWrapper = ({
           isEndCard={isEndCard}
           setCardProperty={setCardProperty}
           cardId={card.id}
+          isLearning={!card.isLearning}
         />
       </ButtonWrapper>
     </>
