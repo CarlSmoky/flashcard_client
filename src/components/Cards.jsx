@@ -10,12 +10,12 @@ const Cards = () => {
   const {
     deck,
     flashcarddata,
-    setCardProperty
+    setCardProperty,
   } = useApplicationData();
   
   const [start, setStart] = useState(false);
-  const [selectedCardIndices, setSelectedCardIndices] = useState([1]);
-  const [numCards, setNumCards] = useState(1);
+  const [selectedCardIndices, setSelectedCardIndices] = useState([]);
+  const [numCards, setNumCards] = useState();
   const { deck_name } = deck;
 
   // navigation in cards
@@ -29,27 +29,57 @@ const Cards = () => {
 
   useEffect(() => {
     const keys = Object.keys(flashcarddata).sort(() => Math.random() - 0.5).slice(0, numCards);
-    setSelectedCardIndices(keys);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [numCards, start])
+    setSelectedCardIndices(keys); 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [numCards, start]);
+  
+  // Default card before start 
+  // TODO: move to another file?
+  const setDefaultDeck = () => {
+    const defaultCard = {
+      id: "default",
+      deckId: "default-deck",
+      term: "marimo",
+      definition: "kawaii",
+      createdAt: "today",
+      fillStar: false,
+      isLearning: true
+    }
+    return [ <Card
+    card={defaultCard}
+    key={defaultCard.id}
+    showingModal={!start}
+    nextCard={nextCard}
+    isEndCard={true}
+    setCardProperty={setCardProperty}
+    />];
+  }
+  
+  // normal way of getting cards after start
+  const setDeckFromIds = () => {
+    // test if we have valid indices yet
+    if (!flashcarddata[selectedCardIndices[0]]) {
+      return setDefaultDeck();
+    }
 
-  console.log("flashcarddata:", flashcarddata);
-  console.log("id:", selectedCardIndices[0]);
-  const cards = selectedCardIndices.map((id) => {
-    let card = flashcarddata[id];
-    return <Card
-              card={card}
-              key={card.id}
-              showingModal={!start}
-              nextCard={nextCard}
-              isEndCard={current === selectedCardIndices.length - 1}
-              setCardProperty={setCardProperty}
-            />;
-  });
+    let cards = selectedCardIndices.map((id) => {
+      // console.log("in map", selectedCardIndices);
+      let card = flashcarddata[id];
+      return <Card
+      card={card}
+      key={card.id}
+      showingModal={!start}
+      nextCard={nextCard}
+      isEndCard={current === selectedCardIndices.length - 1}
+      setCardProperty={setCardProperty}
+      />;
+    });
+    return cards;
+  }
 
-  const loading = <div className="loading">Loading flashcard content...</div>;
+  const cards = setDeckFromIds();
+  const defaultCard = setDefaultDeck();
 
-  console.log("Cards:",cards);
   return (
     <>
       {/* Before start */}
@@ -74,7 +104,7 @@ const Cards = () => {
         </Button>
 
         {/* render cards */}
-        {selectedCardIndices && selectedCardIndices.length > 0 ? cards[current] : loading}
+        {selectedCardIndices && selectedCardIndices.length > 0 ?  cards[current] : defaultCard[0]}
         {/* /render cards */}
 
         <Button disabled={!start}>
