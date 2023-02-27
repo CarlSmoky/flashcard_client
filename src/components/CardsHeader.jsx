@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from "styled-components"
 import { RxCross2 } from 'react-icons/rx'
 
 
-const CardsHeader = ({ deck_name, selectedCardIndices, current, className }) => {
+const CardsHeader = ({ deck_name, selectedCardIndices, current, className, setFinish }) => {
 
   return (
       <CardsHeaderStyle className={className}>
@@ -20,7 +20,7 @@ const CardsHeader = ({ deck_name, selectedCardIndices, current, className }) => 
           )}
         </Center>
         <Right>
-          <RxCross2/>
+          <RxCross2 onClick={() => setFinish(true)}/>
         </Right>
       </CardsHeaderStyle>
   )

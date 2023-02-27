@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import DeckSettings from './DeckSettings'
 import CardsHeader from './CardsHeader'
-import Card from "./Card";
+import Card from "./Card"
+import Confimation from './Confimation'
 import useApplicationData from '../hooks/useApplicationData';
 import { MdArrowForwardIos, MdArrowBackIosNew } from 'react-icons/md'
 
@@ -14,6 +15,7 @@ const Cards = () => {
   } = useApplicationData();
   
   const [start, setStart] = useState(false);
+  const [finish, setFinish] = useState(false);
   const [selectedCardIndices, setSelectedCardIndices] = useState([]);
   const [numCards, setNumCards] = useState();
   const { deck_name } = deck;
@@ -25,6 +27,12 @@ const Cards = () => {
   }
   const nextCard = () => {
     setCurrent(current + 1);
+  }
+
+  const setClassNameBlur = () => {
+    if (!start || finish) {
+      return 'blur';
+    }
   }
 
   useEffect(() => {
@@ -85,15 +93,18 @@ const Cards = () => {
       {/* Before start */}
       {!start && <DeckSettings setNumCards={setNumCards} deckName={deck_name} setStart={setStart} totalCards={Object.keys(flashcarddata).length} />}
 
+      {finish && <Confimation/>}
+
       <CardsHeader
-        className={`${!start && 'blur'}`}
+        className={`${setClassNameBlur()}`}
         selectedCardIndices={selectedCardIndices}
         deck_name={deck_name}
         current={current}
+        setFinish={setFinish}
       />
 
 
-      <CardStyle className={`${!start && 'blur'}`}>
+      <CardStyle className={`${setClassNameBlur()}`}>
 
         <Button disabled={!start}>
           {current > 0 ? (
