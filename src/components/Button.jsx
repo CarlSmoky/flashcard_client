@@ -51,6 +51,7 @@ const ButtonStyle = styled.button`
   & {
     color: ${props => props.selected ? "var(--white-primary)" : ""};
     background: ${props => props.selected ? "var(--black-primary)" : ""};
+    opacity: ${props => props.selected ? "80%" : ""};: ;
     }
 
   ${({ disabled }) => {

@@ -156,8 +156,8 @@ const Button = styled.button`
       transition: all .3s;
 
       &:hover {
-      background: var(--grey-primary);
-      opacity: 0.6;
+      background: var(--black-primary);
+      opacity: 0.4;
       color: white;
     }
     }
