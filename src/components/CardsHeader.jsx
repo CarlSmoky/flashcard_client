@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { RxCross2 } from 'react-icons/rx'
 
 
-const CardsHeader = ({ deck_name, selectedCardIndices, current, className, setFinish }) => {
+const CardsHeader = ({ deck_name, selectedCardIndices, current, className, setConfirmation }) => {
 
   return (
       <CardsHeaderStyle className={className}>
@@ -20,7 +20,7 @@ const CardsHeader = ({ deck_name, selectedCardIndices, current, className, setFi
           )}
         </Center>
         <Right>
-          <RxCross2 onClick={() => setFinish(true)}/>
+          <RxCross2 onClick={setConfirmation}/>
         </Right>
       </CardsHeaderStyle>
   )

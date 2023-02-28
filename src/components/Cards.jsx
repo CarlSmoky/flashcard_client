@@ -15,7 +15,8 @@ const Cards = () => {
   } = useApplicationData();
   
   const [start, setStart] = useState(false);
-  const [finish, setFinish] = useState(false);
+  const [confirmation, setConfirmation] = useState(false);
+  const [complete, setComplete] = useState(false);
   const [selectedCardIndices, setSelectedCardIndices] = useState([]);
   const [numCards, setNumCards] = useState();
   const { deck_name } = deck;
@@ -30,7 +31,7 @@ const Cards = () => {
   }
 
   const setClassNameBlur = () => {
-    if (!start || finish) {
+    if (!start || confirmation) {
       return 'blur';
     }
   }
@@ -71,7 +72,6 @@ const Cards = () => {
     }
 
     let cards = selectedCardIndices.map((id) => {
-      // console.log("in map", selectedCardIndices);
       let card = flashcarddata[id];
       return <Card
       card={card}
@@ -93,14 +93,14 @@ const Cards = () => {
       {/* Before start */}
       {!start && <DeckSettings setNumCards={setNumCards} deckName={deck_name} setStart={setStart} totalCards={Object.keys(flashcarddata).length} />}
 
-      {finish && <Confimation/>}
+      {confirmation && <Confimation />}
 
       <CardsHeader
         className={`${setClassNameBlur()}`}
         selectedCardIndices={selectedCardIndices}
         deck_name={deck_name}
         current={current}
-        setFinish={setFinish}
+        setConfirmation={setConfirmation}
       />
 
 

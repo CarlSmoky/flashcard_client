@@ -4,12 +4,14 @@ import Button from './Button'
 
 
 const Confimation = () => {
+
+  
   return (
     <Wrapper>
       <form>
         <h2>Do you want to finish?</h2>
-        <Button text='Quit'/>
-        <Button text='Back to Deck'/>
+        <Button text='Quit' />
+        <Button text='Back to Deck' />
       </form>
     </Wrapper>
   )
