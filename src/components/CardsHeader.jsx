@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from "styled-components"
 import { RxCross2 } from 'react-icons/rx'
 import { modes } from '../helpers/modes'
@@ -7,7 +7,8 @@ import { modes } from '../helpers/modes'
 const CardsHeader = ({
   deck_name,
   selectedCardIndices,
-  current, className,
+  current,
+  className,
   setMode
 }) => {
 

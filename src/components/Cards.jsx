@@ -29,13 +29,7 @@ const Cards = () => {
     setCurrent(current + 1);
   }
 
-  const setClassNameBlur = () => {
-    if (mode === modes.before || mode === modes.finishConfirmation) {
-      return 'blur';
-    }
-  }
-
-  const isModalDisplayed = () => {
+  const isModalMode = () => {
     if (mode === modes.before || mode === modes.finishConfirmation) {
       return true;
     }
@@ -81,7 +75,7 @@ const Cards = () => {
       return <Card
       card={card}
       key={card.id}
-      showingModal={isModalDisplayed}
+      showingModal={isModalMode()}
       nextCard={nextCard}
       isEndCard={current === selectedCardIndices.length - 1}
       setCardProperty={setCardProperty}
@@ -95,7 +89,7 @@ const Cards = () => {
 
   return (
     <>
-      {/* Before start */}
+      {/* Before start  */}
       {mode === modes.before && 
         <DeckSettings
           setNumCards={setNumCards}
@@ -103,6 +97,7 @@ const Cards = () => {
           setMode={setMode}
           totalCards={Object.keys(flashcarddata).length}
         />}
+      {/* Before start */}
 
       {/* Finish Confirmation */}
       {mode === modes.finishConfirmation && 
@@ -112,11 +107,12 @@ const Cards = () => {
           setMode={setMode}
         />
       }
+      {/* Finish Confirmation */}
 
       {mode === modes.finished && <h1>hi</h1>}
 
       <CardsHeader
-        className={`${setClassNameBlur()}`}
+        className={isModalMode() && 'blur'}
         selectedCardIndices={selectedCardIndices}
         deck_name={deck_name}
         current={current}
@@ -124,9 +120,9 @@ const Cards = () => {
       />
 
 
-      <CardStyle className={`${setClassNameBlur()}`}>
+      <CardStyle className={isModalMode() && 'blur'}>
 
-        <Button disabled={mode === modes.before || mode === modes.finishConfirmation}>
+        <Button disabled={isModalMode()}>
           {current > 0 ? (
             <MdArrowBackIosNew onClick={previousCard} alt="previous_button"/>
           ) : (
@@ -138,7 +134,7 @@ const Cards = () => {
         {selectedCardIndices && selectedCardIndices.length > 0 ?  cards[current] : defaultCard[0]}
         {/* /render cards */}
 
-        <Button disabled={mode === modes.before || mode === modes.finishConfirmation}>
+        <Button disabled={isModalMode()}>
           {current < selectedCardIndices.length - 1 ? (
             <MdArrowForwardIos onClick={nextCard} alt="next_button" />
           ) : (
