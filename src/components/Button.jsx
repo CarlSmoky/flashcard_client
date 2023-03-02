@@ -10,7 +10,6 @@ const Button = ({
   setCardProperty,
   cardId,
   isLearning,
-  setComplete,
   setCurrent,
   current,
   setMode
@@ -63,7 +62,6 @@ const ButtonStyle = styled.button`
   font-family: var(--tertiary-font);
   text-transform: uppercase;
   color: var(--black-primary);
-  cursor: pointer;
   border: 2px solid var(--black-primary); 
   box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
   position: relative;
@@ -83,7 +81,7 @@ const ButtonStyle = styled.button`
       
       `
       : css`
-
+      cursor: pointer;
       &::after {
         content: '';
         position: absolute;
