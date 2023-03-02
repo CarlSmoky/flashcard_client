@@ -35,6 +35,12 @@ const Cards = () => {
     }
   }
 
+  const isModalDisplayed = () => {
+    if (mode === modes.before || mode === modes.finishConfirmation) {
+      return true;
+    }
+  }
+
   useEffect(() => {
     const keys = Object.keys(flashcarddata).sort(() => Math.random() - 0.5).slice(0, numCards);
     setSelectedCardIndices(keys); 
@@ -56,7 +62,7 @@ const Cards = () => {
     return [ <Card
     card={defaultCard}
     key={defaultCard.id}
-    showingModal={mode === modes.before}
+    showingModal={true}
     nextCard={nextCard}
     isEndCard={true}
     setCardProperty={setCardProperty}
@@ -75,7 +81,7 @@ const Cards = () => {
       return <Card
       card={card}
       key={card.id}
-      showingModal={mode === modes.before}
+      showingModal={isModalDisplayed}
       nextCard={nextCard}
       isEndCard={current === selectedCardIndices.length - 1}
       setCardProperty={setCardProperty}
@@ -120,7 +126,7 @@ const Cards = () => {
 
       <CardStyle className={`${setClassNameBlur()}`}>
 
-        <Button disabled={mode === modes.before}>
+        <Button disabled={mode === modes.before || mode === modes.finishConfirmation}>
           {current > 0 ? (
             <MdArrowBackIosNew onClick={previousCard} alt="previous_button"/>
           ) : (
@@ -132,7 +138,7 @@ const Cards = () => {
         {selectedCardIndices && selectedCardIndices.length > 0 ?  cards[current] : defaultCard[0]}
         {/* /render cards */}
 
-        <Button disabled={mode === modes.before}>
+        <Button disabled={mode === modes.before || mode === modes.finishConfirmation}>
           {current < selectedCardIndices.length - 1 ? (
             <MdArrowForwardIos onClick={nextCard} alt="next_button" />
           ) : (
