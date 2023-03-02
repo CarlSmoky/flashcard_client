@@ -2,9 +2,15 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useNavigate } from "react-router-dom";
 import { RxCross2 } from 'react-icons/rx'
-import Button from './Button';
+import Button from './Button'
+import { modes } from '../helpers/modes'
 
-const DeckSettings = ({ setNumCards, deckName, setStart, totalCards}) => {
+const DeckSettings = ({
+    setNumCards,
+    deckName,
+    setMode,
+    totalCards
+  }) => {
 
   const [settingNumCards, setsettingNumCards] = useState(0);
 
@@ -19,7 +25,7 @@ const DeckSettings = ({ setNumCards, deckName, setStart, totalCards}) => {
   const handleSubmitClick = (e) => {
     e.preventDefault();
     setNumCards(settingNumCards);
-    setStart(true);
+    setMode(modes.answering);
   }
 
   // When cancel button clicked, back to /decklist

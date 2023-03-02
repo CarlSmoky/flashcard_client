@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import DeckSettings from './DeckSettings'
 import CardsHeader from './CardsHeader'
-import Card from "./Card";
-import useApplicationData from '../hooks/useApplicationData';
+import Card from "./Card"
+import Confimation from './Confimation'
+import useApplicationData from '../hooks/useApplicationData'
+import { modes } from '../helpers/modes'
 import { MdArrowForwardIos, MdArrowBackIosNew } from 'react-icons/md'
 
 const Cards = () => {
@@ -13,7 +15,7 @@ const Cards = () => {
     setCardProperty,
   } = useApplicationData();
   
-  const [start, setStart] = useState(false);
+  const [mode, setMode] = useState(modes.before);
   const [selectedCardIndices, setSelectedCardIndices] = useState([]);
   const [numCards, setNumCards] = useState();
   const { deck_name } = deck;
@@ -27,11 +29,23 @@ const Cards = () => {
     setCurrent(current + 1);
   }
 
+  const setClassNameBlur = () => {
+    if (mode === modes.before || mode === modes.finishConfirmation) {
+      return 'blur';
+    }
+  }
+
+  const isModalDisplayed = () => {
+    if (mode === modes.before || mode === modes.finishConfirmation) {
+      return true;
+    }
+  }
+
   useEffect(() => {
     const keys = Object.keys(flashcarddata).sort(() => Math.random() - 0.5).slice(0, numCards);
     setSelectedCardIndices(keys); 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [numCards, start]);
+  }, [numCards, mode]);
   
   // Default card before start 
   // TODO: move to another file?
@@ -48,7 +62,7 @@ const Cards = () => {
     return [ <Card
     card={defaultCard}
     key={defaultCard.id}
-    showingModal={!start}
+    showingModal={true}
     nextCard={nextCard}
     isEndCard={true}
     setCardProperty={setCardProperty}
@@ -63,12 +77,11 @@ const Cards = () => {
     }
 
     let cards = selectedCardIndices.map((id) => {
-      // console.log("in map", selectedCardIndices);
       let card = flashcarddata[id];
       return <Card
       card={card}
       key={card.id}
-      showingModal={!start}
+      showingModal={isModalDisplayed}
       nextCard={nextCard}
       isEndCard={current === selectedCardIndices.length - 1}
       setCardProperty={setCardProperty}
@@ -83,19 +96,37 @@ const Cards = () => {
   return (
     <>
       {/* Before start */}
-      {!start && <DeckSettings setNumCards={setNumCards} deckName={deck_name} setStart={setStart} totalCards={Object.keys(flashcarddata).length} />}
+      {mode === modes.before && 
+        <DeckSettings
+          setNumCards={setNumCards}
+          deckName={deck_name}
+          setMode={setMode}
+          totalCards={Object.keys(flashcarddata).length}
+        />}
+
+      {/* Finish Confirmation */}
+      {mode === modes.finishConfirmation && 
+        <Confimation
+          setCurrent={setCurrent}
+          current={current}
+          setMode={setMode}
+        />
+      }
+
+      {mode === modes.finished && <h1>hi</h1>}
 
       <CardsHeader
-        className={`${!start && 'blur'}`}
+        className={`${setClassNameBlur()}`}
         selectedCardIndices={selectedCardIndices}
         deck_name={deck_name}
         current={current}
+        setMode={setMode}
       />
 
 
-      <CardStyle className={`${!start && 'blur'}`}>
+      <CardStyle className={`${setClassNameBlur()}`}>
 
-        <Button disabled={!start}>
+        <Button disabled={mode === modes.before || mode === modes.finishConfirmation}>
           {current > 0 ? (
             <MdArrowBackIosNew onClick={previousCard} alt="previous_button"/>
           ) : (
@@ -107,7 +138,7 @@ const Cards = () => {
         {selectedCardIndices && selectedCardIndices.length > 0 ?  cards[current] : defaultCard[0]}
         {/* /render cards */}
 
-        <Button disabled={!start}>
+        <Button disabled={mode === modes.before || mode === modes.finishConfirmation}>
           {current < selectedCardIndices.length - 1 ? (
             <MdArrowForwardIos onClick={nextCard} alt="next_button" />
           ) : (
@@ -145,8 +176,8 @@ const Button = styled.button`
       transition: all .3s;
 
       &:hover {
-      background: var(--grey-primary);
-      opacity: 0.6;
+      background: var(--black-primary);
+      opacity: 0.4;
       color: white;
     }
     }

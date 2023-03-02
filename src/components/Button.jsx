@@ -1,5 +1,6 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
+import { modes } from '../helpers/modes'
 
 const Button = ({
   text,
@@ -8,16 +9,37 @@ const Button = ({
   isEndCard,
   setCardProperty,
   cardId,
-  isLearning
+  isLearning,
+  setCurrent,
+  current,
+  setMode
 }) => {
 
   const clickButtonHandle = e => {
     e.stopPropagation();
-    if (text === "Start") { return; }
-    const isLearning = e.target.innerHTML === "Learning";
+    
+    // On Settings pop up, Start button clicked
+    if (text === "Start") { return;}
+
+    // On finish confirmation pop up, for Quit and Back to Deck button
+    if (text === "Quit") {
+      setMode(modes.finished);
+      return;
+    }
+
+    if (text === "Back to Deck") {
+      setCurrent(current);
+      setMode(modes.answering);
+      return;
+    }
+
+    // On card, for Learning and Know button
     if (!isEndCard) {
       nextCard();
     }
+      
+    const isLearning = e.target.innerHTML === "Learning";
+      
     setCardProperty(cardId, 'isLearning', isLearning);
   }
 
@@ -40,7 +62,6 @@ const ButtonStyle = styled.button`
   font-family: var(--tertiary-font);
   text-transform: uppercase;
   color: var(--black-primary);
-  cursor: pointer;
   border: 2px solid var(--black-primary); 
   box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
   position: relative;
@@ -51,6 +72,7 @@ const ButtonStyle = styled.button`
   & {
     color: ${props => props.selected ? "var(--white-primary)" : ""};
     background: ${props => props.selected ? "var(--black-primary)" : ""};
+    opacity: ${props => props.selected ? "80%" : ""};: ;
     }
 
   ${({ disabled }) => {
@@ -59,7 +81,7 @@ const ButtonStyle = styled.button`
       
       `
       : css`
-
+      cursor: pointer;
       &::after {
         content: '';
         position: absolute;
