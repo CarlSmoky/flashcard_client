@@ -9,7 +9,7 @@ const Card = ({
   isEndCard,
   setCardProperty
 }) => {
-  console.log(showingModal);
+  
   const [side, setSide] = useState();
 
   const handleClick = e => {

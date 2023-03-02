@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from "styled-components"
 import { RxCross2 } from 'react-icons/rx'
 import { modes } from '../helpers/modes'
