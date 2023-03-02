@@ -3,7 +3,12 @@ import styled from 'styled-components'
 import Button from './Button'
 
 
-const Confimation = ( { setComplete }) => {
+const Confimation = ( {
+  setComplete,
+  setCurrent,
+  current,
+  setConfirmation
+}) => {
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -13,8 +18,17 @@ const Confimation = ( { setComplete }) => {
     <Wrapper>
       <form onSubmit={handleClick} >
         <h2>Do you want to finish?</h2>
-        <Button text='Quit' />
-        <Button text='Back to Deck' />
+        <Button
+          text='Quit'
+          setComplete={setComplete}
+          setConfirmation={setConfirmation}
+        />
+        <Button
+          text='Back to Deck'
+          setCurrent={setCurrent}
+          current={current}
+          setConfirmation={setConfirmation}
+        />
       </form>
     </Wrapper>
   )

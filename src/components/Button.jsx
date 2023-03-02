@@ -8,26 +8,42 @@ const Button = ({
   isEndCard,
   setCardProperty,
   cardId,
-  isLearning
+  isLearning,
+  setComplete,
+  setCurrent,
+  current,
+  setConfirmation,
 }) => {
 
   const clickButtonHandle = e => {
     e.stopPropagation();
-    console.log("called click", text);
-    if (text === "Start") { return; }
     
+    // On Settings pop up, Start button clicked
+    if (text === "Start") { return; }
+
+    // On finish confirmation pop up, for Quit and Back to Deck button
     if (text === "Quit") {
-      console.log("clicked Quit")
+      console.log("clicked Quit");
+      setConfirmation(false);
+      setComplete(true);
+      return;
     }
 
     if (text === "Back to Deck") {
-      console.log("clicked Back to Deck")
+      setCurrent(current);
+      setConfirmation(false);
+      return;
     }
-    const isLearning = e.target.innerHTML === "Learning";
+
+    // On card, for Learning and Know button
     if (!isEndCard) {
       nextCard();
     }
-    setCardProperty(cardId, 'isLearning', isLearning);
+      
+      const isLearning = e.target.innerHTML === "Learning";
+      
+      setCardProperty(cardId, 'isLearning', isLearning);
+    
   }
 
   return (
