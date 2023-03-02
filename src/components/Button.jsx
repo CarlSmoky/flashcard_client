@@ -1,5 +1,6 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
+import { modes } from '../helpers/modes'
 
 const Button = ({
   text,
@@ -12,26 +13,24 @@ const Button = ({
   setComplete,
   setCurrent,
   current,
-  setConfirmation,
+  setMode
 }) => {
 
   const clickButtonHandle = e => {
     e.stopPropagation();
     
     // On Settings pop up, Start button clicked
-    if (text === "Start") { return; }
+    if (text === "Start") { return;}
 
     // On finish confirmation pop up, for Quit and Back to Deck button
     if (text === "Quit") {
-      console.log("clicked Quit");
-      setConfirmation(false);
-      setComplete(true);
+      setMode(modes.finished);
       return;
     }
 
     if (text === "Back to Deck") {
       setCurrent(current);
-      setConfirmation(false);
+      setMode(modes.answering);
       return;
     }
 
@@ -40,10 +39,9 @@ const Button = ({
       nextCard();
     }
       
-      const isLearning = e.target.innerHTML === "Learning";
+    const isLearning = e.target.innerHTML === "Learning";
       
-      setCardProperty(cardId, 'isLearning', isLearning);
-    
+    setCardProperty(cardId, 'isLearning', isLearning);
   }
 
   return (

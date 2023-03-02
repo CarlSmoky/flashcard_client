@@ -1,9 +1,15 @@
 import React, { useState } from 'react'
 import styled from "styled-components"
 import { RxCross2 } from 'react-icons/rx'
+import { modes } from '../helpers/modes'
 
 
-const CardsHeader = ({ deck_name, selectedCardIndices, current, className, setConfirmation }) => {
+const CardsHeader = ({
+  deck_name,
+  selectedCardIndices,
+  current, className,
+  setMode
+}) => {
 
   return (
       <CardsHeaderStyle className={className}>
@@ -20,7 +26,7 @@ const CardsHeader = ({ deck_name, selectedCardIndices, current, className, setCo
           )}
         </Center>
         <Right>
-          <RxCross2 onClick={setConfirmation}/>
+          <RxCross2 onClick={() => setMode(modes.finishConfirmation)}/>
         </Right>
       </CardsHeaderStyle>
   )

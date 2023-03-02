@@ -2,12 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 import Button from './Button'
 
-
 const Confimation = ( {
-  setComplete,
   setCurrent,
   current,
-  setConfirmation
+  setMode
 }) => {
 
   const handleClick = (e) => {
@@ -20,14 +18,13 @@ const Confimation = ( {
         <h2>Do you want to finish?</h2>
         <Button
           text='Quit'
-          setComplete={setComplete}
-          setConfirmation={setConfirmation}
+          setMode={setMode}
         />
         <Button
           text='Back to Deck'
           setCurrent={setCurrent}
           current={current}
-          setConfirmation={setConfirmation}
+          setMode={setMode}
         />
       </form>
     </Wrapper>
