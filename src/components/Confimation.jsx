@@ -3,12 +3,15 @@ import styled from 'styled-components'
 import Button from './Button'
 
 
-const Confimation = () => {
+const Confimation = ( { setComplete }) => {
 
+  const handleClick = (e) => {
+    e.preventDefault();
+  }
   
   return (
     <Wrapper>
-      <form>
+      <form onSubmit={handleClick} >
         <h2>Do you want to finish?</h2>
         <Button text='Quit' />
         <Button text='Back to Deck' />

@@ -88,12 +88,14 @@ const Cards = () => {
   const cards = setDeckFromIds();
   const defaultCard = setDefaultDeck();
 
+  console.log(complete);
+
   return (
     <>
       {/* Before start */}
       {!start && <DeckSettings setNumCards={setNumCards} deckName={deck_name} setStart={setStart} totalCards={Object.keys(flashcarddata).length} />}
 
-      {confirmation && <Confimation />}
+      {confirmation && <Confimation setComplete={setComplete}/>}
 
       <CardsHeader
         className={`${setClassNameBlur()}`}

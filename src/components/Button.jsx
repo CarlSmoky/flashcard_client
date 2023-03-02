@@ -13,7 +13,16 @@ const Button = ({
 
   const clickButtonHandle = e => {
     e.stopPropagation();
+    console.log("called click", text);
     if (text === "Start") { return; }
+    
+    if (text === "Quit") {
+      console.log("clicked Quit")
+    }
+
+    if (text === "Back to Deck") {
+      console.log("clicked Back to Deck")
+    }
     const isLearning = e.target.innerHTML === "Learning";
     if (!isEndCard) {
       nextCard();
