@@ -95,7 +95,7 @@ const Cards = () => {
 
   return (
     <>
-      {/* Before start */}
+      {/* Before start  */}
       {mode === modes.before && 
         <DeckSettings
           setNumCards={setNumCards}
@@ -103,6 +103,7 @@ const Cards = () => {
           setMode={setMode}
           totalCards={Object.keys(flashcarddata).length}
         />}
+      {/* Before start */}
 
       {/* Finish Confirmation */}
       {mode === modes.finishConfirmation && 
@@ -112,6 +113,7 @@ const Cards = () => {
           setMode={setMode}
         />
       }
+      {/* Finish Confirmation */}
 
       {mode === modes.finished && <h1>hi</h1>}
 
