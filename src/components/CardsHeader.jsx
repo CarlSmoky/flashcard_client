@@ -7,7 +7,8 @@ import { modes } from '../helpers/modes'
 const CardsHeader = ({
   deck_name,
   selectedCardIndices,
-  current, className,
+  current,
+  className,
   setMode
 }) => {
 
