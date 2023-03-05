@@ -1,30 +1,45 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from "react-router-dom";
 import styled from 'styled-components'
 import Button from './Button'
+import { modes } from '../helpers/modes'
 
-const Confimation = ( {
-  setCurrent,
-  current,
+const Confimation = ({
   setMode
 }) => {
 
-  const handleClick = (e) => {
+  let navigate = useNavigate();
+
+  const [buttonPressed, setButtonPressed] = useState("");
+  const routeChange = () => {
+    let path = `/decklist`;
+    navigate(path);
+  }
+  useEffect(() => {
+    if (buttonPressed === 'Quit') {
+      setMode(modes.finished);
+      routeChange();
+    }
+    if (buttonPressed === 'Back to Deck') {
+      setMode(modes.answering);
+    }
+  }, [buttonPressed])
+
+  const handleSubmitClick = (e) => {
     e.preventDefault();
   }
-  
+
   return (
     <Wrapper>
-      <form onSubmit={handleClick} >
+      <form onSubmit={handleSubmitClick}>
         <h2>Do you want to finish?</h2>
         <Button
           text='Quit'
-          setMode={setMode}
+          setButtonPressed={setButtonPressed}
         />
         <Button
           text='Back to Deck'
-          setCurrent={setCurrent}
-          current={current}
-          setMode={setMode}
+          setButtonPressed={setButtonPressed}
         />
       </form>
     </Wrapper>

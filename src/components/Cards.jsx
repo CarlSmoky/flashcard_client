@@ -39,7 +39,7 @@ const Cards = () => {
     const keys = Object.keys(flashcarddata).sort(() => Math.random() - 0.5).slice(0, numCards);
     setSelectedCardIndices(keys); 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [numCards, mode]);
+  }, [numCards]);
   
   // Default card before start 
   // TODO: move to another file?
@@ -86,6 +86,8 @@ const Cards = () => {
 
   const cards = setDeckFromIds();
   const defaultCard = setDefaultDeck();
+
+  console.log(selectedCardIndices);
 
   return (
     <>

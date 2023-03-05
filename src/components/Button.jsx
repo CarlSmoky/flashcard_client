@@ -1,6 +1,5 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
-import { modes } from '../helpers/modes'
 
 const Button = ({
   text,
@@ -10,29 +9,23 @@ const Button = ({
   setCardProperty,
   cardId,
   isLearning,
-  setCurrent,
-  current,
-  setMode
+  setButtonPressed
 }) => {
 
   const clickButtonHandle = e => {
     e.stopPropagation();
     
     // On Settings pop up, Start button clicked
-    if (text === "Start") { return;}
+    if (text === "Start") {return;}
 
     // On finish confirmation pop up, for Quit and Back to Deck button
     if (text === "Quit") {
-      setMode(modes.finished);
-      return;
-    }
-
+      setButtonPressed(text);
+      return;}
     if (text === "Back to Deck") {
-      setCurrent(current);
-      setMode(modes.answering);
-      return;
-    }
-
+      setButtonPressed(text);
+      return;}
+  
     // On card, for Learning and Know button
     if (!isEndCard) {
       nextCard();
