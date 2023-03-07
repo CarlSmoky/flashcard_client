@@ -6,6 +6,7 @@ import Menu from './Menu'
 import DeckList from './DeckList'
 import Cards from './Cards'
 import Footer from './Footer'
+import Result from './Result'
 
 const Frame = ({ content }) => {
 
@@ -25,6 +26,7 @@ return (
       {content === "menu" && <Menu />}
       {content === "decklist" && <DeckList />}
       {content === "cards" && <Cards />}
+      {content === "result" && <Result />}
       <Footer />
     </div>
     <div className="right">

@@ -12,7 +12,7 @@ const Confimation = ({
 
   const [buttonPressed, setButtonPressed] = useState("");
   const routeChange = () => {
-    let path = `/decklist`;
+    let path = `/result`;
     navigate(path);
   }
   useEffect(() => {
