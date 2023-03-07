@@ -114,7 +114,7 @@ const Cards = () => {
       {mode === modes.finished && <h1>hi</h1>}
 
       <CardsHeader
-        className={isModalMode() && 'blur'}
+        isModalMode={isModalMode}
         selectedCardIndices={selectedCardIndices}
         deck_name={deck_name}
         current={current}
