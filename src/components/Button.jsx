@@ -1,5 +1,6 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
+import { modes } from '../helpers/modes'
 
 const Button = ({
   text,
@@ -9,9 +10,11 @@ const Button = ({
   setCardProperty,
   cardId,
   isLearning,
-  setButtonPressed
+  setButtonPressed,
+  setMode
 }) => {
 
+  
   const clickButtonHandle = e => {
     e.stopPropagation();
     
@@ -29,6 +32,10 @@ const Button = ({
     // On card, for Learning and Know button
     if (!isEndCard) {
       nextCard();
+    }
+    if (isEndCard) {
+      console.log("ends card");
+      setMode(modes.finishConfirmation);
     }
       
     const isLearning = e.target.innerHTML === "Learning";

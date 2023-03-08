@@ -57,9 +57,7 @@ const Cards = () => {
     card={defaultCard}
     key={defaultCard.id}
     showingModal={true}
-    nextCard={nextCard}
     isEndCard={true}
-    setCardProperty={setCardProperty}
     />];
   }
   
@@ -79,6 +77,7 @@ const Cards = () => {
       nextCard={nextCard}
       isEndCard={current === selectedCardIndices.length - 1}
       setCardProperty={setCardProperty}
+      setMode={setMode}
       />;
     });
     return cards;
