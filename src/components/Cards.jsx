@@ -87,8 +87,6 @@ const Cards = () => {
   const cards = setDeckFromIds();
   const defaultCard = setDefaultDeck();
 
-  console.log(selectedCardIndices);
-
   return (
     <>
       {/* Before start  */}
@@ -128,7 +126,7 @@ const Cards = () => {
           {current > 0 ? (
             <MdArrowBackIosNew onClick={previousCard} alt="previous_button"/>
           ) : (
-            <MdArrowBackIosNew className='disabled' alt="previous_button" disabled />
+            <MdArrowBackIosNew className='disabled' alt="previous_button" />
           )}
         </Button>
 
@@ -173,45 +171,26 @@ const Button = styled.button`
       border-radius: 50%;
       transition: all .3s;
 
-      &:hover {
-      background: var(--black-primary);
-      opacity: 0.4;
-      color: white;
-    }
-    }
+      ${({ disabled }) => {
+      return disabled
+        ? css`
+        
+        `
+        : css`
+        cursor: pointer;
 
-    ${({ disabled }) => {
-    return disabled
-      ? css`
-      
+        &:hover {
+          background: var(--black-primary);
+          color: var(--white-primary);
+        }
+
+        &:active {
+          background: var(--white-primary);
+          color: var(--black-primary);
+        }
       `
-      : css`
-      cursor: pointer;
-      &::after {
-        content: '';
-        position: absolute;
-        width: 100%;
-        height: 4px;
-        transform: scaleX(0);
-        bottom: 0;
-        left: 0;
-        background-color: var(--primary-color);
-        transform-origin: bottom right;
-        transition: transform 0.25s ease-out;
-      }
-
-      &:hover::after {
-        transform: scaleX(1);
-        transform-origin: bottom left;
-      }
-
-      &:active {
-        box-shadow: 0px 0px 0px 0px;
-        top: 5px;
-        left: 5px;
-      }
-    `
-  }}
+      }}
+    }
 
     
 `;
