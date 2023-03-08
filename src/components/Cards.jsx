@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import DeckSettings from './DeckSettings'
 import CardsHeader from './CardsHeader'
 import Card from "./Card"
@@ -180,13 +180,38 @@ const Button = styled.button`
     }
     }
 
-    .disabled {
-      color: transparent;
+    ${({ disabled }) => {
+    return disabled
+      ? css`
       
-      &:hover {
-      background: transparent;
+      `
+      : css`
+      cursor: pointer;
+      &::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 4px;
+        transform: scaleX(0);
+        bottom: 0;
+        left: 0;
+        background-color: var(--primary-color);
+        transform-origin: bottom right;
+        transition: transform 0.25s ease-out;
       }
-    }
+
+      &:hover::after {
+        transform: scaleX(1);
+        transform-origin: bottom left;
+      }
+
+      &:active {
+        box-shadow: 0px 0px 0px 0px;
+        top: 5px;
+        left: 5px;
+      }
+    `
+  }}
 
     
 `;
