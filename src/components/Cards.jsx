@@ -123,11 +123,10 @@ const Cards = () => {
       <CardStyle className={isModalMode() && 'blur'}>
 
         <Button disabled={isModalMode()}>
-          {current > 0 ? (
-            <MdArrowBackIosNew onClick={previousCard} alt="previous_button"/>
-          ) : (
-            <MdArrowBackIosNew className='disabled' alt="previous_button" />
-          )}
+          {current > 0 ? <MdArrowBackIosNew onClick={previousCard} alt="previous_button"/>
+          :
+          <div className="emptyContent"></div>
+          }
         </Button>
 
         {/* render cards */}
@@ -135,11 +134,10 @@ const Cards = () => {
         {/* /render cards */}
 
         <Button disabled={isModalMode()}>
-          {current < selectedCardIndices.length - 1 ? (
-            <MdArrowForwardIos onClick={nextCard} alt="next_button" />
-          ) : (
-            <MdArrowForwardIos className='disabled' alt="next_button" disabled />
-          )}
+          {current < selectedCardIndices.length - 1 ? <MdArrowForwardIos onClick={nextCard} alt="next_button" />
+          :
+          <div className="emptyContent"></div>
+          }
         </Button>
 
       </CardStyle>
@@ -181,6 +179,7 @@ const Button = styled.button`
 
         &:hover {
           background: var(--black-primary);
+          opacity: .5;
           color: var(--white-primary);
         }
 
@@ -190,6 +189,11 @@ const Button = styled.button`
         }
       `
       }}
+    }
+
+    .emptyContent {
+      width: 4.4rem;
+      height: 4.4rem;
     }
 
     
