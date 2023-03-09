@@ -10,7 +10,7 @@ import { MdArrowForwardIos, MdArrowBackIosNew } from 'react-icons/md'
 
 const Cards = () => {
   const {
-    deck,
+    deckName,
     flashcarddata,
     setCardProperty,
   } = useApplicationData();
@@ -18,7 +18,6 @@ const Cards = () => {
   const [mode, setMode] = useState(modes.before);
   const [selectedCardIndices, setSelectedCardIndices] = useState([]);
   const [numCards, setNumCards] = useState();
-  const { deck_name } = deck;
 
   // navigation in cards
   const [current, setCurrent] = useState(0);
@@ -57,9 +56,7 @@ const Cards = () => {
     card={defaultCard}
     key={defaultCard.id}
     showingModal={true}
-    nextCard={nextCard}
     isEndCard={true}
-    setCardProperty={setCardProperty}
     />];
   }
   
@@ -79,6 +76,7 @@ const Cards = () => {
       nextCard={nextCard}
       isEndCard={current === selectedCardIndices.length - 1}
       setCardProperty={setCardProperty}
+      setMode={setMode}
       />;
     });
     return cards;
@@ -93,7 +91,7 @@ const Cards = () => {
       {mode === modes.before && 
         <DeckSettings
           setNumCards={setNumCards}
-          deckName={deck_name}
+          deckName={deckName}
           setMode={setMode}
           totalCards={Object.keys(flashcarddata).length}
         />}
@@ -109,16 +107,13 @@ const Cards = () => {
       }
       {/* Finish Confirmation */}
 
-      {mode === modes.finished && <h1>hi</h1>}
-
       <CardsHeader
         isModalMode={isModalMode}
         selectedCardIndices={selectedCardIndices}
-        deck_name={deck_name}
+        deck_name={deckName}
         current={current}
         setMode={setMode}
       />
-
 
       <CardStyle className={isModalMode() && 'blur'}>
 
