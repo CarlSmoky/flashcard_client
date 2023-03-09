@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 
 
-const DeckItem = ({ id, deckName, user_id }) => {
+const DeckItem = ({ id, deckName }) => {
 
   return (
     <Card >

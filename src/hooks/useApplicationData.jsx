@@ -1,4 +1,4 @@
-import { useEffect, useState} from 'react'
+import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
 
@@ -6,31 +6,20 @@ const useApplicationData = () => {
 
   const { id } = useParams();
   const [flashcarddata, setFlashcarddata] = useState({});
-  const [deck, setDeck] = useState("");
+  const [deckName, setDeckName] = useState("");
 
   useEffect(() => {
-
-    // Need to change to axios.all
-    axios.get(`api/deck/${id}`)
-
+    axios.get(`api/card/deck/${id}`)
       .then(res => {
-        const deckById = res.data;
-        setDeck(deckById);
-      })
-      .catch(err => {
-        console.log(err)
-      })
-
-      axios.get(`api/card/deck/${id}`)
-      .then(res => {
-        const flashcardDataByDeckId = res.data;
+        const deckName = res.data.deckName;
+        setDeckName(deckName);
+        const flashcardDataByDeckId = res.data.cards;
         const formattedCardData = formatFlashcardData(flashcardDataByDeckId);
         setFlashcarddata(formattedCardData);
       })
       .catch(err => {
         console.log(err)
       })
-
   }, [id]);
 
   const formatFlashcardData = (rawAPIData) => {
@@ -51,15 +40,15 @@ const useApplicationData = () => {
     }, initialValue);
   }
 
-  const setCardProperty = (cardId, property, value )  => {
-    let card = {...flashcarddata[cardId]};
+  const setCardProperty = (cardId, property, value) => {
+    let card = { ...flashcarddata[cardId] };
     card[property] = value
-    let updateObj = {[cardId]: card};
-    setFlashcarddata(prev => ({...prev, ...updateObj}));
+    let updateObj = { [cardId]: card };
+    setFlashcarddata(prev => ({ ...prev, ...updateObj }));
   }
 
   return {
-    deck,
+    deckName,
     flashcarddata,
     setCardProperty,
   };
