@@ -33,8 +33,8 @@ const Button = ({
     if (!isEndCard) {
       nextCard();
     }
+    // On card, for Learning and Know button when the card is the end
     if (isEndCard) {
-      console.log("ends card");
       setMode(modes.finishConfirmation);
     }
       
