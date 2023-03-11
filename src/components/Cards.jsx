@@ -4,6 +4,7 @@ import DeckSettings from './DeckSettings'
 import CardsHeader from './CardsHeader'
 import Card from "./Card"
 import Confimation from './Confimation'
+import Result from './Result'
 import useApplicationData from '../hooks/useApplicationData'
 import { modes } from '../helpers/modes'
 import { MdArrowForwardIos, MdArrowBackIosNew } from 'react-icons/md'
@@ -30,6 +31,12 @@ const Cards = () => {
 
   const isModalMode = () => {
     if (mode === modes.before || mode === modes.finishConfirmation) {
+      return true;
+    }
+  }
+
+  const displayCards = () => {
+    if (mode === modes.before || mode === modes.answering || mode === modes.finishConfirmation) {
       return true;
     }
   }
@@ -82,8 +89,18 @@ const Cards = () => {
     return cards;
   }
 
+  const setResults = () => {
+    return selectedCardIndices.map((id) => {
+      let stat = flashcarddata[id];
+      return <Result
+      stat={stat}
+      />
+    })
+  }
+
   const cards = setDeckFromIds();
   const defaultCard = setDefaultDeck();
+  const results = setResults();
 
   return (
     <>
@@ -107,6 +124,7 @@ const Cards = () => {
       }
       {/* Finish Confirmation */}
 
+      
       <CardsHeader
         isModalMode={isModalMode}
         selectedCardIndices={selectedCardIndices}
@@ -115,6 +133,7 @@ const Cards = () => {
         setMode={setMode}
       />
 
+      { displayCards() && 
       <CardStyle className={isModalMode() && 'blur'}>
 
         <Button disabled={isModalMode()}>
@@ -136,6 +155,10 @@ const Cards = () => {
         </Button>
 
       </CardStyle>
+      }
+
+      {mode === modes.finished && results}
+      
 
     </>
   )
