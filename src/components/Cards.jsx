@@ -93,7 +93,10 @@ const Cards = () => {
     return selectedCardIndices.map((id) => {
       let stat = flashcarddata[id];
       return <Result
-      stat={stat}
+        term={stat.term}
+        definition={stat.definition}
+        isLearning={stat.isLearning}
+        fillStar={stat.fillStar}
       />
     })
   }
@@ -124,7 +127,7 @@ const Cards = () => {
       }
       {/* Finish Confirmation */}
 
-      
+      { displayCards() &&
       <CardsHeader
         isModalMode={isModalMode}
         selectedCardIndices={selectedCardIndices}
@@ -132,6 +135,7 @@ const Cards = () => {
         current={current}
         setMode={setMode}
       />
+      }
 
       { displayCards() && 
       <CardStyle className={isModalMode() && 'blur'}>
