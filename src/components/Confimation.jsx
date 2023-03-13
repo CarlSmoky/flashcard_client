@@ -11,14 +11,10 @@ const Confimation = ({
   let navigate = useNavigate();
 
   const [buttonPressed, setButtonPressed] = useState("");
-  const routeChange = () => {
-    let path = `/result`;
-    navigate(path);
-  }
+
   useEffect(() => {
     if (buttonPressed === 'Quit') {
       setMode(modes.finished);
-      routeChange();
     }
     if (buttonPressed === 'Back to Deck') {
       setMode(modes.answering);
