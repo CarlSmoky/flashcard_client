@@ -8,7 +8,7 @@ const Result = ({term, definition, isLearning, fillStar}) => {
     <Wrapper>
       <div className='term'><p>{term}</p></div>
       <div className='definition'><p>{definition}</p></div>
-      <div className='isLearning'>{`${isLearning ? "Learning" : "Know"}`}</div>
+      <div className='isLearning'><p>{`${isLearning ? "Learning" : "Know"}`}</p></div>
       <div className='star'>{fillStar ? <AiTwotoneStar className="filledStar" /> : <AiOutlineStar />}</div>
     </Wrapper>
   )
@@ -28,7 +28,6 @@ const Wrapper = styled.div`
     padding: 2rem;
 
     p {
-      /* padding-left: 2rem; */
       text-align: left;
       font-size: 1.3rem;
     }
@@ -48,7 +47,7 @@ const Wrapper = styled.div`
     }
   
   .isLearning {
-    width: 15%;
+    margin: auto 0;
   }
 
   svg {
@@ -60,6 +59,8 @@ const Wrapper = styled.div`
     color: gold;
     }
   }
+
+
 `
 
 export default Result
