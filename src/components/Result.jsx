@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { AiTwotoneStar, AiOutlineStar } from 'react-icons/ai'
 
 const Result = ({term, definition, isLearning, fillStar}) => {
 
@@ -7,8 +8,8 @@ const Result = ({term, definition, isLearning, fillStar}) => {
     <Wrapper>
       <div className='term'><p>{term}</p></div>
       <div className='definition'><p>{definition}</p></div>
-      <div className='isLearning'>{isLearning}</div>
-      <div className='fillStar'>{fillStar}</div>
+      <div className='isLearning'>{`${isLearning ? "Learning" : "Know"}`}</div>
+      <div className='star'>{fillStar ? <AiTwotoneStar className="filledStar" /> : <AiOutlineStar />}</div>
     </Wrapper>
   )
 }
@@ -50,8 +51,14 @@ const Wrapper = styled.div`
     width: 15%;
   }
 
-  .fillStar {
-    width: 5%;
+  svg {
+    font-size: 2rem;
+    padding: .5rem;
+    margin: .4rem .4rem 0 .4rem;
+
+    &.filledStar {
+    color: gold;
+    }
   }
 `
 
