@@ -94,10 +94,13 @@ const Cards = () => {
     return selectedCardIndices.map((id) => {
       let stat = flashcarddata[id];
       return <Result
+        key={id}
         term={stat.term}
         definition={stat.definition}
         isLearning={stat.isLearning}
         fillStar={stat.fillStar}
+        setCardProperty={setCardProperty}
+        cardId={id}
       />
     })
   }
