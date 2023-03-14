@@ -4,14 +4,18 @@ import StatsHeader from './StatsHeader'
 
 const ResultHeader = ({
   deckName,
-  numCards
+  numCards,
+  numLearning
 }) => {
-  console.log(numCards);
   return (
     <Wrapper>
       <div className="row">
         <h2>{deckName}</h2>
+      <div>
+        <p>Learning: {numLearning}</p>
+        <p>Know: {numCards - numLearning}</p>
         <p>Total cards: {numCards}</p>
+      </div>
       </div>
       <StatsHeader/>
     </Wrapper>
@@ -31,9 +35,14 @@ const Wrapper = styled.div`
     justify-content: space-between;
   }
 
+  h2 {
+    font-size: 1.7rem;
+  }
+
   p {
     font-size: 1.5rem;
     font-family: var(--secondary-font);
+    text-align: right;
   }
 
 

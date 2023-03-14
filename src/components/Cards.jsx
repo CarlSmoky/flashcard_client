@@ -102,9 +102,20 @@ const Cards = () => {
     })
   }
 
+  const getNumLeaning = () => {
+    const numLearning = selectedCardIndices.filter(id => {
+      let stat = flashcarddata[id];
+      if (stat.isLearning === true) {
+        return id;
+      }
+    })
+    return numLearning.length;
+  }
+
   const cards = setDeckFromIds();
   const defaultCard = setDefaultDeck();
   const results = setResults();
+  const numLearning = getNumLeaning();
 
   return (
     <>
@@ -166,6 +177,7 @@ const Cards = () => {
         <ResultHeader
         deckName={deckName}
         numCards={selectedCardIndices.length}
+        numLearning={numLearning}
         />}
       {mode === modes.finished && results}
       
@@ -224,7 +236,6 @@ const Button = styled.button`
       height: 4.4rem;
     }
 
-    
 `;
 
 export default Cards
