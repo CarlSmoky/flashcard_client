@@ -4,6 +4,7 @@ import DeckSettings from './DeckSettings'
 import CardsHeader from './CardsHeader'
 import Card from "./Card"
 import Confimation from './Confimation'
+import ResultHeader from './ResultHeader'
 import Result from './Result'
 import useApplicationData from '../hooks/useApplicationData'
 import { modes } from '../helpers/modes'
@@ -160,7 +161,12 @@ const Cards = () => {
 
       </CardStyle>
       }
-
+      {/* finished */}
+      {mode === modes.finished && 
+        <ResultHeader
+        deckName={deckName}
+        numCards={selectedCardIndices.length}
+        />}
       {mode === modes.finished && results}
       
 

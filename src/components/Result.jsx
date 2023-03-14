@@ -29,7 +29,8 @@ const Wrapper = styled.div`
 
     p {
       text-align: left;
-      font-size: 1.3rem;
+      font-size: 1.5rem;
+      font-family: var(--secondary-font);
     }
   }
 
@@ -37,16 +38,17 @@ const Wrapper = styled.div`
       width: 25%; 
     }
 
-    .definition {
-      width: 45%;
+  .definition {
+    width: 45%;
       
-      p {
-        padding-left: 2rem;
-        border-left: .2rem solid var(--black-secondary);
-      }
+    p {
+      padding-left: 2rem;
+      border-left: .2rem solid var(--black-secondary);
     }
+  }
   
   .isLearning {
+    width: 6%;
     margin: auto 0;
   }
 
