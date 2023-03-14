@@ -36,11 +36,11 @@ const Wrapper = styled.div`
 `;
 
 const StarWrapper = styled.div`
-  div {
+  
     cursor: pointer;
     height: 3rem;
     text-align: right;
-  }
+  
 
   svg {
     font-size: 2rem;
