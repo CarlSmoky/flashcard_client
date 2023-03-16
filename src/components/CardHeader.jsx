@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { AiTwotoneStar, AiOutlineStar } from 'react-icons/ai'
+import Star from './Star'
 
 const CardHeader = ({
   title,
@@ -8,23 +8,15 @@ const CardHeader = ({
   setCardProperty,
   cardId,
 }) => {
-  const [displayFilledStar, setDisplayFilledStar] = useState(false);
-  
-  useEffect(() => {
-    setDisplayFilledStar(fillStar)
-  }, [fillStar])
-
-  const clickStar = e => {
-    e.stopPropagation();
-    setCardProperty(cardId, 'fillStar',!fillStar)
-  }
 
   return (
     <Wrapper>
       <CardSideTitle>{title}</CardSideTitle>
-      <StarWrapper onClick={clickStar}>
-        {displayFilledStar ? <AiTwotoneStar className="filledStar" /> : <AiOutlineStar />}
-      </StarWrapper>
+      <Star
+        fillStar={fillStar}
+        setCardProperty={setCardProperty}
+        cardId={cardId}
+      />
     </Wrapper>
   )
 }
@@ -33,23 +25,6 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-`;
-
-const StarWrapper = styled.div`
-  
-  cursor: pointer;
-  height: 3rem;
-  text-align: right;
-
-  svg {
-    font-size: 2rem;
-    padding: .5rem;
-    margin: .4rem .4rem 0 .4rem;
-
-    &.filledStar {
-    color: gold;
-    }
-  }
 `;
 
 const CardSideTitle = styled.h3`
