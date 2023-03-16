@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import { AiTwotoneStar, AiOutlineStar } from 'react-icons/ai'
+import Star from './Star'
+
 
 const Result = ({
   term,
@@ -15,11 +16,6 @@ const Result = ({
     e.stopPropagation();
     setCardProperty(cardId, 'isLearning',
       !isLearning);
-  }
-
-  const clickStar = e => {
-    e.stopPropagation();
-    setCardProperty(cardId, 'fillStar', !fillStar)
   }
 
   return (
@@ -37,9 +33,11 @@ const Result = ({
           {`${isLearning ? "Learning" : "Know"}`}
         </span>
       </div>
-      <StarWrapper onClick={clickStar}>
-        {fillStar ? <AiTwotoneStar className="filledStar" /> : <AiOutlineStar />}
-      </StarWrapper>
+      <Star
+        fillStar={fillStar}
+        setCardProperty={setCardProperty}
+        cardId={cardId}
+      />
     </Wrapper>
   )
 }
@@ -92,22 +90,5 @@ const Wrapper = styled.div`
     }
   }
 `
-
-const StarWrapper = styled.div`
-  
-  cursor: pointer;
-  height: 3rem;
-  text-align: right;
-
-  svg {
-    font-size: 2rem;
-    padding: .5rem;
-    margin: .4rem .4rem 0 .4rem;
-
-    &.filledStar {
-    color: gold;
-    }
-  }
-`;
 
 export default Result
