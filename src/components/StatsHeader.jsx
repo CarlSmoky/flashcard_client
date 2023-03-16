@@ -1,7 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Result = ({term, definition, isLearning, fillStar}) => {
+const StatsHeader = ({
+  term, 
+  definition, 
+  isLearning, 
+  fillStar
+}) => {
 
   return (
     <Wrapper>
@@ -50,4 +55,4 @@ const Wrapper = styled.div`
 
 `
 
-export default Result
+export default StatsHeader

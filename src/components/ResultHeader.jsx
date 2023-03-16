@@ -40,8 +40,8 @@ const Wrapper = styled.div`
   }
 
   p {
-    font-size: 1.5rem;
-    font-family: var(--secondary-font);
+    font-size: 1.3rem;
+    font-family: var(--primary-font);
     text-align: right;
   }
 
