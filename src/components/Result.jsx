@@ -11,17 +11,34 @@ const Result = ({
   cardId
 }) => {
 
+  const clickLearning = e => {
+    e.stopPropagation();
+    setCardProperty(cardId, 'isLearning',
+      !isLearning);
+  }
+
   const clickStar = e => {
     e.stopPropagation();
-    setCardProperty(cardId, 'fillStar',!fillStar)
+    setCardProperty(cardId, 'fillStar', !fillStar)
   }
 
   return (
     <Wrapper>
-      <div className='term'><p>{term}</p></div>
-      <div className='definition'><p>{definition}</p></div>
-      <div className='isLearning'><p>{`${isLearning ? "Learning" : "Know"}`}</p></div>
-      <StarWrapper onClick={clickStar}>{fillStar ? <AiTwotoneStar className="filledStar" /> : <AiOutlineStar />}
+      <div className='term'>
+        <p>
+          {term}
+        </p>
+      </div>
+      <div className='definition'>
+        <p>{definition}</p>
+      </div>
+      <div className='isLearning'>
+        <span onClick={clickLearning}>
+          {`${isLearning ? "Learning" : "Know"}`}
+        </span>
+      </div>
+      <StarWrapper onClick={clickStar}>
+        {fillStar ? <AiTwotoneStar className="filledStar" /> : <AiOutlineStar />}
       </StarWrapper>
     </Wrapper>
   )
@@ -63,6 +80,16 @@ const Wrapper = styled.div`
   .isLearning {
     width: 6%;
     margin: auto 0;
+    text-align: left;
+
+    span {
+      font-size: 1.5rem;
+      font-family: var(--secondary-font);
+      cursor: pointer;
+      &:hover {
+        border-bottom: 2px solid var(--black-secondary)
+      }
+    }
   }
 `
 
