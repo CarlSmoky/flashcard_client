@@ -19,16 +19,29 @@ const Cards = () => {
   
   const [mode, setMode] = useState(modes.before);
   const [selectedCardIndices, setSelectedCardIndices] = useState([]);
-  const [numCards, setNumCards] = useState();
+  const [numCards, setNumCards] = useState([]);
+  const [loadCards, setLoadCards] = useState([]);
 
   // navigation in cards
   const [current, setCurrent] = useState(0);
+
+  const setSetloadCards = (current) => {
+    const currentCardId = selectedCardIndices[current];
+    if (loadCards.indexOf(currentCardId) === -1) {
+      setLoadCards([...loadCards, currentCardId]);
+    }
+  }
+
   const previousCard = () => {
     setCurrent(current - 1);
   }
   const nextCard = () => {
     setCurrent(current + 1);
+    setSetloadCards(current);
+    
   }
+
+  console.log(loadCards);
 
   const isModalMode = () => {
     if (mode === modes.before || mode === modes.finishConfirmation) {
@@ -85,6 +98,8 @@ const Cards = () => {
       isEndCard={current === selectedCardIndices.length - 1}
       setCardProperty={setCardProperty}
       setMode={setMode}
+      setSetloadCards={setSetloadCards}
+      current={current}
       />;
     });
     return cards;

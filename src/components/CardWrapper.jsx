@@ -10,7 +10,9 @@ const CardWrapper = ({
   nextCard,
   isEndCard,
   setCardProperty,
-  setMode
+  setMode,
+  setSetloadCards,
+  current
 }) => {
   
   const displaySide = (title) => {
@@ -39,6 +41,8 @@ const CardWrapper = ({
           cardId={card.id}
           isLearning={card.isLearning}
           setMode={setMode}
+          setSetloadCards={setSetloadCards}
+          current={current}
         />
         <Button
           text="Know"
@@ -49,6 +53,8 @@ const CardWrapper = ({
           cardId={card.id}
           isLearning={!card.isLearning}
           setMode={setMode}
+          setSetloadCards={setSetloadCards}
+          current={current}
         />
       </ButtonWrapper>
     </>
