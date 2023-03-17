@@ -12,7 +12,7 @@ const Button = ({
   isLearning,
   setButtonPressed,
   setMode,
-  setSetloadCards,
+  addLoadedCards,
   current
 }) => {
 
@@ -38,7 +38,7 @@ const Button = ({
     // On card, for Learning and Know button when the card is the end
     if (isEndCard) {
       setMode(modes.finishConfirmation);
-      setSetloadCards(current)
+      addLoadedCards(current)
     }
       
     const isLearning = e.target.innerHTML === "Learning";

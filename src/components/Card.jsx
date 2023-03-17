@@ -9,7 +9,7 @@ const Card = ({
   isEndCard,
   setCardProperty,
   setMode,
-  setSetloadCards,
+  addLoadedCards,
   current
 }) => {
   
@@ -33,7 +33,7 @@ const Card = ({
             isEndCard={isEndCard}
             setCardProperty={setCardProperty}
             setMode={setMode}
-            setSetloadCards={setSetloadCards}
+            addLoadedCards={addLoadedCards}
             current={current}
           />
         </CardFront>
@@ -47,7 +47,7 @@ const Card = ({
             isEndCard={isEndCard}
             setCardProperty={setCardProperty}
             setMode={setMode}
-            setSetloadCards={setSetloadCards}
+            addLoadedCards={addLoadedCards}
             current={current}
           />
         </CardBack>

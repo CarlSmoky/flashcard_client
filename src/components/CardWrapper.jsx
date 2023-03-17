@@ -11,7 +11,7 @@ const CardWrapper = ({
   isEndCard,
   setCardProperty,
   setMode,
-  setSetloadCards,
+  addLoadedCards,
   current
 }) => {
   
@@ -41,7 +41,7 @@ const CardWrapper = ({
           cardId={card.id}
           isLearning={card.isLearning}
           setMode={setMode}
-          setSetloadCards={setSetloadCards}
+          addLoadedCards={addLoadedCards}
           current={current}
         />
         <Button
@@ -53,7 +53,7 @@ const CardWrapper = ({
           cardId={card.id}
           isLearning={!card.isLearning}
           setMode={setMode}
-          setSetloadCards={setSetloadCards}
+          addLoadedCards={addLoadedCards}
           current={current}
         />
       </ButtonWrapper>
