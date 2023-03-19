@@ -38,7 +38,6 @@ const Cards = () => {
   const nextCard = () => {
     setCurrent(current + 1);
     addLoadedCards(current);
-    
   }
 
   console.log(loadedCards);
@@ -106,7 +105,7 @@ const Cards = () => {
   }
 
   const setResults = () => {
-    return selectedCardIndices.map((id) => {
+    return loadedCards.map((id) => {
       let stat = flashcarddata[id];
       return <Result
         key={id}
@@ -121,7 +120,7 @@ const Cards = () => {
   }
 
   const getNumLeaning = () => {
-    const numLearning = selectedCardIndices.filter(id => {
+    const numLearning = loadedCards.filter(id => {
       let stat = flashcarddata[id];
       if (stat.isLearning === true) {
         return id;
@@ -150,9 +149,9 @@ const Cards = () => {
       {/* Finish Confirmation */}
       {mode === modes.finishConfirmation && 
         <Confimation
-          setCurrent={setCurrent}
           current={current}
           setMode={setMode}
+          addLoadedCards={addLoadedCards}
         />
       }
       {/* Finish Confirmation */}
@@ -194,7 +193,7 @@ const Cards = () => {
       {mode === modes.finished && 
         <ResultHeader
         deckName={deckName}
-        numCards={selectedCardIndices.length}
+        numCards={loadedCards.length}
         numLearning={numLearning}
         />}
       {mode === modes.finished && results}
