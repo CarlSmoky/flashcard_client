@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from "react-router-dom";
 import styled from 'styled-components'
 import Button from './Button'
 import { modes } from '../helpers/modes'
 
 const Confimation = ({
-  setMode
+  current,
+  setMode,
+  addLoadedCards
 }) => {
-
-  let navigate = useNavigate();
 
   const [buttonPressed, setButtonPressed] = useState("");
 
   useEffect(() => {
     if (buttonPressed === 'Quit') {
+      addLoadedCards(current);
       setMode(modes.finished);
     }
     if (buttonPressed === 'Back to Deck') {

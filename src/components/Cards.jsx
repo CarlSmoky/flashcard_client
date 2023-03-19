@@ -19,16 +19,28 @@ const Cards = () => {
   
   const [mode, setMode] = useState(modes.before);
   const [selectedCardIndices, setSelectedCardIndices] = useState([]);
-  const [numCards, setNumCards] = useState();
+  const [numCards, setNumCards] = useState([]);
+  const [loadedCards, setLoadedCards] = useState([]);
 
   // navigation in cards
   const [current, setCurrent] = useState(0);
+
+  const addLoadedCards = (current) => {
+    const currentCardId = selectedCardIndices[current];
+    if (loadedCards.indexOf(currentCardId) === -1) {
+      setLoadedCards([...loadedCards, currentCardId]);
+    }
+  }
+
   const previousCard = () => {
     setCurrent(current - 1);
   }
   const nextCard = () => {
     setCurrent(current + 1);
+    addLoadedCards(current);
   }
+
+  console.log(loadedCards);
 
   const isModalMode = () => {
     if (mode === modes.before || mode === modes.finishConfirmation) {
@@ -85,13 +97,15 @@ const Cards = () => {
       isEndCard={current === selectedCardIndices.length - 1}
       setCardProperty={setCardProperty}
       setMode={setMode}
+      addLoadedCards={addLoadedCards}
+      current={current}
       />;
     });
     return cards;
   }
 
   const setResults = () => {
-    return selectedCardIndices.map((id) => {
+    return loadedCards.map((id) => {
       let stat = flashcarddata[id];
       return <Result
         key={id}
@@ -106,7 +120,7 @@ const Cards = () => {
   }
 
   const getNumLeaning = () => {
-    const numLearning = selectedCardIndices.filter(id => {
+    const numLearning = loadedCards.filter(id => {
       let stat = flashcarddata[id];
       if (stat.isLearning === true) {
         return id;
@@ -135,9 +149,9 @@ const Cards = () => {
       {/* Finish Confirmation */}
       {mode === modes.finishConfirmation && 
         <Confimation
-          setCurrent={setCurrent}
           current={current}
           setMode={setMode}
+          addLoadedCards={addLoadedCards}
         />
       }
       {/* Finish Confirmation */}
@@ -179,7 +193,7 @@ const Cards = () => {
       {mode === modes.finished && 
         <ResultHeader
         deckName={deckName}
-        numCards={selectedCardIndices.length}
+        numCards={loadedCards.length}
         numLearning={numLearning}
         />}
       {mode === modes.finished && results}
