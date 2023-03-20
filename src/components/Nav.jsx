@@ -1,22 +1,25 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useNavigate, Link } from 'react-router-dom';
 
 const Nav = () => {
+
+  const navigate = useNavigate();
+
   return (
     <Wrapper className="nav">
       <h1>Flashcard</h1>
       <div className="links">
-        <a href="#home">
+        <a onClick={()=> {navigate("/")}}>
           <span>Home</span>
         </a>
-        <a href="#contact">
-          <span>Contact</span>
+        <a onClick={()=> {navigate("/decklist")}}>
+          <span>Decks</span>
         </a>
-        <a href="#signup">
-
+        <a onClick={()=> {navigate("/signup")}}>
           <span>Signup</span>
         </a>
-        <a href="#login">
+        <a onClick={()=> {navigate("/login")}}>
           <span>Login</span>
         </a>
       </div>

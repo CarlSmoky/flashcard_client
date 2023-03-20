@@ -14,7 +14,8 @@ const App = () => {
         <Route path ="/decklist" element={<Frame content='decklist'/>}/>
         {/* <Route path ="/search" element={<Search />}/> */}
         <Route path ="/deck/:id" element={<Frame content='cards'/>}/>
-        <Route path ="/result" element={<Frame content='result'/>}/>
+        <Route path ="/signup" element={<Frame content='signup'/>}/>
+        <Route path ="/login" element={<Frame content='login'/>}/>
       </Routes>
       </BrowserRouter>
     </div>

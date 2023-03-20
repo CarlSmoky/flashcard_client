@@ -40,8 +40,6 @@ const Cards = () => {
     addLoadedCards(current);
   }
 
-  console.log(loadedCards);
-
   const isModalMode = () => {
     if (mode === modes.before || mode === modes.finishConfirmation) {
       return true;
