@@ -16,12 +16,15 @@ const Nav = () => {
         <a onClick={()=> {navigate("/decklist")}}>
           <span>Decks</span>
         </a>
-        <a onClick={()=> {navigate("/signup")}}>
+        <a onClick={()=> {navigate("/create")}}>
+          <span>Create</span>
+        </a>
+        {/* <a onClick={()=> {navigate("/signup")}}>
           <span>Signup</span>
         </a>
         <a onClick={()=> {navigate("/login")}}>
           <span>Login</span>
-        </a>
+        </a> */}
       </div>
     </Wrapper>
   )

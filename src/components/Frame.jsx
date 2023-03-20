@@ -5,6 +5,7 @@ import Nav from './Nav'
 import Menu from './Menu'
 import DeckList from './DeckList'
 import Cards from './Cards'
+import Create from '../pages/Create'
 import Footer from './Footer'
 import Signup from './Signup'
 import Login from './Login'
@@ -28,6 +29,7 @@ return (
       {content === "menu" && <Menu />}
       {content === "decklist" && <DeckList />}
       {content === "cards" && <Cards />}
+      {content === "create" && <Create />}
       {content === "signup" && <Signup />}
       {content === "login" && <Login />}
       <Footer />
