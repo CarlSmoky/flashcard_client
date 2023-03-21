@@ -49,7 +49,7 @@ const Wrapper = styled.div`
   margin: 1rem auto 1rem;
   border-radius: .5rem;
   border: 2px solid var(--black-primary);
-  background: var(--tertiary-color);
+  background: var(--quaternary-color);
 
   div {
     margin: auto 0;
