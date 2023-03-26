@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import axios from 'axios'
 import DeckDetailsForm from '../components/DeckDetailsForm'
 import CreateCardHeader from '../components/CardDetailsHeader'
 import CardForm from '../components/CardForm'
@@ -14,6 +15,7 @@ const Create = () => {
   });
 
   //Card
+  
   const defaultCard = {
     term: '',
     definition: ''
@@ -45,6 +47,30 @@ const Create = () => {
     />
   )
 
+  const newDeckData = {
+    deckName: 'test10',
+    description: '',
+    userId: 1,
+  }
+
+  const createDeck = () => {
+
+    const endpoints = {
+      "NEWDECK": "api/deck/create"
+    }
+
+    axios.post(endpoints.NEWDECK, newDeckData)
+      .then(response => {
+        // console.log(response);
+        // const { id, deckName } = response.data;
+        // console.log(id, deckName);
+      })
+      .catch(err => {
+        const error = err.response.data.error;
+        console.log(error);
+      });
+  }
+
   return (
     <Wrapper>
       <form onSubmit={handleSubmitClick}>
@@ -60,7 +86,7 @@ const Create = () => {
           </button>
         </div>
         <div className="saveButton">
-          <Button text='Save' />
+          <button onClick={createDeck}>Save</button>
         </div>
       </form>
     </Wrapper>
