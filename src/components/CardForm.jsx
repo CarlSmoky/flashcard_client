@@ -33,6 +33,7 @@ const CardForm = ({
           name="term"
           id="term"
           value={state.term}
+          required
         />
       </div>
       <div className='definition'>
@@ -42,6 +43,7 @@ const CardForm = ({
           name="definition"
           id="definition"
           value={state.definition}
+          required
         />
       </div>
     </Wrapper>
