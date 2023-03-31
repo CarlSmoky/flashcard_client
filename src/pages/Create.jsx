@@ -13,10 +13,8 @@ const Create = () => {
     deckName: '',
     description: ''
   });
-  
 
   //Card
-  
   const defaultCard = {
     term: '',
     definition: ''
@@ -34,8 +32,44 @@ const Create = () => {
     setNewCardContents([...prev]);
   }
 
+  //Validation
+
+  const [errors, setErrors] = useState({
+    newDeckContent: {
+      deckName: '',
+      description: '',
+    },
+    newCardContent : [
+      {
+        term: '',
+        definition: ''
+      }
+    ]
+  })
+
+  const validation = (name, value) => {
+    let messge = '';
+    switch (name) {
+      case 'deckName':
+        messge = value.trim().length < 3 ? 'Title must be more than 3 characters long!' : '';
+        setErrors((prev) => ({...prev,newDeckContent: {[name]: messge}}));
+      break;
+
+      case 'description':
+        messge = value.length > 255 ? 'Description must be less than 255 characters long!' : '';
+        setErrors((prev) => ({...prev,newDeckContent: {[name]: messge}}));
+      break;
+      
+      default:
+      break;
+    }
+  }
+
+  console.log(errors);
+
   const handleSubmitClick = (e) => {
     e.preventDefault();
+
     const endpoints = {
       "NEWDECK": "api/deck/create"
     }
@@ -65,6 +99,7 @@ const Create = () => {
         <DeckDetailsForm
           newDeckContents={newDeckContents}
           setNewDeckContents={setNewDeckContents}
+          validation={validation}
         />
         <CreateCardHeader />
         {cardFormItems}

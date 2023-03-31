@@ -3,35 +3,38 @@ import styled from 'styled-components'
 
 const DeckDetailsForm = ({
   newDeckContents,
-  setNewDeckContents
+  setNewDeckContents,
+  validation
 }) => {
 
   const onChange = (e) => {
+    validation(e.target.name, e.target.value)
     setNewDeckContents({ ...newDeckContents, [e.target.name]: e.target.value })
   };
 
   return (
     <Wrapper>
-        <div>
-          <label htmlFor="title">Title</label>
-          <input
-            onChange={onChange}
-            type="text"
-            name="deckName"
-            id="deckName"
-            value={newDeckContents.deckName}
-          />
-        </div>
-        <div>
-          <label htmlFor="description">Description</label>
-          <textarea
-            onChange={onChange}
-            type="text"
-            name="description"
-            id="description"
-            value={newDeckContents.deckDescription}
-          />
-        </div>
+      <div>
+        <label htmlFor="title">Title</label>
+        <input
+          onChange={onChange}
+          type="text"
+          name="deckName"
+          id="deckName"
+          value={newDeckContents.deckName}
+          required
+        />
+      </div>
+      <div>
+        <label htmlFor="description">Description</label>
+        <textarea
+          onChange={onChange}
+          type="text"
+          name="description"
+          id="description"
+          value={newDeckContents.deckDescription}
+        />
+      </div>
     </Wrapper>
   )
 }
