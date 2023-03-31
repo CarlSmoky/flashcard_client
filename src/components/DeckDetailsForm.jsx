@@ -17,9 +17,9 @@ const DeckDetailsForm = ({
           <input
             onChange={onChange}
             type="text"
-            name="title"
-            id="title"
-            value={newDeckContents.title}
+            name="deckName"
+            id="deckName"
+            value={newDeckContents.deckName}
           />
         </div>
         <div>
