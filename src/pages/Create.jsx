@@ -10,9 +10,10 @@ import Button from '../components/Button'
 const Create = () => {
   // Deck
   const [newDeckContents, setNewDeckContents] = useState({
-    title: '',
+    deckName: '',
     description: ''
   });
+  
 
   //Card
   
@@ -33,9 +34,20 @@ const Create = () => {
     setNewCardContents([...prev]);
   }
 
-
   const handleSubmitClick = (e) => {
     e.preventDefault();
+    const endpoints = {
+      "NEWDECK": "api/deck/create"
+    }
+
+    axios.post(endpoints.NEWDECK, {newDeckContents, newCardContents})
+      .then(response => {
+        console.log(response);
+      })
+      .catch(err => {
+        const error = err.response.data.error;
+        console.log(error);
+      });
   }
 
   const cardFormItems = newCardContents.map((card, index) =>
@@ -46,30 +58,6 @@ const Create = () => {
       index={index}
     />
   )
-
-  const newDeckData = {
-    deckName: 'test10',
-    description: '',
-    userId: 1,
-  }
-
-  const createDeck = () => {
-
-    const endpoints = {
-      "NEWDECK": "api/deck/create"
-    }
-
-    axios.post(endpoints.NEWDECK, newDeckData)
-      .then(response => {
-        // console.log(response);
-        // const { id, deckName } = response.data;
-        // console.log(id, deckName);
-      })
-      .catch(err => {
-        const error = err.response.data.error;
-        console.log(error);
-      });
-  }
 
   return (
     <Wrapper>
@@ -86,7 +74,7 @@ const Create = () => {
           </button>
         </div>
         <div className="saveButton">
-          <button onClick={createDeck}>Save</button>
+          <button>Save</button>
         </div>
       </form>
     </Wrapper>
