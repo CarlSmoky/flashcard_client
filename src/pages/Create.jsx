@@ -35,29 +35,46 @@ const Create = () => {
   //Validation
 
   const [errors, setErrors] = useState({
-    newDeckContent: {
+    newDeckContents: {
       deckName: '',
       description: '',
     },
-    newCardContent : [
-      {
+    newCardContents : {
+      0 : {
         term: '',
         definition: ''
       }
-    ]
+    }
   })
 
-  const validation = (name, value) => {
+  const validation = (name, value, index) => {
+    console.log(index);
     let messge = '';
     switch (name) {
       case 'deckName':
-        messge = value.trim().length < 3 ? 'Title must be more than 3 characters long!' : '';
-        setErrors((prev) => ({...prev,newDeckContent: {[name]: messge}}));
+        messge = value.trim().length > 3 && value.trim().length < 256 ? 'Title must be more than 3 characters and less than 255 long!' : '';
+        setErrors((prev) => ({...prev,newDeckContents: {[name]: messge}}));
       break;
 
       case 'description':
-        messge = value.length > 255 ? 'Description must be less than 255 characters long!' : '';
-        setErrors((prev) => ({...prev,newDeckContent: {[name]: messge}}));
+        messge = value.length < 256 ? 'Description must be less than 255 characters long!' : '';
+        setErrors((prev) => ({...prev, newDeckContents: {[name]: messge}}));
+      break;
+
+      case 'term':
+        messge = value.length > 0 && value.length < 256 ? 'Description must be less than 255 characters long!' : '';
+        setErrors((prev) => ({...prev, newCardContents: {...prev.newCardContents, 
+          [index]: {...prev.newCardContents[index], [name]: messge}
+        }
+        }));
+      break;
+
+      case 'definition':
+        messge = value.length > 0 && value.length < 256 ? 'Description must be less than 255 characters long!' : '';
+        setErrors((prev) => ({...prev, newCardContents: {...prev.newCardContents, 
+          [index]: {...prev.newCardContents[index], [name]: messge}
+        }
+        }));
       break;
       
       default:
@@ -90,6 +107,7 @@ const Create = () => {
       editCardContents={editCardContents}
       card={card}
       index={index}
+      validation={validation}
     />
   )
 

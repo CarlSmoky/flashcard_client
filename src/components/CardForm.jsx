@@ -4,7 +4,8 @@ import styled from 'styled-components'
 const CardForm = ({
   editCardContents,
   card,
-  index
+  index,
+  validation
 }) => {
 
 
@@ -14,7 +15,8 @@ const CardForm = ({
     const newState = { ...state, [e.target.name]: e.target.value }
     // setState(prev => ({...prev, [e.target.name]: e.target.value}));
     setState(newState);
-    editCardContents(index, newState)
+    editCardContents(index, newState);
+    validation(e.target.name, e.target.value, index);
   };
 
   /*
