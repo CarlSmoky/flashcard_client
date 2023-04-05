@@ -48,21 +48,27 @@ const Create = () => {
   })
 
   const validation = (name, value, index) => {
-    console.log(index);
+    
     let messge = '';
     switch (name) {
       case 'deckName':
-        messge = value.trim().length > 3 && value.trim().length < 256 ? 'Title must be more than 3 characters and less than 255 long!' : '';
+        messge = value.trim().length < 3 || value.trim().length > 255 ? 'Title must be more than 3 characters and less than 255 long!' : '';
         setErrors((prev) => ({...prev,newDeckContents: {[name]: messge}}));
       break;
 
       case 'description':
-        messge = value.length < 256 ? 'Description must be less than 255 characters long!' : '';
+        messge = value.length > 255 ? 'Description must be less than 255 characters long!' : '';
         setErrors((prev) => ({...prev, newDeckContents: {[name]: messge}}));
       break;
 
       case 'term':
-        messge = value.length > 0 && value.length < 256 ? 'Description must be less than 255 characters long!' : '';
+        if (value.length === 0) {
+          messge = 'Required';
+        }
+
+        if (value.length > 255) {
+          messge = 'Term must be less than 255 characters long!'
+        }
         setErrors((prev) => ({...prev, newCardContents: {...prev.newCardContents, 
           [index]: {...prev.newCardContents[index], [name]: messge}
         }
@@ -70,7 +76,13 @@ const Create = () => {
       break;
 
       case 'definition':
-        messge = value.length > 0 && value.length < 256 ? 'Description must be less than 255 characters long!' : '';
+        if (value.length === 0) {
+          messge = 'Required';
+        }
+        
+        if (value.length > 255) {
+          messge = 'Term must be less than 255 characters long!'
+        }
         setErrors((prev) => ({...prev, newCardContents: {...prev.newCardContents, 
           [index]: {...prev.newCardContents[index], [name]: messge}
         }
@@ -108,6 +120,7 @@ const Create = () => {
       card={card}
       index={index}
       validation={validation}
+      
     />
   )
 
@@ -118,6 +131,8 @@ const Create = () => {
           newDeckContents={newDeckContents}
           setNewDeckContents={setNewDeckContents}
           validation={validation}
+          deckNameError={errors.newDeckContents.deckName}
+          descriptionError={errors.newDeckContents.description}
         />
         <CreateCardHeader />
         {cardFormItems}

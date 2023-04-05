@@ -4,7 +4,9 @@ import styled from 'styled-components'
 const DeckDetailsForm = ({
   newDeckContents,
   setNewDeckContents,
-  validation
+  validation,
+  deckNameError,
+  descriptionError
 }) => {
 
   const onChange = (e) => {
@@ -24,6 +26,7 @@ const DeckDetailsForm = ({
           value={newDeckContents.deckName}
           required
         />
+      <p>{deckNameError}</p>
       </div>
       <div>
         <label htmlFor="description">Description</label>
@@ -34,6 +37,7 @@ const DeckDetailsForm = ({
           id="description"
           value={newDeckContents.deckDescription}
         />
+        <p>{descriptionError}</p>
       </div>
     </Wrapper>
   )
@@ -70,6 +74,14 @@ const Wrapper = styled.div`
     textarea:focus, input:focus{
     outline: none;
     }
+
+    p {
+      margin-left: 1rem;
+      font-size: 1rem;
+      color: red;
+      height: 1.5rem;
+    }
+
 
   }
 
