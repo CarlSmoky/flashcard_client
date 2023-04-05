@@ -57,7 +57,11 @@ const Create = () => {
       break;
 
       case 'description':
-        messge = value.length > 255 ? 'Description must be less than 255 characters long!' : '';
+
+        if (value.length > 255) {
+          messge = 'Term must be less than 255 characters long!'
+        }
+
         setErrors((prev) => ({...prev, newDeckContents: {[name]: messge}}));
       break;
 
@@ -69,13 +73,14 @@ const Create = () => {
         if (value.length > 255) {
           messge = 'Term must be less than 255 characters long!'
         }
+
         setErrors((prev) => ({...prev, newCardContents: {...prev.newCardContents, 
           [index]: {...prev.newCardContents[index], [name]: messge}
-        }
-        }));
+        }}));
       break;
 
       case 'definition':
+        
         if (value.length === 0) {
           messge = 'Required';
         }
@@ -83,18 +88,16 @@ const Create = () => {
         if (value.length > 255) {
           messge = 'Term must be less than 255 characters long!'
         }
+
         setErrors((prev) => ({...prev, newCardContents: {...prev.newCardContents, 
           [index]: {...prev.newCardContents[index], [name]: messge}
-        }
-        }));
+        }}));
       break;
       
       default:
       break;
     }
   }
-
-  console.log(errors);
 
   const handleSubmitClick = (e) => {
     e.preventDefault();
@@ -120,9 +123,13 @@ const Create = () => {
       card={card}
       index={index}
       validation={validation}
+      termError={errors.newCardContents[index].term}
+      definitionError={errors.newCardContents[index].definition}
       
     />
   )
+
+  console.log(errors);
 
   return (
     <Wrapper>

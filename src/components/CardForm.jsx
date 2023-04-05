@@ -5,9 +5,12 @@ const CardForm = ({
   editCardContents,
   card,
   index,
-  validation
+  validation,
+  termError,
+  definitionError
 }) => {
 
+  console.log(definitionError);
 
   const [state, setState] = useState(card);
 
@@ -37,6 +40,7 @@ const CardForm = ({
           value={state.term}
           required
         />
+      <p>{termError}</p>
       </div>
       <div className='definition'>
         <textarea
@@ -47,6 +51,7 @@ const CardForm = ({
           value={state.definition}
           required
         />
+      <p>{definitionError}</p>
       </div>
     </Wrapper>
   )
@@ -65,6 +70,13 @@ const Wrapper = styled.div`
     width: 56%;
     height: 5rem;
     margin: 1rem;
+
+    p {
+      margin-left: 1rem;
+      font-size: 1rem;
+      color: red;
+      height: 1.5rem;
+    }
   }
 
   textarea {
