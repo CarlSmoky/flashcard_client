@@ -72,7 +72,7 @@ const Wrapper = styled.div`
     margin: 1rem;
 
     p {
-      margin-left: 1rem;
+      text-align: left;
       font-size: 1rem;
       color: red;
       height: 1.5rem;
