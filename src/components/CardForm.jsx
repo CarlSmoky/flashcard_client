@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { validation } from '../helpers/utilities'
 
 const CardForm = ({
   editCardContents,
   card,
   index,
-  validation
 }) => {
 
   const onChangeCard = (e) => {

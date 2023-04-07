@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
+import { validation } from '../helpers/utilities';
 
 const DeckDetailsForm = ({
   newDeckContents,
-  setNewDeckContents,
-  validation
+  setNewDeckContents
 }) => {
 
   const onChangeDeck = (e) => {
