@@ -18,7 +18,6 @@ const Create = () => {
     }
   });
   
-
   //Card
   const defaultCard = {
     term: '',
@@ -27,19 +26,12 @@ const Create = () => {
       term: '',
       definition: '',
     }
-    
   }
 
   const [newCardContents, setNewCardContents] = useState([{ ...defaultCard }]);
 
   const createNewCard = () => {
     setNewCardContents(prev => ([...prev, { ...defaultCard }]));
-    // setErrors((prev) => ({...prev, newCardContents: [...prev.newCardContents, 
-    //   {
-    //     term: '',
-    //     definition: ''
-    //   }
-    // ]}));
   };
 
   const editCardContents = (index, cardContents) => {
@@ -49,31 +41,27 @@ const Create = () => {
   }
 
   const validation = (name, value) => {
+    const maxLength = 5;
+    const deckNameMinLength = 3;
+    const exceedLengthDeckMessage = `Must be more than 3 characters and less than ${maxLength} charactors long!`;
+    const exceedLengthMessage = `Must be ${maxLength} charactors long!`;
+
     let error = {
       key: name,
       message: ''
     }
-    /*
-
-    • probably should make the deck validation work the same way as the card validation
-
-    • currently the deck's description error isn't working (but need to redo deck validation anyway)
-
-    */
-    let message = '';
+    
     switch (name) {
       case 'deckName':
-        message = value.trim().length < 3 || value.trim().length > 255 ? 'Title must be more than 3 characters and less than 255 long!' : '';
+        error.message = value.trim().length < deckNameMinLength || value.trim().length > maxLength ? exceedLengthDeckMessage : '';
   
-        setNewDeckContents((prev) => ({...prev, errors : {...prev.errors, [name]: message}}));
       break;
 
       case 'description':
-
-        if (value.length > 255) {
-          error.message = 'Term must be less than 255 characters long!'
+        if (value.length > maxLength) {
+          error.message = exceedLengthMessage;
         }
-        setNewDeckContents((prev) => ({...prev, errors : {...prev.errors, [name]: message}}));
+        
       break;
 
       case 'term':
@@ -81,20 +69,19 @@ const Create = () => {
           error.message = 'Required';
         }
 
-        if (value.length > 5) {
-          error.message = 'Term must be less than 255 characters long!'
+        if (value.length > maxLength) {
+          error.message = exceedLengthMessage;
         }
         
       break;
 
       case 'definition':
-        
         if (value.length === 0) {
           error.message = 'Required';
         }
         
-        if (value.length > 5) {
-          error.message = 'Term must be less than 255 characters long!'
+        if (value.length > maxLength) {
+          error.message = exceedLengthMessage;
         }
 
       break;
@@ -129,9 +116,6 @@ const Create = () => {
       card={card}
       index={index}
       validation={validation}
-      termError={newCardContents[index].errors.term}
-      definitionError={newCardContents[index].errors.definition}
-      
     />
   )
 
@@ -142,8 +126,6 @@ const Create = () => {
           newDeckContents={newDeckContents}
           setNewDeckContents={setNewDeckContents}
           validation={validation}
-          deckNameError={newDeckContents.errors.deckName}
-          descriptionError={newDeckContents.errors.description}
         />
         <CreateCardHeader />
         {newCardContents &&cardFormItems}

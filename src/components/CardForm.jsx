@@ -5,21 +5,20 @@ const CardForm = ({
   editCardContents,
   card,
   index,
-  validation,
-  termError,
-  definitionError
+  validation
 }) => {
 
   const onChangeCard = (e) => {
     const returnedError = validation(e.target.name, e.target.value);
-    console.log("onChangeCard", returnedError)
+    
     const updatedCard = {...card,
       [e.target.name]: e.target.value,  
       errors: 
         {
           ...card.errors,
           [returnedError.key] : returnedError.message
-        }}
+        }
+    }
     
     editCardContents(index, updatedCard);
   };
@@ -35,7 +34,7 @@ const CardForm = ({
           value={card.term}
           required
         />
-      <p>{termError}</p>
+      <p>{card.errors.term}</p>
       </div>
       <div className='definition'>
         <textarea
@@ -46,7 +45,7 @@ const CardForm = ({
           value={card.definition}
           required
         />
-      <p>{definitionError}</p>
+      <p>{card.errors.definition}</p>
       </div>
     </Wrapper>
   )

@@ -4,14 +4,21 @@ import styled from 'styled-components'
 const DeckDetailsForm = ({
   newDeckContents,
   setNewDeckContents,
-  validation,
-  deckNameError,
-  descriptionError
+  validation
 }) => {
 
-  const onChange = (e) => {
-    setNewDeckContents({ ...newDeckContents, [e.target.name]: e.target.value });
-    validation(e.target.name, e.target.value);
+  const onChangeDeck = (e) => {
+    const returnedError = validation(e.target.name, e.target.value);
+    console.log("onChangeCard", returnedError)
+    const updatedDeck = {...newDeckContents,
+      [e.target.name]: e.target.value,  
+      errors: 
+        {
+          ...newDeckContents.errors,
+          [returnedError.key] : returnedError.message
+        }}
+    
+        setNewDeckContents(updatedDeck);
   };
 
   return (
@@ -19,25 +26,25 @@ const DeckDetailsForm = ({
       <div>
         <label htmlFor="title">Title</label>
         <input
-          onChange={onChange}
+          onChange={onChangeDeck}
           type="text"
           name="deckName"
           id="deckName"
           value={newDeckContents.deckName}
           required
         />
-      <p>{deckNameError}</p>
+      <p>{newDeckContents.errors.deckName}</p>
       </div>
       <div>
         <label htmlFor="description">Description</label>
         <textarea
-          onChange={onChange}
+          onChange={onChangeDeck}
           type="text"
           name="description"
           id="description"
           value={newDeckContents.deckDescription}
         />
-        <p>{descriptionError}</p>
+        <p>{newDeckContents.errors.description}</p>
       </div>
     </Wrapper>
   )
