@@ -10,8 +10,8 @@ const DeckDetailsForm = ({
 }) => {
 
   const onChange = (e) => {
-    validation(e.target.name, e.target.value);
     setNewDeckContents({ ...newDeckContents, [e.target.name]: e.target.value });
+    validation(e.target.name, e.target.value);
   };
 
   return (

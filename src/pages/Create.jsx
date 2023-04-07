@@ -11,19 +11,35 @@ const Create = () => {
   // Deck
   const [newDeckContents, setNewDeckContents] = useState({
     deckName: '',
-    description: ''
+    description: '',
+    errors: {
+      deckName: '',
+      description: '',
+    }
   });
+  
 
   //Card
   const defaultCard = {
     term: '',
-    definition: ''
+    definition: '',
+    errors:  {
+      term: '',
+      definition: '',
+    }
+    
   }
 
   const [newCardContents, setNewCardContents] = useState([{ ...defaultCard }]);
 
   const createNewCard = () => {
     setNewCardContents(prev => ([...prev, { ...defaultCard }]));
+    // setErrors((prev) => ({...prev, newCardContents: [...prev.newCardContents, 
+    //   {
+    //     term: '',
+    //     definition: ''
+    //   }
+    // ]}));
   };
 
   const editCardContents = (index, cardContents) => {
@@ -32,71 +48,61 @@ const Create = () => {
     setNewCardContents([...prev]);
   }
 
-  //Validation
-
-  const [errors, setErrors] = useState({
-    newDeckContents: {
-      deckName: '',
-      description: '',
-    },
-    newCardContents : {
-      0 : {
-        term: '',
-        definition: ''
-      }
+  const validation = (name, value) => {
+    let error = {
+      key: name,
+      message: ''
     }
-  })
+    /*
 
-  const validation = (name, value, index) => {
-    
-    let messge = '';
+    • probably should make the deck validation work the same way as the card validation
+
+    • currently the deck's description error isn't working (but need to redo deck validation anyway)
+
+    */
+    let message = '';
     switch (name) {
       case 'deckName':
-        messge = value.trim().length < 3 || value.trim().length > 255 ? 'Title must be more than 3 characters and less than 255 long!' : '';
-        setErrors((prev) => ({...prev,newDeckContents: {[name]: messge}}));
+        message = value.trim().length < 3 || value.trim().length > 255 ? 'Title must be more than 3 characters and less than 255 long!' : '';
+  
+        setNewDeckContents((prev) => ({...prev, errors : {...prev.errors, [name]: message}}));
       break;
 
       case 'description':
 
         if (value.length > 255) {
-          messge = 'Term must be less than 255 characters long!'
+          error.message = 'Term must be less than 255 characters long!'
         }
-
-        setErrors((prev) => ({...prev, newDeckContents: {[name]: messge}}));
+        setNewDeckContents((prev) => ({...prev, errors : {...prev.errors, [name]: message}}));
       break;
 
       case 'term':
         if (value.length === 0) {
-          messge = 'Required';
+          error.message = 'Required';
         }
 
-        if (value.length > 255) {
-          messge = 'Term must be less than 255 characters long!'
+        if (value.length > 5) {
+          error.message = 'Term must be less than 255 characters long!'
         }
-
-        setErrors((prev) => ({...prev, newCardContents: {...prev.newCardContents, 
-          [index]: {...prev.newCardContents[index], [name]: messge}
-        }}));
+        
       break;
 
       case 'definition':
         
         if (value.length === 0) {
-          messge = 'Required';
+          error.message = 'Required';
         }
         
-        if (value.length > 255) {
-          messge = 'Term must be less than 255 characters long!'
+        if (value.length > 5) {
+          error.message = 'Term must be less than 255 characters long!'
         }
 
-        setErrors((prev) => ({...prev, newCardContents: {...prev.newCardContents, 
-          [index]: {...prev.newCardContents[index], [name]: messge}
-        }}));
       break;
       
       default:
       break;
     }
+    return error;
   }
 
   const handleSubmitClick = (e) => {
@@ -123,13 +129,11 @@ const Create = () => {
       card={card}
       index={index}
       validation={validation}
-      termError={errors.newCardContents[index].term}
-      definitionError={errors.newCardContents[index].definition}
+      termError={newCardContents[index].errors.term}
+      definitionError={newCardContents[index].errors.definition}
       
     />
   )
-
-  console.log(errors);
 
   return (
     <Wrapper>
@@ -138,11 +142,11 @@ const Create = () => {
           newDeckContents={newDeckContents}
           setNewDeckContents={setNewDeckContents}
           validation={validation}
-          deckNameError={errors.newDeckContents.deckName}
-          descriptionError={errors.newDeckContents.description}
+          deckNameError={newDeckContents.errors.deckName}
+          descriptionError={newDeckContents.errors.description}
         />
         <CreateCardHeader />
-        {cardFormItems}
+        {newCardContents &&cardFormItems}
         <div className='addButton'>
           <button onClick={createNewCard}>
             <GrAddCircle />

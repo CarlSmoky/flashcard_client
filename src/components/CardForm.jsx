@@ -10,24 +10,19 @@ const CardForm = ({
   definitionError
 }) => {
 
-  console.log(definitionError);
-
-  const [state, setState] = useState(card);
-
   const onChangeCard = (e) => {
-    const newState = { ...state, [e.target.name]: e.target.value }
-    // setState(prev => ({...prev, [e.target.name]: e.target.value}));
-    setState(newState);
-    editCardContents(index, newState);
-    validation(e.target.name, e.target.value, index);
+    const returnedError = validation(e.target.name, e.target.value);
+    console.log("onChangeCard", returnedError)
+    const updatedCard = {...card,
+      [e.target.name]: e.target.value,  
+      errors: 
+        {
+          ...card.errors,
+          [returnedError.key] : returnedError.message
+        }}
+    
+    editCardContents(index, updatedCard);
   };
-
-  /*
-  TODO: 
-  • onChangeCard calls editCardContents with its own index and cardContents
-
-  • maybe we need to update state here a useEffect ???
-  */
 
   return (
     <Wrapper>
@@ -37,7 +32,7 @@ const CardForm = ({
           type="text"
           name="term"
           id="term"
-          value={state.term}
+          value={card.term}
           required
         />
       <p>{termError}</p>
@@ -48,7 +43,7 @@ const CardForm = ({
           type="text"
           name="definition"
           id="definition"
-          value={state.definition}
+          value={card.definition}
           required
         />
       <p>{definitionError}</p>
