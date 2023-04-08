@@ -2,7 +2,7 @@ const validation = (name, value) => {
   const maxLength = 5;
   const deckNameMinLength = 3;
   const exceedLengthDeckMessage = `Must be more than 3 characters and less than ${maxLength} charactors long!`;
-  const exceedLengthMessage = `Must be ${maxLength} charactors long!`;
+  const exceedLengthMessage = `Must be less than ${maxLength} charactors long!`;
 
   let error = {
     key: name,
