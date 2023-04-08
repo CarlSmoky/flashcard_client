@@ -2,6 +2,7 @@ import React from 'react'
 import styled from "styled-components"
 import CardHeader from './CardHeader'
 import Button from "./Button";
+import { modes } from '../helpers/modes'
 
 const CardWrapper = ({
   title,
@@ -19,6 +20,27 @@ const CardWrapper = ({
     return title ==="Term" ? card.term : card.definition;
   }
 
+
+
+  const setLearningStatus = (isLearning) => {
+    if (!isEndCard) {
+      nextCard();
+    } else {
+      setMode(modes.finishConfirmation);
+      addLoadedCards(current)
+    }
+      
+    setCardProperty(card.id, 'isLearning', isLearning);
+  }
+
+  const handleClickLearning = () => {
+    setLearningStatus(true)
+  }
+
+  const handleClickKnow = () => {
+    setLearningStatus(false)
+  }
+
   return (
     <>
       <CardHeader
@@ -34,27 +56,15 @@ const CardWrapper = ({
       <ButtonWrapper>
         <Button
           text="Learning"
+          onButtonClick={handleClickLearning}
           disabled={showingModal}
-          nextCard={nextCard}
-          isEndCard={isEndCard}
-          setCardProperty={setCardProperty}
-          cardId={card.id}
-          isLearning={card.isLearning}
-          setMode={setMode}
-          addLoadedCards={addLoadedCards}
-          current={current}
+          isSelected={card.isLearning}
         />
         <Button
           text="Know"
+          onButtonClick={handleClickKnow}
           disabled={showingModal}
-          nextCard={nextCard}
-          isEndCard={isEndCard}
-          setCardProperty={setCardProperty}
-          cardId={card.id}
-          isLearning={!card.isLearning}
-          setMode={setMode}
-          addLoadedCards={addLoadedCards}
-          current={current}
+          isSelected={!card.isLearning}
         />
       </ButtonWrapper>
     </>

@@ -5,16 +5,18 @@ import { modes } from '../helpers/modes'
 const Button = ({
   text,
   buttonType,
+  onButtonClick, 
   disabled,
+  isSelected,
+
+
   nextCard,
   isEndCard,
   setCardProperty,
   cardId,
-  isLearning,
   setMode,
   addLoadedCards,
-  current,
-  onButtonClick
+  current
 }) => {
   
   const handleButtonClick = e => {
@@ -27,25 +29,11 @@ const Button = ({
     
     // On Settings pop up, Start button clicked
     if (text === "Start") {return;}
-  
-    // On card, for Learning and Know button
-    if (!isEndCard) {
-      nextCard();
-    }
-    // On card, for Learning and Know button when the card is the end
-    if (isEndCard) {
-      setMode(modes.finishConfirmation);
-      addLoadedCards(current)
-    }
-      
-    const isLearning = e.target.innerHTML === "Learning";
-      
-    setCardProperty(cardId, 'isLearning', isLearning);
   }
 
   return (
     <ButtonStyle
-      selected={isLearning}
+      selected={isSelected}
       onClick={handleButtonClick}
       disabled={disabled}
       type={buttonType}
