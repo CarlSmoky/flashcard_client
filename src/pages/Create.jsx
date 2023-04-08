@@ -74,14 +74,15 @@ const Create = () => {
           setNewDeckContents={setNewDeckContents}
         />
         <CreateCardHeader />
-        {newCardContents &&cardFormItems}
+        {newCardContents && cardFormItems}
         <div className='addButton'>
-          <button onClick={createNewCard}>
+          <button onClick={createNewCard} type='button'>
             <GrAddCircle />
+            <span className="visually-hidden">Add Button</span>
           </button>
         </div>
         <div className="saveButton">
-          <button>Save</button>
+          <button type='submit'>Save</button>
         </div>
       </form>
     </Wrapper>
@@ -102,6 +103,17 @@ const Wrapper = styled.div`
       font-size: 3rem;
       text-align: left;
     }
+
+    .visually-hidden:not(:focus):not(:active) {
+      clip: rect(0 0 0 0); 
+      clip-path: inset(100%); 
+      height: 1px; 
+      overflow: hidden; 
+      position: absolute; 
+      white-space: nowrap; 
+      width: 1px; 
+    }
+
   }
 
 `
