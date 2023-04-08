@@ -63,9 +63,18 @@ const Wrapper = styled.nav`
       width: 8rem;
       padding: 2rem;
       font-size: 1.3rem;
+      transition: transform 0.1s ease-out;
+
       :hover {
-        transform: scaleX(1.4) scaleY(1.6);
+        transform: scaleX(1.3) scaleY(1.3);
+      }
+
+      :active {
         text-decoration-line: underline;
+      }
+
+      span {
+        text-transform: uppercase;
       }
     }
   }
