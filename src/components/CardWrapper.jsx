@@ -15,14 +15,6 @@ const CardWrapper = ({
     return title ==="Term" ? card.term : card.definition;
   }
 
-  const handleClickLearning = () => {
-    setLearningStatus(true)
-  }
-
-  const handleClickKnow = () => {
-    setLearningStatus(false)
-  }
-
   return (
     <>
       <CardHeader
@@ -38,13 +30,13 @@ const CardWrapper = ({
       <ButtonWrapper>
         <Button
           text="Learning"
-          onButtonClick={handleClickLearning}
+          onButtonClick={() => {setLearningStatus(true)}}
           disabled={showingModal}
           isSelected={card.isLearning}
         />
         <Button
           text="Know"
-          onButtonClick={handleClickKnow}
+          onButtonClick={() => {setLearningStatus(false)}}
           disabled={showingModal}
           isSelected={!card.isLearning}
         />
