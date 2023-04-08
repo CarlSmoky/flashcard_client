@@ -13,23 +13,29 @@ const Button = ({
   setButtonPressed,
   setMode,
   addLoadedCards,
-  current
+  current,
+  onButtonClick
 }) => {
 
   
-  const clickButtonHandle = e => {
+  const handleButtonClick = e => {
     e.stopPropagation();
+
+    if (onButtonClick) {
+      onButtonClick();
+      return;
+    }
     
     // On Settings pop up, Start button clicked
     if (text === "Start") {return;}
 
     // On finish confirmation pop up, for Quit and Back to Deck button
-    if (text === "Quit") {
-      setButtonPressed(text);
-      return;}
-    if (text === "Back to Deck") {
-      setButtonPressed(text);
-      return;}
+    // if (text === "Quit") {
+    //   setButtonPressed(text);
+    //   return;}
+    // if (text === "Back to Deck") {
+    //   setButtonPressed(text);
+    //   return;}
   
     // On card, for Learning and Know button
     if (!isEndCard) {
@@ -49,7 +55,7 @@ const Button = ({
   return (
     <ButtonStyle
       selected={isLearning}
-      onClick={clickButtonHandle}
+      onClick={handleButtonClick}
       disabled={disabled}
     >
       {text}

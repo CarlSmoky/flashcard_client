@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import Button from './Button'
 import { modes } from '../helpers/modes'
@@ -9,21 +9,18 @@ const Confimation = ({
   addLoadedCards
 }) => {
 
-  const [buttonPressed, setButtonPressed] = useState("");
-
-  useEffect(() => {
-    if (buttonPressed === 'Quit') {
-      addLoadedCards(current);
-      setMode(modes.finished);
-    }
-    if (buttonPressed === 'Back to Deck') {
-      setMode(modes.answering);
-    }
-  }, [buttonPressed])
-
   const handleSubmitClick = (e) => {
     e.preventDefault();
   }
+
+  const handleQuit = () => {
+    addLoadedCards(current);
+    setMode(modes.finished);
+  }
+  const handleBackToDeck = () => {
+    setMode(modes.answering);
+  }
+  
 
   return (
     <Wrapper>
@@ -31,11 +28,11 @@ const Confimation = ({
         <h2>Do you want to finish?</h2>
         <Button
           text='Quit'
-          setButtonPressed={setButtonPressed}
+          onButtonClick={handleQuit}
         />
         <Button
           text='Back to Deck'
-          setButtonPressed={setButtonPressed}
+          onButtonClick={handleBackToDeck}
         />
       </form>
     </Wrapper>
