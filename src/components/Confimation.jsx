@@ -66,6 +66,7 @@ const Wrapper = styled.div`
   h2 {
     font-size: 2rem;
     margin: 6.5rem 0 6rem;
+    text-transform: uppercase;
   }
   
 `
