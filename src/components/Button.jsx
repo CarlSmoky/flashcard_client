@@ -4,19 +4,18 @@ import { modes } from '../helpers/modes'
 
 const Button = ({
   text,
+  buttonType,
   disabled,
   nextCard,
   isEndCard,
   setCardProperty,
   cardId,
   isLearning,
-  setButtonPressed,
   setMode,
   addLoadedCards,
   current,
   onButtonClick
 }) => {
-
   
   const handleButtonClick = e => {
     e.stopPropagation();
@@ -28,14 +27,6 @@ const Button = ({
     
     // On Settings pop up, Start button clicked
     if (text === "Start") {return;}
-
-    // On finish confirmation pop up, for Quit and Back to Deck button
-    // if (text === "Quit") {
-    //   setButtonPressed(text);
-    //   return;}
-    // if (text === "Back to Deck") {
-    //   setButtonPressed(text);
-    //   return;}
   
     // On card, for Learning and Know button
     if (!isEndCard) {
@@ -57,6 +48,7 @@ const Button = ({
       selected={isLearning}
       onClick={handleButtonClick}
       disabled={disabled}
+      type={buttonType}
     >
       {text}
     </ButtonStyle>

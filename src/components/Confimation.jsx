@@ -29,9 +29,11 @@ const Confimation = ({
         <Button
           text='Quit'
           onButtonClick={handleQuit}
+          buttonType="button"
         />
         <Button
           text='Back to Deck'
+          buttonType='button'
           onButtonClick={handleBackToDeck}
         />
       </form>
