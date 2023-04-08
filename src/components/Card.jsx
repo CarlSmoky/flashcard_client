@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import styled, { css } from "styled-components"
 import CardWrapper from './CardWrapper'
+import { modes } from '../helpers/modes'
 
 const Card = ({
   card,
@@ -20,6 +21,17 @@ const Card = ({
     setSide(!side);
   }
 
+  const setLearningStatus = (isLearning) => {
+    if (!isEndCard) {
+      nextCard();
+    } else {
+      setMode(modes.finishConfirmation);
+      addLoadedCards(current)
+    }
+      
+    setCardProperty(card.id, 'isLearning', isLearning);
+  }
+
   return (
 
     <StyledCard >
@@ -29,12 +41,8 @@ const Card = ({
             title="Term"
             card={card}
             showingModal={showingModal}
-            nextCard={nextCard}
-            isEndCard={isEndCard}
+            setLearningStatus={setLearningStatus}
             setCardProperty={setCardProperty}
-            setMode={setMode}
-            addLoadedCards={addLoadedCards}
-            current={current}
           />
         </CardFront>
 
@@ -43,12 +51,7 @@ const Card = ({
             title="Definition"
             card={card}
             showingModal={showingModal}
-            nextCard={nextCard}
-            isEndCard={isEndCard}
             setCardProperty={setCardProperty}
-            setMode={setMode}
-            addLoadedCards={addLoadedCards}
-            current={current}
           />
         </CardBack>
       </CardInner>

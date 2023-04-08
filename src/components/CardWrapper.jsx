@@ -2,35 +2,17 @@ import React from 'react'
 import styled from "styled-components"
 import CardHeader from './CardHeader'
 import Button from "./Button";
-import { modes } from '../helpers/modes'
 
 const CardWrapper = ({
   title,
   card,
   showingModal,
-  nextCard,
-  isEndCard,
-  setCardProperty,
-  setMode,
-  addLoadedCards,
-  current
+  setLearningStatus,
+  setCardProperty
 }) => {
   
   const displaySide = (title) => {
     return title ==="Term" ? card.term : card.definition;
-  }
-
-
-
-  const setLearningStatus = (isLearning) => {
-    if (!isEndCard) {
-      nextCard();
-    } else {
-      setMode(modes.finishConfirmation);
-      addLoadedCards(current)
-    }
-      
-    setCardProperty(card.id, 'isLearning', isLearning);
   }
 
   const handleClickLearning = () => {
