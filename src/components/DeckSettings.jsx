@@ -22,8 +22,7 @@ const DeckSettings = ({
     setsettingNumCards(e.target.value)
   };
 
-  const handleSubmitClick = (e) => {
-    e.preventDefault();
+  const handleStart = () => {
     setNumCards(settingNumCards);
     setMode(modes.answering);
   }
@@ -37,7 +36,7 @@ const DeckSettings = ({
 
   return (
     <Wrapper>
-      <form onSubmit={handleSubmitClick} type="post">
+      <form>
         <Header>
           <RxCross2 onClick={routeChange}/>
         </Header>
@@ -53,7 +52,11 @@ const DeckSettings = ({
           value={settingNumCards}
         />
         <ButtonWrapper>
-          <Button text="Start" />
+          <Button
+            text="Start"
+            onButtonClick={handleStart}
+            buttonType='button'
+          />
         </ButtonWrapper>
       </form>
     </Wrapper>

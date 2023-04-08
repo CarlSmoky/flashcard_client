@@ -1,22 +1,12 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
-import { modes } from '../helpers/modes'
 
 const Button = ({
   text,
   buttonType,
   onButtonClick, 
   disabled,
-  isSelected,
-
-
-  nextCard,
-  isEndCard,
-  setCardProperty,
-  cardId,
-  setMode,
-  addLoadedCards,
-  current
+  isSelected
 }) => {
   
   const handleButtonClick = e => {
@@ -27,8 +17,6 @@ const Button = ({
       return;
     }
     
-    // On Settings pop up, Start button clicked
-    if (text === "Start") {return;}
   }
 
   return (
