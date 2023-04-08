@@ -21,9 +21,7 @@ const Result = ({
   return (
     <Wrapper>
       <div className='term'>
-        <p>
-          {term}
-        </p>
+        <p>{term}</p>
       </div>
       <div className='definition'>
         <p>{definition}</p>
@@ -58,7 +56,7 @@ const Wrapper = styled.div`
     p {
       text-align: left;
       font-size: 1.5rem;
-      font-family: var(--secondary-font);
+      font-family: var(--tertiary-font);
     }
   }
 
@@ -81,8 +79,10 @@ const Wrapper = styled.div`
     text-align: left;
 
     span {
-      font-size: 1.5rem;
-      font-family: var(--secondary-font);
+      font-size: 1.3rem;
+      font-family: var(--primary-font);
+      font-weight: 400;
+      text-transform: uppercase;
       cursor: pointer;
       &:hover {
         border-bottom: 2px solid var(--black-secondary)
