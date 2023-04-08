@@ -66,7 +66,7 @@ const Content = styled.p`
   text-align: left;
   margin: 2rem;
   height: 60%;
-  font-family: var(--secondary-font);
+  font-family: var(--tertiary-font);
 
   &.textSelectEnable {
   user-select: text;

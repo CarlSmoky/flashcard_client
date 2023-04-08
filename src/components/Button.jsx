@@ -62,7 +62,8 @@ const ButtonStyle = styled.button`
   width: 45%;
   padding: 1rem;
   margin: 1rem 2rem;
-  font-family: var(--tertiary-font);
+  font-family: var(--primary-font);
+  font-weight: 600;
   text-transform: uppercase;
   color: var(--black-primary);
   border: 2px solid var(--black-primary); 

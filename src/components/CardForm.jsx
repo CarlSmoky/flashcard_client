@@ -32,10 +32,11 @@ const CardForm = ({
           name="term"
           id="term"
           value={card.term}
-          required
+          aria-label="term"
         />
       <p>{card.errors.term}</p>
       </div>
+      <div className='verticalLine'></div>
       <div className='definition'>
         <textarea
           onChange={onChangeCard}
@@ -43,7 +44,7 @@ const CardForm = ({
           name="definition"
           id="definition"
           value={card.definition}
-          required
+          aria-label="definition"
         />
       <p>{card.errors.definition}</p>
       </div>
@@ -55,37 +56,51 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   width: 98%;
+  height: 11rem;
   margin: 1rem auto 1rem;
-  border-radius: .5rem;
+  border-radius: .3rem;
   border: 2px solid var(--black-primary);
   background: var(--tertiary-color);
 
-  div {
+  .term, .definition {
     width: 56%;
-    height: 5rem;
-    margin: 1rem;
+    margin: 1.3rem;
+
+    label {
+      
+    }
 
     p {
       text-align: left;
-      font-size: 1rem;
       color: red;
-      height: 1.5rem;
+      font-size: 1.4rem;
+      color: red;
+      font-family: var(--tertiary-font);
     }
   }
 
-  textarea {
-      width: 100%;
-      border-top-style: hidden;
-      border-right-style: hidden;
-      border-left-style: hidden;
-      border-bottom-style: groove;
-      background-color: var(--tertiary-color);
-      resize: none;
-    }
+  .verticalLine {
+    border-right: 2px solid var(--black-primary);
+    margin: 1rem 0;
+  }
 
-    textarea:focus {
+  textarea {
+    width: 100%;
+    height: 70%;
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
+    border-bottom-style: hidden;
+    background-color: var(--tertiary-color);
+    resize: none;
+    font-size: 1.7rem;
+    font-weight: 100;
+    font-family: var(--tertiary-font);
+  }
+
+  textarea:focus {
     outline: none;
-    }
+  }
 `
 
 export default CardForm

@@ -39,7 +39,6 @@ const DeckSettings = ({
     <Wrapper>
       <form onSubmit={handleSubmitClick} type="post">
         <Header>
-          <Heading>You Select...</Heading>
           <RxCross2 onClick={routeChange}/>
         </Header>
         {deckName && <Title>{deckName}</Title>}
@@ -98,17 +97,17 @@ const Header = styled.div`
     cursor: pointer;
   }
 `
-const Heading = styled.span`
-  font-size: 1.5rem;
-`
+
 const Title = styled.h2`
   font-size: 2rem;
   height: 25%;
+  font-weight: 600;
+  text-transform: uppercase;
 `
 
 const Label = styled.label`
   font-size: 1.5rem;
-  /* font-family: var(--secondary-font); */
+  text-transform: uppercase;
 `
 
 

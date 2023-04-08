@@ -59,15 +59,19 @@ const Right = styled.div`
 `
 
 const Header = styled.h2`
-  font-size: 2rem;
+  font-size: 1.7rem;
   text-align: left;
   max-width: 70rem;
-  margin: 2rem auto 0;
+  margin: 3rem auto 0;
+  font-family: var(--primary-font);
+  font-weight: 600;
+  text-transform: uppercase;
 `
 
 const CardCount = styled.span`
   font-size: 1.5rem;
   font-weight: bold;
+  font-family: var(--tertiary-font);
 `
 
 const Button = styled.button`

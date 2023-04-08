@@ -57,6 +57,8 @@ const Title = styled.h1`
   font-size: 2rem;
   text-align: left;
   margin-left: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
 `
 
 export default Decks

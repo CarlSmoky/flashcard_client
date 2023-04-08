@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { validation } from '../helpers/utilities';
 
 const DeckDetailsForm = ({
@@ -24,14 +24,13 @@ const DeckDetailsForm = ({
   return (
     <Wrapper>
       <div>
-        <label htmlFor="title">Title</label>
+        <label htmlFor="deckName">Title</label>
         <input
           onChange={onChangeDeck}
           type="text"
           name="deckName"
           id="deckName"
           value={newDeckContents.deckName}
-          required
         />
       <p>{newDeckContents.errors.deckName}</p>
       </div>
@@ -50,14 +49,25 @@ const DeckDetailsForm = ({
   )
 }
 
+const absoluteStyle = css`
+  width: 98%;
+  margin-left: 1rem;
+  border-top-style: hidden;
+  border-right-style: hidden;
+  border-left-style: hidden;
+  background-color: var(--quaternary-color);
+  resize: none;
+  font-size: 1.7rem;
+  font-family: var(--tertiary-font);
+`
+
 const Wrapper = styled.div`
   width: 98%;
   margin: 1rem auto 1rem;
-  border-radius: .5rem;
+  border-radius: .3rem;
   border: 2px solid var(--black-primary);
   background: var(--tertiary-color);
   text-align: left;
-
 
   div {
     background: var(--quaternary-color);
@@ -65,17 +75,20 @@ const Wrapper = styled.div`
     label {
       display: block;
       padding: 1rem;
+      font-family: var(--primary-font);
+      font-size: 1.5rem;
+      font-weight: 200;
+      text-transform: uppercase;
     }
-    
-    textarea, input {
-      width: 98%;
-      margin-left: 1rem;
-      border-top-style: hidden;
-      border-right-style: hidden;
-      border-left-style: hidden;
+
+    input {
       border-bottom-style: groove;
-      background-color: var(--quaternary-color);
-      resize: none;
+      ${absoluteStyle}
+    }
+
+    textarea {
+      border-bottom-style: hidden;
+      ${absoluteStyle}
     }
 
     textarea:focus, input:focus{
@@ -84,12 +97,10 @@ const Wrapper = styled.div`
 
     p {
       margin-left: 1rem;
-      font-size: 1rem;
+      font-size: 1.4rem;
       color: red;
-      height: 1.5rem;
+      font-family: var(--tertiary-font);
     }
-
-
   }
 
 

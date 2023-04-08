@@ -15,7 +15,8 @@ const GlobalStyles = createGlobalStyle`
   
   --primary-font: 'Syncopate';
   --secondary-font: 'Roboto Mono';
-  --tertiary-font: 'Poller One';
+  --tertiary-font: 'Tahoma';
+  --serif-font: 'Cambria';
 }
 
 body {
