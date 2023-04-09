@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { RxCross2 } from 'react-icons/rx'
 import Button from './Button'
 import { modes } from '../helpers/modes'
+import { truncate } from '../helpers/utilities';
 
 const DeckSettings = ({
     setNumCards,
@@ -30,7 +31,7 @@ const DeckSettings = ({
   // When cancel button clicked, back to /decklist
   let navigate = useNavigate(); 
   const routeChange = () =>{ 
-    let path = `/decklist`; 
+    let path = `/decks`; 
     navigate(path);
   }
 
@@ -40,7 +41,7 @@ const DeckSettings = ({
         <Header>
           <RxCross2 onClick={routeChange}/>
         </Header>
-        {deckName && <Title>{deckName}</Title>}
+        {deckName && <Title>{truncate(deckName, 18)}</Title>}
         <Label htmlFor="numCards">Cards: </Label>
         <input
           onChange={onChange}

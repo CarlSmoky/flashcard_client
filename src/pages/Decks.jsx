@@ -24,6 +24,7 @@ const Decks = ({title}) => {
         key={deck.id}
         id={deck.id}
         deckName={deck.deck_name}
+        description={deck.description}
         user_id={deck.user_id}
       />
     )
@@ -32,7 +33,7 @@ const Decks = ({title}) => {
   return (
     <>
     <Wrapper>
-      <Title>{title}</Title>
+      <Title>Deck List</Title>
       <Content>
       {allDecks}
       </Content>
@@ -44,13 +45,13 @@ const Decks = ({title}) => {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 6rem;
-  margin-bottom: 6rem;
+  margin: 6rem 2rem;
 `
 const Content = styled.div`
   display: flex;
   flex-direction: row;
-  margin-left: 1rem;
+  flex-wrap: wrap;
+  justify-content: flex-start;
 `
 
 const Title = styled.h1`
