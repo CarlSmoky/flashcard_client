@@ -14,9 +14,9 @@ const GlobalStyles = createGlobalStyle`
   --side-column-width: 8.5rem;
   
   --primary-font: 'Syncopate';
-  --secondary-font: 'Roboto Mono';
+  --secondary-font: 'Futura';
   --tertiary-font: 'Tahoma';
-  --serif-font: 'Cambria';
+  /* --serif-font: 'Futura'; */
 }
 
 body {

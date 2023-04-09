@@ -13,7 +13,7 @@ const Nav = () => {
         <a onClick={()=> {navigate("/")}}>
           <span>Home</span>
         </a>
-        <a onClick={()=> {navigate("/decklist")}}>
+        <a onClick={()=> {navigate("/decks")}}>
           <span>Decks</span>
         </a>
         <a onClick={()=> {navigate("/create")}}>

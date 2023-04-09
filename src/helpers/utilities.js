@@ -50,4 +50,13 @@ const validation = (name, value) => {
   return error;
 }
 
-export { validation };
+const truncate = (text, maxLength) => {
+  if (!text) return '';
+  let displayText = text;
+  if (text.length > maxLength) {
+    displayText = text.slice(0, maxLength) + '...';
+  } 
+  return displayText;
+} 
+
+export { validation, truncate };

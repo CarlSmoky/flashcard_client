@@ -32,8 +32,7 @@ const Wrapper = styled.div`
     span {
       text-align: left;
       font-size: 1.5rem;
-      font-family: var(--primary-font);
-      border-bottom: 1px solid var(--black-primary);
+      font-family: var(--secondary-font);
       text-transform: uppercase;
     }
   }

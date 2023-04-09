@@ -29,9 +29,9 @@ const Wrapper = styled.div`
 `;
 
 const CardSideTitle = styled.h3`
-  font-size: 1.7rem;
-  font-family: var(--primary-font);
-  font-weight: 400;
+  font-size: 1.8rem;
+  font-family: var(--secondary-font);
+  font-weight: 600;
   text-transform: uppercase;
   text-align: left;
   margin: auto 2rem;

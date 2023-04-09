@@ -9,6 +9,7 @@ const DeckDetailsForm = ({
 
   const onChangeDeck = (e) => {
     const returnedError = validation(e.target.name, e.target.value);
+
     const updatedDeck = {...newDeckContents,
       [e.target.name]: e.target.value,  
       errors: 
@@ -74,9 +75,9 @@ const Wrapper = styled.div`
     label {
       display: block;
       padding: 1rem;
-      font-family: var(--primary-font);
       font-size: 1.5rem;
-      font-weight: 200;
+      font-family: var(--secondary-font);
+  font-weight: 200;
       text-transform: uppercase;
     }
 
