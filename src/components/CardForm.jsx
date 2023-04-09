@@ -64,11 +64,7 @@ const Wrapper = styled.div`
 
   .term, .definition {
     width: 56%;
-    margin: 1.3rem;
-
-    label {
-      
-    }
+    margin: 1.2rem;
 
     p {
       text-align: left;

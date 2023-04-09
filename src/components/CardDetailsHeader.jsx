@@ -25,7 +25,7 @@ const Wrapper = styled.div`
   .term, .definition {
     width: 56%;
     text-align: left;
-    margin: 0 2rem;
+    margin-left: 2rem;
 
     span {
       text-align: left;
@@ -39,7 +39,7 @@ const Wrapper = styled.div`
 
   .verticalLine {
     border-right: 2px solid transparent;
-    margin: 1rem 0;
+    /* margin: 1rem 0; */
   }
 `
 
