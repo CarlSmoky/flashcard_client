@@ -10,13 +10,12 @@ const Button = ({
 }) => {
   
   const handleButtonClick = e => {
-    e.stopPropagation();
+    buttonType === 'submit'? e.preventDefault() : e.stopPropagation();
 
     if (onButtonClick) {
       onButtonClick();
       return;
     }
-    
   }
 
   return (
