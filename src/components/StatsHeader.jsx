@@ -61,7 +61,6 @@ const Wrapper = styled.div`
 
   .star {
     width: 10%;
-    padding-right: 2rem;
   }
 
 
