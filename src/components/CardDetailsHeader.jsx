@@ -20,12 +20,12 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   width: 98%;
-  /* margin: 1rem auto 0; */
+  margin: 1rem auto 0;
 
   .term, .definition {
     width: 56%;
     text-align: left;
-    margin-left: 2rem;
+    margin-left: 1rem;
 
     span {
       text-align: left;
