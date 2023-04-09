@@ -29,11 +29,10 @@ const Wrapper = styled.div`
 
     span {
       text-align: left;
-      font-family: var(--primary-font);
+      font-family: var(--secondary-font);
       font-size: 1.5rem;
       font-weight: 200;
       text-transform: uppercase;
-      border-bottom: 1px solid var(--black-primary);
     }
   }
 
