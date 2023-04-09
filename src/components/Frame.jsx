@@ -3,7 +3,7 @@ import { BsCardText } from 'react-icons/bs'
 import { BiSearch } from 'react-icons/bi'
 import Nav from './Nav'
 import Menu from './Menu'
-import DeckList from './DeckList'
+import Decks from '../pages/Decks'
 import Cards from './Cards'
 import Create from '../pages/Create'
 import Footer from './Footer'
@@ -27,7 +27,7 @@ return (
     <div className="center">
       <Nav />
       {content === "menu" && <Menu />}
-      {content === "decklist" && <DeckList />}
+      {content === "decks" && <Decks />}
       {content === "cards" && <Cards />}
       {content === "create" && <Create />}
       {content === "signup" && <Signup />}

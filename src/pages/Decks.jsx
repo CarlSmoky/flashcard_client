@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
 import axios from "axios";
-import DeckItem from './DeckItem';
+import DeckItem from '../components/DeckItem';
 
 const Decks = ({title}) => {
 
