@@ -167,23 +167,23 @@ const Cards = () => {
       { displayCards() && 
       <CardStyle className={isModalMode() && 'blur'}>
 
-        <Button disabled={isModalMode()}>
+        <ArrowButton disabled={isModalMode()}>
           {current > 0 ? <MdArrowBackIosNew onClick={previousCard} alt="previous_button"/>
           :
           <div className="emptyContent"></div>
           }
-        </Button>
+        </ArrowButton>
 
         {/* render cards */}
         {selectedCardIndices && selectedCardIndices.length > 0 ?  cards[current] : defaultCard[0]}
         {/* /render cards */}
 
-        <Button disabled={isModalMode()}>
+        <ArrowButton disabled={isModalMode()}>
           {current < selectedCardIndices.length - 1 ? <MdArrowForwardIos onClick={nextCard} alt="next_button" />
           :
           <div className="emptyContent"></div>
           }
-        </Button>
+        </ArrowButton>
 
       </CardStyle>
       }
@@ -215,7 +215,7 @@ const CardStyle = styled.article`
   }
 `;
 
-const Button = styled.button`
+const ArrowButton = styled.button`
   margin: auto;
   
     svg {

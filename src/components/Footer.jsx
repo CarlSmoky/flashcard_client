@@ -16,6 +16,7 @@ const StyledFooter = styled.footer`
   p {
     margin-top:3rem;
     font-size: 1.5rem;
+    font-family: var(--tertiary-font);
   }
   
 `

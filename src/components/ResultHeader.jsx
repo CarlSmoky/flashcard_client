@@ -37,12 +37,14 @@ const Wrapper = styled.div`
 
   h2 {
     font-size: 1.7rem;
+    text-transform: uppercase;
   }
 
   p {
     font-size: 1.3rem;
     font-family: var(--primary-font);
     text-align: right;
+    text-transform: uppercase;
   }
 
 

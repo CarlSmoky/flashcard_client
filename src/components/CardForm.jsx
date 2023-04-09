@@ -1,28 +1,27 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { validation } from '../helpers/utilities'
 
 const CardForm = ({
   editCardContents,
   card,
-  index
+  index,
 }) => {
 
-
-  const [state, setState] = useState(card);
-
   const onChangeCard = (e) => {
-    const newState = { ...state, [e.target.name]: e.target.value }
-    // setState(prev => ({...prev, [e.target.name]: e.target.value}));
-    setState(newState);
-    editCardContents(index, newState)
+    const returnedError = validation(e.target.name, e.target.value);
+    
+    const updatedCard = {...card,
+      [e.target.name]: e.target.value,  
+      errors: 
+        {
+          ...card.errors,
+          [returnedError.key] : returnedError.message
+        }
+    }
+    
+    editCardContents(index, updatedCard);
   };
-
-  /*
-  TODO: 
-  • onChangeCard calls editCardContents with its own index and cardContents
-
-  • maybe we need to update state here a useEffect ???
-  */
 
   return (
     <Wrapper>
@@ -32,17 +31,22 @@ const CardForm = ({
           type="text"
           name="term"
           id="term"
-          value={state.term}
+          value={card.term}
+          aria-label="term"
         />
+      <p>{card.errors.term}</p>
       </div>
+      <div className='verticalLine'></div>
       <div className='definition'>
         <textarea
           onChange={onChangeCard}
           type="text"
           name="definition"
           id="definition"
-          value={state.definition}
+          value={card.definition}
+          aria-label="definition"
         />
+      <p>{card.errors.definition}</p>
       </div>
     </Wrapper>
   )
@@ -52,30 +56,47 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   width: 98%;
+  height: 11rem;
   margin: 1rem auto 1rem;
-  border-radius: .5rem;
+  border-radius: .3rem;
   border: 2px solid var(--black-primary);
   background: var(--tertiary-color);
 
-  div {
+  .term, .definition {
     width: 56%;
-    height: 5rem;
-    margin: 1rem;
+    margin: 1.2rem;
+
+    p {
+      text-align: left;
+      color: red;
+      font-size: 1.4rem;
+      color: red;
+      font-family: var(--tertiary-font);
+    }
+  }
+
+  .verticalLine {
+    border-right: 2px solid var(--black-primary);
+    margin: 1rem 0;
   }
 
   textarea {
-      width: 100%;
-      border-top-style: hidden;
-      border-right-style: hidden;
-      border-left-style: hidden;
-      border-bottom-style: groove;
-      background-color: var(--tertiary-color);
-      resize: none;
-    }
+    width: 100%;
+    height: 70%;
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
+    border-bottom-style: hidden;
+    background-color: var(--tertiary-color);
+    resize: none;
+    font-size: 1.7rem;
+    font-weight: 100;
+    font-family: var(--tertiary-font);
+  }
 
-    textarea:focus {
+  textarea:focus {
     outline: none;
-    }
+  }
 `
 
 export default CardForm

@@ -21,7 +21,7 @@ const Card = styled.div`
   width: 30%;
   height: 20rem;
   margin: 1rem 1rem 1rem 0;
-  border: var(--side-column-border) solid var(--black-primary);
+  border: .3rem solid var(--black-primary);
   background: var(--tertiary-color);
   border-radius: 5px;
   
@@ -41,6 +41,13 @@ const ClickArea =  styled.div`
   width: 30%;
   height: 20rem;
   margin: 0;
+
+  h1 {
+    font-family: var(--primary-font);
+    font-weight: 200;
+    text-transform: uppercase;
+    margin: 1.5rem;
+  }
 `
 
 export default DeckItem

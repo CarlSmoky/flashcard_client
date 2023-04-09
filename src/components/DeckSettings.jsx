@@ -22,8 +22,7 @@ const DeckSettings = ({
     setsettingNumCards(e.target.value)
   };
 
-  const handleSubmitClick = (e) => {
-    e.preventDefault();
+  const handleStart = () => {
     setNumCards(settingNumCards);
     setMode(modes.answering);
   }
@@ -37,9 +36,8 @@ const DeckSettings = ({
 
   return (
     <Wrapper>
-      <form onSubmit={handleSubmitClick} type="post">
+      <form>
         <Header>
-          <Heading>You Select...</Heading>
           <RxCross2 onClick={routeChange}/>
         </Header>
         {deckName && <Title>{deckName}</Title>}
@@ -54,7 +52,11 @@ const DeckSettings = ({
           value={settingNumCards}
         />
         <ButtonWrapper>
-          <Button text="Start" />
+          <Button
+            text="Start"
+            buttonType='button'
+            onButtonClick={handleStart}
+          />
         </ButtonWrapper>
       </form>
     </Wrapper>
@@ -98,17 +100,17 @@ const Header = styled.div`
     cursor: pointer;
   }
 `
-const Heading = styled.span`
-  font-size: 1.5rem;
-`
+
 const Title = styled.h2`
   font-size: 2rem;
   height: 25%;
+  font-weight: 600;
+  text-transform: uppercase;
 `
 
 const Label = styled.label`
   font-size: 1.5rem;
-  /* font-family: var(--secondary-font); */
+  text-transform: uppercase;
 `
 
 

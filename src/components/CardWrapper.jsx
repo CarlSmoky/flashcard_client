@@ -7,12 +7,8 @@ const CardWrapper = ({
   title,
   card,
   showingModal,
-  nextCard,
-  isEndCard,
-  setCardProperty,
-  setMode,
-  addLoadedCards,
-  current
+  setLearningStatus,
+  setCardProperty
 }) => {
   
   const displaySide = (title) => {
@@ -34,27 +30,15 @@ const CardWrapper = ({
       <ButtonWrapper>
         <Button
           text="Learning"
+          onButtonClick={() => {setLearningStatus(true)}}
           disabled={showingModal}
-          nextCard={nextCard}
-          isEndCard={isEndCard}
-          setCardProperty={setCardProperty}
-          cardId={card.id}
-          isLearning={card.isLearning}
-          setMode={setMode}
-          addLoadedCards={addLoadedCards}
-          current={current}
+          isSelected={card.isLearning}
         />
         <Button
           text="Know"
+          onButtonClick={() => {setLearningStatus(false)}}
           disabled={showingModal}
-          nextCard={nextCard}
-          isEndCard={isEndCard}
-          setCardProperty={setCardProperty}
-          cardId={card.id}
-          isLearning={!card.isLearning}
-          setMode={setMode}
-          addLoadedCards={addLoadedCards}
-          current={current}
+          isSelected={!card.isLearning}
         />
       </ButtonWrapper>
     </>
@@ -66,7 +50,7 @@ const Content = styled.p`
   text-align: left;
   margin: 2rem;
   height: 60%;
-  font-family: var(--secondary-font);
+  font-family: var(--tertiary-font);
 
   &.textSelectEnable {
   user-select: text;

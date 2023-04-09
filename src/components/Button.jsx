@@ -1,56 +1,29 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
-import { modes } from '../helpers/modes'
 
 const Button = ({
   text,
+  buttonType,
+  onButtonClick, 
   disabled,
-  nextCard,
-  isEndCard,
-  setCardProperty,
-  cardId,
-  isLearning,
-  setButtonPressed,
-  setMode,
-  addLoadedCards,
-  current
+  isSelected
 }) => {
-
   
-  const clickButtonHandle = e => {
-    e.stopPropagation();
-    
-    // On Settings pop up, Start button clicked
-    if (text === "Start") {return;}
+  const handleButtonClick = e => {
+    buttonType === 'submit'? e.preventDefault() : e.stopPropagation();
 
-    // On finish confirmation pop up, for Quit and Back to Deck button
-    if (text === "Quit") {
-      setButtonPressed(text);
-      return;}
-    if (text === "Back to Deck") {
-      setButtonPressed(text);
-      return;}
-  
-    // On card, for Learning and Know button
-    if (!isEndCard) {
-      nextCard();
+    if (onButtonClick) {
+      onButtonClick();
+      return;
     }
-    // On card, for Learning and Know button when the card is the end
-    if (isEndCard) {
-      setMode(modes.finishConfirmation);
-      addLoadedCards(current)
-    }
-      
-    const isLearning = e.target.innerHTML === "Learning";
-      
-    setCardProperty(cardId, 'isLearning', isLearning);
   }
 
   return (
     <ButtonStyle
-      selected={isLearning}
-      onClick={clickButtonHandle}
+      selected={isSelected}
+      onClick={handleButtonClick}
       disabled={disabled}
+      type={buttonType}
     >
       {text}
     </ButtonStyle>
@@ -62,7 +35,8 @@ const ButtonStyle = styled.button`
   width: 45%;
   padding: 1rem;
   margin: 1rem 2rem;
-  font-family: var(--tertiary-font);
+  font-family: var(--primary-font);
+  font-weight: 600;
   text-transform: uppercase;
   color: var(--black-primary);
   border: 2px solid var(--black-primary); 

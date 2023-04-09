@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
 import DeckDetailsForm from '../components/DeckDetailsForm'
-import CreateCardHeader from '../components/CardDetailsHeader'
+import CardDetailsHeader from '../components/CardDetailsHeader'
 import CardForm from '../components/CardForm'
 import { GrAddCircle } from 'react-icons/gr'
 import Button from '../components/Button'
@@ -11,15 +11,21 @@ const Create = () => {
   // Deck
   const [newDeckContents, setNewDeckContents] = useState({
     deckName: '',
-    description: ''
+    description: '',
+    errors: {
+      deckName: '',
+      description: '',
+    }
   });
   
-
   //Card
-  
   const defaultCard = {
     term: '',
-    definition: ''
+    definition: '',
+    errors:  {
+      term: '',
+      definition: '',
+    }
   }
 
   const [newCardContents, setNewCardContents] = useState([{ ...defaultCard }]);
@@ -34,13 +40,25 @@ const Create = () => {
     setNewCardContents([...prev]);
   }
 
-  const handleSubmitClick = (e) => {
-    e.preventDefault();
+  const deckContentsForInsertion = {
+    deckName : newDeckContents.deckName,
+    description: newDeckContents.description
+  } 
+
+  const cardsContentsForInsertion = newCardContents.map((card) => {
+    return {
+      term : card.term,
+      definition: card.definition
+    }
+  });
+
+  const handleSaveClick = (e) => {
+  
     const endpoints = {
       "NEWDECK": "api/deck/create"
     }
 
-    axios.post(endpoints.NEWDECK, {newDeckContents, newCardContents})
+    axios.post(endpoints.NEWDECK, {newDeckContents : deckContentsForInsertion, newCardContents : cardsContentsForInsertion})
       .then(response => {
         console.log(response);
       })
@@ -61,21 +79,24 @@ const Create = () => {
 
   return (
     <Wrapper>
-      <form onSubmit={handleSubmitClick}>
+      <form>
         <DeckDetailsForm
           newDeckContents={newDeckContents}
           setNewDeckContents={setNewDeckContents}
         />
-        <CreateCardHeader />
-        {cardFormItems}
+        <CardDetailsHeader />
+        {newCardContents && cardFormItems}
         <div className='addButton'>
-          <button onClick={createNewCard}>
+          <button onClick={createNewCard} type='button'>
             <GrAddCircle />
+            <span className="visually-hidden">Add Button</span>
           </button>
         </div>
-        <div className="saveButton">
-          <button>Save</button>
-        </div>
+          <Button
+            text='Save'
+            buttonType='submit'
+            onButtonClick={handleSaveClick}
+          />
       </form>
     </Wrapper>
   )
@@ -85,16 +106,25 @@ const Wrapper = styled.div`
 
 .addButton {
   text-align: right;
+  
   button {
     margin: 0 1rem;
   }
-}
-
-  button {
     svg {
       font-size: 3rem;
       text-align: left;
     }
+
+    .visually-hidden:not(:focus):not(:active) {
+      clip: rect(0 0 0 0); 
+      clip-path: inset(100%); 
+      height: 1px; 
+      overflow: hidden; 
+      position: absolute; 
+      white-space: nowrap; 
+      width: 1px; 
+    }
+
   }
 
 `

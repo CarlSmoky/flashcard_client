@@ -105,11 +105,12 @@ const Wrapper = styled.div`
       div {
         margin: 1.2rem;
         text-align: center;
+        transition: transform 0.1s ease-out;
         svg {
           font-size: 4rem;
         }
         :hover {
-          transform: scaleX(1.4) scaleY(1.6);
+          transform: scaleX(1.2) scaleY(1.2);
         }
       }
     }

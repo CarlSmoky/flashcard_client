@@ -25,14 +25,18 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin-top: 1rem;
 `;
 
 const CardSideTitle = styled.h3`
-  font-size: 1.5rem;
-  font-family: var(--tertiary-font);
+  font-size: 1.7rem;
+  font-family: var(--primary-font);
+  font-weight: 400;
+  text-transform: uppercase;
   text-align: left;
   margin: auto 2rem;
   user-select: none;
+  
 `;
 
 
