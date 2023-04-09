@@ -89,7 +89,7 @@ const Create = () => {
         <div className='addButton'>
           <button onClick={createNewCard} type='button'>
             <GrAddCircle />
-            <span className="visually-hidden">Add Button</span>
+            <span className="visually-hidden">Add Card Button</span>
           </button>
         </div>
           <Button

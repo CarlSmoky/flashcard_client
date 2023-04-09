@@ -11,6 +11,7 @@ const StatsHeader = ({
   return (
     <Wrapper>
       <div className='term'><span>Term</span></div>
+      <div className='verticalLine'></div>
       <div className='definition'><span>Definition</span></div>
       <div className='isLearning'></div>
       <div className='star'></div>
@@ -24,10 +25,10 @@ const Wrapper = styled.div`
   width: 100%;
   margin: 1rem auto 0;
 
-  div {
-    margin: auto 0;
+  .term {
+    width: 28.5%;
+    margin-left: 2rem;
     text-align: left;
-    margin: 0 2rem;
 
     span {
       text-align: left;
@@ -37,19 +38,30 @@ const Wrapper = styled.div`
     }
   }
 
-  .term {
-      width: 25%; 
-      text-align: left;
+  .verticalLine {
+    border-right: 2px solid transparent;
   }
 
   .definition {
     width: 45%;
-    padding-left: 1rem;
-    
+    margin-left: 2rem;
+    text-align: left;
+
+    span {
+      text-align: left;
+      font-size: 1.5rem;
+      font-family: var(--secondary-font);
+      text-transform: uppercase;
+    }
+  }
+
+  .isLearning {
+    width:15%;
   }
 
   .star {
-    width: 4rem;
+    width: 10%;
+    padding-right: 2rem;
   }
 
 

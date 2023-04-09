@@ -23,6 +23,7 @@ const Result = ({
       <div className='term'>
         <p>{term}</p>
       </div>
+      <div className='verticalLine'></div>
       <div className='definition'>
         <p>{definition}</p>
       </div>
@@ -31,11 +32,13 @@ const Result = ({
           {`${isLearning ? "Learning" : "Know"}`}
         </span>
       </div>
-      <Star
-        fillStar={fillStar}
-        setCardProperty={setCardProperty}
-        cardId={cardId}
-      />
+      <div className="star">
+        <Star
+          fillStar={fillStar}
+          setCardProperty={setCardProperty}
+          cardId={cardId}
+        />
+      </div>
     </Wrapper>
   )
 }
@@ -44,37 +47,42 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   width: 98%;
+  height: 10rem;
   margin: 1rem auto 1rem;
   border-radius: .5rem;
   border: 2px solid var(--black-primary);
   background: var(--quaternary-color);
 
-  div {
-    margin: auto 0;
-    padding: 2rem;
+  .term {
+    width: 30%;
+    text-align: left;
 
     p {
+      margin: 1rem 2rem;
+      font-size: 1.5rem;
+      font-family: var(--tertiary-font);
+    }
+  }
+
+  .verticalLine {
+    border-right: 2px solid var(--black-primary);
+    margin: 1rem 0;
+  }
+
+  .definition {
+    width: 45%;
+      
+    p {
+      margin: 1rem 0 1rem 2rem;
       text-align: left;
       font-size: 1.5rem;
       font-family: var(--tertiary-font);
     }
   }
 
-  .term {
-      width: 25%; 
-    }
-
-  .definition {
-    width: 45%;
-      
-    p {
-      padding-left: 2rem;
-      border-left: .2rem solid var(--black-secondary);
-    }
-  }
   
   .isLearning {
-    width: 6%;
+    width: 15%;
     margin: auto 0;
     text-align: left;
 
@@ -88,6 +96,12 @@ const Wrapper = styled.div`
         border-bottom: 2px solid var(--black-secondary)
       }
     }
+  }
+
+  .star {
+    width: 10%;
+    margin: auto;
+    padding-right: 2rem; 
   }
 `
 
