@@ -9,7 +9,6 @@ const DeckDetailsForm = ({
 
   const onChangeDeck = (e) => {
     const returnedError = validation(e.target.name, e.target.value);
-    console.log("onChangeCard", returnedError)
     const updatedDeck = {...newDeckContents,
       [e.target.name]: e.target.value,  
       errors: 

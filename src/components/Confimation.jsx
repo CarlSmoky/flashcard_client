@@ -28,8 +28,8 @@ const Confimation = ({
         <h2>Do you want to finish?</h2>
         <Button
           text='Quit'
-          onButtonClick={handleQuit}
           buttonType="button"
+          onButtonClick={handleQuit}
         />
         <Button
           text='Back to Deck'

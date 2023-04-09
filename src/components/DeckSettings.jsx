@@ -54,8 +54,8 @@ const DeckSettings = ({
         <ButtonWrapper>
           <Button
             text="Start"
-            onButtonClick={handleStart}
             buttonType='button'
+            onButtonClick={handleStart}
           />
         </ButtonWrapper>
       </form>
