@@ -31,8 +31,9 @@ const Button = ({
 }
 
 const ButtonStyle = styled.button`
-  border-radius: .5rem;
+  border-radius: .4rem;
   width: 45%;
+  height: 2rem;
   padding: 1rem;
   margin: 1rem 2rem;
   font-family: var(--primary-font);
@@ -40,7 +41,7 @@ const ButtonStyle = styled.button`
   text-transform: uppercase;
   color: var(--black-primary);
   border: 2px solid var(--black-primary); 
-  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
+  box-shadow: 1px 1px 0px 0px  black, 2px 2px 0px 0px black, 3px 3px 0px 0px black, 4px 4px 0px 0px black, 5px 5px 0px 0px black;
   position: relative;
   user-select: none;
   -webkit-user-select: none;
@@ -48,8 +49,7 @@ const ButtonStyle = styled.button`
 
   & {
     color: ${props => props.selected ? "var(--white-primary)" : ""};
-    background: ${props => props.selected ? "var(--black-primary)" : ""};
-    opacity: ${props => props.selected ? "80%" : ""};: ;
+    background: ${props => props.selected ? "var(--grey-primary)" : ""};
     }
 
   ${({ disabled }) => {
@@ -69,9 +69,13 @@ const ButtonStyle = styled.button`
         left: 0;
         background-color: var(--primary-color);
         transform-origin: bottom right;
-        transition: transform 0.25s ease-out;
+        transition: transform .3s ease-out;
       }
 
+      &:hover {
+        font-size: 1.5rem;
+      }
+      
       &:hover::after {
         transform: scaleX(1);
         transform-origin: bottom left;
