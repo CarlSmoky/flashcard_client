@@ -51,6 +51,7 @@ const Card = ({
             title="Definition"
             card={card}
             showingModal={showingModal}
+            setLearningStatus={setLearningStatus}
             setCardProperty={setCardProperty}
           />
         </CardBack>
