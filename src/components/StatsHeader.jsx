@@ -1,18 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const StatsHeader = ({
-  term, 
-  definition, 
-  isLearning, 
-  fillStar
-}) => {
+const StatsHeader = () => {
 
   return (
     <Wrapper>
-      <div className='term'><span>Term</span></div>
+      <div className='term'>
+        <p>Term</p></div>
       <div className='verticalLine'></div>
-      <div className='definition'><span>Definition</span></div>
+      <div className='definition'>
+        <p>Definition</p></div>
       <div className='isLearning'></div>
       <div className='star'></div>
     </Wrapper>
@@ -26,11 +23,11 @@ const Wrapper = styled.div`
   margin: 1rem auto 0;
 
   .term {
-    width: 28.5%;
-    margin-left: 2rem;
+    width: 33%;
     text-align: left;
 
-    span {
+    p {
+      margin: 0 2.1rem 0 4rem;
       text-align: left;
       font-size: 1.5rem;
       font-family: var(--secondary-font);
@@ -43,11 +40,11 @@ const Wrapper = styled.div`
   }
 
   .definition {
-    width: 45%;
+    width: 50%;
     margin-left: 2rem;
     text-align: left;
 
-    span {
+    p {
       text-align: left;
       font-size: 1.5rem;
       font-family: var(--secondary-font);
@@ -56,11 +53,11 @@ const Wrapper = styled.div`
   }
 
   .isLearning {
-    width:15%;
+    width:10%;
   }
 
   .star {
-    width: 10%;
+    width: 5%;
   }
 
 
