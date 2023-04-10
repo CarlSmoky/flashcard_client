@@ -88,11 +88,10 @@ const absoluteStyle = css`
   width: calc(100% - 0.4rem - 0.4rem);
   height: 100%;
   border: var(--side-column-border) solid var(--black-primary);  
-  border-radius: 1rem;
+  border-radius: .8rem;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   color: var(--black-secondary);
-  box-shadow: .5rem .5rem;
 `
 
 const CardFront = styled.div`
