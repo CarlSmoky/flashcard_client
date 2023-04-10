@@ -104,18 +104,19 @@ const Create = () => {
 
 const Wrapper = styled.div`
 
-.addButton {
-  text-align: right;
+  .addButton {
+    text-align: right;
   
-  button {
-    margin: 0 1rem;
-    transition: transform 0.2s ease-out;
+    button {
+      margin: 0 1rem;
+      transition: transform 0.2s ease-out;
 
-    &:hover {
+      &:hover {
         cursor: pointer;
         transform: scaleX(1.2) scaleY(1.2);
       }
-  }
+    }
+
     svg {
       font-size: 3rem;
       text-align: left;
