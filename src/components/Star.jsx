@@ -34,7 +34,6 @@ const Wrapper = styled.div`
   svg {
     font-size: 2rem;
     padding: .5rem;
-    margin: .4rem .4rem 0 .4rem;
 
     &.filledStar {
     color: gold;

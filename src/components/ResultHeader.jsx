@@ -12,9 +12,9 @@ const ResultHeader = ({
       <div className="row">
         <h2>{deckName}</h2>
       <div>
-        <p>Learning: {numLearning}</p>
-        <p>Know: {numCards - numLearning}</p>
-        <p>Total cards: {numCards}</p>
+        <p>Learning: <span>{numLearning}</span></p>
+        <p>Know: <span>{numCards - numLearning}</span></p>
+        <p>Total cards: <span>{numCards}</span></p>
       </div>
       </div>
       <StatsHeader/>
@@ -45,9 +45,14 @@ const Wrapper = styled.div`
     font-family: var(--primary-font);
     text-align: right;
     text-transform: uppercase;
+
+    span {
+      display: inline-block;
+      width: 3rem;
+      text-align: center;
+    }
+    
   }
-
-
 `
 
 export default ResultHeader
