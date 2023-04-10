@@ -33,6 +33,7 @@ const CardForm = ({
           id="term"
           value={card.term}
           aria-label="term"
+          placeholder="Enter term here"
         />
       <p>{card.errors.term}</p>
       </div>
@@ -45,6 +46,7 @@ const CardForm = ({
           id="definition"
           value={card.definition}
           aria-label="definition"
+          placeholder="Enter definition here"
         />
       <p>{card.errors.definition}</p>
       </div>
@@ -67,11 +69,10 @@ const Wrapper = styled.div`
     margin: 1rem;
 
     p {
-      text-align: left;
-      color: red;
+      font-family: var(--tertiary-font);
       font-size: 1.4rem;
       color: red;
-      font-family: var(--tertiary-font);
+      text-align: left;
     }
   }
 

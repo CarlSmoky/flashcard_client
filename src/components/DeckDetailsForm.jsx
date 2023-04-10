@@ -10,15 +10,17 @@ const DeckDetailsForm = ({
   const onChangeDeck = (e) => {
     const returnedError = validation(e.target.name, e.target.value);
 
-    const updatedDeck = {...newDeckContents,
-      [e.target.name]: e.target.value,  
-      errors: 
-        {
-          ...newDeckContents.errors,
-          [returnedError.key] : returnedError.message
-        }}
-    
-        setNewDeckContents(updatedDeck);
+    const updatedDeck = {
+      ...newDeckContents,
+      [e.target.name]: e.target.value,
+      errors:
+      {
+        ...newDeckContents.errors,
+        [returnedError.key]: returnedError.message
+      }
+    }
+
+    setNewDeckContents(updatedDeck);
   };
 
   return (
@@ -31,8 +33,9 @@ const DeckDetailsForm = ({
           name="deckName"
           id="deckName"
           value={newDeckContents.deckName}
+          placeholder="Enter deck name here"
         />
-      <p>{newDeckContents.errors.deckName}</p>
+        <p>{newDeckContents.errors.deckName}</p>
       </div>
       <div>
         <label htmlFor="description">Description</label>
@@ -42,6 +45,7 @@ const DeckDetailsForm = ({
           name="description"
           id="description"
           value={newDeckContents.deckDescription}
+          placeholder="Enter deck description here"
         />
         <p>{newDeckContents.errors.description}</p>
       </div>
@@ -63,21 +67,20 @@ const absoluteStyle = css`
 
 const Wrapper = styled.div`
   width: 98%;
+  height: 20rem;
   margin: 1rem auto 1rem;
   border-radius: .3rem;
   border: 2px solid var(--black-primary);
   background: var(--tertiary-color);
   text-align: left;
-
-  div {
-    background: var(--quaternary-color);
+  background: var(--quaternary-color);
 
     label {
       display: block;
       padding: 1rem;
       font-size: 1.5rem;
       font-family: var(--secondary-font);
-  font-weight: 200;
+      font-weight: 200;
       text-transform: uppercase;
     }
 
@@ -96,12 +99,14 @@ const Wrapper = styled.div`
     }
 
     p {
+      height: 1.5rem;
       margin-left: 1rem;
+      font-family: var(--tertiary-font);
       font-size: 1.4rem;
       color: red;
-      font-family: var(--tertiary-font);
     }
-  }
+
+  
 
 
 `

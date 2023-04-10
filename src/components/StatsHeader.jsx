@@ -27,7 +27,7 @@ const Wrapper = styled.div`
     text-align: left;
 
     p {
-      margin: 0 2.1rem 0 4rem;
+      margin: 0 2.1rem;
       text-align: left;
       font-size: 1.5rem;
       font-family: var(--secondary-font);

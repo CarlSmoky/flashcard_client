@@ -22,8 +22,10 @@ const Cards = () => {
   const [numCards, setNumCards] = useState([]);
   const [loadedCards, setLoadedCards] = useState([]);
 
+  
   // navigation in cards
   const [current, setCurrent] = useState(0);
+  console.log('current:', current, 'loadedCards:', loadedCards);
 
   const addLoadedCards = (current) => {
     const currentCardId = selectedCardIndices[current];
@@ -34,6 +36,7 @@ const Cards = () => {
 
   const previousCard = () => {
     setCurrent(current - 1);
+    addLoadedCards(current);
   }
   const nextCard = () => {
     setCurrent(current + 1);
@@ -168,7 +171,7 @@ const Cards = () => {
       <CardStyle className={isModalMode() && 'blur'}>
 
         <ArrowButton disabled={isModalMode()}>
-          {current > 0 ? <MdArrowBackIosNew onClick={previousCard} alt="previous_button"/>
+          {current > 0 ? <MdArrowBackIosNew onClick={previousCard} alt="previous_button" />
           :
           <div className="emptyContent"></div>
           }
