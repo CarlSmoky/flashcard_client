@@ -25,7 +25,6 @@ const Cards = () => {
   
   // navigation in cards
   const [current, setCurrent] = useState(0);
-  console.log('current:', current, 'loadedCards:', loadedCards);
 
   const addLoadedCards = (current) => {
     const currentCardId = selectedCardIndices[current];
