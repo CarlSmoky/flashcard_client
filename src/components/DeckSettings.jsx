@@ -7,11 +7,11 @@ import { modes } from '../helpers/modes'
 import { truncate } from '../helpers/utilities';
 
 const DeckSettings = ({
-    setNumCards,
-    deckName,
-    setMode,
-    totalCards
-  }) => {
+  setNumCards,
+  deckName,
+  setMode,
+  totalCards
+}) => {
 
   const [settingNumCards, setsettingNumCards] = useState(0);
 
@@ -29,9 +29,9 @@ const DeckSettings = ({
   }
 
   // When cancel button clicked, back to /decklist
-  let navigate = useNavigate(); 
-  const routeChange = () =>{ 
-    let path = `/decks`; 
+  let navigate = useNavigate();
+  const routeChange = () => {
+    let path = `/decks`;
     navigate(path);
   }
 
@@ -39,7 +39,10 @@ const DeckSettings = ({
     <Wrapper>
       <form>
         <Header>
-          <RxCross2 onClick={routeChange}/>
+          <button>
+            <RxCross2 onClick={routeChange} />
+            <span className="visually-hidden">Cancel Button</span>
+          </button>
         </Header>
         {deckName && <Title>{truncate(deckName, 18)}</Title>}
         <Label htmlFor="numCards">Cards: </Label>
@@ -94,12 +97,26 @@ const Header = styled.div`
   justify-content: space-between;
   width: 38rem;
   height: 15%;
-  margin: 1rem;
-  
-  svg {
-    font-size: 2rem;
+
+  button {
+    padding: 1rem;
     cursor: pointer;
   }
+
+  svg {
+    font-size: 2rem;
+  }
+
+  .visually-hidden:not(:focus):not(:active) {
+    clip: rect(0 0 0 0); 
+    clip-path: inset(100%); 
+    height: 1px; 
+    overflow: hidden; 
+    position: absolute; 
+    white-space: nowrap; 
+    width: 1px; 
+  }
+  
 `
 
 const Title = styled.h2`

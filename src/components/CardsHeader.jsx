@@ -28,6 +28,7 @@ const CardsHeader = ({
       <Right>
         <Button disabled={isModalMode()}>
           <RxCross2 onClick={() => setMode(modes.finishConfirmation)} />
+          <span className="visually-hidden">Cancel Button</span>
         </Button>
       </Right>
     </CardsHeaderStyle>
@@ -81,6 +82,16 @@ const Button = styled.button`
     font-size: 2.5rem;
     padding: .2rem;
     stroke-width: 1.2;
+    }
+
+    .visually-hidden:not(:focus):not(:active) {
+      clip: rect(0 0 0 0); 
+      clip-path: inset(100%); 
+      height: 1px; 
+      overflow: hidden; 
+      position: absolute; 
+      white-space: nowrap; 
+      width: 1px; 
     }
 
     ${({ disabled }) => {
