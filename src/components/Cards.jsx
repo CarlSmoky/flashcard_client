@@ -4,8 +4,7 @@ import DeckSettings from './DeckSettings'
 import CardsHeader from './CardsHeader'
 import Card from "./Card"
 import Confimation from './Confimation'
-import ResultHeader from './ResultHeader'
-import Result from './Result'
+import Result from '../pages/Result'
 import useApplicationData from '../hooks/useApplicationData'
 import { modes } from '../helpers/modes'
 import { MdArrowForwardIos, MdArrowBackIosNew } from 'react-icons/md'
@@ -77,6 +76,7 @@ const Cards = () => {
     key={defaultCard.id}
     showingModal={true}
     isEndCard={true}
+    loadedCards={loadedCards}
     />];
   }
   
@@ -104,21 +104,6 @@ const Cards = () => {
     return cards;
   }
 
-  const setResults = () => {
-    return loadedCards.map((id) => {
-      let stat = flashcarddata[id];
-      return <Result
-        key={id}
-        term={stat.term}
-        definition={stat.definition}
-        isLearning={stat.isLearning}
-        fillStar={stat.fillStar}
-        setCardProperty={setCardProperty}
-        cardId={id}
-      />
-    })
-  }
-
   const getNumLeaning = () => {
     const numLearning = loadedCards.filter(id => {
       let stat = flashcarddata[id];
@@ -131,7 +116,6 @@ const Cards = () => {
 
   const cards = setDeckFromIds();
   const defaultCard = setDefaultDeck();
-  const results = setResults();
   const numLearning = getNumLeaning();
 
   return (
@@ -191,14 +175,14 @@ const Cards = () => {
       }
       {/* finished */}
       {mode === modes.finished && 
-        <ResultHeader
+        <Result
         deckName={deckName}
         numCards={loadedCards.length}
         numLearning={numLearning}
+        loadedCards={loadedCards}
+        flashcarddata={flashcarddata}
+        setCardProperty={setCardProperty}
         />}
-      {mode === modes.finished && results}
-      
-
     </>
   )
 }
