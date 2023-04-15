@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import styled, { css } from 'styled-components'
-import DeckSettings from './DeckSettings'
-import CardsHeader from './CardsHeader'
-import Card from "./Card"
-import Confimation from './Confimation'
-import Result from '../pages/Result'
+import DeckSettings from '../components/DeckSettings'
+import CardsHeader from '../components/CardsHeader'
+import Card from "../components/Card"
+import Confimation from '../components/Confimation'
+import Result from './Result'
 import useApplicationData from '../hooks/useApplicationData'
 import { modes } from '../helpers/modes'
 import { MdArrowForwardIos, MdArrowBackIosNew } from 'react-icons/md'
 
-const Cards = () => {
+const Practice = () => {
   const {
     deckName,
     flashcarddata,
@@ -239,4 +239,4 @@ const ArrowButton = styled.button`
 
 `;
 
-export default Cards
+export default Practice

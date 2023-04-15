@@ -3,8 +3,8 @@ import { BsCardText } from 'react-icons/bs'
 import { BiSearch } from 'react-icons/bi'
 import Nav from './Nav'
 import Menu from './Menu'
-import Decks from '../pages/Decks'
-import Cards from './Cards'
+import DeckList from '../pages/DeckList'
+import Practice from '../pages/Practice'
 import Create from '../pages/Create'
 import Footer from './Footer'
 import Signup from './Signup'
@@ -27,8 +27,8 @@ return (
     <div className="center">
       <Nav />
       {content === "menu" && <Menu />}
-      {content === "decks" && <Decks />}
-      {content === "cards" && <Cards />}
+      {content === "decklist" && <DeckList />}
+      {content === "practice" && <Practice />}
       {content === "create" && <Create />}
       {content === "signup" && <Signup />}
       {content === "login" && <Login />}

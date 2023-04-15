@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import axios from "axios";
 import DeckItem from '../components/DeckItem';
 
-const Decks = () => {
+const DeckList = () => {
 
   const [decks, setDecks] = useState([]);
 
@@ -64,4 +64,4 @@ const Title = styled.h1`
   text-transform: uppercase;
 `
 
-export default Decks
+export default DeckList

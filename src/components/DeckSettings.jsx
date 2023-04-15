@@ -31,7 +31,7 @@ const DeckSettings = ({
   // When cancel button clicked, back to /decklist
   let navigate = useNavigate();
   const routeChange = () => {
-    let path = `/decks`;
+    let path = `/decklist`;
     navigate(path);
   }
 

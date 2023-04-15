@@ -11,9 +11,9 @@ const App = () => {
       <GlobalStyles/>
       <Routes>
         <Route path ="/" element={<Frame content='menu'/>}/>
-        <Route path ="/decks" element={<Frame content='decks'/>}/>
+        <Route path ="/decklist" element={<Frame content='decklist'/>}/>
         {/* <Route path ="/search" element={<Search />}/> */}
-        <Route path ="/deck/:id" element={<Frame content='cards'/>}/>
+        <Route path ="/deck/:id" element={<Frame content='practice'/>}/>
         <Route path ="/create" element={<Frame content='create'/>}/>
         <Route path ="/signup" element={<Frame content='signup'/>}/>
         <Route path ="/login" element={<Frame content='login'/>}/>
