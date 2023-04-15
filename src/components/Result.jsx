@@ -28,9 +28,9 @@ const Result = ({
         <p>{definition}</p>
       </div>
       <div className='isLearning'>
-        <span onClick={clickLearning}>
+        <p onClick={clickLearning}>
           {`${isLearning ? "Learning" : "Know"}`}
-        </span>
+        </p>
       </div>
       <div className="star">
         <Star
@@ -86,16 +86,21 @@ const Wrapper = styled.div`
     margin: auto 0;
     text-align: left;
 
-    span {
+    p {
       font-size: 1.3rem;
       font-family: var(--primary-font);
       font-weight: 400;
       text-transform: uppercase;
+      text-align: center;
       cursor: pointer;
-      transition: transform 1s ease-out;
+      transition: transform .1s ease-out;
       
-      &:hover {
-        border-bottom: 2px solid var(--black-secondary)
+      :hover {
+        transform: scaleX(1.1) scaleY(1.1);
+      }
+
+      :active {
+        text-decoration-line: underline;
       }
     }
   }
