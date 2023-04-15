@@ -9,7 +9,7 @@ import useApplicationData from '../hooks/useApplicationData'
 import { modes } from '../helpers/modes'
 import { MdArrowForwardIos, MdArrowBackIosNew } from 'react-icons/md'
 
-const Cards = () => {
+const Practice = () => {
   const {
     deckName,
     flashcarddata,
@@ -239,4 +239,4 @@ const ArrowButton = styled.button`
 
 `;
 
-export default Cards
+export default Practice

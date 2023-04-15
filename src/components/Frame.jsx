@@ -4,7 +4,7 @@ import { BiSearch } from 'react-icons/bi'
 import Nav from './Nav'
 import Menu from './Menu'
 import Decks from '../pages/Decks'
-import Cards from '../pages/Cards'
+import Practice from '../pages/Practice'
 import Create from '../pages/Create'
 import Footer from './Footer'
 import Signup from './Signup'
@@ -28,7 +28,7 @@ return (
       <Nav />
       {content === "menu" && <Menu />}
       {content === "decks" && <Decks />}
-      {content === "cards" && <Cards />}
+      {content === "practice" && <Practice />}
       {content === "create" && <Create />}
       {content === "signup" && <Signup />}
       {content === "login" && <Login />}
