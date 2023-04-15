@@ -27,7 +27,7 @@ const Confimation = ({
       <form onSubmit={handleSubmitClick}>
         <h2>Do you want to finish?</h2>
         <Button
-          text='Quit'
+          text='Done'
           buttonType="button"
           onButtonClick={handleQuit}
         />

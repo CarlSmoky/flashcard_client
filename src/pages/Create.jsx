@@ -79,6 +79,7 @@ const Create = () => {
 
   return (
     <Wrapper>
+      <Title>Create Deck</Title>
       <form>
         <DeckDetailsForm
           newDeckContents={newDeckContents}
@@ -102,8 +103,19 @@ const Create = () => {
   )
 }
 
-const Wrapper = styled.div`
+const Title = styled.h1`
+  width: 98%
+  font-size: 2rem;
+  text-align: left;
+  margin: 2rem 0;
+  padding: 1.3rem;
+  font-weight: 600;
+  text-transform: uppercase;
+`
 
+const Wrapper = styled.div`
+  min-height: calc(100vh - 9.3rem - 9.3rem); 
+  
   .addButton {
     text-align: right;
   

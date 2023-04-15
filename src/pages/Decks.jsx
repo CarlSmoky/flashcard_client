@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import axios from "axios";
 import DeckItem from '../components/DeckItem';
 
-const Decks = ({title}) => {
+const Decks = () => {
 
   const [decks, setDecks] = useState([]);
 
@@ -45,19 +45,21 @@ const Decks = ({title}) => {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 6rem 2rem;
+  min-height: calc(100vh - 9.3rem - 9.3rem);
 `
 const Content = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
+  margin: 2rem;
 `
 
 const Title = styled.h1`
   font-size: 2rem;
   text-align: left;
-  margin-left: 1rem;
+  margin: 2rem 2rem 0 2rem;
+  padding: 1.3rem;
   font-weight: 600;
   text-transform: uppercase;
 `
