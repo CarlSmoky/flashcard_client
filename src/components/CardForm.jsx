@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { validation } from '../helpers/utilities'
+import { errorMessage } from '../helpers/utilities'
 
 const CardForm = ({
   editCardContents,
@@ -9,7 +9,7 @@ const CardForm = ({
 }) => {
 
   const onChangeCard = (e) => {
-    const returnedError = validation(e.target.name, e.target.value);
+    const returnedError = errorMessage(e.target.name, e.target.value);
     
     const updatedCard = {...card,
       [e.target.name]: e.target.value,  
@@ -17,6 +17,10 @@ const CardForm = ({
         {
           ...card.errors,
           [returnedError.key] : returnedError.message
+        },
+        modifications: {
+          ...card.modifications,
+          [e.target.name]: true
         }
     }
     

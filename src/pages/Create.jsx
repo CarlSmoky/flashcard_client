@@ -9,15 +9,19 @@ import Button from '../components/Button'
 
 const Create = () => {
   // Deck
-  const [newDeckContents, setNewDeckContents] = useState({
+  const defaultDeck = {
     deckName: '',
     description: '',
     errors: {
       deckName: '',
       description: '',
+    },
+    modifications: {
+      deckName: false,
+      description: true, // we can allow unmodified deck descriptions
     }
-  });
-  
+  };
+
   //Card
   const defaultCard = {
     term: '',
@@ -25,9 +29,14 @@ const Create = () => {
     errors:  {
       term: '',
       definition: '',
+    },
+    modifications: {
+      term: false,
+      definition: false,
     }
-  }
-
+  };
+  
+  const [newDeckContents, setNewDeckContents] = useState({ ...defaultDeck});
   const [newCardContents, setNewCardContents] = useState([{ ...defaultCard }]);
 
   const createNewCard = () => {
@@ -38,12 +47,12 @@ const Create = () => {
     const prev = [...newCardContents];
     prev[index] = cardContents;
     setNewCardContents([...prev]);
-  }
+  };
 
   const deckContentsForInsertion = {
     deckName : newDeckContents.deckName,
     description: newDeckContents.description
-  } 
+  };
 
   const cardsContentsForInsertion = newCardContents.map((card) => {
     return {
@@ -52,7 +61,33 @@ const Create = () => {
     }
   });
 
+  // test one card/deck to see if it has error
+  const failsValidation = (element) => {
+    // fail validation if any field has error OR any field is untouched
+    const hasError = Object.values(element.errors).some((errorField) => errorField.length > 0);
+    const hasUntouchedField = Object.values(element.modifications).some((modificationField) => !modificationField);
+    return hasError || hasUntouchedField;
+  }
+
+  const newCardContentsFailValidation = () => {
+    return newCardContents.some((card) => failsValidation(card))
+  }
+
+  const newDeckContentsFailValidation  = () => {
+    return failsValidation(newDeckContents)
+  }
+
+  const formFailsValidation = () => {
+    return newCardContentsFailValidation() || newDeckContentsFailValidation();
+  }
+
   const handleSaveClick = (e) => {
+
+    if(formFailsValidation()) {
+      // TODO tell user what the error is
+      console.log("dame--");
+      return;
+    }
   
     const endpoints = {
       "NEWDECK": "api/deck/create"
@@ -65,8 +100,8 @@ const Create = () => {
       .catch(err => {
         const error = err.response.data.error;
         console.log(error);
-      });
-  }
+      })
+  };
 
   const cardFormItems = newCardContents.map((card, index) =>
     <CardForm
@@ -75,7 +110,7 @@ const Create = () => {
       card={card}
       index={index}
     />
-  )
+  );
 
   return (
     <Wrapper>
@@ -101,7 +136,7 @@ const Create = () => {
       </form>
     </Wrapper>
   )
-}
+};
 
 const Title = styled.h1`
   width: 98%
