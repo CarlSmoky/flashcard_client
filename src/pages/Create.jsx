@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
 import DeckDetailsForm from '../components/DeckDetailsForm'
-import CardDetailsHeader from '../components/CardDetailsHeader'
+import CardFormHeader from '../components/CardFormHeader'
 import CardForm from '../components/CardForm'
 import { GrAddCircle } from 'react-icons/gr'
 import Button from '../components/Button'
@@ -136,7 +136,7 @@ const Create = () => {
           newDeckContents={newDeckContents}
           setNewDeckContents={setNewDeckContents}
         />
-        <CardDetailsHeader />
+        <CardFormHeader />
         {newCardContents && cardFormItems}
         <div className='addButton'>
           <button onClick={createNewCard} type='button'>

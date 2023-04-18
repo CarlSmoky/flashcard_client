@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const CardDetailsHeader = () => {
+const CardFormHeader = () => {
 
   return (
     <Wrapper>
@@ -12,6 +12,7 @@ const CardDetailsHeader = () => {
       <div className='definition'>
         <p>Definition <span>*</span></p>
       </div>
+      <div className='bin'></div>
     </Wrapper>
   )
 }
@@ -44,6 +45,10 @@ const Wrapper = styled.div`
     border-right: 2px solid transparent;
     /* margin: 1rem 0; */
   }
+
+  .bin {
+    width: 4rem;
+  }
 `
 
-export default CardDetailsHeader
+export default CardFormHeader
