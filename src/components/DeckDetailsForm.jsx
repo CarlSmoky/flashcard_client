@@ -30,7 +30,7 @@ const DeckDetailsForm = ({
   return (
     <Wrapper>
       <div>
-        <label htmlFor="deckName">Title</label>
+        <label htmlFor="deckName">Title <span>*</span></label>
         <input
           onChange={onChangeDeck}
           type="text"
@@ -86,6 +86,10 @@ const Wrapper = styled.div`
       font-family: var(--secondary-font);
       font-weight: 200;
       text-transform: uppercase;
+
+      span {
+        color: red;
+      }
     }
 
     input {
@@ -103,7 +107,7 @@ const Wrapper = styled.div`
     }
 
     p {
-      height: 1.5rem;
+      height: 2rem;
       margin-left: 1rem;
       font-family: var(--tertiary-font);
       font-size: 1.4rem;

@@ -1,17 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const CardDetailsHeader = () => {
+const CardFormHeader = () => {
 
   return (
     <Wrapper>
       <div className='term'>
-        <span>Term</span>
+        <p>Term <span>*</span></p>
       </div>
       <div className='verticalLine'></div>
       <div className='definition'>
-        <span>Definition</span>
+        <p>Definition <span>*</span></p>
       </div>
+      <div className='bin'></div>
     </Wrapper>
   )
 }
@@ -27,12 +28,16 @@ const Wrapper = styled.div`
     text-align: left;
     margin-left: 1rem;
 
-    span {
+    p {
       text-align: left;
       font-family: var(--secondary-font);
       font-size: 1.5rem;
       font-weight: 200;
       text-transform: uppercase;
+
+      span {
+        color: red;
+      }
     }
   }
 
@@ -40,6 +45,10 @@ const Wrapper = styled.div`
     border-right: 2px solid transparent;
     /* margin: 1rem 0; */
   }
+
+  .bin {
+    width: 4rem;
+  }
 `
 
-export default CardDetailsHeader
+export default CardFormHeader
