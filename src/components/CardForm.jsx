@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { errorMessage } from '../helpers/utilities'
+import { RiDeleteBin5Line } from 'react-icons/ri'
 
 const CardForm = ({
   editCardContents,
@@ -10,20 +11,21 @@ const CardForm = ({
 
   const onChangeCard = (e) => {
     const returnedError = errorMessage(e.target.name, e.target.value);
-    
-    const updatedCard = {...card,
-      [e.target.name]: e.target.value,  
-      errors: 
-        {
-          ...card.errors,
-          [returnedError.key] : returnedError.message
-        },
-        modifications: {
-          ...card.modifications,
-          [e.target.name]: true
-        }
+
+    const updatedCard = {
+      ...card,
+      [e.target.name]: e.target.value,
+      errors:
+      {
+        ...card.errors,
+        [returnedError.key]: returnedError.message
+      },
+      modifications: {
+        ...card.modifications,
+        [e.target.name]: true
+      }
     }
-    
+
     editCardContents(index, updatedCard);
   };
 
@@ -39,7 +41,7 @@ const CardForm = ({
           aria-label="term"
           placeholder="Enter term here"
         />
-      <p>{card.errors.term}</p>
+        <p>{card.errors.term}</p>
       </div>
       <div className='verticalLine'></div>
       <div className='definition'>
@@ -52,7 +54,13 @@ const CardForm = ({
           aria-label="definition"
           placeholder="Enter definition here"
         />
-      <p>{card.errors.definition}</p>
+        <p>{card.errors.definition}</p>
+      </div>
+      <div className='bin'>
+        <button>
+          <RiDeleteBin5Line />
+          <span className="visually-hidden">Add Card Button</span>
+        </button>
       </div>
     </Wrapper>
   )
@@ -102,6 +110,33 @@ const Wrapper = styled.div`
   textarea:focus {
     outline: none;
   }
+
+  .bin {
+    margin: auto 0;
+    
+    button {
+      padding: .5rem;
+      font-size: 2.5rem;
+      cursor: pointer;
+      transition: transform 0.2s ease-out;
+  
+        &:hover {
+          cursor: pointer;
+          transform: scaleX(1.2) scaleY(1.2);
+        }
+  
+        .visually-hidden:not(:focus):not(:active) {
+        clip: rect(0 0 0 0); 
+        clip-path: inset(100%); 
+        height: 1px; 
+        overflow: hidden; 
+        position: absolute; 
+        white-space: nowrap; 
+        width: 1px; 
+      }
+    }
+  }
+
 `
 
 export default CardForm
