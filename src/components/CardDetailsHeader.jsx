@@ -6,11 +6,11 @@ const CardDetailsHeader = () => {
   return (
     <Wrapper>
       <div className='term'>
-        <span>Term</span>
+        <p>Term <span>*</span></p>
       </div>
       <div className='verticalLine'></div>
       <div className='definition'>
-        <span>Definition</span>
+        <p>Definition <span>*</span></p>
       </div>
     </Wrapper>
   )
@@ -27,12 +27,16 @@ const Wrapper = styled.div`
     text-align: left;
     margin-left: 1rem;
 
-    span {
+    p {
       text-align: left;
       font-family: var(--secondary-font);
       font-size: 1.5rem;
       font-weight: 200;
       text-transform: uppercase;
+
+      span {
+        color: red;
+      }
     }
   }
 
