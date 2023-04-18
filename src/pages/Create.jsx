@@ -38,6 +38,7 @@ const Create = () => {
   
   const [newDeckContents, setNewDeckContents] = useState({ ...defaultDeck});
   const [newCardContents, setNewCardContents] = useState([{ ...defaultCard }]);
+  const [error, setError] = useState('');
 
   const createNewCard = () => {
     setNewCardContents(prev => ([...prev, { ...defaultCard }]));
@@ -48,6 +49,15 @@ const Create = () => {
     prev[index] = cardContents;
     setNewCardContents([...prev]);
   };
+
+  const deleteCardForm = (index) => {
+
+    if(index === 0) return;
+
+    const prev = [...newCardContents];
+    prev.splice(index, 1);    
+    setNewCardContents([...prev]);
+  }
 
   const deckContentsForInsertion = {
     deckName : newDeckContents.deckName,
@@ -85,7 +95,7 @@ const Create = () => {
 
     if(formFailsValidation()) {
       // TODO tell user what the error is
-      console.log("dame--");
+      setError("*Error occurs. Please check your input.");
       return;
     }
   
@@ -109,12 +119,18 @@ const Create = () => {
       editCardContents={editCardContents}
       card={card}
       index={index}
+      deleteCardForm={deleteCardForm}
     />
   );
+
+  console.log(newCardContents);
 
   return (
     <Wrapper>
       <Title>Create Deck</Title>
+      <div className='error'>
+      <p>{error}</p>
+      </div>
       <form>
         <DeckDetailsForm
           newDeckContents={newDeckContents}
@@ -149,7 +165,21 @@ const Title = styled.h1`
 `
 
 const Wrapper = styled.div`
-  min-height: calc(100vh - 9.3rem - 9.3rem); 
+  min-height: calc(100vh - 9.3rem - 9.3rem);
+
+  .error {
+    width: 98%;
+    height: 2.3rem;
+    margin: 1rem auto 0;
+
+    p {
+      margin-left: 1rem;
+      font-family: var(--tertiary-font);
+      font-size: 1.4rem;
+      color: red;
+      text-align: left;
+    }
+  }
   
   .addButton {
     text-align: right;

@@ -7,6 +7,7 @@ const CardForm = ({
   editCardContents,
   card,
   index,
+  deleteCardForm
 }) => {
 
   const onChangeCard = (e) => {
@@ -28,6 +29,11 @@ const CardForm = ({
 
     editCardContents(index, updatedCard);
   };
+
+  const deleteNewCard = (e) => {
+    e.preventDefault();
+    deleteCardForm(index);
+  }
 
   return (
     <Wrapper>
@@ -57,7 +63,7 @@ const CardForm = ({
         <p>{card.errors.definition}</p>
       </div>
       <div className='bin'>
-        <button>
+        <button onClick={deleteNewCard}>
           <RiDeleteBin5Line />
           <span className="visually-hidden">Add Card Button</span>
         </button>
@@ -81,6 +87,7 @@ const Wrapper = styled.div`
     margin: 1rem;
 
     p {
+      height: 2rem;
       font-family: var(--tertiary-font);
       font-size: 1.4rem;
       color: red;
@@ -113,7 +120,7 @@ const Wrapper = styled.div`
 
   .bin {
     margin: auto 0;
-    
+
     button {
       padding: .5rem;
       font-size: 2.5rem;
