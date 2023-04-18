@@ -1,6 +1,6 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
-import { validation } from '../helpers/utilities';
+import { errorMessage } from '../helpers/utilities';
 
 const DeckDetailsForm = ({
   newDeckContents,
@@ -8,7 +8,7 @@ const DeckDetailsForm = ({
 }) => {
 
   const onChangeDeck = (e) => {
-    const returnedError = validation(e.target.name, e.target.value);
+    const returnedError = errorMessage(e.target.name, e.target.value);
 
     const updatedDeck = {
       ...newDeckContents,
@@ -17,6 +17,10 @@ const DeckDetailsForm = ({
       {
         ...newDeckContents.errors,
         [returnedError.key]: returnedError.message
+      },
+      modifications: {
+        ...newDeckContents.modifications,
+        [e.target.name]: true
       }
     }
 

@@ -1,26 +1,32 @@
-const validation = (name, value) => {
-  const maxLength = 5;
+const errorMessage = (name, value) => {
   const deckNameMinLength = 3;
-  const exceedLengthDeckMessage = `Must be more than 3 characters and less than ${maxLength} charactors long!`;
+  const maxLength = 5;
+  const exceedLengthDeckMessage = `Must be more than ${deckNameMinLength} characters and less than ${maxLength} charactors long!`;
   const exceedLengthMessage = `Must be less than ${maxLength} charactors long!`;
 
   let error = {
     key: name,
     message: ''
   }
-  
+
   switch (name) {
     case 'deckName':
-      error.message = value.trim().length < deckNameMinLength || value.trim().length > maxLength ? exceedLengthDeckMessage : '';
+      if (value.trim().length < deckNameMinLength || value.trim().length > maxLength) {
+        error.message = exceedLengthDeckMessage;
+      }
 
-    break;
+      if (value.trim().length === 0) {
+        error.message = 'Required';
+      }
+
+      break;
 
     case 'description':
       if (value.length > maxLength) {
         error.message = exceedLengthMessage;
       }
-      
-    break;
+
+      break;
 
     case 'term':
       if (value.length === 0) {
@@ -30,22 +36,22 @@ const validation = (name, value) => {
       if (value.length > maxLength) {
         error.message = exceedLengthMessage;
       }
-      
-    break;
+
+      break;
 
     case 'definition':
       if (value.length === 0) {
         error.message = 'Required';
       }
-      
+
       if (value.length > maxLength) {
         error.message = exceedLengthMessage;
       }
 
-    break;
-    
+      break;
+
     default:
-    break;
+      break;
   }
   return error;
 }
@@ -55,8 +61,8 @@ const truncate = (text, maxLength) => {
   let displayText = text;
   if (text.length > maxLength) {
     displayText = text.slice(0, maxLength) + '...';
-  } 
+  }
   return displayText;
-} 
+}
 
-export { validation, truncate };
+export { errorMessage, truncate };
