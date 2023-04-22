@@ -16,6 +16,7 @@ const Create = () => {
       deckName: '',
       description: '',
     },
+    // if modification is false, the field has never been touched, and needs to be non-emptyy
     modifications: {
       deckName: false,
       description: true, // we can allow unmodified deck descriptions
@@ -79,25 +80,53 @@ const Create = () => {
     return hasError || hasUntouchedField;
   }
 
-  const newCardContentsFailValidation = () => {
-    return newCardContents.some((card) => failsValidation(card))
+  const getRequiredUnmodifiedKeys = (element) => {
+    return Object.entries(element.modifications)
+          .filter(([key, value]) => !value)
+          .map(([key,value]) => key )
   }
 
-  const newDeckContentsFailValidation  = () => {
-    return failsValidation(newDeckContents)
+
+  const handleOnSaveValidation = () => {
+    let hasProblem = false;
+    let deckInfo = {...newDeckContents}
+    // decks
+    if (failsValidation(deckInfo)) {
+      hasProblem = true;
+      const unmodifiedKeys = getRequiredUnmodifiedKeys(deckInfo);
+      unmodifiedKeys.forEach((key) => {
+        deckInfo.errors[key] = "Required";
+      })
+      setNewDeckContents({...deckInfo});
+    }
+
+    // cards
+    let cardsInfo = [...newCardContents];
+    cardsInfo.forEach((card, index) => {
+      if (failsValidation(card)) {
+        hasProblem = true;
+        const unmodifiedKeys = getRequiredUnmodifiedKeys(card);
+        unmodifiedKeys.forEach((key) => {
+          cardsInfo[index].errors[key] = "Required";
+        })
+      }
+    })
+    setNewCardContents([...cardsInfo]);
+    
+    return hasProblem;
   }
 
-  const formFailsValidation = () => {
-    return newCardContentsFailValidation() || newDeckContentsFailValidation();
-  }
 
   const handleSaveClick = (e) => {
 
-    if(formFailsValidation()) {
-      // TODO tell user what the error is
-      setError("*Error occurs. Please check your input.");
+    if(handleOnSaveValidation()) {
+      
+      setError("*Something went wrong. Please check your input.");
       return;
-    }
+    } 
+    
+    setError("");
+    
   
     const endpoints = {
       "NEWDECK": "api/deck/create"
