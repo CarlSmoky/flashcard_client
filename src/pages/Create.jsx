@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
+import { useNavigate } from "react-router-dom"
 import DeckDetailsForm from '../components/DeckDetailsForm'
 import CardFormHeader from '../components/CardFormHeader'
 import CardForm from '../components/CardForm'
@@ -8,6 +9,8 @@ import { GrAddCircle } from 'react-icons/gr'
 import Button from '../components/Button'
 
 const Create = () => {
+  let navigate = useNavigate();
+
   // Deck
   const defaultDeck = {
     deckName: '',
@@ -16,6 +19,7 @@ const Create = () => {
       deckName: '',
       description: '',
     },
+    // if modification is false, the field has never been touched, and needs to be non-emptyy
     modifications: {
       deckName: false,
       description: true, // we can allow unmodified deck descriptions
@@ -26,7 +30,7 @@ const Create = () => {
   const defaultCard = {
     term: '',
     definition: '',
-    errors:  {
+    errors: {
       term: '',
       definition: '',
     },
@@ -35,8 +39,8 @@ const Create = () => {
       definition: false,
     }
   };
-  
-  const [newDeckContents, setNewDeckContents] = useState({ ...defaultDeck});
+
+  const [newDeckContents, setNewDeckContents] = useState({ ...defaultDeck });
   const [newCardContents, setNewCardContents] = useState([{ ...defaultCard }]);
   const [error, setError] = useState('');
 
@@ -52,21 +56,21 @@ const Create = () => {
 
   const deleteCardForm = (index) => {
 
-    if(index === 0) return;
+    if (index === 0) return;
 
     const prev = [...newCardContents];
-    prev.splice(index, 1);    
+    prev.splice(index, 1);
     setNewCardContents([...prev]);
   }
 
   const deckContentsForInsertion = {
-    deckName : newDeckContents.deckName,
+    deckName: newDeckContents.deckName,
     description: newDeckContents.description
   };
 
   const cardsContentsForInsertion = newCardContents.map((card) => {
     return {
-      term : card.term,
+      term: card.term,
       definition: card.definition
     }
   });
@@ -79,39 +83,75 @@ const Create = () => {
     return hasError || hasUntouchedField;
   }
 
-  const newCardContentsFailValidation = () => {
-    return newCardContents.some((card) => failsValidation(card))
+  const getRequiredUnmodifiedKeys = (element) => {
+    return Object.entries(element.modifications)
+      .filter(([key, value]) => !value)
+      .map(([key, value]) => key)
   }
 
-  const newDeckContentsFailValidation  = () => {
-    return failsValidation(newDeckContents)
+
+  const handleOnSaveValidation = () => {
+    let hasProblem = false;
+    let deckInfo = { ...newDeckContents }
+    // decks
+    if (failsValidation(deckInfo)) {
+      hasProblem = true;
+      const unmodifiedKeys = getRequiredUnmodifiedKeys(deckInfo);
+      unmodifiedKeys.forEach((key) => {
+        deckInfo.errors[key] = "Required";
+      })
+      setNewDeckContents({ ...deckInfo });
+    }
+
+    // cards
+    let cardsInfo = [...newCardContents];
+    cardsInfo.forEach((card, index) => {
+      if (failsValidation(card)) {
+        hasProblem = true;
+        const unmodifiedKeys = getRequiredUnmodifiedKeys(card);
+        unmodifiedKeys.forEach((key) => {
+          cardsInfo[index].errors[key] = "Required";
+        })
+      }
+    })
+    setNewCardContents([...cardsInfo]);
+
+    return hasProblem;
   }
 
-  const formFailsValidation = () => {
-    return newCardContentsFailValidation() || newDeckContentsFailValidation();
-  }
 
   const handleSaveClick = (e) => {
 
-    if(formFailsValidation()) {
-      // TODO tell user what the error is
-      setError("*Error occurs. Please check your input.");
+    if (handleOnSaveValidation()) {
+
+      setError("* Something went wrong. Please check your input.");
       return;
     }
-  
+    setError("");
+
+    // Need to refactor
     const endpoints = {
       "NEWDECK": "api/deck/create"
     }
 
-    axios.post(endpoints.NEWDECK, {newDeckContents : deckContentsForInsertion, newCardContents : cardsContentsForInsertion})
-      .then(response => {
-        console.log(response);
-      })
-      .catch(err => {
-        const error = err.response.data.error;
-        console.log(error);
-      })
+    const createDeckAndCards = async () => {
+      try {
+        const response = await axios.post(endpoints.NEWDECK, { newDeckContents: deckContentsForInsertion, newCardContents: cardsContentsForInsertion });
+
+        const path = `/deck/${response.data.deckId}`;
+        navigate(path);
+
+      } catch (error) {
+        setError(error.response.data.error);
+        console.log(error.response.data.error);
+      }
+    };
+
+    createDeckAndCards();
+
   };
+
+
 
   const cardFormItems = newCardContents.map((card, index) =>
     <CardForm
@@ -123,13 +163,11 @@ const Create = () => {
     />
   );
 
-  console.log(newCardContents);
-
   return (
     <Wrapper>
       <Title>Create Deck</Title>
       <div className='error'>
-      <p>{error}</p>
+        <p>{error}</p>
       </div>
       <form>
         <DeckDetailsForm
@@ -144,11 +182,11 @@ const Create = () => {
             <span className="visually-hidden">Add Card Button</span>
           </button>
         </div>
-          <Button
-            text='Save'
-            buttonType='submit'
-            onButtonClick={handleSaveClick}
-          />
+        <Button
+          text='Save'
+          buttonType='submit'
+          onButtonClick={handleSaveClick}
+        />
       </form>
     </Wrapper>
   )
