@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
+import { useNavigate } from "react-router-dom"
 import DeckDetailsForm from '../components/DeckDetailsForm'
 import CardFormHeader from '../components/CardFormHeader'
 import CardForm from '../components/CardForm'
@@ -8,6 +9,8 @@ import { GrAddCircle } from 'react-icons/gr'
 import Button from '../components/Button'
 
 const Create = () => {
+  let navigate = useNavigate();
+
   // Deck
   const defaultDeck = {
     deckName: '',
@@ -121,23 +124,23 @@ const Create = () => {
 
     if(handleOnSaveValidation()) {
       
-      setError("*Something went wrong. Please check your input.");
+      setError("* Something went wrong. Please check your input.");
       return;
     } 
-    
     setError("");
-    
-  
+
     const endpoints = {
       "NEWDECK": "api/deck/create"
     }
 
     axios.post(endpoints.NEWDECK, {newDeckContents : deckContentsForInsertion, newCardContents : cardsContentsForInsertion})
       .then(response => {
-        console.log(response);
+        let path = `/deck/${response.data.deckId}`;
+        navigate(path);
       })
       .catch(err => {
         const error = err.response.data.error;
+        setError(error);
         console.log(error);
       })
   };
@@ -151,8 +154,6 @@ const Create = () => {
       deleteCardForm={deleteCardForm}
     />
   );
-
-  console.log(newCardContents);
 
   return (
     <Wrapper>
