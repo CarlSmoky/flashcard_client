@@ -30,7 +30,7 @@ const Create = () => {
   const defaultCard = {
     term: '',
     definition: '',
-    errors:  {
+    errors: {
       term: '',
       definition: '',
     },
@@ -39,8 +39,8 @@ const Create = () => {
       definition: false,
     }
   };
-  
-  const [newDeckContents, setNewDeckContents] = useState({ ...defaultDeck});
+
+  const [newDeckContents, setNewDeckContents] = useState({ ...defaultDeck });
   const [newCardContents, setNewCardContents] = useState([{ ...defaultCard }]);
   const [error, setError] = useState('');
 
@@ -56,21 +56,21 @@ const Create = () => {
 
   const deleteCardForm = (index) => {
 
-    if(index === 0) return;
+    if (index === 0) return;
 
     const prev = [...newCardContents];
-    prev.splice(index, 1);    
+    prev.splice(index, 1);
     setNewCardContents([...prev]);
   }
 
   const deckContentsForInsertion = {
-    deckName : newDeckContents.deckName,
+    deckName: newDeckContents.deckName,
     description: newDeckContents.description
   };
 
   const cardsContentsForInsertion = newCardContents.map((card) => {
     return {
-      term : card.term,
+      term: card.term,
       definition: card.definition
     }
   });
@@ -85,14 +85,14 @@ const Create = () => {
 
   const getRequiredUnmodifiedKeys = (element) => {
     return Object.entries(element.modifications)
-          .filter(([key, value]) => !value)
-          .map(([key,value]) => key )
+      .filter(([key, value]) => !value)
+      .map(([key, value]) => key)
   }
 
 
   const handleOnSaveValidation = () => {
     let hasProblem = false;
-    let deckInfo = {...newDeckContents}
+    let deckInfo = { ...newDeckContents }
     // decks
     if (failsValidation(deckInfo)) {
       hasProblem = true;
@@ -100,7 +100,7 @@ const Create = () => {
       unmodifiedKeys.forEach((key) => {
         deckInfo.errors[key] = "Required";
       })
-      setNewDeckContents({...deckInfo});
+      setNewDeckContents({ ...deckInfo });
     }
 
     // cards
@@ -115,35 +115,43 @@ const Create = () => {
       }
     })
     setNewCardContents([...cardsInfo]);
-    
+
     return hasProblem;
   }
 
 
   const handleSaveClick = (e) => {
 
-    if(handleOnSaveValidation()) {
-      
+    if (handleOnSaveValidation()) {
+
       setError("* Something went wrong. Please check your input.");
       return;
-    } 
+    }
     setError("");
 
+    // Need to refactor
     const endpoints = {
       "NEWDECK": "api/deck/create"
     }
 
-    axios.post(endpoints.NEWDECK, {newDeckContents : deckContentsForInsertion, newCardContents : cardsContentsForInsertion})
-      .then(response => {
-        let path = `/deck/${response.data.deckId}`;
+    const createDeckAndCards = async () => {
+      try {
+        const response = await axios.post(endpoints.NEWDECK, { newDeckContents: deckContentsForInsertion, newCardContents: cardsContentsForInsertion });
+
+        const path = `/deck/${response.data.deckId}`;
         navigate(path);
-      })
-      .catch(err => {
-        const error = err.response.data.error;
-        setError(error);
-        console.log(error);
-      })
+
+      } catch (error) {
+        setError(error.response.data.error);
+        console.log(error.response.data.error);
+      }
+    };
+
+    createDeckAndCards();
+
   };
+
+
 
   const cardFormItems = newCardContents.map((card, index) =>
     <CardForm
@@ -159,7 +167,7 @@ const Create = () => {
     <Wrapper>
       <Title>Create Deck</Title>
       <div className='error'>
-      <p>{error}</p>
+        <p>{error}</p>
       </div>
       <form>
         <DeckDetailsForm
@@ -174,11 +182,11 @@ const Create = () => {
             <span className="visually-hidden">Add Card Button</span>
           </button>
         </div>
-          <Button
-            text='Save'
-            buttonType='submit'
-            onButtonClick={handleSaveClick}
-          />
+        <Button
+          text='Save'
+          buttonType='submit'
+          onButtonClick={handleSaveClick}
+        />
       </form>
     </Wrapper>
   )
