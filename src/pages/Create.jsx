@@ -7,7 +7,7 @@ import CardFormHeader from '../components/CardFormHeader'
 import CardForm from '../components/CardForm'
 import { GrAddCircle } from 'react-icons/gr'
 import Button from '../components/Button'
-import failsValidation from '../helpers/validation'
+import { handleOnSaveValidation } from '../helpers/validation'
 
 const Create = () => {
   let navigate = useNavigate();
@@ -45,6 +45,13 @@ const Create = () => {
   const [newCardContents, setNewCardContents] = useState([{ ...defaultCard }]);
   const [error, setError] = useState('');
 
+  const currentDeck = {
+    deckContents: newDeckContents,
+    setDeckContents: setNewDeckContents,
+    cardContents: newCardContents,
+    setCardContents: setNewCardContents,
+  }
+
   const createNewCard = () => {
     setNewCardContents(prev => ([...prev, { ...defaultCard }]));
   };
@@ -76,54 +83,9 @@ const Create = () => {
     }
   });
 
-  // test one card/deck to see if it has error
-  // const failsValidation = (element) => {
-  //   // fail validation if any field has error OR any field is untouched
-  //   const hasError = Object.values(element.errors).some((errorField) => errorField.length > 0);
-  //   const hasUntouchedField = Object.values(element.modifications).some((modificationField) => !modificationField);
-  //   return hasError || hasUntouchedField;
-  // }
-
-  const getRequiredUnmodifiedKeys = (element) => {
-    return Object.entries(element.modifications)
-      .filter(([key, value]) => !value)
-      .map(([key, value]) => key)
-  }
-
-
-  const handleOnSaveValidation = () => {
-    let hasProblem = false;
-    let deckInfo = { ...newDeckContents }
-    // decks
-    if (failsValidation(deckInfo)) {
-      hasProblem = true;
-      const unmodifiedKeys = getRequiredUnmodifiedKeys(deckInfo);
-      unmodifiedKeys.forEach((key) => {
-        deckInfo.errors[key] = "Required";
-      })
-      setNewDeckContents({ ...deckInfo });
-    }
-
-    // cards
-    let cardsInfo = [...newCardContents];
-    cardsInfo.forEach((card, index) => {
-      if (failsValidation(card)) {
-        hasProblem = true;
-        const unmodifiedKeys = getRequiredUnmodifiedKeys(card);
-        unmodifiedKeys.forEach((key) => {
-          cardsInfo[index].errors[key] = "Required";
-        })
-      }
-    })
-    setNewCardContents([...cardsInfo]);
-
-    return hasProblem;
-  }
-
-
   const handleSaveClick = (e) => {
 
-    if (handleOnSaveValidation()) {
+    if (handleOnSaveValidation(currentDeck)) {
 
       setError("* Something went wrong. Please check your input.");
       return;
@@ -151,8 +113,6 @@ const Create = () => {
     createDeckAndCards();
 
   };
-
-
 
   const cardFormItems = newCardContents.map((card, index) =>
     <CardForm
