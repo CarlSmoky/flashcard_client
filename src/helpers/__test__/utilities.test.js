@@ -77,7 +77,7 @@ deckName:
 should give decknameError when deckName is too short
 should give decknameError when deckName is too long
 should give Required error when deckName is white space
-should give decknameError when deckName is uses leading white space to meet min length "  hi"
-should give decknameError when deckName is uses trailing white space to meet min length "hi  "
+√ should give decknameError when deckName is uses leading white space to meet min length "  hi"
+√ should give decknameError when deckName is uses trailing white space to meet min length "hi  "
 
 */
