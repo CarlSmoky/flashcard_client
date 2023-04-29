@@ -1,7 +1,6 @@
-const errorMessage = (name, value) => {
+const errorMessage = (name, value, maxLength = 255) => {
   const deckNameMinLength = 3;
-  const maxLength = 5;
-  const exceedLengthDeckMessage = `Must be more than ${deckNameMinLength} characters and less than ${maxLength} charactors long!`;
+  const deckLengthMessage = `Must be more than ${deckNameMinLength} characters and less than ${maxLength} charactors long!`;
   const exceedLengthMessage = `Must be less than ${maxLength} charactors long!`;
 
   let error = {
@@ -12,7 +11,7 @@ const errorMessage = (name, value) => {
   switch (name) {
     case 'deckName':
       if (value.trim().length < deckNameMinLength || value.trim().length > maxLength) {
-        error.message = exceedLengthDeckMessage;
+        error.message = deckLengthMessage;
       }
 
       if (value.trim().length === 0) {
