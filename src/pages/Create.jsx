@@ -7,6 +7,7 @@ import CardFormHeader from '../components/CardFormHeader'
 import CardForm from '../components/CardForm'
 import { GrAddCircle } from 'react-icons/gr'
 import Button from '../components/Button'
+import failsValidation from '../helpers/validation'
 
 const Create = () => {
   let navigate = useNavigate();
@@ -76,12 +77,12 @@ const Create = () => {
   });
 
   // test one card/deck to see if it has error
-  const failsValidation = (element) => {
-    // fail validation if any field has error OR any field is untouched
-    const hasError = Object.values(element.errors).some((errorField) => errorField.length > 0);
-    const hasUntouchedField = Object.values(element.modifications).some((modificationField) => !modificationField);
-    return hasError || hasUntouchedField;
-  }
+  // const failsValidation = (element) => {
+  //   // fail validation if any field has error OR any field is untouched
+  //   const hasError = Object.values(element.errors).some((errorField) => errorField.length > 0);
+  //   const hasUntouchedField = Object.values(element.modifications).some((modificationField) => !modificationField);
+  //   return hasError || hasUntouchedField;
+  // }
 
   const getRequiredUnmodifiedKeys = (element) => {
     return Object.entries(element.modifications)
