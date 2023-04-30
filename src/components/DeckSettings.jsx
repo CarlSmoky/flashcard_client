@@ -30,17 +30,13 @@ const DeckSettings = ({
 
   // When cancel button clicked, back to /decklist
   let navigate = useNavigate();
-  const routeChange = () => {
-    let path = `/decklist`;
-    navigate(path);
-  }
 
   return (
     <Wrapper>
       <form>
         <Header>
-          <button >
-            <RxCross2 onClick={routeChange} />
+          <button onClick={() => navigate('/decklist')}>
+            <RxCross2 />
             <span className="visually-hidden">Cancel Button</span>
           </button>
         </Header>
