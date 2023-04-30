@@ -127,19 +127,9 @@ const Wrapper = styled.div`
       cursor: pointer;
       transition: transform 0.2s ease-out;
   
-        &:hover {
-          cursor: pointer;
-          transform: scaleX(1.2) scaleY(1.2);
-        }
-  
-        .visually-hidden:not(:focus):not(:active) {
-        clip: rect(0 0 0 0); 
-        clip-path: inset(100%); 
-        height: 1px; 
-        overflow: hidden; 
-        position: absolute; 
-        white-space: nowrap; 
-        width: 1px; 
+      &:hover {
+        cursor: pointer;
+        transform: scaleX(1.2) scaleY(1.2);
       }
     }
   }

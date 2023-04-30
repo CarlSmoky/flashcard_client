@@ -39,7 +39,7 @@ const DeckSettings = ({
     <Wrapper>
       <form>
         <Header>
-          <button>
+          <button >
             <RxCross2 onClick={routeChange} />
             <span className="visually-hidden">Cancel Button</span>
           </button>
@@ -107,16 +107,6 @@ const Header = styled.div`
     font-size: 2rem;
   }
 
-  .visually-hidden:not(:focus):not(:active) {
-    clip: rect(0 0 0 0); 
-    clip-path: inset(100%); 
-    height: 1px; 
-    overflow: hidden; 
-    position: absolute; 
-    white-space: nowrap; 
-    width: 1px; 
-  }
-  
 `
 
 const Title = styled.h2`
