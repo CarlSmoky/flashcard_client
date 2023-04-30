@@ -1,4 +1,4 @@
-import failsValidation from "../validation";
+import { failsValidation } from "../validation";
 
 const defaultDeck = {
   deckName: '',
