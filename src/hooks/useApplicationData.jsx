@@ -8,19 +8,23 @@ const useApplicationData = () => {
   const [flashcardData, setFlashcardData] = useState({});
   const [deckData, setDeckData] = useState({});
 
-  useEffect(() => {
-    axios.get(`api/card/deck/${id}`)
-      .then(res => {
-        const deckName = res.data.deck.deck_name;
-        const description = res.data.deck.description;
+  const getDeckAndCardsData = async () => {
+    try {
+      const response = await axios.get(`api/card/deck/${id}`);
+      const deckName = response.data.deck.deck_name;
+        const description = response.data.deck.description;
         setDeckData({deckName, description});
-        const flashcardDataByDeckId = res.data.cards;
+        const flashcardDataByDeckId = response.data.cards;
         const formattedCardData = formatFlashcardData(flashcardDataByDeckId);
         setFlashcardData(formattedCardData);
-      })
-      .catch(err => {
-        console.log(err)
-      })
+
+    } catch (error) {
+      console.log(error.response.data.error);
+    }
+  }
+
+  useEffect(() => {
+    getDeckAndCardsData();
   }, [id]);
 
   const formatFlashcardData = (rawAPIData) => {
