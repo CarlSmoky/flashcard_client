@@ -5,17 +5,18 @@ import { useParams } from 'react-router-dom'
 const useApplicationData = () => {
 
   const { id } = useParams();
-  const [flashcarddata, setFlashcarddata] = useState({});
-  const [deckName, setDeckName] = useState("");
+  const [flashcardData, setFlashcardData] = useState({});
+  const [deckData, setDeckData] = useState({});
 
   useEffect(() => {
     axios.get(`api/card/deck/${id}`)
       .then(res => {
-        const deckName = res.data.deckName;
-        setDeckName(deckName);
+        const deckName = res.data.deck.deck_name;
+        const description = res.data.deck.description;
+        setDeckData({deckName, description});
         const flashcardDataByDeckId = res.data.cards;
         const formattedCardData = formatFlashcardData(flashcardDataByDeckId);
-        setFlashcarddata(formattedCardData);
+        setFlashcardData(formattedCardData);
       })
       .catch(err => {
         console.log(err)
@@ -41,15 +42,15 @@ const useApplicationData = () => {
   }
 
   const setCardProperty = (cardId, property, value) => {
-    let card = { ...flashcarddata[cardId] };
+    let card = { ...flashcardData[cardId] };
     card[property] = value
     let updateObj = { [cardId]: card };
-    setFlashcarddata(prev => ({ ...prev, ...updateObj }));
+    setFlashcardData(prev => ({ ...prev, ...updateObj }));
   }
 
   return {
-    deckName,
-    flashcarddata,
+    deckData,
+    flashcardData,
     setCardProperty,
   };
 }
