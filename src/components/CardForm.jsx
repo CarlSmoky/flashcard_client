@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { errorMessage } from '../helpers/utilities'
 import { RiDeleteBin5Line } from 'react-icons/ri'
+import { updateStatus } from '../helpers/defaultEditableData'
 
 const CardForm = ({
   editCardContents,
@@ -24,7 +25,8 @@ const CardForm = ({
       modifications: {
         ...card.modifications,
         [e.target.name]: true
-      }
+      },
+      updateStatus: updateStatus.edited
     }
 
     editCardContents(index, updatedCard);
@@ -35,7 +37,7 @@ const CardForm = ({
     deleteCardForm(index);
   }
 
-  return (
+  const renderedCard = (
     <Wrapper>
       <div className='term'>
         <textarea
@@ -69,6 +71,10 @@ const CardForm = ({
         </button>
       </div>
     </Wrapper>
+  )
+
+  return (
+   card.updateStatus === updateStatus.deleted ? <></> : renderedCard 
   )
 }
 

@@ -7,40 +7,40 @@ import CardForm from '../components/CardForm'
 import { GrAddCircle } from 'react-icons/gr'
 import Button from '../components/Button'
 import { handleOnSaveValidation } from '../helpers/validation'
-import { defaultEditableDeck, defaultEditableCard } from '../helpers/defaultEditableData'
+import { defaultEditableDeck, defaultEditableCard, updateStatus } from '../helpers/defaultEditableData'
 
 
 const Edit = () => {
   const {
-    deckData,
-    flashcardData,
-    // setCardProperty,
+    editableDeck,
+    editableCards,
+    setEditableDeck,
+    setEditableCards,
   } = useApplicationData();
 
-  const [newDeckContents, setNewDeckContents] = useState({ ...defaultEditableDeck });
-  const [newCardContents, setNewCardContents] = useState([{ ...defaultEditableCard }]);
   const [error, setError] = useState('');
 
+  console.log(editableCards);
+
   const createNewCard = () => {
-    setNewCardContents(prev => ([...prev, { ...defaultEditableCard }]));
+    setEditableCards(prev => ([...prev, { ...defaultEditableCard }]));
   };
 
   const editCardContents = (index, cardContents) => {
-    const prev = [...newCardContents];
+    const prev = [...editableCards];
     prev[index] = cardContents;
-    setNewCardContents([...prev]);
+    setEditableCards([...prev]);
   };
 
   const deleteCardForm = (index) => {
+    if (editableCards.length <= 1) { return }
 
-    if (index === 0) return;
-
-    const prev = [...newCardContents];
-    prev.splice(index, 1);
-    setNewCardContents([...prev]);
+    let card = {...editableCards[index]};
+    card.updateStatus = updateStatus.deleted  
+    editCardContents(index, card); 
   }
 
-  const cardFormItems = newCardContents.map((card, index) =>
+  const cardFormItems = editableCards.map((card, index) =>
     <CardForm
       key={index}
       editCardContents={editCardContents}
@@ -51,21 +51,22 @@ const Edit = () => {
   );
 
   
+  
 
 
   return (
     <Wrapper>
       <Title>Edit Deck</Title>
       <div className='error'>
-        {/* <p>{deckData.deckName}</p> */}
+        <p>{error}</p>
       </div>
       <form>
-        {deckData && <DeckDetailsForm 
-          newDeckContents={deckData || newDeckContents}
-          setNewDeckContents={setNewDeckContents}
+        {editableDeck && <DeckDetailsForm 
+          newDeckContents={editableDeck || defaultEditableDeck}
+          setNewDeckContents={setEditableDeck}
         />}
         <CardFormHeader />
-        {newCardContents && cardFormItems}
+        {editableCards && cardFormItems}
         <div className='addButton'>
           <button
             onClick={createNewCard}

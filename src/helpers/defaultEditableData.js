@@ -1,3 +1,10 @@
+const updateStatus = {
+  created: "CREATED",
+  deleted: "DELETED",
+  edited: "EDITED",
+  default: "DEFAULT"
+}
+
 // Deck
 const defaultEditableDeck = {
   deckName: '',
@@ -10,11 +17,13 @@ const defaultEditableDeck = {
   modifications: {
     deckName: false,
     description: true, // we can allow unmodified deck descriptions
-  }
+  },
+  updateStatus: updateStatus.created,
 };
 
 //Card
 const defaultEditableCard = {
+  id: null,
   term: '',
   definition: '',
   errors: {
@@ -24,8 +33,9 @@ const defaultEditableCard = {
   modifications: {
     term: false,
     definition: false,
-  }
+  },
+  updateStatus: updateStatus.created,
 };
 
-export { defaultEditableDeck, defaultEditableCard };
+export { defaultEditableDeck, defaultEditableCard, updateStatus };
 

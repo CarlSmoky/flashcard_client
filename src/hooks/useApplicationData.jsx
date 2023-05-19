@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
-import { defaultEditableDeck, defaultEditableCard } from '../helpers/defaultEditableData'
+import { defaultEditableDeck, defaultEditableCard, updateStatus } from '../helpers/defaultEditableData'
 
 const useApplicationData = () => {
 
   const { id } = useParams();
+  // for quiz format
   const [flashcardData, setFlashcardData] = useState({});
   const [deckData, setDeckData] = useState({});
-
+  
+  // for edit/create format
   const [editableDeck, setEditableDeck] = useState({ ...defaultEditableDeck });
   const [editableCards, setEditableCards] = useState([{ ...defaultEditableCard }]);
 
@@ -20,7 +22,6 @@ const useApplicationData = () => {
       const description = response.data.deck.description;
       setDeckData({deckName, description});
       const flashcardDataByDeckId = response.data.cards;
-      console.log(flashcardDataByDeckId);
 
       const formattedCardData = formatFlashcardData(flashcardDataByDeckId);
       setFlashcardData(formattedCardData);
@@ -37,9 +38,6 @@ const useApplicationData = () => {
       console.log(error.response.data.error);
     }
   }
-
-  console.log(editableDeck);
-  console.log(editableCards);
 
   useEffect(() => {
     getDeckAndCardsData();
@@ -74,13 +72,15 @@ const useApplicationData = () => {
       modifications: {
         deckName: true,
         description: true, 
-      }
+      },
+      updateStatus: updateStatus.default,
     }
   }
 
   const formatEditableCards = (flashcardDataByDeckId) => {
     return flashcardDataByDeckId.map(card => {
       return {
+        id: card.id,
         term: card.term,
         definition: card.definition,
         errors: {
@@ -90,7 +90,8 @@ const useApplicationData = () => {
         modifications: {
           term: true,
           definition: true,
-        }
+        },
+        updateStatus: updateStatus.default
       };
     })
   }
@@ -106,6 +107,10 @@ const useApplicationData = () => {
     deckData,
     flashcardData,
     setCardProperty,
+    editableDeck,
+    editableCards,
+    setEditableDeck,
+    setEditableCards,
   };
 }
 
