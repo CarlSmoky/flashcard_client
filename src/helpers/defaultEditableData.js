@@ -1,7 +1,7 @@
 const updateStatus = {
   created: "CREATED",
-  deleted: "DELETED",
   edited: "EDITED",
+  deleted: "DELETED",
   default: "DEFAULT"
 }
 

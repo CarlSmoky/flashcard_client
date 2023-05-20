@@ -1,4 +1,5 @@
 import { failsValidation } from "../validation";
+import { updateStatus } from "../defaultEditableData";
 
 const defaultDeck = {
   deckName: '',
@@ -65,4 +66,10 @@ test('modified card fails with error', () => {
   const modifiedCardWithNoError = {...defaultCard, modifications: {...defaultCard.modifications, term : true, definition : true} ,errors: {...defaultCard.errors, term: "required", definition: "required"}};
 
   expect(failsValidation(modifiedCardWithNoError)).toBe(true);
+});
+
+test('invalid deleted card doesnt fail', () => {
+  const unmodifiedDeletedCard = {...defaultCard, updateStatus: updateStatus.deleted};
+
+  expect(failsValidation(unmodifiedDeletedCard)).toBe(false);
 });

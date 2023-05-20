@@ -56,7 +56,7 @@ const Create = () => {
   });
 
   const handleSaveClick = (e) => {
-
+    // handleOnSaveValidation will return true if there is a problem
     if (handleOnSaveValidation(currentDeck)) {
 
       setError("* Something went wrong. Please check your input.");
