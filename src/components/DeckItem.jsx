@@ -1,12 +1,22 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom';
-import { truncate } from '../helpers/utilities';
+import { useNavigate } from "react-router-dom";
+import { Link } from 'react-router-dom'
+import { truncate } from '../helpers/utilities'
+import { AiOutlineEdit } from 'react-icons/ai'
 
 const DeckItem = ({ id, deckName, description }) => {
- 
+
+  let navigate = useNavigate();
+
   return (
     <Wrapper >
+      <Header>
+        <button onClick={() => navigate(`/edit/${id}`)}>
+          <AiOutlineEdit />
+          <span className="visually-hidden">Edit Button</span>
+        </button>
+      </Header>
       <Link to={`/deck/${id}`}>
         <ClickArea>
           <h1>{truncate(deckName, 35)}</h1>
@@ -30,7 +40,6 @@ const Wrapper = styled.div`
   
   &:hover {
     box-shadow: 0 3px 3px var(--black-secondary);
-    cursor: pointer;
   }
 
   &:active {
@@ -38,14 +47,14 @@ const Wrapper = styled.div`
 }
 `
 
-const ClickArea =  styled.div`
+const ClickArea = styled.div`
   width: 100%;
   height: 100%;
   
   h1 {
     width: 90%;
     height: 6rem;
-    margin: 1.5rem;
+    margin: 0 1rem 1rem 1rem;
     font-family: var(--secondary-font);
     font-weight: 200;
     text-transform: uppercase;
@@ -62,6 +71,27 @@ const ClickArea =  styled.div`
     overflow-wrap: break-word;
 
   }
+
+  &:hover {
+    cursor: pointer;
+  }
+
+`
+
+const Header = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+
+  button {
+    padding: .5rem;
+    cursor: pointer;
+  }
+
+  svg {
+    font-size: 2rem;
+  }
+  
 `
 
 export default DeckItem

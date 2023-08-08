@@ -1,6 +1,7 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
-import { errorMessage } from '../helpers/utilities';
+import { errorMessage } from '../helpers/utilities'
+import { updateStatus } from '../helpers/defaultEditableData'
 
 const DeckDetailsForm = ({
   newDeckContents,
@@ -21,12 +22,13 @@ const DeckDetailsForm = ({
       modifications: {
         ...newDeckContents.modifications,
         [e.target.name]: true
-      }
+      },
+      updateStatus: updateStatus.edited
     }
 
     setNewDeckContents(updatedDeck);
   };
-
+  
   return (
     <Wrapper>
       <div>
@@ -48,7 +50,7 @@ const DeckDetailsForm = ({
           type="text"
           name="description"
           id="description"
-          value={newDeckContents.deckDescription}
+          value={newDeckContents.description}
           placeholder="Enter deck description here"
         />
         <p>{newDeckContents.errors.description}</p>

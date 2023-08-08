@@ -1,25 +1,48 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
+import { defaultEditableDeck, defaultEditableCard, updateStatus } from '../helpers/defaultEditableData'
+import { useNavigate } from "react-router-dom"
 
 const useApplicationData = () => {
-
+  let navigate = useNavigate();
+  const [error, setError] = useState('');
   const { id } = useParams();
-  const [flashcarddata, setFlashcarddata] = useState({});
-  const [deckName, setDeckName] = useState("");
+  // for quiz format
+  const [flashcardData, setFlashcardData] = useState({});
+  const [deckData, setDeckData] = useState({});
+  
+  // for edit/create format
+  const [editableDeck, setEditableDeck] = useState({ ...defaultEditableDeck });
+  const [editableCards, setEditableCards] = useState([{ ...defaultEditableCard }]);
+
+  //move this function to helper
+  const getDeckAndCardsData = async () => {
+    try {
+      const response = await axios.get(`api/card/deck/${id}`);
+      const deckName = response.data.deck.deck_name;
+      const description = response.data.deck.description;
+      setDeckData({ deckName, description });
+      const flashcardDataByDeckId = response.data.cards;
+
+      const formattedCardData = formatFlashcardData(flashcardDataByDeckId);
+      setFlashcardData(formattedCardData);
+
+
+      // make editableDeck 
+      const formattedEditableDeck = formatEditableDeck(id, deckName, description)
+      setEditableDeck(formattedEditableDeck);
+
+      // make editableCards
+      const formattedEditableCards = formatEditableCards(flashcardDataByDeckId)
+      setEditableCards(formattedEditableCards)
+    } catch (error) {
+      console.log(error.response.data.error);
+    }
+  }
 
   useEffect(() => {
-    axios.get(`api/card/deck/${id}`)
-      .then(res => {
-        const deckName = res.data.deckName;
-        setDeckName(deckName);
-        const flashcardDataByDeckId = res.data.cards;
-        const formattedCardData = formatFlashcardData(flashcardDataByDeckId);
-        setFlashcarddata(formattedCardData);
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    getDeckAndCardsData();
   }, [id]);
 
   const formatFlashcardData = (rawAPIData) => {
@@ -40,17 +63,80 @@ const useApplicationData = () => {
     }, initialValue);
   }
 
-  const setCardProperty = (cardId, property, value) => {
-    let card = { ...flashcarddata[cardId] };
-    card[property] = value
-    let updateObj = { [cardId]: card };
-    setFlashcarddata(prev => ({ ...prev, ...updateObj }));
+  const formatEditableDeck = (id, deckName, description) => {
+    return {
+      id,
+      deckName,
+      description,
+      errors: {
+        deckName: '',
+        description: '',
+      },
+      modifications: {
+        deckName: true,
+        description: true, 
+      },
+      updateStatus: updateStatus.default,
+    }
   }
 
+  const formatEditableCards = (flashcardDataByDeckId) => {
+    return flashcardDataByDeckId.map(card => {
+      return {
+        id: card.id,
+        term: card.term,
+        definition: card.definition,
+        errors: {
+          term: '',
+          definition: '',
+        },
+        modifications: {
+          term: true,
+          definition: true,
+        },
+        updateStatus: updateStatus.default
+      };
+    })
+  }
+
+  const setCardProperty = (cardId, property, value) => {
+    let card = { ...flashcardData[cardId] };
+    card[property] = value
+    let updateObj = { [cardId]: card };
+    setFlashcardData(prev => ({ ...prev, ...updateObj }));
+  }
+
+  const endpoints = {
+    "UPDATE_DECK": `api/deck/update/${id}`
+  }
+
+  //move this function to helper
+  const updateDeckAndCards = async (updateDeckData, createdCardsData, updateCardsData, deleteCardsData) => {
+      
+    try {
+      const response = await axios.post(endpoints.UPDATE_DECK, { updateDeckData, createdCardsData, updateCardsData, deleteCardsData});
+
+      if (response) {
+        const path = `/edit/${id}`;
+        navigate(path);
+      }
+
+    } catch (error) {
+      setError(error.response.data.error);
+    }
+  };
+
   return {
-    deckName,
-    flashcarddata,
+    deckData,
+    flashcardData,
     setCardProperty,
+    editableDeck,
+    editableCards,
+    setEditableDeck,
+    setEditableCards,
+    updateDeckAndCards,
+    error,
+    setError
   };
 }
 

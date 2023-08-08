@@ -30,17 +30,13 @@ const DeckSettings = ({
 
   // When cancel button clicked, back to /decklist
   let navigate = useNavigate();
-  const routeChange = () => {
-    let path = `/decklist`;
-    navigate(path);
-  }
 
   return (
     <Wrapper>
       <form>
         <Header>
-          <button>
-            <RxCross2 onClick={routeChange} />
+          <button onClick={() => navigate('/decklist')}>
+            <RxCross2 />
             <span className="visually-hidden">Cancel Button</span>
           </button>
         </Header>
@@ -107,16 +103,6 @@ const Header = styled.div`
     font-size: 2rem;
   }
 
-  .visually-hidden:not(:focus):not(:active) {
-    clip: rect(0 0 0 0); 
-    clip-path: inset(100%); 
-    height: 1px; 
-    overflow: hidden; 
-    position: absolute; 
-    white-space: nowrap; 
-    width: 1px; 
-  }
-  
 `
 
 const Title = styled.h2`

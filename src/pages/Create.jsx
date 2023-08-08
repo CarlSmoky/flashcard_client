@@ -8,41 +8,13 @@ import CardForm from '../components/CardForm'
 import { GrAddCircle } from 'react-icons/gr'
 import Button from '../components/Button'
 import { handleOnSaveValidation } from '../helpers/validation'
+import { defaultEditableDeck, defaultEditableCard } from '../helpers/defaultEditableData'
 
 const Create = () => {
   let navigate = useNavigate();
 
-  // Deck
-  const defaultDeck = {
-    deckName: '',
-    description: '',
-    errors: {
-      deckName: '',
-      description: '',
-    },
-    // if modification is false, the field has never been touched, and needs to be non-emptyy
-    modifications: {
-      deckName: false,
-      description: true, // we can allow unmodified deck descriptions
-    }
-  };
-
-  //Card
-  const defaultCard = {
-    term: '',
-    definition: '',
-    errors: {
-      term: '',
-      definition: '',
-    },
-    modifications: {
-      term: false,
-      definition: false,
-    }
-  };
-
-  const [newDeckContents, setNewDeckContents] = useState({ ...defaultDeck });
-  const [newCardContents, setNewCardContents] = useState([{ ...defaultCard }]);
+  const [newDeckContents, setNewDeckContents] = useState({ ...defaultEditableDeck });
+  const [newCardContents, setNewCardContents] = useState([{ ...defaultEditableCard }]);
   const [error, setError] = useState('');
 
   const currentDeck = {
@@ -53,7 +25,7 @@ const Create = () => {
   }
 
   const createNewCard = () => {
-    setNewCardContents(prev => ([...prev, { ...defaultCard }]));
+    setNewCardContents(prev => ([...prev, { ...defaultEditableCard }]));
   };
 
   const editCardContents = (index, cardContents) => {
@@ -64,7 +36,7 @@ const Create = () => {
 
   const deleteCardForm = (index) => {
 
-    if (index === 0) return;
+    if (newCardContents.length <= 1) { return }
 
     const prev = [...newCardContents];
     prev.splice(index, 1);
@@ -84,7 +56,7 @@ const Create = () => {
   });
 
   const handleSaveClick = (e) => {
-
+    // handleOnSaveValidation will return true if there is a problem
     if (handleOnSaveValidation(currentDeck)) {
 
       setError("* Something went wrong. Please check your input.");
@@ -96,7 +68,7 @@ const Create = () => {
     const endpoints = {
       "NEWDECK": "api/deck/create"
     }
-
+    //move this function to helper
     const createDeckAndCards = async () => {
       try {
         const response = await axios.post(endpoints.NEWDECK, { newDeckContents: deckContentsForInsertion, newCardContents: cardsContentsForInsertion });
@@ -196,16 +168,6 @@ const Wrapper = styled.div`
     svg {
       font-size: 3rem;
       text-align: left;
-    }
-
-    .visually-hidden:not(:focus):not(:active) {
-      clip: rect(0 0 0 0); 
-      clip-path: inset(100%); 
-      height: 1px; 
-      overflow: hidden; 
-      position: absolute; 
-      white-space: nowrap; 
-      width: 1px; 
     }
 
   }

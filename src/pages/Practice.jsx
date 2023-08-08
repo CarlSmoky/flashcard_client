@@ -11,8 +11,8 @@ import { MdArrowForwardIos, MdArrowBackIosNew } from 'react-icons/md'
 
 const Practice = () => {
   const {
-    deckName,
-    flashcarddata,
+    deckData,
+    flashcardData,
     setCardProperty,
   } = useApplicationData();
   
@@ -54,7 +54,7 @@ const Practice = () => {
   }
 
   useEffect(() => {
-    const keys = Object.keys(flashcarddata).sort(() => Math.random() - 0.5).slice(0, numCards);
+    const keys = Object.keys(flashcardData).sort(() => Math.random() - 0.5).slice(0, numCards);
     setSelectedCardIndices(keys); 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [numCards]);
@@ -83,12 +83,12 @@ const Practice = () => {
   // normal way of getting cards after start
   const setDeckFromIds = () => {
     // test if we have valid indices yet
-    if (!flashcarddata[selectedCardIndices[0]]) {
+    if (!flashcardData[selectedCardIndices[0]]) {
       return setDefaultDeck();
     }
 
     let cards = selectedCardIndices.map((id) => {
-      let card = flashcarddata[id];
+      let card = flashcardData[id];
       return <Card
       card={card}
       key={card.id}
@@ -106,7 +106,7 @@ const Practice = () => {
 
   const getNumLeaning = () => {
     const numLearning = loadedCards.filter(id => {
-      let stat = flashcarddata[id];
+      let stat = flashcardData[id];
       if (stat.isLearning === true) {
         return id;
       }
@@ -124,9 +124,9 @@ const Practice = () => {
       {mode === modes.before && 
         <DeckSettings
           setNumCards={setNumCards}
-          deckName={deckName}
+          deckName={deckData.deckName}
           setMode={setMode}
-          totalCards={Object.keys(flashcarddata).length}
+          totalCards={Object.keys(flashcardData).length}
         />}
       {/* Before start */}
 
@@ -144,7 +144,7 @@ const Practice = () => {
       <CardsHeader
         isModalMode={isModalMode}
         selectedCardIndices={selectedCardIndices}
-        deck_name={deckName}
+        deck_name={deckData.deckName}
         current={current}
         setMode={setMode}
       />
@@ -176,11 +176,11 @@ const Practice = () => {
       {/* finished */}
       {mode === modes.finished && 
         <Result
-        deckName={deckName}
+        deckName={deckData.deckName}
         numCards={loadedCards.length}
         numLearning={numLearning}
         loadedCards={loadedCards}
-        flashcarddata={flashcarddata}
+        flashcarddata={flashcardData}
         setCardProperty={setCardProperty}
         />}
     </>
