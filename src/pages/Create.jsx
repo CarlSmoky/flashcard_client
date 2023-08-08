@@ -36,7 +36,7 @@ const Create = () => {
 
   const deleteCardForm = (index) => {
 
-    if (index === 0) return;
+    if (newCardContents.length <= 1) { return }
 
     const prev = [...newCardContents];
     prev.splice(index, 1);

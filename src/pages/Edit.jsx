@@ -9,18 +9,16 @@ import Button from '../components/Button'
 import { handleOnSaveValidation } from '../helpers/validation'
 import { defaultEditableDeck, defaultEditableCard, updateStatus } from '../helpers/defaultEditableData'
 
-
 const Edit = () => {
   const {
     editableDeck,
     editableCards,
     setEditableDeck,
     setEditableCards,
+    updateDeckAndCards,
+    error,
+    setError
   } = useApplicationData();
-
-  const [error, setError] = useState('');
-
-  console.log(editableCards);
 
   const createNewCard = () => {
     setEditableCards(prev => ([...prev, { ...defaultEditableCard }]));
@@ -32,8 +30,10 @@ const Edit = () => {
     setEditableCards([...prev]);
   };
 
+  const displayedCardFrom = editableCards.filter(card => card.updateStatus !== updateStatus.deleted);
+
   const deleteCardForm = (index) => {
-    if (editableCards.length <= 1) { return }
+    if (displayedCardFrom.length <= 1) { return }
 
     let card = {...editableCards[index]};
     card.updateStatus = updateStatus.deleted  
@@ -50,9 +50,57 @@ const Edit = () => {
     />
   );
 
-  
-  
+  const currentDeck = {
+    deckContents: editableDeck,
+    cardContents: editableCards,
+    setDeckContents: setEditableDeck,
+    setCardContents: setEditableCards,
+  }
 
+  const handleSaveClick = (e) => {
+
+    if (handleOnSaveValidation(currentDeck)) {
+
+      setError("* Something went wrong. Please check your input.");
+      return;
+    }
+    setError("");
+
+    const stripCardWithoutId = card => {
+      return {
+        term: card.term,
+        definition: card.definition
+      }
+    }
+
+    const stripCardWithID = card => {
+        return {
+          id: card.id,
+          term: card.term,
+          definition: card.definition
+        }
+      }
+
+    // Updata deck data
+    const updateDeckData = editableDeck.updateStatus === updateStatus.edited ? {id: editableDeck.id, deckName: editableDeck.deckName, description: editableDeck.description} : null;
+    
+    // Create card data
+    const createdCardsData = editableCards
+    .filter(card => card.id === null && card.updateStatus === updateStatus.edited)
+    .map(stripCardWithoutId);
+    
+    // Updata card data
+    const updateCardsData = editableCards
+      .filter(card => card.id !== null && card.updateStatus === updateStatus.edited)
+      .map(stripCardWithID);
+
+    // Delete card
+    const deleteCardsData = editableCards
+      .filter(card => card.id !== null && card.updateStatus === updateStatus.deleted)
+      .map(stripCardWithID);
+
+    updateDeckAndCards(updateDeckData, createdCardsData, updateCardsData, deleteCardsData);
+  };
 
   return (
     <Wrapper>
@@ -78,7 +126,7 @@ const Edit = () => {
         <Button
           text='Save'
           buttonType='submit'
-          // onButtonClick={handleSaveClick}
+          onButtonClick={handleSaveClick}
         />
       </form>
     </Wrapper>
@@ -129,7 +177,6 @@ const Wrapper = styled.div`
       font-size: 3rem;
       text-align: left;
     }
-
   }
 `
 export default Edit
