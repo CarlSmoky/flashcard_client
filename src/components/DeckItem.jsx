@@ -28,8 +28,7 @@ const DeckItem = ({ id, deckName, description }) => {
 }
 
 const Wrapper = styled.div`
-  width: 31%;
-  min-width: 25rem;
+  width: 25%;
   height: 20rem;
   margin: 1rem;
   border: .3rem solid var(--black-primary);
@@ -49,7 +48,7 @@ const Wrapper = styled.div`
 
 const ClickArea = styled.div`
   width: 100%;
-  height: 100%;
+  height: 82%;
   
   h1 {
     width: 90%;
