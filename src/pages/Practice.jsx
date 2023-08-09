@@ -119,7 +119,7 @@ const Practice = () => {
   const numLearning = getNumLeaning();
 
   return (
-    <>
+    <Wrapper>
       {/* Before start  */}
       {mode === modes.before && 
         <DeckSettings
@@ -183,15 +183,19 @@ const Practice = () => {
         flashcarddata={flashcardData}
         setCardProperty={setCardProperty}
         />}
-    </>
+    </Wrapper>
   )
 }
 
+const Wrapper = styled.div`
+  min-height: calc(100vh - 9.3rem - 9.3rem);
+`
 const CardStyle = styled.article`
   display: flex;
   flex-direction: row;
   justify-content: center;
   height: 45rem;
+  margin-top: 10rem;
 
   background: var(--white);
   z-index: -1;
