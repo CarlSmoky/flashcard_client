@@ -39,7 +39,6 @@ const ButtonStyle = styled.button`
   font-family: var(--primary-font);
   font-weight: 600;
   text-transform: uppercase;
-  color: var(--black-primary);
   border: 2px solid var(--black-primary); 
   box-shadow: 1px 1px 0px 0px  black, 2px 2px 0px 0px black, 3px 3px 0px 0px black, 4px 4px 0px 0px black, 5px 5px 0px 0px black;
   position: relative;
@@ -55,7 +54,7 @@ const ButtonStyle = styled.button`
   ${({ disabled }) => {
     return disabled
       ? css`
-      
+        color: var(--grey-secondary);
       `
       : css`
       cursor: pointer;
@@ -69,6 +68,7 @@ const ButtonStyle = styled.button`
         left: 0;
         background-color: var(--primary-color);
         transform-origin: bottom right;
+        color: var(--black-primary);
         transition: transform .3s ease-out;
       }
 

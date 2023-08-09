@@ -10,6 +10,7 @@ const GlobalStyles = createGlobalStyle`
   --black-primary: #2E2E2E;
   --black-secondary: #3E3E3E;
   --grey-primary: #333;
+  --grey-secondary: #829191;
   --side-column-border: 0.4rem;
   --side-column-width: 8.5rem;
   
