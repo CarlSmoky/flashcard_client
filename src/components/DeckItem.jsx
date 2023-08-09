@@ -83,8 +83,13 @@ const Header = styled.div`
   justify-content: flex-end;
 
   button {
+    transition: transform .1s ease-out;
     padding: .5rem;
+
+    &:hover {
     cursor: pointer;
+    transform: scaleX(1.2) scaleY(1.2);
+    }
   }
 
   svg {
