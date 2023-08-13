@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import useApplicationData from '../hooks/useApplicationData'
 import DeckDetailsForm from '../components/DeckDetailsForm'
 import CardFormHeader from '../components/CardFormHeader'
@@ -8,6 +8,7 @@ import { GrAddCircle } from 'react-icons/gr'
 import Button from '../components/Button'
 import { handleOnSaveValidation } from '../helpers/validation'
 import { defaultEditableDeck, defaultEditableCard, updateStatus } from '../helpers/defaultEditableData'
+import { useModal } from '../providers/ModalProvider'
 
 const Edit = () => {
   const {
@@ -19,6 +20,8 @@ const Edit = () => {
     error,
     setError
   } = useApplicationData();
+
+  const { modalActivated, openModal, closeModal } = useModal()
 
   const createNewCard = () => {
     setEditableCards(prev => ([...prev, { ...defaultEditableCard }]));
@@ -35,9 +38,9 @@ const Edit = () => {
   const deleteCardForm = (index) => {
     if (displayedCardFrom.length <= 1) { return }
 
-    let card = {...editableCards[index]};
-    card.updateStatus = updateStatus.deleted  
-    editCardContents(index, card); 
+    let card = { ...editableCards[index] };
+    card.updateStatus = updateStatus.deleted
+    editCardContents(index, card);
   }
 
   const cardFormItems = editableCards.map((card, index) =>
@@ -73,13 +76,13 @@ const Edit = () => {
   }
 
   // Updata deck data
-  const updateDeckData = editableDeck.updateStatus === updateStatus.edited ? {id: editableDeck.id, deckName: editableDeck.deckName, description: editableDeck.description} : null;
-    
+  const updateDeckData = editableDeck.updateStatus === updateStatus.edited ? { id: editableDeck.id, deckName: editableDeck.deckName, description: editableDeck.description } : null;
+
   // Create card data
   const createdCardsData = editableCards
-  .filter(card => card.id === null && card.updateStatus === updateStatus.edited)
-  .map(stripCardWithoutId);
-  
+    .filter(card => card.id === null && card.updateStatus === updateStatus.edited)
+    .map(stripCardWithoutId);
+
   // Updata card data
   const updateCardsData = editableCards
     .filter(card => card.id !== null && card.updateStatus === updateStatus.edited)
@@ -101,33 +104,34 @@ const Edit = () => {
       return;
     }
     setError("");
-
+    modalActivated ? closeModal() : openModal();
     updateDeckAndCards(updateDeckData, createdCardsData, updateCardsData, deleteCardsData);
   };
 
-  
-    
+
+
 
   return (
-    <Wrapper>
+    <Wrapper className={modalActivated && 'blur'}>
       <Title>Edit Deck</Title>
       <div className='error'>
         <p>{error}</p>
       </div>
       <form>
-        {editableDeck && <DeckDetailsForm 
+        {editableDeck && <DeckDetailsForm
           newDeckContents={editableDeck || defaultEditableDeck}
           setNewDeckContents={setEditableDeck}
         />}
         <CardFormHeader />
         {editableCards && cardFormItems}
-        <div className='addButton'>
-          <button
+        <div className="addBtnContainer">
+          <AddButton
             onClick={createNewCard}
-            type='button'>
+            type='button'
+            disabled={modalActivated}>
             <GrAddCircle />
             <span className="visually-hidden">Add Card Button</span>
-          </button>
+          </AddButton>
         </div>
         <Button
           text='Save'
@@ -153,6 +157,10 @@ const Title = styled.h1`
 const Wrapper = styled.div`
   min-height: calc(100vh - 9.3rem - 9.3rem);
 
+  &.blur {
+    filter: blur(2rem);
+  }
+
   .error {
     width: 98%;
     height: 2.3rem;
@@ -166,24 +174,40 @@ const Wrapper = styled.div`
       text-align: left;
     }
   }
-  
-  .addButton {
-    text-align: right;
-  
-    button {
-      margin: 0 1rem;
+
+  .addBtnContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+  }
+`
+
+const AddButton = styled.button`
+  margin-right: 2.1rem;
+
+  svg {
+      font-size: 3rem;
       transition: transform 0.2s ease-out;
 
-      &:hover {
+      ${({ disabled }) => {
+    return disabled
+      ? css`
+        
+        `
+      : css`
+        cursor: pointer;
+
+        &:hover {
         cursor: pointer;
         transform: scaleX(1.2) scaleY(1.2);
-      }
-    }
+        }
 
-    svg {
-      font-size: 3rem;
-      text-align: left;
+        &:active {
+          background: var(--white-primary);
+          color: var(--black-primary);
+        }
+      `
+  }}
     }
-  }
 `
 export default Edit

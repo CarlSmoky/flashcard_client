@@ -2,11 +2,14 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 import { errorMessage } from '../helpers/utilities'
 import { updateStatus } from '../helpers/defaultEditableData'
+import { useModal } from '../providers/ModalProvider'
 
 const DeckDetailsForm = ({
   newDeckContents,
   setNewDeckContents
 }) => {
+
+  const { modalActivated } = useModal()
 
   const onChangeDeck = (e) => {
     const returnedError = errorMessage(e.target.name, e.target.value);
@@ -40,6 +43,7 @@ const DeckDetailsForm = ({
           id="deckName"
           value={newDeckContents.deckName}
           placeholder="Enter deck name here"
+          disabled={modalActivated}
         />
         <p>{newDeckContents.errors.deckName}</p>
       </div>
@@ -52,6 +56,7 @@ const DeckDetailsForm = ({
           id="description"
           value={newDeckContents.description}
           placeholder="Enter deck description here"
+          disabled={modalActivated}
         />
         <p>{newDeckContents.errors.description}</p>
       </div>

@@ -10,6 +10,7 @@ import Create from '../pages/Create'
 import Footer from './Footer'
 import Signup from './Signup'
 import Login from './Login'
+import ModalProvider from '../providers/ModalProvider'
 
 
 const Frame = ({ content }) => {
@@ -27,13 +28,15 @@ return (
     </div>
     <div className="center">
       <Nav />
-      {content === "menu" && <Menu />}
-      {content === "decklist" && <DeckList />}
-      {content === "practice" && <Practice />}
-      {content === "edit" && <Edit />}
-      {content === "create" && <Create />}
-      {content === "signup" && <Signup />}
-      {content === "login" && <Login />}
+      <ModalProvider>
+        {content === "menu" && <Menu />}
+        {content === "decklist" && <DeckList />}
+        {content === "practice" && <Practice />}
+        {content === "edit" && <Edit />}
+        {content === "create" && <Create />}
+        {content === "signup" && <Signup />}
+        {content === "login" && <Login />}
+      </ModalProvider>
       <Footer />
     </div>
     <div className="right">
