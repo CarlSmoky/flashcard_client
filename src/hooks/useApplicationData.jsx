@@ -3,6 +3,7 @@ import axios from 'axios'
 import { useParams } from 'react-router-dom'
 import { defaultEditableDeck, defaultEditableCard, updateStatus } from '../helpers/defaultEditableData'
 import { useNavigate } from "react-router-dom"
+import { useModal } from '../providers/ModalProvider'
 
 const useApplicationData = () => {
   let navigate = useNavigate();
@@ -15,6 +16,8 @@ const useApplicationData = () => {
   // for edit/create format
   const [editableDeck, setEditableDeck] = useState({ ...defaultEditableDeck });
   const [editableCards, setEditableCards] = useState([{ ...defaultEditableCard }]);
+
+  const { modalActivated } = useModal()
 
   //move this function to helper
   const getDeckAndCardsData = async () => {
@@ -43,7 +46,8 @@ const useApplicationData = () => {
 
   useEffect(() => {
     getDeckAndCardsData();
-  }, [id]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id, modalActivated]);
 
   const formatFlashcardData = (rawAPIData) => {
     const initialValue = {};
@@ -106,6 +110,8 @@ const useApplicationData = () => {
     setFlashcardData(prev => ({ ...prev, ...updateObj }));
   }
 
+  const [editDeckResult, setEditDeckResult] = useState({});
+
   const endpoints = {
     "UPDATE_DECK": `api/deck/update/${id}`
   }
@@ -119,6 +125,7 @@ const useApplicationData = () => {
       if (response) {
         const path = `/edit/${id}`;
         navigate(path);
+        setEditDeckResult(response.data);
       }
 
     } catch (error) {
@@ -136,7 +143,9 @@ const useApplicationData = () => {
     setEditableCards,
     updateDeckAndCards,
     error,
-    setError
+    setError,
+    editDeckResult,
+    setEditDeckResult
   };
 }
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled, { css } from 'styled-components'
 import useApplicationData from '../hooks/useApplicationData'
 import DeckDetailsForm from '../components/DeckDetailsForm'
@@ -9,6 +9,9 @@ import Button from '../components/Button'
 import { handleOnSaveValidation } from '../helpers/validation'
 import { defaultEditableDeck, defaultEditableCard, updateStatus } from '../helpers/defaultEditableData'
 import { useModal } from '../providers/ModalProvider'
+import EditDeckResult from '../components/EditDeckResult'
+import { useNavigate } from "react-router-dom"
+import { useParams } from 'react-router-dom'
 
 const Edit = () => {
   const {
@@ -18,8 +21,13 @@ const Edit = () => {
     setEditableCards,
     updateDeckAndCards,
     error,
-    setError
+    setError,
+    editDeckResult,
+    setEditDeckResult
   } = useApplicationData();
+
+  let navigate = useNavigate();
+  const { id } = useParams();
 
   const { modalActivated, openModal, closeModal } = useModal()
 
@@ -104,20 +112,30 @@ const Edit = () => {
       return;
     }
     setError("");
-    modalActivated ? closeModal() : openModal();
+    openModal();
     updateDeckAndCards(updateDeckData, createdCardsData, updateCardsData, deleteCardsData);
   };
 
-
-
+  const handleOk = () => {
+    closeModal();
+    const path = `/edit/${id}`;
+    navigate(path);
+    setEditDeckResult({});
+  }
 
   return (
+    <>
+      {modalActivated && 
+        <EditDeckResult
+          editDeckResult={editDeckResult}
+          handleOk={handleOk}
+        />}
     <Wrapper className={modalActivated && 'blur'}>
       <Title>Edit Deck</Title>
       <div className='error'>
         <p>{error}</p>
       </div>
-      <form>
+      <form className={modalActivated && 'blur'}>
         {editableDeck && <DeckDetailsForm
           newDeckContents={editableDeck || defaultEditableDeck}
           setNewDeckContents={setEditableDeck}
@@ -137,10 +155,11 @@ const Edit = () => {
           text='Save'
           buttonType='submit'
           onButtonClick={handleSaveClick}
-          disabled={disableButton()}
+          disabled={disableButton() || modalActivated}
         />
       </form>
     </Wrapper>
+    </>
   )
 }
 
@@ -152,13 +171,17 @@ const Title = styled.h1`
   padding: 1.3rem;
   font-weight: 600;
   text-transform: uppercase;
+
+  &.blur {
+    filter: blur(.6rem);
+  }
 `
 
 const Wrapper = styled.div`
   min-height: calc(100vh - 9.3rem - 9.3rem);
 
   &.blur {
-    filter: blur(2rem);
+    filter: blur(.6rem);
   }
 
   .error {

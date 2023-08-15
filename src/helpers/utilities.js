@@ -64,4 +64,19 @@ const truncate = (text, maxLength) => {
   return displayText;
 }
 
-export { errorMessage, truncate };
+const formatPluralText = (count, baseText) => {
+  if (count > 1) return baseText + `s are`;
+  return baseText + ` is`;
+}
+
+const generateUpdateMsg = (editDeckResult) => {
+  let msg = [];
+  if (editDeckResult.updateDeckName) msg = [...msg, `Deck: ${editDeckResult.updateDeckName}`];
+  if (editDeckResult.updateDescription && editDeckResult.updateDescription.length > 0) msg = [...msg, `Description: ${editDeckResult.updateDescription}`];
+  if (editDeckResult.numOfUpdatedCard && editDeckResult.numOfUpdatedCard > 0) msg = [...msg, `${editDeckResult.numOfUpdatedCard} ${formatPluralText(editDeckResult.numOfUpdatedCard, 'card')} changed`];
+  if (editDeckResult.numOfDeletedCards && editDeckResult.numOfDeletedCards > 0) msg = [...msg, `${editDeckResult.numOfDeletedCards} ${formatPluralText(editDeckResult.numOfDeletedCards, 'card')} deleted`];
+  if (editDeckResult.numOfCreatedCard && editDeckResult.numOfCreatedCard > 0) msg = [...msg, `${editDeckResult.numOfCreatedCard} ${formatPluralText(editDeckResult.numOfCreatedCard, 'card')} created`];
+  return msg;
+}
+
+export { errorMessage, truncate, generateUpdateMsg };
