@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled, { css } from 'styled-components'
 import useApplicationData from '../hooks/useApplicationData'
 import DeckDetailsForm from '../components/DeckDetailsForm'
@@ -10,9 +10,9 @@ import { handleOnSaveValidation } from '../helpers/validation'
 import { defaultEditableDeck, defaultEditableCard, updateStatus } from '../helpers/defaultEditableData'
 import { useModal } from '../providers/ModalProvider'
 import EditDeckResult from '../components/EditDeckResult'
-import { useNavigate } from "react-router-dom"
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from "react-router-dom"
 import { scrollToTop } from '../helpers/utilities'
+import { updateDeckAndCards } from '../helpers/deckAndCardsHelpers'
 
 const Edit = () => {
   const {
@@ -20,18 +20,15 @@ const Edit = () => {
     editableCards,
     setEditableDeck,
     setEditableCards,
-    updateDeckAndCards,
     error,
-    setError,
-    editDeckResult,
-    setEditDeckResult
+    setError
   } = useApplicationData();
 
   let navigate = useNavigate();
   const { id } = useParams();
 
   const { modalActivated, openModal, closeModal } = useModal();
-  
+  const [editDeckResult, setEditDeckResult] = useState({});
 
   const createNewCard = () => {
     setEditableCards(prev => ([...prev, { ...defaultEditableCard }]));
@@ -115,7 +112,7 @@ const Edit = () => {
     }
     setError("");
     openModal();
-    updateDeckAndCards(updateDeckData, createdCardsData, updateCardsData, deleteCardsData);
+    updateDeckAndCards(updateDeckData, createdCardsData, updateCardsData, deleteCardsData, setEditDeckResult, setError, id);
   };
 
   const handleOk = () => {

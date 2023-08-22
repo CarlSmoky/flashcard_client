@@ -16,7 +16,7 @@ const useApplicationData = () => {
   const [editableCards, setEditableCards] = useState([{ ...defaultEditableCard }]);
 
   const { modalActivated } = useModal();
-  const [editDeckResult, setEditDeckResult] = useState({});
+  
 
   //move this function to helper
   const getDeckAndCardsData = async () => {
@@ -109,21 +109,6 @@ const useApplicationData = () => {
     setFlashcardData(prev => ({ ...prev, ...updateObj }));
   }
 
-  const endpoints = {
-    "UPDATE_DECK": `api/deck/update/${id}`
-  }
-
-  //move this function to helper
-  const updateDeckAndCards = async (updateDeckData, createdCardsData, updateCardsData, deleteCardsData) => {
-    try {
-      const response = await axios.post(endpoints.UPDATE_DECK, { updateDeckData, createdCardsData, updateCardsData, deleteCardsData});
-      const resp = await response.data;
-      setEditDeckResult(resp);
-    } catch (error) {
-      setError(error.response.data.error);
-    }
-  };
-
   return {
     deckData,
     flashcardData,
@@ -132,11 +117,8 @@ const useApplicationData = () => {
     editableCards,
     setEditableDeck,
     setEditableCards,
-    updateDeckAndCards,
     error,
-    setError,
-    editDeckResult,
-    setEditDeckResult
+    setError
   };
 }
 
