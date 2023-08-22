@@ -79,4 +79,9 @@ const generateUpdateMsg = (editDeckResult) => {
   return msg;
 }
 
-export { errorMessage, truncate, generateUpdateMsg };
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+
+export { errorMessage, truncate, generateUpdateMsg, scrollToTop };

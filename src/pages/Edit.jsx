@@ -12,6 +12,7 @@ import { useModal } from '../providers/ModalProvider'
 import EditDeckResult from '../components/EditDeckResult'
 import { useNavigate } from "react-router-dom"
 import { useParams } from 'react-router-dom'
+import { scrollToTop } from '../helpers/utilities'
 
 const Edit = () => {
   const {
@@ -29,7 +30,8 @@ const Edit = () => {
   let navigate = useNavigate();
   const { id } = useParams();
 
-  const { modalActivated, openModal, closeModal } = useModal()
+  const { modalActivated, openModal, closeModal } = useModal();
+  
 
   const createNewCard = () => {
     setEditableCards(prev => ([...prev, { ...defaultEditableCard }]));
@@ -106,9 +108,9 @@ const Edit = () => {
   }
 
   const handleSaveClick = (e) => {
-
     if (handleOnSaveValidation(currentDeck)) {
       setError("* Something went wrong. Please check your input.");
+      scrollToTop();
       return;
     }
     setError("");
@@ -125,40 +127,40 @@ const Edit = () => {
 
   return (
     <>
-      {modalActivated && 
+      {modalActivated &&
         <EditDeckResult
           editDeckResult={editDeckResult}
           handleOk={handleOk}
         />}
-    <Wrapper className={modalActivated && 'blur'}>
-      <Title>Edit Deck</Title>
-      <div className='error'>
-        <p>{error}</p>
-      </div>
-      <form className={modalActivated && 'blur'}>
-        {editableDeck && <DeckDetailsForm
-          newDeckContents={editableDeck || defaultEditableDeck}
-          setNewDeckContents={setEditableDeck}
-        />}
-        <CardFormHeader />
-        {editableCards && cardFormItems}
-        <div className="addBtnContainer">
-          <AddButton
-            onClick={createNewCard}
-            type='button'
-            disabled={modalActivated}>
-            <GrAddCircle />
-            <span className="visually-hidden">Add Card Button</span>
-          </AddButton>
+      <Wrapper className={modalActivated && 'blur'}>
+        <Title>Edit Deck</Title>
+        <div className='error'>
+          <p>{error}</p>
         </div>
-        <Button
-          text='Save'
-          buttonType='submit'
-          onButtonClick={handleSaveClick}
-          disabled={disableButton() || modalActivated}
-        />
-      </form>
-    </Wrapper>
+        <form className={modalActivated && 'blur'}>
+          {editableDeck && <DeckDetailsForm
+            newDeckContents={editableDeck || defaultEditableDeck}
+            setNewDeckContents={setEditableDeck}
+          />}
+          <CardFormHeader />
+          {editableCards && cardFormItems}
+          <div className="addBtnContainer">
+            <AddButton
+              onClick={createNewCard}
+              type='button'
+              disabled={modalActivated}>
+              <GrAddCircle />
+              <span className="visually-hidden">Add Card Button</span>
+            </AddButton>
+          </div>
+          <Button
+            text='Save'
+            buttonType='submit'
+            onButtonClick={handleSaveClick}
+            disabled={disableButton() || modalActivated}
+          />
+        </form>
+      </Wrapper>
     </>
   )
 }

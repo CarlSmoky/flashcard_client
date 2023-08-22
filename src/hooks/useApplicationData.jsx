@@ -2,11 +2,9 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
 import { defaultEditableDeck, defaultEditableCard, updateStatus } from '../helpers/defaultEditableData'
-import { useNavigate } from "react-router-dom"
 import { useModal } from '../providers/ModalProvider'
 
 const useApplicationData = () => {
-  let navigate = useNavigate();
   const [error, setError] = useState('');
   const { id } = useParams();
   // for quiz format
@@ -17,7 +15,8 @@ const useApplicationData = () => {
   const [editableDeck, setEditableDeck] = useState({ ...defaultEditableDeck });
   const [editableCards, setEditableCards] = useState([{ ...defaultEditableCard }]);
 
-  const { modalActivated } = useModal()
+  const { modalActivated } = useModal();
+  const [editDeckResult, setEditDeckResult] = useState({});
 
   //move this function to helper
   const getDeckAndCardsData = async () => {
@@ -110,24 +109,16 @@ const useApplicationData = () => {
     setFlashcardData(prev => ({ ...prev, ...updateObj }));
   }
 
-  const [editDeckResult, setEditDeckResult] = useState({});
-
   const endpoints = {
     "UPDATE_DECK": `api/deck/update/${id}`
   }
 
   //move this function to helper
   const updateDeckAndCards = async (updateDeckData, createdCardsData, updateCardsData, deleteCardsData) => {
-      
     try {
       const response = await axios.post(endpoints.UPDATE_DECK, { updateDeckData, createdCardsData, updateCardsData, deleteCardsData});
-
-      if (response) {
-        const path = `/edit/${id}`;
-        navigate(path);
-        setEditDeckResult(response.data);
-      }
-
+      const resp = await response.data;
+      setEditDeckResult(resp);
     } catch (error) {
       setError(error.response.data.error);
     }
