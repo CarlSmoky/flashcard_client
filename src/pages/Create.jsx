@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { useNavigate } from "react-router-dom"
 import DeckDetailsForm from '../components/DeckDetailsForm'
 import CardFormHeader from '../components/CardFormHeader'
@@ -99,16 +99,20 @@ const Create = () => {
           />
           <CardFormHeader />
           {newCardContents && cardFormItems}
-          <div className='addButton'>
-            <button onClick={createNewCard} type='button'>
+          <div className='addBtnContainer'>
+            <AddButton
+              onClick={createNewCard}
+              type='button'
+              disabled={modalActivated}>
               <GrAddCircle />
               <span className="visually-hidden">Add Card Button</span>
-            </button>
+            </AddButton>
           </div>
           <Button
             text='Save'
             buttonType='submit'
             onButtonClick={handleSaveClick}
+            disabled={modalActivated}
           />
         </form>
       </Wrapper>
@@ -129,6 +133,10 @@ const Title = styled.h1`
 const Wrapper = styled.div`
   min-height: calc(100vh - 9.3rem - 9.3rem);
 
+  &.blur {
+    filter: blur(.6rem);
+  }
+
   .error {
     width: 98%;
     height: 2.3rem;
@@ -141,32 +149,42 @@ const Wrapper = styled.div`
       color: red;
       text-align: left;
     }
+  }
 
-    &.blur {
-    filter: blur(.6rem);
+  .addBtnContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
   }
-  }
-  
-  .addButton {
-    text-align: right;
-  
-    button {
-      margin: 0 1rem;
+`
+
+const AddButton = styled.button`
+  margin-right: 2.1rem;
+
+  svg {
+      font-size: 3rem;
       transition: transform 0.2s ease-out;
 
-      &:hover {
+      ${({ disabled }) => {
+      return disabled
+      ? css`
+        
+        `
+      : css`
+        cursor: pointer;
+
+        &:hover {
         cursor: pointer;
         transform: scaleX(1.2) scaleY(1.2);
-      }
-    }
+        }
 
-    svg {
-      font-size: 3rem;
-      text-align: left;
-    }
-
-  }
-
+        &:active {
+          background: var(--white-primary);
+          color: var(--black-primary);
+        }
+      `
+      }}
+}
 `
 
 export default Create
