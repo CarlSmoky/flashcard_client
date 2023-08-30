@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import axios from 'axios'
 import { useNavigate } from "react-router-dom"
 import DeckDetailsForm from '../components/DeckDetailsForm'
 import CardFormHeader from '../components/CardFormHeader'
@@ -9,13 +8,23 @@ import { GrAddCircle } from 'react-icons/gr'
 import Button from '../components/Button'
 import { handleOnSaveValidation } from '../helpers/validation'
 import { defaultEditableDeck, defaultEditableCard } from '../helpers/defaultEditableData'
+import { createDeckAndCards } from '../helpers/deckAndCardsHelpers'
+import useApplicationData from '../hooks/useApplicationData'
+import { useModal } from '../providers/ModalProvider'
+// import CreateDeckResult from '../components/CreateDeckResult'
+import UpdateConfirmation from '../components/UpdateConfirmation'
 
 const Create = () => {
-  let navigate = useNavigate();
+  const {
+    error,
+    setError
+  } = useApplicationData();
 
   const [newDeckContents, setNewDeckContents] = useState({ ...defaultEditableDeck });
   const [newCardContents, setNewCardContents] = useState([{ ...defaultEditableCard }]);
-  const [error, setError] = useState('');
+  const [newDeck, setNewDeck] = useState('');
+  const { modalActivated, openModal, closeModal } = useModal();
+  let navigate = useNavigate();
 
   const currentDeck = {
     deckContents: newDeckContents,
@@ -43,48 +52,22 @@ const Create = () => {
     setNewCardContents([...prev]);
   }
 
-  const deckContentsForInsertion = {
-    deckName: newDeckContents.deckName,
-    description: newDeckContents.description
-  };
-
-  const cardsContentsForInsertion = newCardContents.map((card) => {
-    return {
-      term: card.term,
-      definition: card.definition
-    }
-  });
-
   const handleSaveClick = (e) => {
     // handleOnSaveValidation will return true if there is a problem
     if (handleOnSaveValidation(currentDeck)) {
-
       setError("* Something went wrong. Please check your input.");
       return;
     }
     setError("");
-
-    // Need to refactor
-    const endpoints = {
-      "NEWDECK": "api/deck/create"
-    }
-    //move this function to helper
-    const createDeckAndCards = async () => {
-      try {
-        const response = await axios.post(endpoints.NEWDECK, { newDeckContents: deckContentsForInsertion, newCardContents: cardsContentsForInsertion });
-
-        const path = `/deck/${response.data.deckId}`;
-        navigate(path);
-
-      } catch (error) {
-        setError(error.response.data.error);
-        console.log(error.response.data.error);
-      }
-    };
-
-    createDeckAndCards();
-
+    openModal();
+    createDeckAndCards(newDeckContents, newCardContents, setNewDeck, setError);
   };
+
+  const handleOk = () => {
+    closeModal();
+    const path = `/deck/${newDeck.deckId}`;
+    navigate(path);
+  }
 
   const cardFormItems = newCardContents.map((card, index) =>
     <CardForm
@@ -96,32 +79,40 @@ const Create = () => {
     />
   );
 
+
   return (
-    <Wrapper>
-      <Title>Create Deck</Title>
-      <div className='error'>
-        <p>{error}</p>
-      </div>
-      <form>
-        <DeckDetailsForm
-          newDeckContents={newDeckContents}
-          setNewDeckContents={setNewDeckContents}
-        />
-        <CardFormHeader />
-        {newCardContents && cardFormItems}
-        <div className='addButton'>
-          <button onClick={createNewCard} type='button'>
-            <GrAddCircle />
-            <span className="visually-hidden">Add Card Button</span>
-          </button>
+    <>
+      {modalActivated &&
+        <UpdateConfirmation
+          handleOk={handleOk}
+          updateResult={newDeck}
+        />}
+      <Wrapper className={modalActivated && 'blur'}>
+        <Title>Create Deck</Title>
+        <div className='error'>
+          <p>{error}</p>
         </div>
-        <Button
-          text='Save'
-          buttonType='submit'
-          onButtonClick={handleSaveClick}
-        />
-      </form>
-    </Wrapper>
+        <form>
+          <DeckDetailsForm
+            newDeckContents={newDeckContents}
+            setNewDeckContents={setNewDeckContents}
+          />
+          <CardFormHeader />
+          {newCardContents && cardFormItems}
+          <div className='addButton'>
+            <button onClick={createNewCard} type='button'>
+              <GrAddCircle />
+              <span className="visually-hidden">Add Card Button</span>
+            </button>
+          </div>
+          <Button
+            text='Save'
+            buttonType='submit'
+            onButtonClick={handleSaveClick}
+          />
+        </form>
+      </Wrapper>
+    </>
   )
 };
 
@@ -150,6 +141,10 @@ const Wrapper = styled.div`
       color: red;
       text-align: left;
     }
+
+    &.blur {
+    filter: blur(.6rem);
+  }
   }
   
   .addButton {

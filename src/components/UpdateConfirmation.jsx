@@ -3,20 +3,20 @@ import styled from 'styled-components'
 import Button from './Button'
 import { generateUpdateMsg } from '../helpers/utilities'
 
-
-const EditDeckResult = ({
-  editDeckResult,
-  handleOk
-}) => {
-
-  const displayMsg = generateUpdateMsg((editDeckResult)).map(msg => <p>{msg}</p>)
+const UpdateConfirmation = (
+  {
+    handleOk,
+    updateResult
+  }
+) => {
+  const displayMsg = generateUpdateMsg((updateResult)).map(msg => <p>{msg}</p>);
 
   return (
     <Wrapper>
       <form>
         <h2>Updated</h2>
         <div>
-          {displayMsg}
+          <p>{displayMsg}</p>
         </div>
         <Button
           text='Ok'
@@ -63,4 +63,4 @@ const Wrapper = styled.div`
   
 `
 
-export default EditDeckResult
+export default UpdateConfirmation

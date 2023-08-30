@@ -69,13 +69,15 @@ const formatPluralText = (count, baseText) => {
   return baseText + ` is`;
 }
 
-const generateUpdateMsg = (editDeckResult) => {
+const generateUpdateMsg = (updateResult) => {
   let msg = [];
-  if (editDeckResult.updateDeckName) msg = [...msg, `Deck: ${editDeckResult.updateDeckName}`];
-  if (editDeckResult.updateDescription && editDeckResult.updateDescription.length > 0) msg = [...msg, `Description: ${editDeckResult.updateDescription}`];
-  if (editDeckResult.numOfUpdatedCard && editDeckResult.numOfUpdatedCard > 0) msg = [...msg, `${editDeckResult.numOfUpdatedCard} ${formatPluralText(editDeckResult.numOfUpdatedCard, 'card')} changed`];
-  if (editDeckResult.numOfDeletedCards && editDeckResult.numOfDeletedCards > 0) msg = [...msg, `${editDeckResult.numOfDeletedCards} ${formatPluralText(editDeckResult.numOfDeletedCards, 'card')} deleted`];
-  if (editDeckResult.numOfCreatedCard && editDeckResult.numOfCreatedCard > 0) msg = [...msg, `${editDeckResult.numOfCreatedCard} ${formatPluralText(editDeckResult.numOfCreatedCard, 'card')} created`];
+  if (updateResult.updateDeckName) msg = [...msg, `Deck: ${updateResult.updateDeckName}`];
+  if (updateResult.updateDescription && updateResult.updateDescription.length > 0) msg = [...msg, `Description: ${updateResult.updateDescription}`];
+  if (updateResult.numOfUpdatedCard && updateResult.numOfUpdatedCard > 0) msg = [...msg, `${updateResult.numOfUpdatedCard} ${formatPluralText(updateResult.numOfUpdatedCard, 'card')} changed`];
+  if (updateResult.numOfDeletedCards && updateResult.numOfDeletedCards > 0) msg = [...msg, `${updateResult.numOfDeletedCards} ${formatPluralText(updateResult.numOfDeletedCards, 'card')} deleted`];
+  if (updateResult.numOfCreatedCard && updateResult.numOfCreatedCard > 0) msg = [...msg, `${updateResult.numOfCreatedCard} ${formatPluralText(updateResult.numOfCreatedCard, 'card')} created`];
+  if (updateResult.deckName) msg = [...msg, `New deck: ${updateResult.deckName}`]
+  if (updateResult.numOfCards && updateResult.numOfCards > 0) msg = [...msg, `${updateResult.numOfCards} ${formatPluralText(updateResult.numOfCards, 'card')} saved.`];
   return msg;
 }
 

@@ -9,10 +9,10 @@ import Button from '../components/Button'
 import { handleOnSaveValidation } from '../helpers/validation'
 import { defaultEditableDeck, defaultEditableCard, updateStatus } from '../helpers/defaultEditableData'
 import { useModal } from '../providers/ModalProvider'
-import EditDeckResult from '../components/EditDeckResult'
 import { useNavigate, useParams } from "react-router-dom"
 import { scrollToTop } from '../helpers/utilities'
 import { updateDeckAndCards } from '../helpers/deckAndCardsHelpers'
+import UpdateConfirmation from '../components/UpdateConfirmation'
 
 const Edit = () => {
   const {
@@ -125,8 +125,8 @@ const Edit = () => {
   return (
     <>
       {modalActivated &&
-        <EditDeckResult
-          editDeckResult={editDeckResult}
+        <UpdateConfirmation
+          updateResult={editDeckResult}
           handleOk={handleOk}
         />}
       <Wrapper className={modalActivated && 'blur'}>
