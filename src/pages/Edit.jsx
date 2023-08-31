@@ -129,12 +129,12 @@ const Edit = () => {
           updateResult={editDeckResult}
           handleOk={handleOk}
         />}
-      <Wrapper className={modalActivated && 'blur'}>
+      <Wrapper className={modalActivated ? 'blur' : null}>
         <Title>Edit Deck</Title>
         <div className='error'>
           <p>{error}</p>
         </div>
-        <form className={modalActivated && 'blur'}>
+        <form>
           {editableDeck && <DeckDetailsForm
             newDeckContents={editableDeck || defaultEditableDeck}
             setNewDeckContents={setEditableDeck}
