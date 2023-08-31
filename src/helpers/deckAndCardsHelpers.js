@@ -16,7 +16,7 @@ export const createDeckAndCards = async (newDeckContents, newCardContents, setNe
   const deckContentsForInsertion = getDeckContentsForInsertion(newDeckContents);
   const cardsContentsForInsertion = getCardsContentsForInsertion(newCardContents)
   try {
-    const response = await axios.post(endpoints.NEWDECK, { newDeckContents: deckContentsForInsertion, newCardContents: cardsContentsForInsertion });
+    const response = await axios.post(endpoints.CREATE_DECK, { newDeckContents: deckContentsForInsertion, newCardContents: cardsContentsForInsertion });
     setNewDeck(response.data)
   } catch (error) {
     setError(error.response.data.error);
