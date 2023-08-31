@@ -87,7 +87,7 @@ const Create = () => {
           handleOk={handleOk}
           updateResult={newDeck}
         />}
-      <Wrapper className={modalActivated && 'blur'}>
+      <Wrapper className={modalActivated ? 'blur' : null}>
         <Title>Create Deck</Title>
         <div className='error'>
           <p>{error}</p>
