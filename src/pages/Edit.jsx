@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 import useApplicationData from '../hooks/useApplicationData'
 import DeckDetailsForm from '../components/DeckDetailsForm'
@@ -21,7 +21,8 @@ const Edit = () => {
     setEditableDeck,
     setEditableCards,
     error,
-    setError
+    setError,
+    getDeckAndCardsData
   } = useApplicationData();
 
   let navigate = useNavigate();
@@ -117,10 +118,15 @@ const Edit = () => {
 
   const handleOk = () => {
     closeModal();
-    const path = `/edit/${id}`;
+    const path = `/deck/${id}`;
     navigate(path);
     setEditDeckResult({});
   }
+
+  useEffect(() => {
+    getDeckAndCardsData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id, modalActivated]);
 
   return (
     <>

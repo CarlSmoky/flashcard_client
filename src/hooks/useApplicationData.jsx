@@ -3,6 +3,7 @@ import axios from 'axios'
 import { useParams } from 'react-router-dom'
 import { defaultEditableDeck, defaultEditableCard, updateStatus } from '../helpers/defaultEditableData'
 import { useModal } from '../providers/ModalProvider'
+import { endpoints } from '../helpers/endpoints'
 
 const useApplicationData = () => {
   const [error, setError] = useState('');
@@ -16,12 +17,13 @@ const useApplicationData = () => {
   const [editableCards, setEditableCards] = useState([{ ...defaultEditableCard }]);
 
   const { modalActivated } = useModal();
+  const appendParamToEndPoint = endpoints.GET_DECK_BY_ID(id);
   
 
   //move this function to helper
   const getDeckAndCardsData = async () => {
     try {
-      const response = await axios.get(`api/card/deck/${id}`);
+      const response = await axios.get(appendParamToEndPoint);
       const deckName = response.data.deck.deck_name;
       const description = response.data.deck.description;
       setDeckData({ deckName, description });
@@ -43,10 +45,10 @@ const useApplicationData = () => {
     }
   }
 
-  useEffect(() => {
-    getDeckAndCardsData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, modalActivated]);
+  // useEffect(() => {
+  //   getDeckAndCardsData();
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [id, modalActivated]);
 
   const formatFlashcardData = (rawAPIData) => {
     const initialValue = {};
@@ -118,7 +120,8 @@ const useApplicationData = () => {
     setEditableDeck,
     setEditableCards,
     error,
-    setError
+    setError,
+    getDeckAndCardsData
   };
 }
 
