@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
 import { defaultEditableDeck, defaultEditableCard, updateStatus } from '../helpers/defaultEditableData'
-import { useModal } from '../providers/ModalProvider'
 import { endpoints } from '../helpers/endpoints'
 
 const useApplicationData = () => {
@@ -16,7 +15,6 @@ const useApplicationData = () => {
   const [editableDeck, setEditableDeck] = useState({ ...defaultEditableDeck });
   const [editableCards, setEditableCards] = useState([{ ...defaultEditableCard }]);
 
-  const { modalActivated } = useModal();
   const appendParamToEndPoint = endpoints.GET_DECK_BY_ID(id);
   
 
@@ -44,11 +42,6 @@ const useApplicationData = () => {
       console.log(error.response.data.error);
     }
   }
-
-  // useEffect(() => {
-  //   getDeckAndCardsData();
-  // // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [id, modalActivated]);
 
   const formatFlashcardData = (rawAPIData) => {
     const initialValue = {};
