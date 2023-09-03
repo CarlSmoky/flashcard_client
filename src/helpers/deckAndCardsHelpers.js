@@ -1,5 +1,6 @@
 import axios from 'axios'
-import { endpoints } from './endpoints';
+import { endpoints } from './endpoints'
+import { errorMessage } from '../helpers/messages'
 
 export const updateDeckAndCards = async (updateDeckData, createdCardsData, updateCardsData, deleteCardsData, setEditDeckResult, setError, id) => {
   const appendParamToEndPoint = endpoints.UPDATE_DECK(id);
@@ -8,7 +9,8 @@ export const updateDeckAndCards = async (updateDeckData, createdCardsData, updat
     const response = await axios.post(appendParamToEndPoint, { updateDeckData, createdCardsData, updateCardsData, deleteCardsData});
     setEditDeckResult(response.data);
   } catch (error) {
-    setError(error.response.data.error);
+    setError(errorMessage.titleExists);
+    console.log(error.response.data.error);
   }
 };
 
@@ -19,7 +21,7 @@ export const createDeckAndCards = async (newDeckContents, newCardContents, setNe
     const response = await axios.post(endpoints.CREATE_DECK, { newDeckContents: deckContentsForInsertion, newCardContents: cardsContentsForInsertion });
     setNewDeck(response.data)
   } catch (error) {
-    setError(error.response.data.error);
+    setError(errorMessage.titleExists);
     console.log(error.response.data.error);
   }
 };

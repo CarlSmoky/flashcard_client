@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 import { useNavigate } from "react-router-dom"
 import DeckDetailsForm from '../components/DeckDetailsForm'
@@ -11,8 +11,8 @@ import { defaultEditableDeck, defaultEditableCard } from '../helpers/defaultEdit
 import { createDeckAndCards } from '../helpers/deckAndCardsHelpers'
 import useApplicationData from '../hooks/useApplicationData'
 import { useModal } from '../providers/ModalProvider'
-// import CreateDeckResult from '../components/CreateDeckResult'
 import UpdateConfirmation from '../components/UpdateConfirmation'
+import { errorMessage } from '../helpers/messages'
 
 const Create = () => {
   const {
@@ -44,9 +44,7 @@ const Create = () => {
   };
 
   const deleteCardForm = (index) => {
-
     if (newCardContents.length <= 1) { return }
-
     const prev = [...newCardContents];
     prev.splice(index, 1);
     setNewCardContents([...prev]);
@@ -55,13 +53,20 @@ const Create = () => {
   const handleSaveClick = (e) => {
     // handleOnSaveValidation will return true if there is a problem
     if (handleOnSaveValidation(currentDeck)) {
-      setError("* Something went wrong. Please check your input.");
+      setError(errorMessage.inputError);
       return;
     }
     setError("");
-    openModal();
     createDeckAndCards(newDeckContents, newCardContents, setNewDeck, setError);
+    openModal();
   };
+
+  // When deck_title already exists
+  useEffect(() => {
+    if (error.length > 0 && modalActivated) {
+      closeModal();
+    } 
+  }, [closeModal, error, modalActivated])
 
   const handleOk = () => {
     closeModal();
@@ -79,10 +84,9 @@ const Create = () => {
     />
   );
 
-
   return (
     <>
-      {modalActivated &&
+      {modalActivated && !error &&
         <UpdateConfirmation
           handleOk={handleOk}
           updateResult={newDeck}

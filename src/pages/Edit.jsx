@@ -13,6 +13,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { scrollToTop } from '../helpers/utilities'
 import { updateDeckAndCards } from '../helpers/deckAndCardsHelpers'
 import UpdateConfirmation from '../components/UpdateConfirmation'
+import { errorMessage } from '../helpers/messages'
 
 const Edit = () => {
   const {
@@ -107,7 +108,7 @@ const Edit = () => {
 
   const handleSaveClick = (e) => {
     if (handleOnSaveValidation(currentDeck)) {
-      setError("* Something went wrong. Please check your input.");
+      setError(errorMessage.inputError);
       scrollToTop();
       return;
     }
@@ -126,7 +127,14 @@ const Edit = () => {
   useEffect(() => {
     getDeckAndCardsData();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, modalActivated]);
+  }, [id]);
+
+  // When deck_title already exists
+  useEffect(() => {
+    if (error.length > 0 && modalActivated) {
+      closeModal();
+    } 
+  }, [closeModal, error, modalActivated])
 
   return (
     <>
