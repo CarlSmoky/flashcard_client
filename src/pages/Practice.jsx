@@ -8,12 +8,14 @@ import Result from './Result'
 import useApplicationData from '../hooks/useApplicationData'
 import { modes } from '../helpers/modes'
 import { MdArrowForwardIos, MdArrowBackIosNew } from 'react-icons/md'
+import { useParams } from "react-router-dom"
 
 const Practice = () => {
   const {
     deckData,
     flashcardData,
     setCardProperty,
+    getDeckAndCardsData
   } = useApplicationData();
   
   const [mode, setMode] = useState(modes.before);
@@ -21,6 +23,7 @@ const Practice = () => {
   const [numCards, setNumCards] = useState([]);
   const [loadedCards, setLoadedCards] = useState([]);
 
+  const { id } = useParams();
   
   // navigation in cards
   const [current, setCurrent] = useState(0);
@@ -58,6 +61,11 @@ const Practice = () => {
     setSelectedCardIndices(keys); 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [numCards]);
+
+  useEffect(() => {
+    getDeckAndCardsData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
   
   // Default card before start 
   // TODO: move to another file?

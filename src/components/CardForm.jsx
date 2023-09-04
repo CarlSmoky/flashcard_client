@@ -1,8 +1,9 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { errorMessage } from '../helpers/utilities'
 import { RiDeleteBin5Line } from 'react-icons/ri'
 import { updateStatus } from '../helpers/defaultEditableData'
+import { useModal } from '../providers/ModalProvider'
 
 const CardForm = ({
   editCardContents,
@@ -10,6 +11,8 @@ const CardForm = ({
   index,
   deleteCardForm
 }) => {
+
+  const { modalActivated } = useModal()
 
   const onChangeCard = (e) => {
     const returnedError = errorMessage(e.target.name, e.target.value);
@@ -48,6 +51,7 @@ const CardForm = ({
           value={card.term}
           aria-label="term"
           placeholder="Enter term here"
+          disabled={modalActivated}
         />
         <p>{card.errors.term}</p>
       </div>
@@ -61,15 +65,16 @@ const CardForm = ({
           value={card.definition}
           aria-label="definition"
           placeholder="Enter definition here"
+          disabled={modalActivated}
         />
         <p>{card.errors.definition}</p>
       </div>
-      <div className='bin'>
-        <button onClick={deleteNewCard}>
+        <Binbutton
+          onClick={deleteNewCard}
+          disabled={modalActivated}>
           <RiDeleteBin5Line />
           <span className="visually-hidden">Add Card Button</span>
-        </button>
-      </div>
+        </Binbutton>
     </Wrapper>
   )
 
@@ -140,6 +145,35 @@ const Wrapper = styled.div`
     }
   }
 
+`
+
+const Binbutton = styled.button`
+  margin: auto 1rem;
+
+  svg {
+      font-size: 3rem;
+      transition: transform 0.2s ease-out;
+
+      ${({ disabled }) => {
+      return disabled
+        ? css`
+        
+        `
+        : css`
+        cursor: pointer;
+
+        &:hover {
+        cursor: pointer;
+        transform: scaleX(1.2) scaleY(1.2);
+        }
+
+        &:active {
+          background: var(--white-primary);
+          color: var(--black-primary);
+        }
+      `
+      }}
+    }
 `
 
 export default CardForm

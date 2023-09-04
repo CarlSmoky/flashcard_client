@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
-import axios from 'axios'
+import React, { useState, useEffect } from 'react'
+import styled, { css } from 'styled-components'
 import { useNavigate } from "react-router-dom"
 import DeckDetailsForm from '../components/DeckDetailsForm'
 import CardFormHeader from '../components/CardFormHeader'
@@ -9,13 +8,23 @@ import { GrAddCircle } from 'react-icons/gr'
 import Button from '../components/Button'
 import { handleOnSaveValidation } from '../helpers/validation'
 import { defaultEditableDeck, defaultEditableCard } from '../helpers/defaultEditableData'
+import { createDeckAndCards } from '../helpers/deckAndCardsHelpers'
+import useApplicationData from '../hooks/useApplicationData'
+import { useModal } from '../providers/ModalProvider'
+import UpdateConfirmation from '../components/UpdateConfirmation'
+import { errorMessage } from '../helpers/messages'
 
 const Create = () => {
-  let navigate = useNavigate();
+  const {
+    error,
+    setError
+  } = useApplicationData();
 
   const [newDeckContents, setNewDeckContents] = useState({ ...defaultEditableDeck });
   const [newCardContents, setNewCardContents] = useState([{ ...defaultEditableCard }]);
-  const [error, setError] = useState('');
+  const [newDeck, setNewDeck] = useState('');
+  const { modalActivated, openModal, closeModal } = useModal();
+  let navigate = useNavigate();
 
   const currentDeck = {
     deckContents: newDeckContents,
@@ -35,56 +44,30 @@ const Create = () => {
   };
 
   const deleteCardForm = (index) => {
-
     if (newCardContents.length <= 1) { return }
-
     const prev = [...newCardContents];
     prev.splice(index, 1);
     setNewCardContents([...prev]);
   }
 
-  const deckContentsForInsertion = {
-    deckName: newDeckContents.deckName,
-    description: newDeckContents.description
-  };
-
-  const cardsContentsForInsertion = newCardContents.map((card) => {
-    return {
-      term: card.term,
-      definition: card.definition
-    }
-  });
-
-  const handleSaveClick = (e) => {
+  const handleSaveClick = async (e) => {
     // handleOnSaveValidation will return true if there is a problem
     if (handleOnSaveValidation(currentDeck)) {
-
-      setError("* Something went wrong. Please check your input.");
+      setError(errorMessage.inputError);
       return;
     }
     setError("");
-
-    // Need to refactor
-    const endpoints = {
-      "NEWDECK": "api/deck/create"
+    const updatedSuccessfully = await createDeckAndCards(newDeckContents, newCardContents, setNewDeck, setError);
+    if (updatedSuccessfully) {
+      openModal();
     }
-    //move this function to helper
-    const createDeckAndCards = async () => {
-      try {
-        const response = await axios.post(endpoints.NEWDECK, { newDeckContents: deckContentsForInsertion, newCardContents: cardsContentsForInsertion });
-
-        const path = `/deck/${response.data.deckId}`;
-        navigate(path);
-
-      } catch (error) {
-        setError(error.response.data.error);
-        console.log(error.response.data.error);
-      }
-    };
-
-    createDeckAndCards();
-
   };
+
+  const handleOk = () => {
+    closeModal();
+    const path = `/deck/${newDeck.deckId}`;
+    navigate(path);
+  }
 
   const cardFormItems = newCardContents.map((card, index) =>
     <CardForm
@@ -97,31 +80,42 @@ const Create = () => {
   );
 
   return (
-    <Wrapper>
-      <Title>Create Deck</Title>
-      <div className='error'>
-        <p>{error}</p>
-      </div>
-      <form>
-        <DeckDetailsForm
-          newDeckContents={newDeckContents}
-          setNewDeckContents={setNewDeckContents}
-        />
-        <CardFormHeader />
-        {newCardContents && cardFormItems}
-        <div className='addButton'>
-          <button onClick={createNewCard} type='button'>
-            <GrAddCircle />
-            <span className="visually-hidden">Add Card Button</span>
-          </button>
+    <>
+      {modalActivated && !error &&
+        <UpdateConfirmation
+          handleOk={handleOk}
+          updateResult={newDeck}
+        />}
+      <Wrapper className={modalActivated ? 'blur' : null}>
+        <Title>Create Deck</Title>
+        <div className='error'>
+          <p>{error}</p>
         </div>
-        <Button
-          text='Save'
-          buttonType='submit'
-          onButtonClick={handleSaveClick}
-        />
-      </form>
-    </Wrapper>
+        <form>
+          <DeckDetailsForm
+            newDeckContents={newDeckContents}
+            setNewDeckContents={setNewDeckContents}
+          />
+          <CardFormHeader />
+          {newCardContents && cardFormItems}
+          <div className='addBtnContainer'>
+            <AddButton
+              onClick={createNewCard}
+              type='button'
+              disabled={modalActivated}>
+              <GrAddCircle />
+              <span className="visually-hidden">Add Card Button</span>
+            </AddButton>
+          </div>
+          <Button
+            text='Save'
+            buttonType='submit'
+            onButtonClick={handleSaveClick}
+            disabled={modalActivated}
+          />
+        </form>
+      </Wrapper>
+    </>
   )
 };
 
@@ -138,6 +132,10 @@ const Title = styled.h1`
 const Wrapper = styled.div`
   min-height: calc(100vh - 9.3rem - 9.3rem);
 
+  &.blur {
+    filter: blur(.6rem);
+  }
+
   .error {
     width: 98%;
     height: 2.3rem;
@@ -151,27 +149,41 @@ const Wrapper = styled.div`
       text-align: left;
     }
   }
-  
-  .addButton {
-    text-align: right;
-  
-    button {
-      margin: 0 1rem;
+
+  .addBtnContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+  }
+`
+
+const AddButton = styled.button`
+  margin-right: 2.1rem;
+
+  svg {
+      font-size: 3rem;
       transition: transform 0.2s ease-out;
 
-      &:hover {
+      ${({ disabled }) => {
+      return disabled
+      ? css`
+        
+        `
+      : css`
+        cursor: pointer;
+
+        &:hover {
         cursor: pointer;
         transform: scaleX(1.2) scaleY(1.2);
-      }
-    }
+        }
 
-    svg {
-      font-size: 3rem;
-      text-align: left;
-    }
-
-  }
-
+        &:active {
+          background: var(--white-primary);
+          color: var(--black-primary);
+        }
+      `
+      }}
+}
 `
 
 export default Create
