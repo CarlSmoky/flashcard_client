@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import styled, { css } from 'styled-components'
-import useApplicationData from '../hooks/useApplicationData'
 import DeckDetailsForm from '../components/DeckDetailsForm'
 import CardFormHeader from '../components/CardFormHeader'
 import CardForm from '../components/CardForm'
@@ -14,23 +13,67 @@ import { scrollToTop } from '../helpers/utilities'
 import { updateDeckAndCards } from '../helpers/deckAndCardsHelpers'
 import UpdateConfirmation from '../components/UpdateConfirmation'
 import { errorMessage } from '../helpers/messages'
+import {  getDeckAndCardsDataById } from '../helpers/deckAndCardsHelpers'
 
 const Edit = () => {
-  const {
-    editableDeck,
-    editableCards,
-    setEditableDeck,
-    setEditableCards,
-    error,
-    setError,
-    getDeckAndCardsData
-  } = useApplicationData();
-
-  let navigate = useNavigate();
-  const { id } = useParams();
-
+  const [editableDeck, setEditableDeck] = useState({ ...defaultEditableDeck });
+  const [editableCards, setEditableCards] = useState([{ ...defaultEditableCard }]);
+  const [error, setError] = useState('');
   const { modalActivated, openModal, closeModal } = useModal();
   const [editDeckResult, setEditDeckResult] = useState({});
+  const { id } = useParams();
+  let navigate = useNavigate();
+
+  // from useApplicationData
+  const getEditableDeckAndCardsById = async (id) => {
+    const { deckName, description, flashcardData } = await getDeckAndCardsDataById(id);
+
+    const formattedEditableDeck = formatEditableDeck(id, deckName, description)
+      setEditableDeck(formattedEditableDeck);
+
+      // make editableCards
+      const formattedEditableCards = formatEditableCards(flashcardData)
+      setEditableCards(formattedEditableCards)
+
+  }
+
+  // from useApplicationData
+  const formatEditableDeck = (id, deckName, description) => {
+    return {
+      id,
+      deckName,
+      description,
+      errors: {
+        deckName: '',
+        description: '',
+      },
+      modifications: {
+        deckName: true,
+        description: true, 
+      },
+      updateStatus: updateStatus.default,
+    }
+  }
+
+  // from useApplicationData
+  const formatEditableCards = (flashcardDataByDeckId) => {
+    return flashcardDataByDeckId.map(card => {
+      return {
+        id: card.id,
+        term: card.term,
+        definition: card.definition,
+        errors: {
+          term: '',
+          definition: '',
+        },
+        modifications: {
+          term: true,
+          definition: true,
+        },
+        updateStatus: updateStatus.default
+      };
+    })
+  }
 
   const createNewCard = () => {
     setEditableCards(prev => ([...prev, { ...defaultEditableCard }]));
@@ -125,7 +168,7 @@ const Edit = () => {
   }
 
   useEffect(() => {
-    getDeckAndCardsData();
+    getEditableDeckAndCardsById(id);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 

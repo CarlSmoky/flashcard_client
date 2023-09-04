@@ -9,17 +9,12 @@ import Button from '../components/Button'
 import { handleOnSaveValidation } from '../helpers/validation'
 import { defaultEditableDeck, defaultEditableCard } from '../helpers/defaultEditableData'
 import { createDeckAndCards } from '../helpers/deckAndCardsHelpers'
-import useApplicationData from '../hooks/useApplicationData'
 import { useModal } from '../providers/ModalProvider'
 import UpdateConfirmation from '../components/UpdateConfirmation'
 import { errorMessage } from '../helpers/messages'
 
 const Create = () => {
-  const {
-    error,
-    setError
-  } = useApplicationData();
-
+  const [error, setError] = useState('');
   const [newDeckContents, setNewDeckContents] = useState({ ...defaultEditableDeck });
   const [newCardContents, setNewCardContents] = useState([{ ...defaultEditableCard }]);
   const [newDeck, setNewDeck] = useState('');
