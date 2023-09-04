@@ -5,7 +5,7 @@ import CardsHeader from '../components/CardsHeader'
 import Card from "../components/Card"
 import Confimation from '../components/Confimation'
 import Result from './Result'
-import useApplicationData from '../hooks/useApplicationData'
+import usePracticeData from '../hooks/usePracticeData'
 import { modes } from '../helpers/modes'
 import { MdArrowForwardIos, MdArrowBackIosNew } from 'react-icons/md'
 import { useParams } from "react-router-dom"
@@ -15,14 +15,13 @@ const Practice = () => {
     deckData,
     flashcardData,
     setCardProperty,
-    getDeckAndCardsData
-  } = useApplicationData();
+    initializeDeckAndCardsDataById
+  } = usePracticeData();
   
   const [mode, setMode] = useState(modes.before);
   const [selectedCardIndices, setSelectedCardIndices] = useState([]);
   const [numCards, setNumCards] = useState([]);
   const [loadedCards, setLoadedCards] = useState([]);
-
   const { id } = useParams();
   
   // navigation in cards
@@ -63,7 +62,7 @@ const Practice = () => {
   }, [numCards]);
 
   useEffect(() => {
-    getDeckAndCardsData();
+    initializeDeckAndCardsDataById(id);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
   
