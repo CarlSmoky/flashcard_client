@@ -1,9 +1,8 @@
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { defaultEditableDeck, defaultEditableCard, updateStatus } from '../helpers/defaultEditableData'
 import {  getDeckAndCardsDataById } from '../helpers/deckAndCardsHelpers'
 
-const useApplicationData = () => {
+const usePracticeData = () => {
   const { id } = useParams();
   // for quiz format
   const [flashcardData, setFlashcardData] = useState({});
@@ -52,4 +51,4 @@ const useApplicationData = () => {
   };
 }
 
-export default useApplicationData
+export default usePracticeData

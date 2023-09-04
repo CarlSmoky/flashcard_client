@@ -5,7 +5,7 @@ import CardsHeader from '../components/CardsHeader'
 import Card from "../components/Card"
 import Confimation from '../components/Confimation'
 import Result from './Result'
-import useApplicationData from '../hooks/useApplicationData'
+import usePracticeData from '../hooks/usePracticeData'
 import { modes } from '../helpers/modes'
 import { MdArrowForwardIos, MdArrowBackIosNew } from 'react-icons/md'
 import { useParams } from "react-router-dom"
@@ -16,7 +16,7 @@ const Practice = () => {
     flashcardData,
     setCardProperty,
     getDeckAndCardsData
-  } = useApplicationData();
+  } = usePracticeData();
   
   const [mode, setMode] = useState(modes.before);
   const [selectedCardIndices, setSelectedCardIndices] = useState([]);
