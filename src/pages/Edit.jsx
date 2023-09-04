@@ -6,90 +6,36 @@ import CardForm from '../components/CardForm'
 import { GrAddCircle } from 'react-icons/gr'
 import Button from '../components/Button'
 import { handleOnSaveValidation } from '../helpers/validation'
-import { defaultEditableDeck, defaultEditableCard, updateStatus } from '../helpers/defaultEditableData'
+import { defaultEditableDeck, updateStatus } from '../helpers/defaultEditableData'
 import { useModal } from '../providers/ModalProvider'
 import { useNavigate, useParams } from "react-router-dom"
 import { scrollToTop } from '../helpers/utilities'
 import { updateDeckAndCards } from '../helpers/deckAndCardsHelpers'
 import UpdateConfirmation from '../components/UpdateConfirmation'
 import { errorMessage } from '../helpers/messages'
-import {  getDeckAndCardsDataById } from '../helpers/deckAndCardsHelpers'
+import useEditData from '../hooks/useEditData'
 
 const Edit = () => {
-  const [editableDeck, setEditableDeck] = useState({ ...defaultEditableDeck });
-  const [editableCards, setEditableCards] = useState([{ ...defaultEditableCard }]);
-  const [error, setError] = useState('');
-  const { modalActivated, openModal, closeModal } = useModal();
-  const [editDeckResult, setEditDeckResult] = useState({});
-  const { id } = useParams();
+  const {
+    createNewCard,
+    editCardContents,
+    initializeEditableDeckAndCardsById,
+    editableDeck,
+    setEditableDeck,
+    editableCards,
+    currentDeck
+  } = useEditData();
+  
   let navigate = useNavigate();
-
-  // from useApplicationData
-  const getEditableDeckAndCardsById = async (id) => {
-    const { deckName, description, flashcardData } = await getDeckAndCardsDataById(id);
-
-    const formattedEditableDeck = formatEditableDeck(id, deckName, description)
-      setEditableDeck(formattedEditableDeck);
-
-      // make editableCards
-      const formattedEditableCards = formatEditableCards(flashcardData)
-      setEditableCards(formattedEditableCards)
-
-  }
-
-  // from useApplicationData
-  const formatEditableDeck = (id, deckName, description) => {
-    return {
-      id,
-      deckName,
-      description,
-      errors: {
-        deckName: '',
-        description: '',
-      },
-      modifications: {
-        deckName: true,
-        description: true, 
-      },
-      updateStatus: updateStatus.default,
-    }
-  }
-
-  // from useApplicationData
-  const formatEditableCards = (flashcardDataByDeckId) => {
-    return flashcardDataByDeckId.map(card => {
-      return {
-        id: card.id,
-        term: card.term,
-        definition: card.definition,
-        errors: {
-          term: '',
-          definition: '',
-        },
-        modifications: {
-          term: true,
-          definition: true,
-        },
-        updateStatus: updateStatus.default
-      };
-    })
-  }
-
-  const createNewCard = () => {
-    setEditableCards(prev => ([...prev, { ...defaultEditableCard }]));
-  };
-
-  const editCardContents = (index, cardContents) => {
-    const prev = [...editableCards];
-    prev[index] = cardContents;
-    setEditableCards([...prev]);
-  };
-
-  const displayedCardFrom = editableCards.filter(card => card.updateStatus !== updateStatus.deleted);
+  const { id } = useParams();
+  const { modalActivated, openModal, closeModal } = useModal();
+  const [error, setError] = useState('');
+  const [editDeckResult, setEditDeckResult] = useState({});
+  
+  const displayedCardForm = editableCards.filter(card => card.updateStatus !== updateStatus.deleted);
 
   const deleteCardForm = (index) => {
-    if (displayedCardFrom.length <= 1) { return }
-
+    if (displayedCardForm.length <= 1) { return }
     let card = { ...editableCards[index] };
     card.updateStatus = updateStatus.deleted
     editCardContents(index, card);
@@ -105,13 +51,6 @@ const Edit = () => {
     />
   );
 
-  const currentDeck = {
-    deckContents: editableDeck,
-    cardContents: editableCards,
-    setDeckContents: setEditableDeck,
-    setCardContents: setEditableCards,
-  }
-
   const stripCardWithoutId = card => {
     return {
       term: card.term,
@@ -119,7 +58,7 @@ const Edit = () => {
     }
   }
 
-  const stripCardWithID = card => {
+  const stripCardWithId = card => {
     return {
       id: card.id,
       term: card.term,
@@ -138,26 +77,28 @@ const Edit = () => {
   // Updata card data
   const updateCardsData = editableCards
     .filter(card => card.id !== null && card.updateStatus === updateStatus.edited)
-    .map(stripCardWithID);
+    .map(stripCardWithId);
 
   // Delete card
   const deleteCardsData = editableCards
     .filter(card => card.id !== null && card.updateStatus === updateStatus.deleted)
-    .map(stripCardWithID);
+    .map(stripCardWithId);
 
   const disableButton = () => {
     return (updateDeckData !== null || updateCardsData.length !== 0 || createdCardsData.length !== 0 || deleteCardsData.length !== 0) ? false : true;
   }
 
-  const handleSaveClick = (e) => {
+  const handleSaveClick = async (e) => {
     if (handleOnSaveValidation(currentDeck)) {
       setError(errorMessage.inputError);
       scrollToTop();
       return;
     }
     setError("");
-    openModal();
-    updateDeckAndCards(updateDeckData, createdCardsData, updateCardsData, deleteCardsData, setEditDeckResult, setError, id);
+    const updatedSuccessfully = await updateDeckAndCards(updateDeckData, createdCardsData, updateCardsData, deleteCardsData, setEditDeckResult, setError, id);
+    if (updatedSuccessfully) {
+      openModal();
+    }
   };
 
   const handleOk = () => {
@@ -168,16 +109,9 @@ const Edit = () => {
   }
 
   useEffect(() => {
-    getEditableDeckAndCardsById(id);
+    initializeEditableDeckAndCardsById(id);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
-
-  // When deck_title already exists
-  useEffect(() => {
-    if (error.length > 0 && modalActivated) {
-      closeModal();
-    } 
-  }, [closeModal, error, modalActivated])
 
   return (
     <>

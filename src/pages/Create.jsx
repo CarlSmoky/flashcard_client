@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import styled, { css } from 'styled-components'
 import { useNavigate } from "react-router-dom"
 import DeckDetailsForm from '../components/DeckDetailsForm'
@@ -76,7 +76,7 @@ const Create = () => {
 
   return (
     <>
-      {modalActivated && !error &&
+      {modalActivated &&
         <UpdateConfirmation
           handleOk={handleOk}
           updateResult={newDeck}
@@ -87,10 +87,10 @@ const Create = () => {
           <p>{error}</p>
         </div>
         <form>
-          <DeckDetailsForm
+          {true && <DeckDetailsForm
             newDeckContents={newDeckContents}
             setNewDeckContents={setNewDeckContents}
-          />
+          />}
           <CardFormHeader />
           {newCardContents && cardFormItems}
           <div className='addBtnContainer'>
@@ -106,7 +106,7 @@ const Create = () => {
             text='Save'
             buttonType='submit'
             onButtonClick={handleSaveClick}
-            disabled={modalActivated}
+            disabled={false || modalActivated}
           />
         </form>
       </Wrapper>

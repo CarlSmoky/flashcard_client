@@ -21,9 +21,11 @@ export const updateDeckAndCards = async (updateDeckData, createdCardsData, updat
   try {
     const response = await axios.post(appendParamToEndPoint, { updateDeckData, createdCardsData, updateCardsData, deleteCardsData});
     setEditDeckResult(response.data);
+    return true;
   } catch (error) {
     setError(errorMessage.titleExists);
     console.log(error.response.data.error);
+    return false;
   }
 };
 

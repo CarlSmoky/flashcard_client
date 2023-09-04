@@ -1,14 +1,12 @@
 import { useState } from 'react'
-import { useParams } from 'react-router-dom'
-import {  getDeckAndCardsDataById } from '../helpers/deckAndCardsHelpers'
+import { getDeckAndCardsDataById } from '../helpers/deckAndCardsHelpers'
 
 const usePracticeData = () => {
-  const { id } = useParams();
   // for quiz format
   const [flashcardData, setFlashcardData] = useState({});
   const [deckData, setDeckData] = useState({});
 
-  const getDeckAndCardsData = async () => {
+  const initializeDeckAndCardsDataById = async (id) => {
       const { deckName, description, flashcardData } = await getDeckAndCardsDataById(id);
       setDeckData({ deckName, description });
       const formattedCardData = formatFlashcardData(flashcardData);
@@ -47,7 +45,7 @@ const usePracticeData = () => {
     deckData,
     flashcardData,
     setCardProperty,
-    getDeckAndCardsData
+    initializeDeckAndCardsDataById
   };
 }
 

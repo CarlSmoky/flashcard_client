@@ -15,14 +15,13 @@ const Practice = () => {
     deckData,
     flashcardData,
     setCardProperty,
-    getDeckAndCardsData
+    initializeDeckAndCardsDataById
   } = usePracticeData();
   
   const [mode, setMode] = useState(modes.before);
   const [selectedCardIndices, setSelectedCardIndices] = useState([]);
   const [numCards, setNumCards] = useState([]);
   const [loadedCards, setLoadedCards] = useState([]);
-
   const { id } = useParams();
   
   // navigation in cards
@@ -63,7 +62,7 @@ const Practice = () => {
   }, [numCards]);
 
   useEffect(() => {
-    getDeckAndCardsData();
+    initializeDeckAndCardsDataById(id);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
   
