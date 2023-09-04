@@ -50,23 +50,18 @@ const Create = () => {
     setNewCardContents([...prev]);
   }
 
-  const handleSaveClick = (e) => {
+  const handleSaveClick = async (e) => {
     // handleOnSaveValidation will return true if there is a problem
     if (handleOnSaveValidation(currentDeck)) {
       setError(errorMessage.inputError);
       return;
     }
     setError("");
-    createDeckAndCards(newDeckContents, newCardContents, setNewDeck, setError);
-    openModal();
+    const updatedSuccessfully = await createDeckAndCards(newDeckContents, newCardContents, setNewDeck, setError);
+    if (updatedSuccessfully) {
+      openModal();
+    }
   };
-
-  // When deck_title already exists
-  useEffect(() => {
-    if (error.length > 0 && modalActivated) {
-      closeModal();
-    } 
-  }, [closeModal, error, modalActivated])
 
   const handleOk = () => {
     closeModal();

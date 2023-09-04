@@ -20,9 +20,11 @@ export const createDeckAndCards = async (newDeckContents, newCardContents, setNe
   try {
     const response = await axios.post(endpoints.CREATE_DECK, { newDeckContents: deckContentsForInsertion, newCardContents: cardsContentsForInsertion });
     setNewDeck(response.data)
+    return true;
   } catch (error) {
     setError(errorMessage.titleExists);
     console.log(error.response.data.error);
+    return false;
   }
 };
 
