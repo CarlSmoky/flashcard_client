@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { getDeckAndCardsDataById } from '../helpers/deckAndCardsHelpers'
 
 const usePracticeData = () => {
-  // for quiz format
   const [flashcardData, setFlashcardData] = useState({});
   const [deckData, setDeckData] = useState({});
 
@@ -13,7 +12,6 @@ const usePracticeData = () => {
       setFlashcardData(formattedCardData);
   }
 
-  // PRACTICE:
   const formatFlashcardData = (rawAPIData) => {
     const initialValue = {};
     return rawAPIData.reduce((obj, card) => {
@@ -32,8 +30,6 @@ const usePracticeData = () => {
     }, initialValue);
   }
 
-  
-  // PRACTICE:
   const setCardProperty = (cardId, property, value) => {
     let card = { ...flashcardData[cardId] };
     card[property] = value

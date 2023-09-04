@@ -1,5 +1,4 @@
 import { useState } from 'react'
-// import { useParams } from 'react-router-dom'
 import { getDeckAndCardsDataById } from '../helpers/deckAndCardsHelpers'
 import { defaultEditableDeck, defaultEditableCard, updateStatus } from '../helpers/defaultEditableData'
 
@@ -70,7 +69,6 @@ const useEditData = () => {
     prev[index] = cardContents;
     setEditableCards([...prev]);
   };
-
 
   return {
     createNewCard,
