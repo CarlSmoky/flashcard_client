@@ -17,7 +17,7 @@ const Create = () => {
   const [error, setError] = useState('');
   const [newDeckContents, setNewDeckContents] = useState({ ...defaultEditableDeck });
   const [newCardContents, setNewCardContents] = useState([{ ...defaultEditableCard }]);
-  const [newDeck, setNewDeck] = useState('');
+  const [updateResult, setNewDeck] = useState('');
   const { modalActivated, openModal, closeModal } = useModal();
   let navigate = useNavigate();
 
@@ -60,7 +60,7 @@ const Create = () => {
 
   const handleOk = () => {
     closeModal();
-    const path = `/deck/${newDeck.deckId}`;
+    const path = `/deck/${updateResult.deckId}`;
     navigate(path);
   }
 
@@ -78,8 +78,8 @@ const Create = () => {
     <>
       {modalActivated &&
         <UpdateConfirmation
+          updateResult={updateResult}
           handleOk={handleOk}
-          updateResult={newDeck}
         />}
       <Wrapper className={modalActivated ? 'blur' : null}>
         <Title>Create Deck</Title>
@@ -88,8 +88,8 @@ const Create = () => {
         </div>
         <form>
           {true && <DeckDetailsForm
-            newDeckContents={newDeckContents}
-            setNewDeckContents={setNewDeckContents}
+            deckContents={newDeckContents}
+            setDeckContents={setNewDeckContents}
           />}
           <CardFormHeader />
           {newCardContents && cardFormItems}
