@@ -12,9 +12,8 @@ import { defaultEditableDeck } from '../helpers/defaultEditableData'
 const ModifyWrapper = (
   {
     error,
-    editableDeck,
-    setEditableDeck,
-    editableCards,
+    deckContents,
+    setDeckContents,
     cardFormItems,
     updateResult,
     handleSaveClick,
@@ -39,12 +38,12 @@ const ModifyWrapper = (
           <p>{error}</p>
         </div>
         <form>
-          {editableDeck && <DeckDetailsForm
-            deckContents={editableDeck || defaultEditableDeck}
-            setDeckContents={setEditableDeck}
-          />}
+          <DeckDetailsForm
+            deckContents={deckContents || defaultEditableDeck}
+            setDeckContents={setDeckContents}
+          />
           <CardFormHeader />
-          {editableCards && cardFormItems}
+          {cardFormItems}
           <div className="addBtnContainer">
             <AddButton
               onClick={createNewCard}

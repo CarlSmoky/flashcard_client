@@ -111,9 +111,8 @@ const Edit = () => {
   return (
       <ModifyWrapper
         error={error}
-        editableDeck={editableDeck}
-        setEditableDeck={setEditableDeck}
-        editableCards={editableCards}
+        deckContents={editableDeck}
+        setDeckContents={setEditableDeck}
         cardFormItems={cardFormItems}
         updateResult={editDeckResult}
         handleOk={handleOk}
