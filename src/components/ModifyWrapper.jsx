@@ -24,7 +24,7 @@ const ModifyWrapper = (
 ) => {
 
   const { modalActivated } = useModal();
-
+  
   return (
     <>
       {modalActivated &&

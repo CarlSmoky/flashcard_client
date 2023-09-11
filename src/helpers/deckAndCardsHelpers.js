@@ -29,12 +29,12 @@ export const updateDeckAndCards = async (updateDeckData, createdCardsData, updat
   }
 };
 
-export const createDeckAndCards = async (newDeckContents, newCardContents, setNewDeck, setError) => {
+export const createDeckAndCards = async (newDeckContents, newCardContents, SetUpdateResult, setError) => {
   const deckContentsForInsertion = getDeckContentsForInsertion(newDeckContents);
   const cardsContentsForInsertion = getCardsContentsForInsertion(newCardContents)
   try {
     const response = await axios.post(endpoints.CREATE_DECK, { newDeckContents: deckContentsForInsertion, newCardContents: cardsContentsForInsertion });
-    setNewDeck(response.data)
+    SetUpdateResult(response.data)
     return true;
   } catch (error) {
     setError(errorMessage.titleExists);
