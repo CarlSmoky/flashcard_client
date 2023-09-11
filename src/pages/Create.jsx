@@ -84,6 +84,7 @@ const Create = () => {
         handleSaveClick={handleSaveClick}
         disableButton={disableButton}
         createNewCard={createNewCard}
+        headerText="Create"
       />
   )
 };

@@ -1,12 +1,12 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
+import { useModal } from '../providers/ModalProvider'
+import { GrAddCircle } from 'react-icons/gr'
+import { defaultEditableDeck } from '../helpers/defaultEditableData'
 import UpdateConfirmation from './UpdateConfirmation'
 import DeckDetailsForm from './DeckDetailsForm'
 import CardFormHeader from './CardFormHeader'
-import { GrAddCircle } from 'react-icons/gr'
 import Button from './Button'
-import { useModal } from '../providers/ModalProvider'
-import { defaultEditableDeck } from '../helpers/defaultEditableData'
 
 
 const ModifyWrapper = (
@@ -19,7 +19,8 @@ const ModifyWrapper = (
     handleSaveClick,
     disableButton,
     handleOk,
-    createNewCard
+    createNewCard,
+    headerText
   }
 ) => {
 
@@ -33,7 +34,7 @@ const ModifyWrapper = (
           handleOk={handleOk}
         />}
       <Wrapper className={modalActivated ? 'blur' : null}>
-        <Title>Edit Deck</Title>
+        <Title>{headerText}</Title>
         <div className='error'>
           <p>{error}</p>
         </div>

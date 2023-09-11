@@ -119,6 +119,7 @@ const Edit = () => {
         handleSaveClick={handleSaveClick}
         disableButton={disableButton}
         createNewCard={createNewCard}
+        headerText="Edit"
       />
   )
 }
