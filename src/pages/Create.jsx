@@ -47,9 +47,12 @@ const Create = () => {
       return;
     }
     setError("");
-    const updatedSuccessfully = await createDeckAndCards(newDeckContents, newCardContents, SetUpdateResult, setError);
-    if (updatedSuccessfully) {
+    const updateResult = await createDeckAndCards(newDeckContents, newCardContents);
+    if (updateResult.isUpdated) {
+      SetUpdateResult(updateResult.data);
       openModal();
+    } else {
+      setError(updateResult.error)
     }
   };
 

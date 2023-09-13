@@ -90,9 +90,13 @@ const Edit = () => {
       return;
     }
     setError("");
-    const updatedSuccessfully = await updateDeckAndCards(updateDeckData, createdCardsData, updateCardsData, deleteCardsData, setEditDeckResult, setError, id);
-    if (updatedSuccessfully) {
+    const updateResult = await updateDeckAndCards(updateDeckData, createdCardsData, updateCardsData, deleteCardsData, id);
+    console.log("here",updateResult)
+    if (updateResult.isUpdated) {
+      setEditDeckResult(updateResult.data)
       openModal();
+    } else {
+      setError(updateResult.error)
     }
   };
 
