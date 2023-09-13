@@ -1,25 +1,20 @@
 import React, { useState } from 'react'
-import styled, { css } from 'styled-components'
 import { useNavigate } from "react-router-dom"
-import DeckDetailsForm from '../components/DeckDetailsForm'
-import CardFormHeader from '../components/CardFormHeader'
-import CardForm from '../components/CardForm'
-import { GrAddCircle } from 'react-icons/gr'
-import Button from '../components/Button'
+import { useModal } from '../providers/ModalProvider'
+import { errorMessage } from '../helpers/messages'
 import { handleOnSaveValidation } from '../helpers/validation'
 import { defaultEditableDeck, defaultEditableCard } from '../helpers/defaultEditableData'
 import { createDeckAndCards } from '../helpers/deckAndCardsHelpers'
-import { useModal } from '../providers/ModalProvider'
-import UpdateConfirmation from '../components/UpdateConfirmation'
-import { errorMessage } from '../helpers/messages'
+import CardForm from '../components/CardForm'
+import ModifyWrapper from '../components/ModifyWrapper'
 
 const Create = () => {
+  let navigate = useNavigate();
   const [error, setError] = useState('');
   const [newDeckContents, setNewDeckContents] = useState({ ...defaultEditableDeck });
   const [newCardContents, setNewCardContents] = useState([{ ...defaultEditableCard }]);
-  const [newDeck, setNewDeck] = useState('');
-  const { modalActivated, openModal, closeModal } = useModal();
-  let navigate = useNavigate();
+  const [updateResult, SetUpdateResult] = useState('');
+  const { openModal, closeModal } = useModal();
 
   const currentDeck = {
     deckContents: newDeckContents,
@@ -52,16 +47,23 @@ const Create = () => {
       return;
     }
     setError("");
-    const updatedSuccessfully = await createDeckAndCards(newDeckContents, newCardContents, setNewDeck, setError);
-    if (updatedSuccessfully) {
+    const updateResult = await createDeckAndCards(newDeckContents, newCardContents);
+    if (updateResult.isUpdated) {
+      SetUpdateResult(updateResult.data);
       openModal();
+    } else {
+      setError(updateResult.error)
     }
   };
 
   const handleOk = () => {
     closeModal();
-    const path = `/deck/${newDeck.deckId}`;
+    const path = `/deck/${updateResult.deckId}`;
     navigate(path);
+  }
+
+  const disableButton = () => {
+    return false;
   }
 
   const cardFormItems = newCardContents.map((card, index) =>
@@ -75,110 +77,19 @@ const Create = () => {
   );
 
   return (
-    <>
-      {modalActivated &&
-        <UpdateConfirmation
-          handleOk={handleOk}
-          updateResult={newDeck}
-        />}
-      <Wrapper className={modalActivated ? 'blur' : null}>
-        <Title>Create Deck</Title>
-        <div className='error'>
-          <p>{error}</p>
-        </div>
-        <form>
-          {true && <DeckDetailsForm
-            newDeckContents={newDeckContents}
-            setNewDeckContents={setNewDeckContents}
-          />}
-          <CardFormHeader />
-          {newCardContents && cardFormItems}
-          <div className='addBtnContainer'>
-            <AddButton
-              onClick={createNewCard}
-              type='button'
-              disabled={modalActivated}>
-              <GrAddCircle />
-              <span className="visually-hidden">Add Card Button</span>
-            </AddButton>
-          </div>
-          <Button
-            text='Save'
-            buttonType='submit'
-            onButtonClick={handleSaveClick}
-            disabled={false || modalActivated}
-          />
-        </form>
-      </Wrapper>
-    </>
+    <ModifyWrapper
+        error={error}
+        deckContents={newDeckContents}
+        setDeckContents={setNewDeckContents}
+        cardFormItems={cardFormItems}
+        updateResult={updateResult}
+        handleOk={handleOk}
+        handleSaveClick={handleSaveClick}
+        disableButton={disableButton}
+        createNewCard={createNewCard}
+        headerText="Create"
+      />
   )
 };
-
-const Title = styled.h1`
-  width: 98%
-  font-size: 2rem;
-  text-align: left;
-  margin: 2rem 0;
-  padding: 1.3rem;
-  font-weight: 600;
-  text-transform: uppercase;
-`
-
-const Wrapper = styled.div`
-  min-height: calc(100vh - 9.3rem - 9.3rem);
-
-  &.blur {
-    filter: blur(.6rem);
-  }
-
-  .error {
-    width: 98%;
-    height: 2.3rem;
-    margin: 1rem auto 0;
-
-    p {
-      margin-left: 1rem;
-      font-family: var(--tertiary-font);
-      font-size: 1.4rem;
-      color: red;
-      text-align: left;
-    }
-  }
-
-  .addBtnContainer {
-    display: flex;
-    flex-direction: row;
-    justify-content: end;
-  }
-`
-
-const AddButton = styled.button`
-  margin-right: 2.1rem;
-
-  svg {
-      font-size: 3rem;
-      transition: transform 0.2s ease-out;
-
-      ${({ disabled }) => {
-      return disabled
-      ? css`
-        
-        `
-      : css`
-        cursor: pointer;
-
-        &:hover {
-        cursor: pointer;
-        transform: scaleX(1.2) scaleY(1.2);
-        }
-
-        &:active {
-          background: var(--white-primary);
-          color: var(--black-primary);
-        }
-      `
-      }}
-}
-`
 
 export default Create

@@ -15,31 +15,35 @@ export const getDeckAndCardsDataById = async (id) => {
   }
 }
 
-export const updateDeckAndCards = async (updateDeckData, createdCardsData, updateCardsData, deleteCardsData, setEditDeckResult, setError, id) => {
+export const updateDeckAndCards = async (updateDeckData, createdCardsData, updateCardsData, deleteCardsData, id) => {
   const appendParamToEndPoint = endpoints.UPDATE_DECK(id);
 
   try {
     const response = await axios.post(appendParamToEndPoint, { updateDeckData, createdCardsData, updateCardsData, deleteCardsData});
-    setEditDeckResult(response.data);
-    return true;
+    return {isUpdated: true,
+      data: response.data
+    };
   } catch (error) {
-    setError(errorMessage.titleExists);
     console.log(error.response.data.error);
-    return false;
+    return {isUpdated: false,
+      error: errorMessage.titleExists
+    };
   }
 };
 
-export const createDeckAndCards = async (newDeckContents, newCardContents, setNewDeck, setError) => {
+export const createDeckAndCards = async (newDeckContents, newCardContents, SetUpdateResult, setError) => {
   const deckContentsForInsertion = getDeckContentsForInsertion(newDeckContents);
   const cardsContentsForInsertion = getCardsContentsForInsertion(newCardContents)
   try {
     const response = await axios.post(endpoints.CREATE_DECK, { newDeckContents: deckContentsForInsertion, newCardContents: cardsContentsForInsertion });
-    setNewDeck(response.data)
-    return true;
+    return {isUpdated: true,
+      data: response.data
+    };
   } catch (error) {
-    setError(errorMessage.titleExists);
     console.log(error.response.data.error);
-    return false;
+    return {isUpdated: false,
+      error: errorMessage.titleExists
+    };
   }
 };
 

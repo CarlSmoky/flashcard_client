@@ -5,8 +5,8 @@ import { updateStatus } from '../helpers/defaultEditableData'
 import { useModal } from '../providers/ModalProvider'
 
 const DeckDetailsForm = ({
-  newDeckContents,
-  setNewDeckContents
+  deckContents,
+  setDeckContents
 }) => {
 
   const { modalActivated } = useModal()
@@ -15,21 +15,21 @@ const DeckDetailsForm = ({
     const returnedError = errorMessage(e.target.name, e.target.value);
 
     const updatedDeck = {
-      ...newDeckContents,
+      ...deckContents,
       [e.target.name]: e.target.value,
       errors:
       {
-        ...newDeckContents.errors,
+        ...deckContents.errors,
         [returnedError.key]: returnedError.message
       },
       modifications: {
-        ...newDeckContents.modifications,
+        ...deckContents.modifications,
         [e.target.name]: true
       },
       updateStatus: updateStatus.edited
     }
 
-    setNewDeckContents(updatedDeck);
+    setDeckContents(updatedDeck);
   };
   
   return (
@@ -41,11 +41,11 @@ const DeckDetailsForm = ({
           type="text"
           name="deckName"
           id="deckName"
-          value={newDeckContents.deckName}
+          value={deckContents.deckName}
           placeholder="Enter deck name here"
           disabled={modalActivated}
         />
-        <p>{newDeckContents.errors.deckName}</p>
+        <p>{deckContents.errors.deckName}</p>
       </div>
       <div>
         <label htmlFor="description">Description</label>
@@ -54,11 +54,11 @@ const DeckDetailsForm = ({
           type="text"
           name="description"
           id="description"
-          value={newDeckContents.description}
+          value={deckContents.description}
           placeholder="Enter deck description here"
           disabled={modalActivated}
         />
-        <p>{newDeckContents.errors.description}</p>
+        <p>{deckContents.errors.description}</p>
       </div>
     </Wrapper>
   )
