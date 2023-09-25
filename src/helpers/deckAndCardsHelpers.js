@@ -31,7 +31,7 @@ export const updateDeckAndCards = async (updateDeckData, createdCardsData, updat
   }
 };
 
-export const createDeckAndCards = async (newDeckContents, newCardContents, SetUpdateResult, setError) => {
+export const createDeckAndCards = async (newDeckContents, newCardContents) => {
   const deckContentsForInsertion = getDeckContentsForInsertion(newDeckContents);
   const cardsContentsForInsertion = getCardsContentsForInsertion(newCardContents)
   try {

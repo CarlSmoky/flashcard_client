@@ -91,7 +91,6 @@ const Edit = () => {
     }
     setError("");
     const updateResult = await updateDeckAndCards(updateDeckData, createdCardsData, updateCardsData, deleteCardsData, id);
-    console.log("here",updateResult)
     if (updateResult.isUpdated) {
       setEditDeckResult(updateResult.data)
       openModal();
