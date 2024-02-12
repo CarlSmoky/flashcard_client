@@ -47,21 +47,23 @@ const Wrapper = styled.div`
   flex-direction: column;
   min-height: calc(100vh - 9.3rem - 9.3rem);
 `
-const Content = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  margin: 2rem;
-`
-
 const Title = styled.h1`
   font-size: 2rem;
   text-align: left;
-  margin: 2rem 2rem 0 2rem;
+  margin: 2rem;
   padding: 1.3rem;
   font-weight: 600;
   text-transform: uppercase;
 `
+
+const Content = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 2rem;
+  padding: 1.3rem;
+`
+
 
 export default DeckList
