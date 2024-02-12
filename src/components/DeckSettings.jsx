@@ -33,7 +33,7 @@ const DeckSettings = ({
 
   return (
     <Wrapper>
-      <form>
+      <Form>
         <Header>
           <button onClick={() => navigate('/decklist')}>
             <RxCross2 />
@@ -58,7 +58,7 @@ const DeckSettings = ({
             onButtonClick={handleStart}
           />
         </ButtonWrapper>
-      </form>
+      </Form>
     </Wrapper>
   )
 }
@@ -79,19 +79,35 @@ const Wrapper = styled.div`
   ${holizontal};
   display: flex;
   flex-direction: row;
-  width: 40rem;
-  height: 30rem;
+  width: 35%;
+  min-width: 40rem;
+  height: 35%;
+  min-height: 25rem;
   background: var(--primary-color);
   border: var(--side-column-border) solid var(--black-primary);
   border-radius: 1rem;
   z-index: 100;
+
+  @media (max-width: 768px) {
+    width: 50%;
+    min-width: 30rem;
+  }
+
+  @media (max-width: 488px) {
+    width: 75%;
+    min-width: 20rem;
+  }
+`
+
+const Form = styled.form`
+  width: 100%;
 `
 
 const Header = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 38rem;
+  width: 100%;
   height: 15%;
 
   button {
@@ -102,25 +118,42 @@ const Header = styled.div`
   svg {
     font-size: 2rem;
   }
-
 `
 
 const Title = styled.h2`
-  font-size: 2rem;
+  width: 100%;
   height: 25%;
+  font-size: 2rem;
   font-weight: 600;
   text-transform: uppercase;
+
+  @media (max-width: 768px) {
+    font-size: 1.6rem;
+  }
+
+  @media (max-width: 488px) {
+    font-size: 1.3rem;
+  }
 `
 
 const Label = styled.label`
   font-size: 1.5rem;
   text-transform: uppercase;
-`
 
+  @media (max-width: 768px) {
+    font-size: 1.3rem;
+  }
+
+  @media (max-width: 488px) {
+    font-size: 1rem;
+  }
+`
 
 const ButtonWrapper = styled.div`
   height: 3rem;
   margin: 4rem 0;
+
+  
 `
 
 export default DeckSettings

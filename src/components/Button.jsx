@@ -38,6 +38,7 @@ const ButtonStyle = styled.button`
   margin: 1rem 2rem;
   font-family: var(--primary-font);
   font-weight: 600;
+  font-size: 1.6rem;
   text-transform: uppercase;
   border: 2px solid var(--black-primary); 
   box-shadow: 1px 1px 0px 0px  black, 2px 2px 0px 0px black, 3px 3px 0px 0px black, 4px 4px 0px 0px black, 5px 5px 0px 0px black;
@@ -73,11 +74,11 @@ const ButtonStyle = styled.button`
       }
 
       &:hover {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
       }
       
       &:hover::after {
-        transform: scaleX(1);
+        transform: scaleX(1.0);
         transform-origin: bottom left;
       }
 
@@ -86,6 +87,15 @@ const ButtonStyle = styled.button`
         top: 5px;
         left: 5px;
       }
+
+      @media (max-width: 768px) {
+        font-size: 1.3rem;
+
+        &:hover {
+        font-size: 1.4rem;
+      }
+      }
+
     `
   }}
 `
