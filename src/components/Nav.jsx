@@ -35,9 +35,6 @@ const Wrapper = styled.nav`
   flex-direction: row;
   justify-content: space-between;
   align-content: stretch;
-  /* want to use variable here*/
-  width: calc(100vw - 9.3rem - 9.3rem);
-  min-width: 70rem;
   height: 9rem;
   position: sticky;
   border-bottom: var(--side-column-border) solid var(--black-primary);

@@ -28,23 +28,53 @@ const DeckItem = ({ id, deckName, description }) => {
 }
 
 const Wrapper = styled.div`
-  width: 25%;
-  height: 20rem;
-  margin: 1rem;
+  width: calc(33% - 1rem);
+  aspect-ratio: 16 / 9;
   border: .3rem solid var(--black-primary);
   background: var(--tertiary-color);
   border-radius: .3rem;
-  
   transition: all 0.3s ease-in-out;
   
   &:hover {
     box-shadow: 0 3px 3px var(--black-secondary);
   }
-
+  
   &:active {
-  transform: translateY(4px);
-}
-`
+    transform: translateY(4px);
+  }
+
+  @media (max-width: 1200px) {
+    width: calc(32% - 1rem);
+  }
+
+  @media (max-width: 768px) {
+    width: calc(49% - 1rem);
+  }
+
+  @media (max-width: 488px) {
+    width: 100%;
+  }
+  `
+  
+  const Header = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+  
+    button {
+      transition: transform .1s ease-out;
+      padding: .5rem;
+  
+      &:hover {
+      cursor: pointer;
+      transform: scaleX(1.2) scaleY(1.2);
+      }
+    }
+  
+    svg {
+      font-size: 2rem;
+    }
+  `
 
 const ClickArea = styled.div`
   width: 100%;
@@ -56,6 +86,7 @@ const ClickArea = styled.div`
     margin: 0 1rem 1rem 1rem;
     font-family: var(--secondary-font);
     font-weight: 200;
+    font-size: 2rem;
     text-transform: uppercase;
     text-align: left;
     overflow-wrap: break-word;
@@ -75,27 +106,19 @@ const ClickArea = styled.div`
     cursor: pointer;
   }
 
-`
-
-const Header = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-
-  button {
-    transition: transform .1s ease-out;
-    padding: .5rem;
-
-    &:hover {
-    cursor: pointer;
-    transform: scaleX(1.2) scaleY(1.2);
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 1.6rem;
+    }
+    p {
+      font-size: 1rem;
     }
   }
 
-  svg {
-    font-size: 2rem;
+  @media (max-width: 488px) {
+    width: 100%;
   }
-  
 `
+
 
 export default DeckItem

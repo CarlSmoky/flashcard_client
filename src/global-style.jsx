@@ -12,7 +12,7 @@ const GlobalStyles = createGlobalStyle`
   --grey-primary: #333;
   --grey-secondary: #829191;
   --side-column-border: 0.4rem;
-  --side-column-width: 8.5rem;
+  --side-column-width: 5%;
   
   --primary-font: 'Syncopate';
   --secondary-font: 'Futura';
