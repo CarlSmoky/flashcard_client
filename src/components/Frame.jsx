@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { BsCardText } from 'react-icons/bs'
-import { BiSearch } from 'react-icons/bi'
+// import { BiSearch } from 'react-icons/bi'
 import Nav from './Nav'
 import Menu from './Menu'
 import DeckList from '../pages/DeckList'
@@ -15,42 +15,40 @@ import ModalProvider from '../providers/ModalProvider'
 
 const Frame = ({ content }) => {
 
-return (
-  <Wrapper >
-    <div className="left">
-      <div className="logo">
-        <div>
+  return (
+    <Wrapper >
+      <div className="left">
+        <div className="logo">
           <BsCardText />
         </div>
+        <div className="middle"></div>
+        <div className="bottom"></div>
       </div>
-      <div className="middle"></div>
-      <div className="bottom"></div>
-    </div>
-    <div className="center">
-      <Nav />
-      <ModalProvider>
-        {content === "menu" && <Menu />}
-        {content === "decklist" && <DeckList />}
-        {content === "practice" && <Practice />}
-        {content === "edit" && <Edit />}
-        {content === "create" && <Create />}
-        {content === "signup" && <Signup />}
-        {content === "login" && <Login />}
-      </ModalProvider>
-      <Footer />
-    </div>
-    <div className="right">
-      <div className="search">
-        <div>
+      <div className="center">
+        <Nav />
+        <ModalProvider>
+          {content === "menu" && <Menu />}
+          {content === "decklist" && <DeckList />}
+          {content === "practice" && <Practice />}
+          {content === "edit" && <Edit />}
+          {content === "create" && <Create />}
+          {content === "signup" && <Signup />}
+          {content === "login" && <Login />}
+        </ModalProvider>
+        <Footer />
+      </div>
+      <div className="right">
+        <div className="search">
+          {/* <div>
           <BiSearch />
+        </div> */}
         </div>
+        <div className="middle">
+        </div>
+        <div className="bottom"></div>
       </div>
-      <div className="middle">
-      </div>
-      <div className="bottom"></div>
-    </div>
-  </Wrapper>
-)
+    </Wrapper>
+  )
 }
 
 const Wrapper = styled.div`
@@ -66,31 +64,33 @@ const Wrapper = styled.div`
     flex-direction: column;
     justify-content: space-between;
     min-width: var(--side-column-width);
-    height: {height};
     border-right: var(--side-column-border) solid var(--black-primary);
     border-left: var(--side-column-border) solid var(--black-primary);
 
     .logo {
     padding: 1rem;
-    min-width: 6.5rem;
     height: 7rem;
     border-bottom: var(--side-column-border) solid var(--black-primary);
 
-      div {
+      /* div {
         margin: 1.2rem;
         text-align: center;
         svg {
           font-size: 4rem;
         }
-      }
+      } */
     }
 
     .bottom {
       padding: 1rem;
-      min-width: 6.5rem;
       height: 7rem;
       border-top: var(--side-column-border) solid var(--black-primary);
     }
+  }
+
+  .center {
+    width: 90%;
+    position: relative;
   }
 
   .right {
@@ -103,33 +103,35 @@ const Wrapper = styled.div`
 
     .search {
       padding: 1rem;
-      min-width: 6.5rem;
       height: 7rem;
       border-bottom: var(--side-column-border) solid var(--black-primary);
 
-      div {
-        margin: 1.2rem;
-        text-align: center;
-        transition: transform 0.1s ease-out;
-        svg {
-          font-size: 4rem;
-        }
-        :hover {
-          transform: scaleX(1.2) scaleY(1.2);
-        }
-      }
     }
     
     .bottom {
-      position: relative;
-      bottom: 0;
-      min-width: 8.5rem;
-      height: 9rem;
+      padding: 1rem;
+      height: 7rem;
       border-top: var(--side-column-border) solid var(--black-primary);
     }
   }
 
+  @media (max-width: 768px) {
 
+    .left {
+      .bottom {
+        padding: 0;
+        height: 6rem;
+      }
+    }
+    .right {
+      .bottom {
+        padding: 0;
+        height: 6rem;
+      }
+    }
+
+    
+  }
   
 `
 
