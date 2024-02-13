@@ -93,7 +93,7 @@ const ButtonStyle = styled.button`
 
         &:hover {
         font-size: 1.4rem;
-      }
+        }
       }
 
     `

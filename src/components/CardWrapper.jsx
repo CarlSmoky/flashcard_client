@@ -16,7 +16,7 @@ const CardWrapper = ({
   }
 
   return (
-    <>
+    <Wrapper>
       <CardHeader
         title={title}
         setCardProperty={setCardProperty}
@@ -41,9 +41,15 @@ const CardWrapper = ({
           isSelected={!card.isLearning}
         />
       </ButtonWrapper>
-    </>
+    </Wrapper>
   )
 }
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+`
 
 const Content = styled.p`
   font-size: 2rem;
@@ -55,12 +61,23 @@ const Content = styled.p`
   &.textSelectEnable {
   user-select: text;
   }
+
+  @media (max-width: 768px) {
+    font-size: 1.4rem;
+    margin: 1rem;
+  }
 `;
 
 const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
 `
 
 export default CardWrapper

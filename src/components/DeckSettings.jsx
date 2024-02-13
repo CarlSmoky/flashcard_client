@@ -152,8 +152,6 @@ const Label = styled.label`
 const ButtonWrapper = styled.div`
   height: 3rem;
   margin: 4rem 0;
-
-  
 `
 
 export default DeckSettings

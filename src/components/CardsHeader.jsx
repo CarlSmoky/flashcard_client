@@ -40,7 +40,6 @@ const CardsHeaderStyle = styled.div`
   flex-direction: row;
   justify-content: space-between;
   
-
   &.blur {
     filter: blur(2rem);
   }
@@ -56,7 +55,7 @@ max-width: 70rem;
 `
 
 const Right = styled.div`
-  margin: 2rem;
+  margin: auto 2rem;
 `
 
 const Header = styled.h2`
@@ -67,12 +66,20 @@ const Header = styled.h2`
   font-family: var(--primary-font);
   font-weight: 600;
   text-transform: uppercase;
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
 `
 
 const CardCount = styled.span`
   font-size: 1.5rem;
   font-weight: bold;
   font-family: var(--tertiary-font);
+
+  @media (max-width: 768px) {
+    font-size: 1.3rem;
+  }
 `
 
 const Button = styled.button`
@@ -82,6 +89,13 @@ const Button = styled.button`
     font-size: 2.5rem;
     padding: .2rem;
     stroke-width: 1.2;
+    }
+
+    @media (max-width: 768px) {
+      svg {
+        font-size: 1.3rem;
+        padding: .3rem;
+      }
     }
 
     .visually-hidden:not(:focus):not(:active) {
