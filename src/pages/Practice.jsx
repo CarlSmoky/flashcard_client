@@ -195,17 +195,19 @@ const Practice = () => {
 }
 
 const Wrapper = styled.div`
+  width: 100%;
   min-height: calc(100vh - 9.3rem - 9.3rem);
+  display: flex;
+  flex-direction: column;
 `
 const CardStyle = styled.article`
   display: flex;
   flex-direction: row;
   justify-content: center;
+  width: 100%;
   height: 45rem;
-  margin-top: 10rem;
-
+  margin: auto;
   background: var(--white);
-  z-index: -1;
 
   &.blur {
     filter: blur(2rem);
@@ -224,7 +226,6 @@ const ArrowButton = styled.button`
       ${({ disabled }) => {
       return disabled
         ? css`
-        
         `
         : css`
         cursor: pointer;
@@ -246,6 +247,17 @@ const ArrowButton = styled.button`
     .emptyContent {
       width: 4.4rem;
       height: 4.4rem;
+    }
+
+    @media (max-width: 768px) {
+      svg {
+        font-size: 2rem;
+      }
+
+      .emptyContent {
+      width: 2.4rem;
+      height: 2.4rem;
+    }
     }
 
 `;

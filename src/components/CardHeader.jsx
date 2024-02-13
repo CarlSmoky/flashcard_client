@@ -42,6 +42,11 @@ const CardSideTitle = styled.h3`
   text-align: left;
   margin: auto 2rem;
   user-select: none;
+
+  @media (max-width: 768px) {
+    font-size: 1.6rem;
+    margin: auto 1rem;
+  }
   
 `;
 
