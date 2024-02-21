@@ -46,7 +46,7 @@ const Wrapper = styled.div`
   flex-direction: row;
   justify-content: center;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   border-top: var(--side-column-border) solid var(--black-primary);
   border-bottom: var(--side-column-border) solid var(--black-primary);
   
@@ -65,7 +65,7 @@ const Wrapper = styled.div`
     }
 
     .bottom {
-      padding: .9rem;
+      padding: 1rem;
       height: 7rem;
       border-top: var(--side-column-border) solid var(--black-primary);
     }
@@ -91,7 +91,7 @@ const Wrapper = styled.div`
     }
     
     .bottom {
-      padding: .9rem;
+      padding: 1rem;
       height: 7rem;
       border-top: var(--side-column-border) solid var(--black-primary);
     }

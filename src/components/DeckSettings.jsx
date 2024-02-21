@@ -82,7 +82,7 @@ const Wrapper = styled.div`
   width: 35%;
   min-width: 40rem;
   height: 35%;
-  min-height: 25rem;
+  min-height: 30rem;
   background: var(--primary-color);
   border: var(--side-column-border) solid var(--black-primary);
   border-radius: 1rem;

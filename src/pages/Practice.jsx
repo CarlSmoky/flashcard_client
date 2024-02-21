@@ -195,10 +195,14 @@ const Practice = () => {
 }
 
 const Wrapper = styled.div`
-  width: 100%;
-  min-height: calc(100vh - 9.3rem - 9.3rem);
   display: flex;
   flex-direction: column;
+  width: 100%;
+  min-height: calc(100vh - 9.3rem - 9.3rem);
+
+  @media (max-width: 768px) {
+    min-height: calc(100vh - 6rem - 6rem);
+  }
 `
 const CardStyle = styled.article`
   display: flex;

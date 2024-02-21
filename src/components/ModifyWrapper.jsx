@@ -67,7 +67,7 @@ const ModifyWrapper = (
 }
 
 const Title = styled.h1`
-  width: 98%
+  width: 98%;
   font-size: 2rem;
   text-align: left;
   margin: 2rem 0;
@@ -82,6 +82,10 @@ const Title = styled.h1`
 
 const Wrapper = styled.div`
   min-height: calc(100vh - 9.3rem - 9.3rem);
+  
+  @media (max-width: 768px) {
+    min-height: calc(100vh - 6rem - 6rem);
+  }
 
   &.blur {
     filter: blur(.6rem);

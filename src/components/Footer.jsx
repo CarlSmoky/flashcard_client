@@ -25,7 +25,7 @@ const StyledFooter = styled.footer`
   }
 
   @media (max-width: 768px) {
-    height: 6rem;
+    height: 5.2rem;
 
     p {
       font-size: 1rem; 

@@ -46,6 +46,10 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   min-height: calc(100vh - 9.3rem - 9.3rem);
+
+  @media (max-width: 768px) {
+    min-height: calc(100vh - 6rem - 6rem);
+  }
 `
 const Title = styled.h1`
   font-size: 2rem;

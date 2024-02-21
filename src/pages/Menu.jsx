@@ -38,6 +38,8 @@ const Wrapper = styled.div`
   margin: auto;
   height: 50%;
   min-height: calc(100vh - 9.3rem - 9.3rem);
+
+  
   
   .header {
     margin: auto;
@@ -112,7 +114,6 @@ const Wrapper = styled.div`
 
       .card-1 {
         width: 100%;
-        height: 15rem;
 
         h2 {
           font-size: 1.4rem;
@@ -121,7 +122,6 @@ const Wrapper = styled.div`
 
       .card-2 {
         width: 100%;
-        height: 15rem;
         border-right: none;
         border-left: none;
 
@@ -132,7 +132,6 @@ const Wrapper = styled.div`
 
       .card-3 {
         width: 100%;
-        height: 15rem;
         border-bottom: none;
 
         h2 {
