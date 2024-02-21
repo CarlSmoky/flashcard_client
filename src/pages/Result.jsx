@@ -36,9 +36,7 @@ const Result = ({
         numCards={numCards}
         numLearning={numLearning}
       />
-      <ContenteWrapper>
         {resultItems}
-      </ContenteWrapper>
     </Wrapper>
   )
 }
@@ -50,10 +48,5 @@ const Wrapper = styled.div`
     min-height: calc(100vh - 6rem - 6rem);
   }
 `
-
-const ContenteWrapper = styled.div`
-`
-
-
 
 export default Result

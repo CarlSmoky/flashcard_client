@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import StatsHeader from './StatsHeader'
 
 const ResultHeader = ({
   deckName,
@@ -17,7 +16,6 @@ const ResultHeader = ({
         <p>Total cards: <span>{numCards}</span></p>
       </div>
       </div>
-      <StatsHeader/>
     </Wrapper>
   )
 }
@@ -51,7 +49,18 @@ const Wrapper = styled.div`
       width: 3rem;
       text-align: center;
     }
-    
+  }
+
+  @media (max-width: 768px) {
+    margin: 2rem auto 0;
+
+    h2 {
+    font-size: 1.4rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
   }
 `
 
