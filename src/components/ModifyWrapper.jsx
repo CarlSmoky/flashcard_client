@@ -67,7 +67,6 @@ const ModifyWrapper = (
 }
 
 const Title = styled.h1`
-  width: 98%;
   font-size: 2rem;
   text-align: left;
   margin: 2rem 0;
