@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import Navbar from './Navbar'
-import Menu from './Menu'
+import Menu from '../pages/Menu'
 import DeckList from '../pages/DeckList'
 import Practice from '../pages/Practice'
 import Edit from '../pages/Edit'
@@ -32,9 +32,6 @@ const Frame = ({ content }) => {
       </div>
       <div className="right">
         <div className="search">
-          {/* <div>
-          <BiSearch />
-        </div> */}
         </div>
         <div className="middle">
         </div>
@@ -49,6 +46,7 @@ const Wrapper = styled.div`
   flex-direction: row;
   justify-content: center;
   width: 100vw;
+  min-height: 100vh;
   border-top: var(--side-column-border) solid var(--black-primary);
   border-bottom: var(--side-column-border) solid var(--black-primary);
   
@@ -64,14 +62,6 @@ const Wrapper = styled.div`
     padding: 1rem;
     height: 7rem;
     border-bottom: var(--side-column-border) solid var(--black-primary);
-
-      /* div {
-        margin: 1.2rem;
-        text-align: center;
-        svg {
-          font-size: 4rem;
-        }
-      } */
     }
 
     .bottom {
@@ -117,19 +107,19 @@ const Wrapper = styled.div`
 
       .bottom {
         padding: 0;
-        height: 6rem;
+        height: 5.2rem;
       }
     }
 
     .right {
       .search {
-      padding: 0rem;
-      height: 6rem;
+        padding: 0rem;
+        height: 6rem;
       }
 
       .bottom {
         padding: 0;
-        height: 6rem;
+        height: 5.2rem;
       }
     }
   }

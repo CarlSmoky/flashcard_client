@@ -65,7 +65,7 @@ const DeckDetailsForm = ({
 }
 
 const absoluteStyle = css`
-  width: 98%;
+  width: 95%;
   margin-left: 1rem;
   border-top-style: hidden;
   border-right-style: hidden;

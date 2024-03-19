@@ -20,24 +20,28 @@ const Result = ({
 
   return (
     <Wrapper>
-      <div className='term'>
-        <p>{term}</p>
+      <div className="termDeifinitionWrapper">
+        <div className='term'>
+          <p>{term}</p>
+        </div>
+        <div className='verticalLine'></div>
+        <div className='definition'>
+          <p>{definition}</p>
+        </div>
       </div>
-      <div className='verticalLine'></div>
-      <div className='definition'>
-        <p>{definition}</p>
-      </div>
-      <div className='isLearning'>
-        <p onClick={clickLearning}>
-          {`${isLearning ? "Learning" : "Know"}`}
-        </p>
-      </div>
-      <div className="star">
-        <Star
-          fillStar={fillStar}
-          setCardProperty={setCardProperty}
-          cardId={cardId}
-        />
+      <div className="statusWrapper">
+        <div className="star">
+          <Star
+            fillStar={fillStar}
+            setCardProperty={setCardProperty}
+            cardId={cardId}
+          />
+        </div>
+        <div className='isLearning'>
+          <p onClick={clickLearning}>
+            {`${isLearning ? "L" : "K"}`}
+          </p>
+        </div>
       </div>
     </Wrapper>
   )
@@ -53,12 +57,17 @@ const Wrapper = styled.div`
   border: 2px solid var(--black-primary);
   background: var(--quaternary-color);
 
+  .termDeifinitionWrapper {
+    display: flex;
+    width: 100%;
+  }
+
   .term {
-    width: 33%;
+    width: 50%;
     text-align: left;
 
     p {
-      margin: 1rem 2rem;
+      margin: 1rem;
       font-size: 1.5rem;
       font-family: var(--tertiary-font);
     }
@@ -73,25 +82,33 @@ const Wrapper = styled.div`
     width: 50%;
       
     p {
-      margin: 1rem 2rem;
+      margin: 1rem;
       text-align: left;
       font-size: 1.5rem;
       font-family: var(--tertiary-font);
     }
   }
 
+  .statusWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+
+  .star {
+    svg {
+      font-size: 1.5rem;
+    }
+  }
   
   .isLearning {
-    width: 10%;
-    margin: auto 0;
-    text-align: left;
-
     p {
-      font-size: 1.3rem;
+      padding: 0 .2rem;
+      font-size: 1.6rem;
       font-family: var(--primary-font);
       font-weight: 400;
       text-transform: uppercase;
-      text-align: center;
       cursor: pointer;
       transition: transform .1s ease-out;
       
@@ -105,11 +122,46 @@ const Wrapper = styled.div`
     }
   }
 
-  .star {
-    width: 5%;
-    margin: auto;
-    padding-right: 2rem; 
+  @media (max-width: 768px) {
+    flex-direction: column-reverse;
+
+    .term {
+      p {
+        margin: .2rem .5rem;
+        font-size: 1.3rem;
+      }
+    }
+
+    .definition {
+      p {
+        margin: .2rem .5rem;
+        font-size: 1.3rem;
+      }
+    }
+
+    .verticalLine {
+    margin: .2rem 0;
   }
+
+    .statusWrapper {
+      flex-direction: row-reverse;
+
+    .star {
+      margin: auto;
+      svg {
+        padding: .2rem;
+      }
+  }
+
+      .isLearning {
+        margin: auto;
+      p {
+        padding: 0 .5rem;
+        font-size: 1.3rem;
+      }
+    }
+  }
+}
 `
 
 export default Result

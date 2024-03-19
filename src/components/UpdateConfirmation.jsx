@@ -42,8 +42,10 @@ const holizontal = () => {
 
 const Wrapper = styled.div`
   ${holizontal};
-  width: 40rem;
-  height: 30rem;
+  width: 35%;
+  min-width: 40rem;
+  height: 35%;
+  min-height: 30rem;
   background: var(--primary-color);
   border: var(--side-column-border) solid var(--black-primary);
   border-radius: 1rem;
@@ -59,6 +61,16 @@ const Wrapper = styled.div`
   }
   p {
     font-size: 1.5rem;
+  }
+
+  @media (max-width: 768px) {
+    width: 50%;
+    min-width: 30rem;
+  }
+
+  @media (max-width: 488px) {
+    width: 75%;
+    min-width: 20rem;
   }
   
 `

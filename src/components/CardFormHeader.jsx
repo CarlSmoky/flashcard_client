@@ -43,11 +43,10 @@ const Wrapper = styled.div`
 
   .verticalLine {
     border-right: 2px solid transparent;
-    /* margin: 1rem 0; */
   }
 
   .bin {
-    width: 4rem;
+    width: 5.5rem;
   }
 `
 

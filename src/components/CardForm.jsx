@@ -87,14 +87,14 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   width: 98%;
-  height: 11rem;
+  /* height: 11rem; */
   margin: 1rem auto 1rem;
   border-radius: .3rem;
   border: 2px solid var(--black-primary);
   background: var(--tertiary-color);
 
   .term, .definition {
-    width: 56%;
+    width: 50%;
     margin: 1rem;
 
     p {
@@ -113,7 +113,6 @@ const Wrapper = styled.div`
 
   textarea {
     width: 100%;
-    height: 70%;
     border-top-style: hidden;
     border-right-style: hidden;
     border-left-style: hidden;
@@ -173,6 +172,12 @@ const Binbutton = styled.button`
         }
       `
       }}
+    }
+
+    @media (max-width: 768px) {
+      svg {
+      font-size: 2rem;
+      }
     }
 `
 

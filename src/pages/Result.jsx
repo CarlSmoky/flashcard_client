@@ -36,13 +36,17 @@ const Result = ({
         numCards={numCards}
         numLearning={numLearning}
       />
-      {resultItems}
+        {resultItems}
     </Wrapper>
   )
 }
 
 const Wrapper = styled.div`
   min-height: calc(100vh - 9.3rem - 9.3rem);
+
+  @media (max-width: 768px) {
+    min-height: calc(100vh - 6rem - 6rem);
+  }
 `
 
 export default Result

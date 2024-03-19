@@ -28,7 +28,6 @@ const Star = ({
 const Wrapper = styled.div`
   
   cursor: pointer;
-  height: 3rem;
   text-align: right;
 
   svg {
