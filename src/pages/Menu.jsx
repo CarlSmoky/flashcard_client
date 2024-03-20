@@ -1,35 +1,5 @@
-import styled from 'styled-components'
-
-const Menu = () => {
-
-  return (
-    <>
-      <Wrapper>
-        <div className="header">
-          <div>
-            <h1>Memorize anything with free digital flashcards</h1>
-            <p>Lorem Ipsum is simply dummy text of the
-              printingand typesetting industry. </p>
-          </div>
-        </div>
-        <div className="cards">
-          <div className="card-1">
-            <h2>Search Deck</h2>
-            <p></p>
-          </div>
-          <div className="card-2">
-            <h2>Create Deck</h2>
-            <p></p>
-          </div>
-          <div className="card-3">
-            <h2>Practice</h2>
-            <p></p>
-          </div>
-        </div>
-      </ Wrapper>
-    </>
-  )
-}
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const Wrapper = styled.div`
   display: flex;
@@ -39,8 +9,6 @@ const Wrapper = styled.div`
   height: 50%;
   min-height: calc(100vh - 9.3rem - 9.3rem);
 
-  
-  
   .header {
     margin: auto;
     padding: 1rem;
@@ -63,31 +31,28 @@ const Wrapper = styled.div`
     width: 100%;
     height: 50%;
 
-    .card-1 {
+    .card-side {
       width: 33.3%;
       height: 100%;
       border-top: .3rem solid var(--black-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
       h2 {
         font-size: 1.6rem;
       }
     }
-    .card-2 {
+    .card-middle {
       width: 33.3%;
       height: 100%;
       border-top: .3rem solid var(--black-primary);
       border-right: .3rem solid var(--black-primary);
       border-left: .3rem solid var(--black-primary);
       background: var(--primary-color);
-
-      h2 {
-        font-size: 1.6rem;
-      }
-    }
-    .card-3 {
-      width: 33.3%;
-      height: 100%;
-      border-top: .3rem solid var(--black-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
       h2 {
         font-size: 1.6rem;
@@ -101,18 +66,18 @@ const Wrapper = styled.div`
     .header {
 
       h1 {
-        font-size: 1.6rem;
+        font-size: 1.4rem;
       }
 
       p {
-        font-size: 1.3rem;
+        font-size: 1rem;
       }
     }
     .cards {
       flex-direction: column;
       justify-content: flex-end;
 
-      .card-1 {
+      .card-side {
         width: 100%;
 
         h2 {
@@ -120,7 +85,7 @@ const Wrapper = styled.div`
         }
       }
 
-      .card-2 {
+      .card-middle {
         width: 100%;
         border-right: none;
         border-left: none;
@@ -129,17 +94,37 @@ const Wrapper = styled.div`
           font-size: 1.4rem;
         }
       }
-
-      .card-3 {
-        width: 100%;
-        border-bottom: none;
-
-        h2 {
-          font-size: 1.4rem;
-        }
-      }
     }
   }
 `
+
+const Menu = () => {
+
+  return (
+    <>
+      <Wrapper>
+        <div className="header">
+          <div>
+            <h1>The Lifelong Learning App anytime, anywhere.</h1>
+            <p>DokodemoCard! is an innovative learning app designed to make memorization not just effective but also engaging. With FlashMaster, the power to learn is always at your fingertips, transforming downtime into productive study sessions.</p>
+          </div>
+        </div>
+        <div className="cards">
+          <Link className="card-side" to={`/decklist`}>
+            <h2>Search Deck</h2>
+          </Link>
+          <Link className="card-middle" to={`/decklist`}>
+            <h2>Practice</h2>
+          </Link>
+          <Link className="card-side" to={`/create`}>
+            <h2>Create Deck</h2>
+          </Link>
+        </div>
+      </ Wrapper>
+    </>
+  )
+}
+
+
 
 export default Menu
