@@ -83,7 +83,8 @@ const CardCount = styled.span`
 `
 
 const Button = styled.button`
-  margin: auto;
+  display: flex;
+  justify-items: center;
   
     svg {
     font-size: 2.5rem;
@@ -94,7 +95,7 @@ const Button = styled.button`
 
     @media (max-width: 768px) {
       svg {
-        font-size: 1.3rem;
+        font-size: 2rem;
         padding: .3rem;
       }
     }
