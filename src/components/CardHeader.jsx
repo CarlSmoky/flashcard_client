@@ -1,25 +1,5 @@
-import React from 'react'
-import styled from 'styled-components'
-import Star from './Star'
-
-const CardHeader = ({
-  title,
-  fillStar,
-  setCardProperty,
-  cardId,
-}) => {
-
-  return (
-    <Wrapper>
-      <CardSideTitle>{title}</CardSideTitle>
-      <Star
-        fillStar={fillStar}
-        setCardProperty={setCardProperty}
-        cardId={cardId}
-      />
-    </Wrapper>
-  )
-}
+import styled from "styled-components";
+import Star from "./Star";
 
 const Wrapper = styled.div`
   display: flex;
@@ -41,8 +21,25 @@ const CardSideTitle = styled.h3`
     font-size: 1.4rem;
     margin: auto 1rem;
   }
-  
-`;
+`
 
+const CardHeader = ({
+  title,
+  fillStar,
+  setCardProperty,
+  cardId,
+}) => {
+
+  return (
+    <Wrapper>
+      <CardSideTitle>{title}</CardSideTitle>
+      <Star
+        fillStar={fillStar}
+        setCardProperty={setCardProperty}
+        cardId={cardId}
+      />
+    </Wrapper>
+  )
+}
 
 export default CardHeader
