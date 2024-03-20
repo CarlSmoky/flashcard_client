@@ -89,7 +89,7 @@ const Button = styled.button`
     font-size: 2.5rem;
     padding: .2rem;
     stroke-width: 1.2;
-    filter: invert(0%) sepia(5%) saturate(6868%) hue-rotate(246deg) brightness(87%) contrast(104%);
+    filter: invert(10%) sepia(7%) saturate(7%) hue-rotate(349deg) brightness(93%) contrast(79%);
     }
 
     @media (max-width: 768px) {
