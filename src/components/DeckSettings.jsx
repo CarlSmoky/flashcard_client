@@ -113,6 +113,7 @@ const Header = styled.div`
   button {
     padding: 1rem;
     cursor: pointer;
+    color: #2E2E2E;
   }
 
   svg {
