@@ -91,7 +91,7 @@ const ButtonStyle = styled.button`
 
       @media (max-width: 768px) {
         font-size: 1.3rem;
-        width: 80%;
+        width: 70%;
 
         &:hover {
         font-size: 1.4rem;
