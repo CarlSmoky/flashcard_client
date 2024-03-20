@@ -1,10 +1,42 @@
-import React, {useEffect, useState} from 'react'
-import styled from 'styled-components'
+import React, {useEffect, useState} from "react";
+import styled from "styled-components";
 import axios from "axios";
-import DeckItem from '../components/DeckItem';
+import DeckItem from "../components/DeckItem";
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 9.3rem - 9.3rem);
+
+  @media (max-width: 768px) {
+    min-height: calc(100vh - 6rem - 6rem);
+  }
+`
+const Title = styled.h1`
+  font-size: 2rem;
+  text-align: left;
+  margin: 2rem;
+  padding: 1.3rem;
+  font-weight: 600;
+  text-transform: uppercase;
+
+  @media (max-width: 768px) {
+    font-size: 1.4rem;
+    margin: 1rem;
+    padding: .8rem;
+  }
+`
+
+const Content = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 2rem;
+  padding: 1.3rem;
+`
 
 const DeckList = () => {
-
   const [decks, setDecks] = useState([]);
 
   useEffect(() => {
@@ -31,43 +63,13 @@ const DeckList = () => {
   });
     
   return (
-    <>
     <Wrapper>
       <Title>Deck List</Title>
       <Content>
       {allDecks}
       </Content>
     </Wrapper>
-  </>
   )
 }
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  min-height: calc(100vh - 9.3rem - 9.3rem);
-
-  @media (max-width: 768px) {
-    min-height: calc(100vh - 6rem - 6rem);
-  }
-`
-const Title = styled.h1`
-  font-size: 2rem;
-  text-align: left;
-  margin: 2rem;
-  padding: 1.3rem;
-  font-weight: 600;
-  text-transform: uppercase;
-`
-
-const Content = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin: 2rem;
-  padding: 1.3rem;
-`
-
 
 export default DeckList
