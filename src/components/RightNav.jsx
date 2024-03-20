@@ -9,6 +9,7 @@ const Ul = styled.ul`
   flex-flow: row nowrap;
   background-color: var(--secondary-color);
   border-left: var(--side-column-border) solid var(--black-primary);
+  z-index: 20;
 
   li {
     margin: auto;
