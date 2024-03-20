@@ -1,15 +1,4 @@
-import React from 'react'
-import styled from 'styled-components'
-
-const Footer = () => {
-  const currentDate = new Date();
-  const currentYear = currentDate.getFullYear();
-  return (
-    <StyledFooter>
-      <p>© {currentYear} Flashcard! by Kaoru in Toronto. All rights reserved</p>
-    </StyledFooter>
-  )
-}
+import styled from 'styled-components';
 
 const StyledFooter = styled.footer`
   display: flex;
@@ -18,7 +7,6 @@ const StyledFooter = styled.footer`
   height: 9rem;
   border-top: var(--side-column-border) solid var(--black-primary);
 
-    
   p {
     font-size: 1.6rem;
     font-family: var(--tertiary-font);
@@ -31,7 +19,15 @@ const StyledFooter = styled.footer`
       font-size: 1rem; 
     }
   }
-  
 `
+const Footer = () => {
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+  return (
+    <StyledFooter>
+      <p>© {currentYear} DokodemoCard! by Kaoru. All rights reserved</p>
+    </StyledFooter>
+  )
+}
 
 export default Footer

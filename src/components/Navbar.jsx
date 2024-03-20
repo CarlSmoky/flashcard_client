@@ -11,7 +11,7 @@ const Nav = styled.nav`
   .logo {
     padding: 1.5rem;
     margin: auto 0;
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     font-weight: 600;
   }
 
@@ -19,7 +19,7 @@ const Nav = styled.nav`
     height: 6rem;
 
     .logo {
-    font-size: 2rem;
+    font-size: 1.4rem;
   }
   }
 `
@@ -28,7 +28,7 @@ const Navbar = () => {
   return (
     <Nav>
       <div className="logo">
-        FlashCard!
+        DokodemoCard!
       </div>
       <Burger />
     </Nav>
