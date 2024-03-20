@@ -46,7 +46,7 @@ const ButtonStyle = styled.button`
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-  color: "var(--grey-primary)";
+  color: var(--grey-primary);
 
   & {
     color: ${props => props.selected ? "var(--white-primary)" : ""};
