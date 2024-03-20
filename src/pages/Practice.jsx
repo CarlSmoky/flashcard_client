@@ -226,6 +226,7 @@ const ArrowButton = styled.button`
       padding: .2rem;
       border-radius: 50%;
       transition: all .3s;
+      filter: invert(10%) sepia(7%) saturate(7%) hue-rotate(349deg) brightness(93%) contrast(79%);
 
       ${({ disabled }) => {
       return disabled

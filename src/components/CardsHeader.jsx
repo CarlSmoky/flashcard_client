@@ -83,17 +83,19 @@ const CardCount = styled.span`
 `
 
 const Button = styled.button`
-  margin: auto;
+  display: flex;
+  justify-items: center;
   
     svg {
     font-size: 2.5rem;
     padding: .2rem;
     stroke-width: 1.2;
+    filter: invert(10%) sepia(7%) saturate(7%) hue-rotate(349deg) brightness(93%) contrast(79%);
     }
 
     @media (max-width: 768px) {
       svg {
-        font-size: 1.3rem;
+        font-size: 2rem;
         padding: .3rem;
       }
     }

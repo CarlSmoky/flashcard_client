@@ -64,6 +64,7 @@ const Wrapper = styled.div`
     button {
       transition: transform .1s ease-out;
       padding: .5rem;
+      color: #2E2E2E;
   
       &:hover {
       cursor: pointer;

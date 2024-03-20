@@ -86,7 +86,7 @@ const Wrapper = styled.div`
   background: var(--primary-color);
   border: var(--side-column-border) solid var(--black-primary);
   border-radius: 1rem;
-  z-index: 100;
+  z-index: 10;
 
   @media (max-width: 768px) {
     width: 50%;
@@ -113,6 +113,7 @@ const Header = styled.div`
   button {
     padding: 1rem;
     cursor: pointer;
+    color: #2E2E2E;
   }
 
   svg {

@@ -71,7 +71,8 @@ const CardForm = ({
       </div>
         <Binbutton
           onClick={deleteNewCard}
-          disabled={modalActivated}>
+          disabled={modalActivated}
+          className="bin">
           <RiDeleteBin5Line />
           <span className="visually-hidden">Add Card Button</span>
         </Binbutton>
@@ -127,23 +128,6 @@ const Wrapper = styled.div`
   textarea:focus {
     outline: none;
   }
-
-  .bin {
-    margin: auto 0;
-
-    button {
-      padding: .5rem;
-      font-size: 2.5rem;
-      cursor: pointer;
-      transition: transform 0.2s ease-out;
-  
-      &:hover {
-        cursor: pointer;
-        transform: scaleX(1.2) scaleY(1.2);
-      }
-    }
-  }
-
 `
 
 const Binbutton = styled.button`
@@ -152,6 +136,7 @@ const Binbutton = styled.button`
   svg {
       font-size: 3rem;
       transition: transform 0.2s ease-out;
+      filter: invert(11%) sepia(17%) saturate(15%) hue-rotate(356deg) brightness(99%) contrast(83%);
 
       ${({ disabled }) => {
       return disabled

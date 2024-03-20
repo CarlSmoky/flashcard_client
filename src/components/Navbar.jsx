@@ -11,6 +11,8 @@ const Nav = styled.nav`
   .logo {
     padding: 1.5rem;
     margin: auto 0;
+    font-size: 2.5rem;
+    font-weight: 600;
   }
 
   @media (max-width: 768px) {
@@ -22,7 +24,7 @@ const Navbar = () => {
   return (
     <Nav>
       <div className="logo">
-        FlashCard
+        FlashCard!
       </div>
       <Burger />
     </Nav>
