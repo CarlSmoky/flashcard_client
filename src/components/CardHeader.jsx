@@ -12,13 +12,11 @@ const CardHeader = ({
   return (
     <Wrapper>
       <CardSideTitle>{title}</CardSideTitle>
-      <div>
-        <Star
-          fillStar={fillStar}
-          setCardProperty={setCardProperty}
-          cardId={cardId}
-        />
-      </div>
+      <Star
+        fillStar={fillStar}
+        setCardProperty={setCardProperty}
+        cardId={cardId}
+      />
     </Wrapper>
   )
 }
@@ -28,10 +26,6 @@ const Wrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   margin-top: 1rem;
-
-  div {
-    margin-right: .4rem;
-  }
 `;
 
 const CardSideTitle = styled.h3`
@@ -44,7 +38,7 @@ const CardSideTitle = styled.h3`
   user-select: none;
 
   @media (max-width: 768px) {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     margin: auto 1rem;
   }
   

@@ -26,9 +26,9 @@ const Star = ({
 }
 
 const Wrapper = styled.div`
-  
+  display: flex;
+  justify-items: center;
   cursor: pointer;
-  text-align: right;
 
   svg {
     font-size: 2rem;

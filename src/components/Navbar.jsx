@@ -17,6 +17,10 @@ const Nav = styled.nav`
 
   @media (max-width: 768px) {
     height: 6rem;
+
+    .logo {
+    font-size: 2rem;
+  }
   }
 `
 

@@ -63,7 +63,7 @@ const Content = styled.p`
   }
 
   @media (max-width: 768px) {
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     margin: 1rem;
   }
 `;
