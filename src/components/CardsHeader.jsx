@@ -1,39 +1,6 @@
-import React from 'react'
-import styled, { css } from "styled-components"
-import { RxCross2 } from 'react-icons/rx'
-import { modes } from '../helpers/modes'
-
-const CardsHeader = ({
-  deck_name,
-  selectedCardIndices,
-  current,
-  isModalMode,
-  setMode
-}) => {
-
-  return (
-    <CardsHeaderStyle className={isModalMode() && 'blur'}>
-      <Left>
-      </Left>
-      <Center>
-        <Header>{deck_name}</Header>
-        {selectedCardIndices && selectedCardIndices.length > 0 ? (
-          <CardCount>
-            {current + 1} / {selectedCardIndices.length}
-          </CardCount>
-        ) : (
-          ""
-        )}
-      </Center>
-      <Right>
-        <Button disabled={isModalMode()}>
-          <RxCross2 onClick={() => setMode(modes.finishConfirmation)} />
-          <span className="visually-hidden">Cancel Button</span>
-        </Button>
-      </Right>
-    </CardsHeaderStyle>
-  )
-}
+import styled, { css } from "styled-components";
+import { RxCross2 } from "react-icons/rx";
+import { modes } from "../helpers/modes";
 
 const CardsHeaderStyle = styled.div`
   display: flex;
@@ -69,6 +36,7 @@ const Header = styled.h2`
 
   @media (max-width: 768px) {
     font-size: 1.5rem;
+    text-align: center;
   }
 `
 
@@ -121,5 +89,36 @@ const Button = styled.button`
     }}
 `
 
+const CardsHeader = ({
+  deck_name,
+  selectedCardIndices,
+  current,
+  isModalMode,
+  setMode
+}) => {
+
+  return (
+    <CardsHeaderStyle className={isModalMode() && 'blur'}>
+      <Left>
+      </Left>
+      <Center>
+        <Header>{deck_name}</Header>
+        {selectedCardIndices && selectedCardIndices.length > 0 ? (
+          <CardCount>
+            {current + 1} / {selectedCardIndices.length}
+          </CardCount>
+        ) : (
+          ""
+        )}
+      </Center>
+      <Right>
+        <Button disabled={isModalMode()}>
+          <RxCross2 onClick={() => setMode(modes.finishConfirmation)} />
+          <span className="visually-hidden">Cancel Button</span>
+        </Button>
+      </Right>
+    </CardsHeaderStyle>
+  )
+}
 
 export default CardsHeader

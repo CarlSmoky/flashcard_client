@@ -1,6 +1,21 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react";
 import styled from 'styled-components';
-import { AiTwotoneStar, AiOutlineStar } from 'react-icons/ai'
+import { AiTwotoneStar, AiOutlineStar } from 'react-icons/ai';
+
+const Wrapper = styled.div`
+  display: flex;
+  justify-items: center;
+  cursor: pointer;
+
+  svg {
+    font-size: 2rem;
+    padding: .5rem;
+
+    &.filledStar {
+    color: gold;
+    }
+  }
+`
 
 const Star = ({
   fillStar,
@@ -24,20 +39,5 @@ const Star = ({
     </Wrapper>
   )
 }
-
-const Wrapper = styled.div`
-  
-  cursor: pointer;
-  text-align: right;
-
-  svg {
-    font-size: 2rem;
-    padding: .5rem;
-
-    &.filledStar {
-    color: gold;
-    }
-  }
-`;
 
 export default Star

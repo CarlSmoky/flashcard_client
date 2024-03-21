@@ -1,37 +1,11 @@
-import React from 'react'
-import styled from 'styled-components'
-import Star from './Star'
-
-const CardHeader = ({
-  title,
-  fillStar,
-  setCardProperty,
-  cardId,
-}) => {
-
-  return (
-    <Wrapper>
-      <CardSideTitle>{title}</CardSideTitle>
-      <div>
-        <Star
-          fillStar={fillStar}
-          setCardProperty={setCardProperty}
-          cardId={cardId}
-        />
-      </div>
-    </Wrapper>
-  )
-}
+import styled from "styled-components";
+import Star from "./Star";
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin-top: 1rem;
-
-  div {
-    margin-right: .4rem;
-  }
 `;
 
 const CardSideTitle = styled.h3`
@@ -44,11 +18,28 @@ const CardSideTitle = styled.h3`
   user-select: none;
 
   @media (max-width: 768px) {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     margin: auto 1rem;
   }
-  
-`;
+`
 
+const CardHeader = ({
+  title,
+  fillStar,
+  setCardProperty,
+  cardId,
+}) => {
+
+  return (
+    <Wrapper>
+      <CardSideTitle>{title}</CardSideTitle>
+      <Star
+        fillStar={fillStar}
+        setCardProperty={setCardProperty}
+        cardId={cardId}
+      />
+    </Wrapper>
+  )
+}
 
 export default CardHeader

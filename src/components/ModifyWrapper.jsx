@@ -1,70 +1,11 @@
-import React from 'react'
-import styled, { css } from 'styled-components'
-import { useModal } from '../providers/ModalProvider'
-import { GrAddCircle } from 'react-icons/gr'
-import { defaultEditableDeck } from '../helpers/defaultEditableData'
-import UpdateConfirmation from './UpdateConfirmation'
-import DeckDetailsForm from './DeckDetailsForm'
-import CardFormHeader from './CardFormHeader'
-import Button from './Button'
-
-
-const ModifyWrapper = (
-  {
-    error,
-    deckContents,
-    setDeckContents,
-    cardFormItems,
-    updateResult,
-    handleSaveClick,
-    disableButton,
-    handleOk,
-    createNewCard,
-    headerText
-  }
-) => {
-
-  const { modalActivated } = useModal();
-  
-  return (
-    <>
-      {modalActivated &&
-        <UpdateConfirmation
-          updateResult={updateResult}
-          handleOk={handleOk}
-        />}
-      <Wrapper className={modalActivated ? 'blur' : null}>
-        <Title>{headerText}</Title>
-        <div className='error'>
-          <p>{error}</p>
-        </div>
-        <form>
-          <DeckDetailsForm
-            deckContents={deckContents || defaultEditableDeck}
-            setDeckContents={setDeckContents}
-          />
-          <CardFormHeader />
-          {cardFormItems}
-          <div className="addBtnContainer">
-            <AddButton
-              onClick={createNewCard}
-              type='button'
-              disabled={modalActivated}>
-              <GrAddCircle />
-              <span className="visually-hidden">Add Card Button</span>
-            </AddButton>
-          </div>
-          <Button
-            text='Save'
-            buttonType='submit'
-            onButtonClick={handleSaveClick}
-            disabled={disableButton() || modalActivated}
-          />
-        </form>
-      </Wrapper>
-    </>
-  )
-}
+import styled, { css } from "styled-components";
+import { useModal } from "../providers/ModalProvider"
+import { GrAddCircle } from "react-icons/gr"
+import { defaultEditableDeck } from "../helpers/defaultEditableData"
+import UpdateConfirmation from "./UpdateConfirmation"
+import DeckDetailsForm from "./DeckDetailsForm"
+import CardFormHeader from "./CardFormHeader"
+import Button from "./Button";
 
 const Title = styled.h1`
   font-size: 2rem;
@@ -76,6 +17,12 @@ const Title = styled.h1`
 
   &.blur {
     filter: blur(.6rem);
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1.4rem;
+    margin: 1rem;
+    padding: .8rem;
   }
 `
 
@@ -139,8 +86,65 @@ const AddButton = styled.button`
           color: var(--black-primary);
         }
       `
-  }}
-    }
+    }}
+  }
 `
+
+const ModifyWrapper = (
+  {
+    error,
+    deckContents,
+    setDeckContents,
+    cardFormItems,
+    updateResult,
+    handleSaveClick,
+    disableButton,
+    handleOk,
+    createNewCard,
+    headerText
+  }
+) => {
+
+  const { modalActivated } = useModal();
+
+  return (
+    <>
+      {modalActivated &&
+        <UpdateConfirmation
+          updateResult={updateResult}
+          handleOk={handleOk}
+        />}
+      <Wrapper className={modalActivated ? 'blur' : null}>
+        <Title>{headerText}</Title>
+        <div className='error'>
+          <p>{error}</p>
+        </div>
+        <form>
+          <DeckDetailsForm
+            deckContents={deckContents || defaultEditableDeck}
+            setDeckContents={setDeckContents}
+          />
+          <CardFormHeader />
+          {cardFormItems}
+          <div className="addBtnContainer">
+            <AddButton
+              onClick={createNewCard}
+              type='button'
+              disabled={modalActivated}>
+              <GrAddCircle />
+              <span className="visually-hidden">Add Card Button</span>
+            </AddButton>
+          </div>
+          <Button
+            text='Save'
+            buttonType='submit'
+            onButtonClick={handleSaveClick}
+            disabled={disableButton() || modalActivated}
+          />
+        </form>
+      </Wrapper>
+    </>
+  )
+}
 
 export default ModifyWrapper
