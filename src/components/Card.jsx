@@ -91,7 +91,7 @@ const absoluteStyle = css`
   border-radius: .8rem;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  color: var(--black-secondary);
+  color: var(--black-primary);
 `
 
 const CardFront = styled.div`

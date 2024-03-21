@@ -36,7 +36,7 @@ const Wrapper = styled.div`
   transition: all 0.3s ease-in-out;
   
   &:hover {
-    box-shadow: 0 3px 3px var(--black-secondary);
+    box-shadow: 0 3px 3px var(--black-primary);
   }
   
   &:active {
