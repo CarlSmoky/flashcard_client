@@ -60,11 +60,12 @@ const ButtonStyle = styled.button`
       }
 
       @media (max-width: 768px) {
-        font-size: 1.3rem;
         width: 70%;
+        padding: .5rem;
+        margin: .5rem 0 1rem;
 
-        &:hover {
-        font-size: 1.4rem;
+        span {
+          font-size: 1.3rem;
         }
       }
 

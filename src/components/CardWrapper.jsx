@@ -13,6 +13,7 @@ const Content = styled.p`
   margin: 2rem;
   height: 60%;
   font-family: var(--tertiary-font);
+  overflow-y: scroll;
 
   &.textSelectEnable {
   user-select: text;
