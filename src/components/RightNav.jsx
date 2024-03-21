@@ -25,7 +25,7 @@ const Ul = styled.ul`
   @media (max-width: 768px) {
     flex-flow: column nowrap;
     justify-content: flex-start;
-    background-color: var(--white-primary);
+    background-color: var(--secondary-color);
     position: fixed;
     transform: ${({ open }) => open ? 'translateX(0)' : 'translateX(100%)'};
     top: 0;
