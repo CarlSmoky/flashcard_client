@@ -1,45 +1,10 @@
-import React from 'react'
-import styled, { css } from 'styled-components'
-
-const Button = ({
-  text,
-  buttonType,
-  onButtonClick, 
-  disabled,
-  isSelected
-}) => {
-  
-  const handleButtonClick = e => {
-    buttonType === 'submit'? e.preventDefault() : e.stopPropagation();
-
-    if (onButtonClick) {
-      onButtonClick();
-      return;
-    }
-  }
-
-  return (
-    <ButtonStyle
-      selected={isSelected}
-      onClick={handleButtonClick}
-      disabled={disabled}
-      type={buttonType}
-    >
-      {text}
-    </ButtonStyle>
-  )
-}
+import styled, { css } from "styled-components";
 
 const ButtonStyle = styled.button`
-  border-radius: .4rem;
   width: 45%;
   height: 2rem;
   padding: 1rem;
   margin: 1rem 2rem;
-  font-family: var(--primary-font);
-  font-weight: 600;
-  font-size: 1.6rem;
-  text-transform: uppercase;
   border: 2px solid var(--black-primary); 
   box-shadow: 1px 1px 0px 0px  black, 2px 2px 0px 0px black, 3px 3px 0px 0px black, 4px 4px 0px 0px black, 5px 5px 0px 0px black;
   position: relative;
@@ -47,10 +12,18 @@ const ButtonStyle = styled.button`
   -webkit-user-select: none;
   touch-action: manipulation;
   color: var(--grey-primary);
+  
+
+  span {
+    font-family: var(--primary-font);
+    font-weight: 600;
+    font-size: 1.6rem;
+    text-transform: uppercase;
+  }
 
   & {
     color: ${props => props.selected ? "var(--white-primary)" : ""};
-    background: ${props => props.selected ? "var(--grey-primary)" : ""};
+    background: ${props => props.selected ? "var(--black-primary)" : ""};
     }
 
   ${({ disabled }) => {
@@ -68,15 +41,12 @@ const ButtonStyle = styled.button`
         transform: scaleX(0);
         bottom: 0;
         left: 0;
-        background-color: var(--primary-color);
+        background-color: var(--white-primary);
         transform-origin: bottom right;
         color: var(--black-primary);
-        transition: transform .3s ease-out;
+        transition: transform .1s ease-out;
       }
 
-      &:hover {
-        font-size: 1.8rem;
-      }
       
       &:hover::after {
         transform: scaleX(1.0);
@@ -90,16 +60,46 @@ const ButtonStyle = styled.button`
       }
 
       @media (max-width: 768px) {
-        font-size: 1.3rem;
         width: 70%;
+        padding: .5rem;
+        margin: .5rem 0 1rem;
 
-        &:hover {
-        font-size: 1.4rem;
+        span {
+          font-size: 1.3rem;
         }
       }
 
     `
   }}
 `
+
+const Button = ({
+  text,
+  buttonType,
+  onButtonClick,
+  disabled,
+  isSelected
+}) => {
+
+  const handleButtonClick = e => {
+    buttonType === 'submit' ? e.preventDefault() : e.stopPropagation();
+
+    if (onButtonClick) {
+      onButtonClick();
+      return;
+    }
+  }
+
+  return (
+    <ButtonStyle
+      selected={isSelected}
+      onClick={handleButtonClick}
+      disabled={disabled}
+      type={buttonType}
+    >
+      <span>{text}</span>
+    </ButtonStyle>
+  )
+}
 
 export default Button

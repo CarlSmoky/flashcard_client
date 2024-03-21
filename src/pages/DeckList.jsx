@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import DeckItem from "../components/DeckItem";
@@ -16,7 +16,6 @@ const Title = styled.h1`
   font-size: 2rem;
   text-align: left;
   margin: 2rem;
-  padding: 1.3rem;
   font-weight: 600;
   text-transform: uppercase;
 
