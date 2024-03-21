@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const StyledFooter = styled.footer`
   display: flex;
@@ -16,7 +16,7 @@ const StyledFooter = styled.footer`
     height: 5.2rem;
 
     p {
-      font-size: 1rem; 
+      font-size: 1.2rem; 
     }
   }
 `
