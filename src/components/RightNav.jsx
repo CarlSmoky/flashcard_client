@@ -1,7 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import { links } from '../helpers/links';
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import { links } from "../helpers/links";
 
 const Ul = styled.ul`
   list-style: none;
@@ -15,6 +14,12 @@ const Ul = styled.ul`
     margin: auto;
     padding: 2rem 4rem;
     font-size: 1.3rem;
+    transition: transform 0.2s ease-in-out;
+
+    &:hover {
+      cursor: pointer;
+      transform: scaleX(1.1) scaleY(1.1);
+    }
   }
 
   @media (max-width: 768px) {

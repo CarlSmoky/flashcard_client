@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const Wrapper = styled.div`
   display: flex;
@@ -41,6 +41,12 @@ const Wrapper = styled.div`
 
       h2 {
         font-size: 1.6rem;
+        transition: transform 0.2s ease-in-out;
+
+        &:hover {
+          cursor: pointer;
+          transform: scaleX(1.1) scaleY(1.1);
+        }
       }
     }
     .card-middle {
@@ -56,6 +62,12 @@ const Wrapper = styled.div`
 
       h2 {
         font-size: 1.6rem;
+        transition: transform 0.2s ease-in-out;
+
+        &:hover {
+          cursor: pointer;
+          transform: scaleX(1.1) scaleY(1.1);
+        }
       }
     }
   }
