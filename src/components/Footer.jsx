@@ -25,7 +25,7 @@ const Footer = () => {
   const currentYear = currentDate.getFullYear();
   return (
     <StyledFooter>
-      <p>© {currentYear} DokodemoCard! by Kaoru. All rights reserved</p>
+      <p>© {currentYear} Dokodemo Card. All rights reserved</p>
     </StyledFooter>
   )
 }

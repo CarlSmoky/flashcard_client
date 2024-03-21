@@ -1,6 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
-import Burger from './Burger';
+import styled from "styled-components";
+import Burger from "./Burger";
 
 const Nav = styled.nav`
   display: flex;
@@ -28,7 +27,7 @@ const Navbar = () => {
   return (
     <Nav>
       <div className="logo">
-        DokodemoCard!
+        Dokodemo Card
       </div>
       <Burger />
     </Nav>
