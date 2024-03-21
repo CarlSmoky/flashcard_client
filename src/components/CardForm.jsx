@@ -52,7 +52,7 @@ const Binbutton = styled.button`
   margin: auto 1rem;
 
   svg {
-    font-size: 3rem;
+    font-size: 2.5rem;
     transition: transform 0.2s ease-out;
     filter: invert(11%) sepia(17%) saturate(15%) hue-rotate(356deg) brightness(99%) contrast(83%);
 

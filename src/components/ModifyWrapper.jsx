@@ -69,24 +69,31 @@ const AddButton = styled.button`
       transition: transform 0.2s ease-out;
 
       ${({ disabled }) => {
-    return disabled
-      ? css`
-        
+        return disabled
+        ? css`
+          
+          `
+        : css`
+          cursor: pointer;
+
+          &:hover {
+          cursor: pointer;
+          transform: scaleX(1.2) scaleY(1.2);
+          }
+
+          &:active {
+            background: var(--white-primary);
+            color: var(--black-primary);
+          }
         `
-      : css`
-        cursor: pointer;
+      }}
+  }
 
-        &:hover {
-        cursor: pointer;
-        transform: scaleX(1.2) scaleY(1.2);
-        }
-
-        &:active {
-          background: var(--white-primary);
-          color: var(--black-primary);
-        }
-      `
-    }}
+  @media (max-width: 768px) {
+    margin-right: .8rem;
+    svg {
+      font-size: 2.2rem;
+    }
   }
 `
 

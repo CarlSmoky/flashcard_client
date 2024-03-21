@@ -1,21 +1,4 @@
-import React from 'react'
-import styled from 'styled-components'
-
-const CardFormHeader = () => {
-
-  return (
-    <Wrapper>
-      <div className='term'>
-        <p>Term <span>*</span></p>
-      </div>
-      <div className='verticalLine'></div>
-      <div className='definition'>
-        <p>Definition <span>*</span></p>
-      </div>
-      <div className='bin'></div>
-    </Wrapper>
-  )
-}
+import styled from "styled-components";
 
 const Wrapper = styled.div`
   display: flex;
@@ -49,5 +32,21 @@ const Wrapper = styled.div`
     width: 5.5rem;
   }
 `
+
+const CardFormHeader = () => {
+
+  return (
+    <Wrapper>
+      <div className='term'>
+        <p>Term <span>*</span></p>
+      </div>
+      <div className='verticalLine'></div>
+      <div className='definition'>
+        <p>Definition <span>*</span></p>
+      </div>
+      <div className='bin'></div>
+    </Wrapper>
+  )
+}
 
 export default CardFormHeader
