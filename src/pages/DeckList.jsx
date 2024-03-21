@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import DeckItem from "../components/DeckItem";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const Wrapper = styled.div`
   display: flex;
@@ -37,12 +38,15 @@ const Content = styled.div`
 
 const DeckList = () => {
   const [decks, setDecks] = useState([]);
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
+    setLoading(true);
     axios.get(`api/deck/`)
     .then(res => {
       const allDecks = res.data;
       setDecks(allDecks);
+      setLoading(false)
     })
     .catch (err => {
       console.log(err)
@@ -64,9 +68,9 @@ const DeckList = () => {
   return (
     <Wrapper>
       <Title>Deck List</Title>
-      <Content>
-      {allDecks}
-      </Content>
+      
+      {loading ? <LoadingSpinner/> : <Content>{allDecks}</Content>}
+      
     </Wrapper>
   )
 }
