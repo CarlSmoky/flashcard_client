@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { RxCross2 } from 'react-icons/rx'
-import Button from './Button'
-import { modes } from '../helpers/modes'
-import { truncate } from '../helpers/utilities';
+import { RxCross2 } from "react-icons/rx";
+import Button from "./Button";
+import LoadingSpinner from "../components/LoadingSpinner";
+import { modes } from "../helpers/modes";
+import { truncate } from "../helpers/utilities";
 
 // Mixin
 const holizontal = () => {
@@ -124,32 +125,34 @@ const DeckSettings = ({
 
   return (
     <Wrapper>
-      <Form>
-        <Header>
-          <button onClick={() => navigate('/decklist')}>
-            <RxCross2 />
-            <span className="visually-hidden">Cancel Button</span>
-          </button>
-        </Header>
-        {deckName && <Title>{truncate(deckName, 18)}</Title>}
-        <Label htmlFor="numCards">Cards: </Label>
-        <input
-          onChange={onChange}
-          id="numCards"
-          type="number"
-          name="numCards"
-          min="1"
-          max={totalCards}
-          value={settingNumCards}
-        />
-        <ButtonWrapper>
-          <Button
-            text="Start"
-            buttonType='button'
-            onButtonClick={handleStart}
+      {!deckName ? 
+        <LoadingSpinner/> : 
+        <Form>
+          <Header>
+            <button onClick={() => navigate('/decklist')}>
+              <RxCross2 />
+              <span className="visually-hidden">Cancel Button</span>
+            </button>
+          </Header>
+          <Title>{truncate(deckName, 18)}</Title>
+          <Label htmlFor="numCards">Cards: </Label>
+          <input
+            onChange={onChange}
+            id="numCards"
+            type="number"
+            name="numCards"
+            min="1"
+            max={totalCards}
+            value={settingNumCards}
           />
-        </ButtonWrapper>
-      </Form>
+          <ButtonWrapper>
+            <Button
+              text="Start"
+              buttonType='button'
+              onButtonClick={handleStart}
+            />
+          </ButtonWrapper>
+        </Form>}
     </Wrapper>
   )
 }
