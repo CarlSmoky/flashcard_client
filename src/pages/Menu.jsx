@@ -15,12 +15,13 @@ const Wrapper = styled.div`
 
     h1 {
       font-size: 2rem;
-      text-align: center;
+      font-family: var(--tertiary-font);
     }
 
     p {
       font-size: 1.5rem;
-      text-align: center;
+      margin: 2rem;
+      font-family: var(--tertiary-font);
     }
   }
 
