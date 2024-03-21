@@ -70,6 +70,8 @@ const Wrapper = styled.div`
   `
 
 const ClickArea = styled.div`
+  height: 80%;
+  
   h1 {
     margin: 0 1rem 1rem 1rem;
     font-family: var(--secondary-font);
