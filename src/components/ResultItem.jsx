@@ -1,51 +1,5 @@
-import React from 'react'
-import styled from 'styled-components'
-import Star from './Star'
-
-
-const Result = ({
-  term,
-  definition,
-  isLearning,
-  fillStar,
-  setCardProperty,
-  cardId
-}) => {
-
-  const clickLearning = e => {
-    e.stopPropagation();
-    setCardProperty(cardId, 'isLearning',
-      !isLearning);
-  }
-
-  return (
-    <Wrapper>
-      <div className="termDeifinitionWrapper">
-        <div className='term'>
-          <p>{term}</p>
-        </div>
-        <div className='verticalLine'></div>
-        <div className='definition'>
-          <p>{definition}</p>
-        </div>
-      </div>
-      <div className="statusWrapper">
-        <div className="star">
-          <Star
-            fillStar={fillStar}
-            setCardProperty={setCardProperty}
-            cardId={cardId}
-          />
-        </div>
-        <div className='isLearning'>
-          <p onClick={clickLearning}>
-            {`${isLearning ? "L" : "K"}`}
-          </p>
-        </div>
-      </div>
-    </Wrapper>
-  )
-}
+import styled from "styled-components";
+import Star from "./Star";
 
 const Wrapper = styled.div`
   display: flex;
@@ -53,7 +7,6 @@ const Wrapper = styled.div`
   width: 98%;
   min-height: 5rem;
   margin: 1rem auto 1rem;
-  border-radius: .5rem;
   border: 2px solid var(--black-primary);
   background: var(--quaternary-color);
 
@@ -163,5 +116,50 @@ const Wrapper = styled.div`
   }
 }
 `
+
+
+const Result = ({
+  term,
+  definition,
+  isLearning,
+  fillStar,
+  setCardProperty,
+  cardId
+}) => {
+
+  const clickLearning = e => {
+    e.stopPropagation();
+    setCardProperty(cardId, 'isLearning',
+      !isLearning);
+  }
+
+  return (
+    <Wrapper>
+      <div className="termDeifinitionWrapper">
+        <div className='term'>
+          <p>{term}</p>
+        </div>
+        <div className='verticalLine'></div>
+        <div className='definition'>
+          <p>{definition}</p>
+        </div>
+      </div>
+      <div className="statusWrapper">
+        <div className="star">
+          <Star
+            fillStar={fillStar}
+            setCardProperty={setCardProperty}
+            cardId={cardId}
+          />
+        </div>
+        <div className='isLearning'>
+          <p onClick={clickLearning}>
+            {`${isLearning ? "L" : "K"}`}
+          </p>
+        </div>
+      </div>
+    </Wrapper>
+  )
+}
 
 export default Result
