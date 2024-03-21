@@ -1,10 +1,10 @@
 import styled, { css } from "styled-components";
-import { useModal } from "../providers/ModalProvider"
-import { GrAddCircle } from "react-icons/gr"
-import { defaultEditableDeck } from "../helpers/defaultEditableData"
-import UpdateConfirmation from "./UpdateConfirmation"
-import DeckDetailsForm from "./DeckDetailsForm"
-import CardFormHeader from "./CardFormHeader"
+import { useModal } from "../providers/ModalProvider";
+import { GrAddCircle } from "react-icons/gr";
+import { defaultEditableDeck } from "../helpers/defaultEditableData";
+import UpdateConfirmation from "./UpdateConfirmation";
+import DeckDetailsForm from "./DeckDetailsForm";
+import CardFormHeader from "./CardFormHeader";
 import Button from "./Button";
 
 const Title = styled.h1`

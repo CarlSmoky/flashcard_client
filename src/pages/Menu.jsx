@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const Wrapper = styled.div`
   display: flex;
@@ -41,6 +41,12 @@ const Wrapper = styled.div`
 
       h2 {
         font-size: 1.6rem;
+        transition: transform 0.2s ease-in-out;
+
+        &:hover {
+          cursor: pointer;
+          transform: scaleX(1.1) scaleY(1.1);
+        }
       }
     }
     .card-middle {
@@ -56,6 +62,12 @@ const Wrapper = styled.div`
 
       h2 {
         font-size: 1.6rem;
+        transition: transform 0.2s ease-in-out;
+
+        &:hover {
+          cursor: pointer;
+          transform: scaleX(1.1) scaleY(1.1);
+        }
       }
     }
   }
@@ -106,18 +118,18 @@ const Menu = () => {
         <div className="header">
           <div>
             <h1>The Lifelong Learning App anytime, anywhere.</h1>
-            <p>DokodemoCard! is an innovative learning app designed to make memorization not just effective but also engaging. With FlashMaster, the power to learn is always at your fingertips, transforming downtime into productive study sessions.</p>
+            <p>Dokodemo Card is an innovative learning app designed to make memorization not just effective but also engaging. With Dokodemo Card, the power to learn is always at your fingertips, transforming downtime into productive study sessions.</p>
           </div>
         </div>
         <div className="cards">
           <Link className="card-side" to={`/decklist`}>
-            <h2>Search Deck</h2>
+            <h2>Search</h2>
           </Link>
           <Link className="card-middle" to={`/decklist`}>
             <h2>Practice</h2>
           </Link>
           <Link className="card-side" to={`/create`}>
-            <h2>Create Deck</h2>
+            <h2>Create</h2>
           </Link>
         </div>
       </ Wrapper>
