@@ -1,9 +1,88 @@
-import React from 'react'
-import styled, { css } from 'styled-components'
-import { errorMessage } from '../helpers/utilities'
-import { RiDeleteBin5Line } from 'react-icons/ri'
-import { updateStatus } from '../helpers/defaultEditableData'
-import { useModal } from '../providers/ModalProvider'
+import styled, { css } from "styled-components";
+import { errorMessage } from "../helpers/utilities";
+import { RiDeleteBin5Line } from "react-icons/ri";
+import { updateStatus } from "../helpers/defaultEditableData";
+import { useModal } from "../providers/ModalProvider";
+
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 98%;
+  margin: 1rem auto 1rem;
+  border: 2px solid var(--black-primary);
+  background: var(--tertiary-color);
+
+  .term, .definition {
+    width: 50%;
+    margin: 1rem;
+
+    p {
+      height: 2rem;
+      font-family: var(--tertiary-font);
+      font-size: 1.4rem;
+      color: red;
+      text-align: left;
+    }
+  }
+
+  .verticalLine {
+    border-right: 2px solid var(--black-primary);
+    margin: 1rem 0;
+  }
+
+  textarea {
+    width: 100%;
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
+    border-bottom-style: hidden;
+    background-color: var(--tertiary-color);
+    resize: none;
+    font-size: 1.7rem;
+    font-weight: 100;
+    font-family: var(--tertiary-font);
+  }
+
+  textarea:focus {
+    outline: none;
+  }
+`
+
+const Binbutton = styled.button`
+  margin: auto 1rem;
+
+  svg {
+    font-size: 3rem;
+    transition: transform 0.2s ease-out;
+    filter: invert(11%) sepia(17%) saturate(15%) hue-rotate(356deg) brightness(99%) contrast(83%);
+
+    ${({ disabled }) => {
+    return disabled
+      ? css`
+      
+      `
+      : css`
+        cursor: pointer;
+
+        &:hover {
+        cursor: pointer;
+        transform: scaleX(1.2) scaleY(1.2);
+        }
+
+        &:active {
+          background: var(--white-primary);
+          color: var(--black-primary);
+        }
+      `
+    }}
+  }
+
+  @media (max-width: 768px) {
+    svg {
+    font-size: 2rem;
+    }
+  }
+`
 
 const CardForm = ({
   editCardContents,
@@ -83,87 +162,5 @@ const CardForm = ({
    card.updateStatus === updateStatus.deleted ? <></> : renderedCard 
   )
 }
-
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 98%;
-  /* height: 11rem; */
-  margin: 1rem auto 1rem;
-  border-radius: .3rem;
-  border: 2px solid var(--black-primary);
-  background: var(--tertiary-color);
-
-  .term, .definition {
-    width: 50%;
-    margin: 1rem;
-
-    p {
-      height: 2rem;
-      font-family: var(--tertiary-font);
-      font-size: 1.4rem;
-      color: red;
-      text-align: left;
-    }
-  }
-
-  .verticalLine {
-    border-right: 2px solid var(--black-primary);
-    margin: 1rem 0;
-  }
-
-  textarea {
-    width: 100%;
-    border-top-style: hidden;
-    border-right-style: hidden;
-    border-left-style: hidden;
-    border-bottom-style: hidden;
-    background-color: var(--tertiary-color);
-    resize: none;
-    font-size: 1.7rem;
-    font-weight: 100;
-    font-family: var(--tertiary-font);
-  }
-
-  textarea:focus {
-    outline: none;
-  }
-`
-
-const Binbutton = styled.button`
-  margin: auto 1rem;
-
-  svg {
-      font-size: 3rem;
-      transition: transform 0.2s ease-out;
-      filter: invert(11%) sepia(17%) saturate(15%) hue-rotate(356deg) brightness(99%) contrast(83%);
-
-      ${({ disabled }) => {
-      return disabled
-        ? css`
-        
-        `
-        : css`
-        cursor: pointer;
-
-        &:hover {
-        cursor: pointer;
-        transform: scaleX(1.2) scaleY(1.2);
-        }
-
-        &:active {
-          background: var(--white-primary);
-          color: var(--black-primary);
-        }
-      `
-      }}
-    }
-
-    @media (max-width: 768px) {
-      svg {
-      font-size: 2rem;
-      }
-    }
-`
 
 export default CardForm
