@@ -2,9 +2,10 @@ import styled, { css } from "styled-components";
 import { useModal } from "../providers/ModalProvider";
 import { GrAddCircle } from "react-icons/gr";
 import { defaultEditableDeck } from "../helpers/defaultEditableData";
-import UpdateConfirmation from "./UpdateConfirmation";
+import { generateUpdateMsg } from "../helpers/utilities";
 import DeckDetailsForm from "./DeckDetailsForm";
 import CardFormHeader from "./CardFormHeader";
+import GenericConfirmation from "./GenericConfirmation";
 import Button from "./Button";
 
 const Title = styled.h1`
@@ -69,11 +70,11 @@ const AddButton = styled.button`
       transition: transform 0.2s ease-out;
 
       ${({ disabled }) => {
-        return disabled
-        ? css`
+    return disabled
+      ? css`
           
           `
-        : css`
+      : css`
           cursor: pointer;
 
           &:hover {
@@ -86,7 +87,7 @@ const AddButton = styled.button`
             color: var(--black-primary);
           }
         `
-      }}
+  }}
   }
 
   @media (max-width: 768px) {
@@ -113,14 +114,19 @@ const ModifyWrapper = (
 ) => {
 
   const { modalActivated } = useModal();
+  const displayMsg = generateUpdateMsg((updateResult)).map(msg => <p>{msg}</p>);
 
   return (
     <>
       {modalActivated &&
-        <UpdateConfirmation
-          updateResult={updateResult}
-          handleOk={handleOk}
-        />}
+        <GenericConfirmation text="Updated" info={displayMsg}>
+          <Button
+            text='Ok'
+            buttonType="button"
+            onButtonClick={handleOk}
+          />
+        </GenericConfirmation>
+      }
       <Wrapper className={modalActivated ? 'blur' : null}>
         <Title>{headerText}</Title>
         <div className='error'>

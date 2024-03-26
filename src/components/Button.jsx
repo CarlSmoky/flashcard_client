@@ -4,7 +4,7 @@ const ButtonStyle = styled.button`
   width: 45%;
   height: 2rem;
   padding: 1rem;
-  margin: 1rem 2rem;
+  margin: 1.5rem;
   border: 2px solid var(--black-primary); 
   box-shadow: 1px 1px 0px 0px  black, 2px 2px 0px 0px black, 3px 3px 0px 0px black, 4px 4px 0px 0px black, 5px 5px 0px 0px black;
   position: relative;
@@ -61,8 +61,8 @@ const ButtonStyle = styled.button`
 
       @media (max-width: 768px) {
         width: 70%;
+        margin: 1rem;
         padding: .5rem;
-        margin: .5rem 0 1rem;
 
         span {
           font-size: 1.3rem;
