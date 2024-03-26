@@ -6,10 +6,6 @@ const CardsHeaderStyle = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  
-  &.blur {
-    filter: blur(2rem);
-  }
 `
 
 const Left = styled.div`
@@ -90,7 +86,7 @@ const Button = styled.button`
 `
 
 const CardsHeader = ({
-  deck_name,
+  deckName,
   selectedCardIndices,
   current,
   isModalMode,
@@ -98,11 +94,11 @@ const CardsHeader = ({
 }) => {
 
   return (
-    <CardsHeaderStyle className={isModalMode() && 'blur'}>
+    <CardsHeaderStyle>
       <Left>
       </Left>
       <Center>
-        <Header>{deck_name}</Header>
+        <Header>{deckName}</Header>
         {selectedCardIndices && selectedCardIndices.length > 0 ? (
           <CardCount>
             {current + 1} / {selectedCardIndices.length}

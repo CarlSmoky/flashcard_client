@@ -1,8 +1,5 @@
 import styled from "styled-components";
-import Button from "./Button";
-import { generateUpdateMsg } from "../helpers/utilities";
 
-// Mixin
 const holizontal = () => {
   return `
   position: absolute;
@@ -16,6 +13,9 @@ const holizontal = () => {
 
 const Wrapper = styled.div`
   ${holizontal};
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
   width: 35%;
   min-width: 40rem;
   height: 35%;
@@ -26,12 +26,14 @@ const Wrapper = styled.div`
 
   h2 {
     font-size: 2rem;
-    margin: 3.5rem 0 3rem;
+    margin: 4rem;
+    text-transform: uppercase;
   }
 
   div {
-    height: 11rem;
+    margin: 1rem;
   }
+
   p {
     font-size: 1.5rem;
   }
@@ -39,37 +41,44 @@ const Wrapper = styled.div`
   @media (max-width: 768px) {
     width: 50%;
     min-width: 30rem;
+
+    h2 {
+      font-size: 1.6rem;
+    }
+
+    p {
+      font-size: 1.3rem;
+    }
   }
 
   @media (max-width: 488px) {
     width: 75%;
     min-width: 20rem;
+
+    h2 {
+      font-size: 1.3rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
   }
 `
 
-const UpdateConfirmation = (
-  {
-    handleOk,
-    updateResult
-  }
-) => {
-  const displayMsg = generateUpdateMsg((updateResult)).map(msg => <p>{msg}</p>);
-
+const GenericConfirmation = ({ text, info, children }) => {
   return (
     <Wrapper>
       <form>
-        <h2>Updated</h2>
-        <div>
-          <p>{displayMsg}</p>
-        </div>
-        <Button
-          text='Ok'
-          buttonType="button"
-          onButtonClick={handleOk}
-        />
+        <h2>{text}</h2>
+        {info &&
+          <div>
+            {info}
+          </div>
+        }
+        {children}
       </form>
     </Wrapper>
   )
 }
 
-export default UpdateConfirmation
+export default GenericConfirmation

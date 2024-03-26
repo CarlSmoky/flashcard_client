@@ -44,7 +44,7 @@ const Frame = ({ content }) => {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-evenly;
   width: 100vw;
   min-height: 100vh;
   border-top: var(--side-column-border) solid var(--black-primary);
