@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import LoadingSpinner from "./LoadingSpinner";
 
 const holizontal = () => {
   return `
@@ -68,6 +69,7 @@ const Wrapper = styled.div`
 const GenericConfirmation = ({ text, info, children }) => {
   return (
     <Wrapper>
+      {!text ? <LoadingSpinner/> : 
       <form>
         <h2>{text}</h2>
         {info &&
@@ -76,7 +78,7 @@ const GenericConfirmation = ({ text, info, children }) => {
           </div>
         }
         {children}
-      </form>
+      </form>}
     </Wrapper>
   )
 }
