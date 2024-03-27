@@ -8,7 +8,7 @@ const Wrapper = styled.button`
   return disabled
     ? css`
       cursor: not-allowed;
-      filter: invert(45%) sepia(5%) saturate(634%) hue-rotate(192deg) brightness(92%) contrast(93%);
+      filter: invert(85%) sepia(0%) saturate(5093%) hue-rotate(298deg) brightness(95%) contrast(97%);
       `
     : css`
       cursor: pointer;
