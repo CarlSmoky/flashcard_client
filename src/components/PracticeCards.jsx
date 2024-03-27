@@ -39,6 +39,12 @@ const CardsHeaderStyle = styled.div`
 `
 
 const CrossButton = styled.button`
+
+  svg {
+    stroke-width: 1.1;
+    filter: invert(10%) sepia(7%) saturate(7%) hue-rotate(349deg) brightness(93%) contrast(79%);
+  }
+
   ${({ disabled }) => {
     return disabled
       ? css`
@@ -133,7 +139,7 @@ const PracticeCards = ({
 
   const cards = setDeckFromIds();
   const defaultCard = setDefaultDeck();
-  
+
   return (
     <>
       <CardsHeaderStyle className={isModalMode() && 'blur'}>
