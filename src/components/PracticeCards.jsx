@@ -16,24 +16,26 @@ const CardsHeaderStyle = styled.div`
   }
 
   h2 {
-    font-size: 1.7rem;
+    font-size: 2rem;
     text-align: center;
-    font-family: var(--primary-font);
+    font-family: var(--secondary-font);
     font-weight: 600;
+    text-transform: Uppercase;
   }
 
   span {
-    font-size: 1.5rem;
-    font-family: var(--secondary-font);
+    font-size: 1.6rem;
+    font-family: var(--tertiary-font);
+    
   }
 
   @media (max-width: 768px) {
     h2 {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     }
 
     span {
-      font-size: 1.3rem;
+      font-size: 1.5rem;
     }
   }
 `
@@ -42,7 +44,7 @@ const CrossButton = styled.button`
 
   svg {
     stroke-width: 1.1;
-    filter: invert(10%) sepia(7%) saturate(7%) hue-rotate(349deg) brightness(93%) contrast(79%);
+    filter: invert(10%) sepia(0%) saturate(2017%) hue-rotate(138deg) brightness(116%) contrast(82%);
   }
 
   ${({ disabled }) => {

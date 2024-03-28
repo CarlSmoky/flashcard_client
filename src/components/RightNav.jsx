@@ -13,7 +13,9 @@ const Ul = styled.ul`
   li {
     margin: auto;
     padding: 2rem 4rem;
-    font-size: 1.3rem;
+    font-size: 1.6rem;
+    font-family: var(--tertiary-font);
+    font-weight: 300;
     transition: transform 0.2s ease-in-out;
 
     &:hover {

@@ -10,7 +10,7 @@ const Container = styled.div`
  const Loader = styled.div`
   border-width: 0.5rem;
   border-style: solid;
-  border-color: transparent var(--grey-primary) var(--grey-primary) var(--grey-primary);
+  border-color: transparent var(--grey-secondary) var(--grey-secondary) var(--grey-secondary);
   width: 3.625rem;
   height: 3.625rem;
   border-radius: 50%;

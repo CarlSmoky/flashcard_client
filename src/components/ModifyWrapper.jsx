@@ -9,7 +9,7 @@ import GenericConfirmation from "./GenericConfirmation";
 import Button from "./Button";
 
 const Title = styled.h1`
-  font-size: 2rem;
+  font-size: 1.8rem;
   text-align: left;
   margin: 2rem 0;
   padding: 1.3rem;
@@ -49,6 +49,7 @@ const Wrapper = styled.div`
     p {
       margin-left: 1rem;
       font-family: var(--tertiary-font);
+      font-weight: 400;
       font-size: 1.4rem;
       color: red;
       text-align: left;
@@ -79,7 +80,7 @@ const AddButton = styled.button`
 
           &:hover {
           cursor: pointer;
-          transform: scaleX(1.2) scaleY(1.2);
+          transform: scaleX(1.1) scaleY(1.1);
           }
 
           &:active {

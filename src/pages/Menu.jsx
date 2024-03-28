@@ -15,7 +15,7 @@ const Wrapper = styled.div`
 
     h1 {
       font-size: 2rem;
-      font-family: var(--tertiary-font);
+      font-family: var(--secondary-font);
     }
 
     p {

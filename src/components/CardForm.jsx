@@ -39,9 +39,10 @@ const Wrapper = styled.div`
     background-color: var(--tertiary-color);
     resize: none;
     font-size: 1.7rem;
-    font-weight: 100;
     font-family: var(--tertiary-font);
+    font-weight: 400;
   }
+
 
   textarea:focus {
     outline: none;
@@ -50,28 +51,29 @@ const Wrapper = styled.div`
 
 const Binbutton = styled.button`
   margin: auto 1rem;
-
+  
   svg {
     font-size: 2.5rem;
-    transition: transform 0.2s ease-out;
-    filter: invert(11%) sepia(17%) saturate(15%) hue-rotate(356deg) brightness(99%) contrast(83%);
-
+    filter: invert(44%) sepia(6%) saturate(532%) hue-rotate(192deg) brightness(94%) contrast(93%);
+    transition: transform 0.3s ease-in-out;
+    
+    
     ${({ disabled }) => {
-    return disabled
+      return disabled
       ? css`
-      
+        cursor: not-allowed;
       `
       : css`
         cursor: pointer;
 
         &:hover {
-        cursor: pointer;
-        transform: scaleX(1.2) scaleY(1.2);
+          transform: scaleX(1.1) scaleY(1.1);
+          filter: invert(11%) sepia(1%) saturate(866%) hue-rotate(329deg) brightness(98%) contrast(82%);
         }
 
         &:active {
-          background: var(--white-primary);
-          color: var(--black-primary);
+          transform: scaleX(1.1) scaleY(1.1);
+          filter: invert(11%) sepia(1%) saturate(866%) hue-rotate(329deg) brightness(98%) contrast(82%);
         }
       `
     }}
@@ -79,7 +81,7 @@ const Binbutton = styled.button`
 
   @media (max-width: 768px) {
     svg {
-    font-size: 2rem;
+      font-size: 2rem;
     }
   }
 `
@@ -90,7 +92,7 @@ const CardForm = ({
   index,
   deleteCardForm
 }) => {
-
+  console.log(card.length)
   const { modalActivated } = useModal()
 
   const onChangeCard = (e) => {
