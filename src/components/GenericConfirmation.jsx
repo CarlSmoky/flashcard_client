@@ -26,8 +26,9 @@ const Wrapper = styled.div`
   z-index: 10;
 
   h2 {
-    font-size: 2rem;
+    font-size: 2.5rem;
     margin: 4rem;
+    font-family: var(--secondary-font);
     text-transform: uppercase;
   }
 
@@ -37,6 +38,7 @@ const Wrapper = styled.div`
 
   p {
     font-size: 1.5rem;
+    font-family: var(--secondary-font);
   }
 
   @media (max-width: 768px) {
@@ -57,11 +59,11 @@ const Wrapper = styled.div`
     min-width: 20rem;
 
     h2 {
-      font-size: 1.3rem;
+      font-size: 2rem;
     }
 
     p {
-      font-size: 1rem;
+      font-size: 1.3rem;
     }
   }
 `

@@ -13,10 +13,9 @@ const GlobalStyles = createGlobalStyle`
   --grey-secondary: #6b6d76;
   --side-column-border: 0.4rem;
   --side-column-width: 5%;
-  
   --primary-font: 'Syncopate';
-  --secondary-font: 'Futura';
-  --tertiary-font: 'Tahoma';
+  --secondary-font: 'Cabin';
+  --tertiary-font: 'Roboto';
 }
 
 body {

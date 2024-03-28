@@ -2,6 +2,11 @@ import styled from "styled-components";
 
 const Wrapper = styled.div`
   margin: 1rem;
+
+  label {
+    font-size: 1.7rem;
+    font-family: var(--tertiary-font);
+  }
 `
 
 const NumOfCardsInput = ({ onChange, settingNumCards, max }) => {

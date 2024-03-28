@@ -14,11 +14,16 @@ const Wrapper = styled.div`
   }
 `
 const Title = styled.h1`
-  font-size: 2rem;
+  font-size: 1.8rem;
   text-align: left;
-  margin: 2rem;
+  margin: 2rem 0;
+  padding: 1.3rem;
   font-weight: 600;
   text-transform: uppercase;
+
+  &.blur {
+    filter: blur(.6rem);
+  }
 
   @media (max-width: 768px) {
     font-size: 1.4rem;

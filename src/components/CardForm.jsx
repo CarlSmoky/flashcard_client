@@ -39,9 +39,10 @@ const Wrapper = styled.div`
     background-color: var(--tertiary-color);
     resize: none;
     font-size: 1.7rem;
-    font-weight: 100;
     font-family: var(--tertiary-font);
+    font-weight: 400;
   }
+
 
   textarea:focus {
     outline: none;
