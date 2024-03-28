@@ -44,7 +44,7 @@ const CrossButton = styled.button`
 
   svg {
     stroke-width: 1.1;
-    filter: invert(10%) sepia(7%) saturate(7%) hue-rotate(349deg) brightness(93%) contrast(79%);
+    filter: invert(10%) sepia(0%) saturate(2017%) hue-rotate(138deg) brightness(116%) contrast(82%);
   }
 
   ${({ disabled }) => {

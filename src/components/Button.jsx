@@ -30,6 +30,7 @@ const ButtonStyle = styled.button`
     return disabled
       ? css`
         color: var(--grey-secondary);
+        cursor: not-allowed;
       `
       : css`
       cursor: pointer;

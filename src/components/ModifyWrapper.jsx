@@ -80,7 +80,7 @@ const AddButton = styled.button`
 
           &:hover {
           cursor: pointer;
-          transform: scaleX(1.2) scaleY(1.2);
+          transform: scaleX(1.1) scaleY(1.1);
           }
 
           &:active {
