@@ -51,10 +51,10 @@ const Wrapper = styled.div`
 
 const Binbutton = styled.button`
   margin: auto 1rem;
+  color: var(--grey-secondary );
   
   svg {
     font-size: 2.5rem;
-    filter: invert(44%) sepia(6%) saturate(532%) hue-rotate(192deg) brightness(94%) contrast(93%);
     transition: transform 0.3s ease-in-out;
     
     
@@ -68,12 +68,13 @@ const Binbutton = styled.button`
 
         &:hover {
           transform: scaleX(1.1) scaleY(1.1);
-          filter: invert(11%) sepia(1%) saturate(866%) hue-rotate(329deg) brightness(98%) contrast(82%);
+          color: var(--grey-primary);
         }
 
         &:active {
           transform: scaleX(1.1) scaleY(1.1);
-          filter: invert(11%) sepia(1%) saturate(866%) hue-rotate(329deg) brightness(98%) contrast(82%);
+          color: var(--grey-primary);
+
         }
       `
     }}

@@ -79,11 +79,11 @@ const Wrapper = styled.div`
     .header {
 
       h1 {
-        font-size: 1.4rem;
+        font-size: 1.6rem;
       }
 
       p {
-        font-size: 1rem;
+        font-size: 1.3rem;
       }
     }
     .cards {
