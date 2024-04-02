@@ -17,7 +17,7 @@ const ButtonStyle = styled.button`
   span {
     font-family: var(--tertiary-font);
     font-weight: 600;
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     text-transform: uppercase;
   }
 
@@ -66,7 +66,7 @@ const ButtonStyle = styled.button`
         padding: .5rem;
 
         span {
-          font-size: 1.3rem;
+          font-size: 1.6rem;
         }
       }
 

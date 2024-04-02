@@ -58,6 +58,12 @@ const Wrapper = styled.div`
       font-size: 1.4rem;
       color: red;
     }
+    @media (max-width: 768px) {
+      p {
+        height: 3rem;
+        line-height: 1.3;
+      }
+    }
 `
 
 const DeckDetailsForm = ({

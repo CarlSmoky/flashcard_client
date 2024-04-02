@@ -30,6 +30,7 @@ const CardsHeaderStyle = styled.div`
   }
 
   @media (max-width: 768px) {
+    margin: 1rem;
     h2 {
     font-size: 1.6rem;
     }
@@ -41,10 +42,10 @@ const CardsHeaderStyle = styled.div`
 `
 
 const CrossButton = styled.button`
+  color: var(--black-primary);
 
   svg {
     stroke-width: 1.1;
-    filter: invert(10%) sepia(0%) saturate(2017%) hue-rotate(138deg) brightness(116%) contrast(82%);
   }
 
   ${({ disabled }) => {

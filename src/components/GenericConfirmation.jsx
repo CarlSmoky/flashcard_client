@@ -19,7 +19,6 @@ const Wrapper = styled.div`
   justify-content: space-evenly;
   width: 35%;
   min-width: 40rem;
-  height: 35%;
   min-height: 30rem;
   background: var(--primary-color);
   border: 2px solid var(--black-primary);
