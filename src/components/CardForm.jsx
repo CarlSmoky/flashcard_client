@@ -93,7 +93,6 @@ const CardForm = ({
   index,
   deleteCardForm
 }) => {
-  console.log(card.length)
   const { modalActivated } = useModal()
 
   const onChangeCard = (e) => {

@@ -1,12 +1,11 @@
 import GlobalStyles from "./global-style"
 import Frame from "./components/Frame"
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 const App = () => {
 
   return (
     <div className="App">
-      <BrowserRouter>
       <GlobalStyles/>
       <Routes>
         <Route path ="/" element={<Frame content='menu'/>}/>
@@ -15,7 +14,6 @@ const App = () => {
         <Route path ="/edit/:id" element={<Frame content='edit'/>}/>
         <Route path ="/create" element={<Frame content='create'/>}/>
       </Routes>
-      </BrowserRouter>
     </div>
   );
 }
