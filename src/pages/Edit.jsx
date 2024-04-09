@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react'
-import { useNavigate, useParams } from "react-router-dom"
-import { errorMessage } from '../helpers/messages'
-import { handleOnSaveValidation } from '../helpers/validation'
-import { updateStatus } from '../helpers/defaultEditableData'
-import { useModal } from '../providers/ModalProvider'
-import { scrollToTop } from '../helpers/utilities'
-import { updateDeckAndCards } from '../helpers/deckAndCardsHelpers'
-import useEditData from '../hooks/useEditData'
-import CardForm from '../components/CardForm'
-import ModifyWrapper from '../components/ModifyWrapper'
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { errorMessage } from "../helpers/messages";
+import { handleOnSaveValidation } from "../helpers/validation";
+import { updateStatus } from "../helpers/defaultEditableData";
+import { useModal } from "../providers/ModalProvider";
+import { scrollToTop } from "../helpers/utilities";
+import { updateDeckAndCards } from "../helpers/deckAndCardsHelpers";
+import useEditData from "../hooks/useEditData";
+import PageLayout from "../components/PageLayout";
+import CardForm from "../components/CardForm";
+import ModifyWrapper from "../components/ModifyWrapper";
 
 const Edit = () => {
   const {
@@ -20,13 +21,13 @@ const Edit = () => {
     editableCards,
     currentDeck
   } = useEditData();
-  
+
   let navigate = useNavigate();
   const { id } = useParams();
   const { openModal, closeModal } = useModal();
   const [error, setError] = useState('');
   const [editDeckResult, setEditDeckResult] = useState({});
-  
+
   const displayedCardForm = editableCards.filter(card => card.updateStatus !== updateStatus.deleted);
 
   const deleteCardForm = (index) => {
@@ -108,10 +109,11 @@ const Edit = () => {
 
   useEffect(() => {
     initializeEditableDeckAndCardsById(id);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   return (
+    <PageLayout>
       <ModifyWrapper
         error={error}
         deckContents={editableDeck}
@@ -124,6 +126,7 @@ const Edit = () => {
         createNewCard={createNewCard}
         headerText="Edit"
       />
+    </PageLayout>
   )
 }
 

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import PageLayout from "../components/PageLayout";
 
 const Wrapper = styled.div`
   display: flex;
@@ -114,7 +115,7 @@ const Wrapper = styled.div`
 const Menu = () => {
 
   return (
-    <>
+    <PageLayout>
       <Wrapper>
         <div className="header">
           <div>
@@ -134,7 +135,7 @@ const Menu = () => {
           </Link>
         </div>
       </ Wrapper>
-    </>
+    </PageLayout>
   )
 }
 

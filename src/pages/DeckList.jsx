@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import DeckItem from "../components/DeckItem";
+import PageLayout from "../components/PageLayout";
 import LoadingSpinner from "../components/LoadingSpinner";
 
 const Wrapper = styled.div`
@@ -48,16 +49,16 @@ const DeckList = () => {
   useEffect(() => {
     setLoading(true);
     axios.get(`api/deck/`)
-    .then(res => {
-      const allDecks = res.data;
-      setDecks(allDecks);
-      setLoading(false)
-    })
-    .catch (err => {
-      console.log(err)
-    })
+      .then(res => {
+        const allDecks = res.data;
+        setDecks(allDecks);
+        setLoading(false)
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }, []);
-  
+
   const allDecks = decks.map(deck => {
     return (
       <DeckItem
@@ -69,14 +70,14 @@ const DeckList = () => {
       />
     )
   });
-    
+
   return (
-    <Wrapper>
-      <Title>Deck List</Title>
-      
-      {loading ? <LoadingSpinner/> : <Content>{allDecks}</Content>}
-      
-    </Wrapper>
+    <PageLayout>
+      <Wrapper>
+        <Title>Deck List</Title>
+        {loading ? <LoadingSpinner /> : <Content>{allDecks}</Content>}
+      </Wrapper>
+    </PageLayout>
   )
 }
 

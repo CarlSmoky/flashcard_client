@@ -1,14 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom"
 import { useModal } from '../providers/ModalProvider'
 import { errorMessage } from '../helpers/messages'
 import { handleOnSaveValidation } from '../helpers/validation'
 import { defaultEditableDeck, defaultEditableCard } from '../helpers/defaultEditableData'
-import { createDeckAndCards } from '../helpers/deckAndCardsHelpers'
+import { postCreateDeckAndCards } from "../helpers/deckAndCardsHelpers";
+import PageLayout from '../components/PageLayout'
 import CardForm from '../components/CardForm'
 import ModifyWrapper from '../components/ModifyWrapper'
 
 const Create = () => {
+  const { getAccessTokenSilently } = useAuth0();
   let navigate = useNavigate();
   const [error, setError] = useState('');
   const [newDeckContents, setNewDeckContents] = useState({ ...defaultEditableDeck });
@@ -47,12 +50,14 @@ const Create = () => {
       return;
     }
     setError("");
-    const updateResult = await createDeckAndCards(newDeckContents, newCardContents);
-    if (updateResult.isUpdated) {
-      SetUpdateResult(updateResult.data);
+    const accessToken = await getAccessTokenSilently();
+    const { data, error } = await postCreateDeckAndCards(accessToken, newDeckContents, newCardContents);
+    
+    if (data) {
+      SetUpdateResult(data);
       openModal();
     } else {
-      setError(updateResult.error)
+      setError(error)
     }
   };
 
@@ -77,7 +82,8 @@ const Create = () => {
   );
 
   return (
-    <ModifyWrapper
+    // <PageLa/yout>
+      <ModifyWrapper
         error={error}
         deckContents={newDeckContents}
         setDeckContents={setNewDeckContents}
@@ -89,6 +95,7 @@ const Create = () => {
         createNewCard={createNewCard}
         headerText="Create"
       />
+    // </PageLayout>
   )
 };
 

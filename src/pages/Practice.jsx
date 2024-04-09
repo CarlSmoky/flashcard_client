@@ -8,6 +8,7 @@ import GenericConfirmation from "../components/GenericConfirmation";
 import PracticeCards from "../components/PracticeCards";
 import NumOfCardsInput from "../components/NumOfCardsInput";
 import Button from "../components/Button";
+import PageLayout from "../components/PageLayout";
 import Result from "./Result";
 
 const Wrapper = styled.div`
@@ -112,71 +113,73 @@ const Practice = () => {
   }
 
   return (
-    <Wrapper>
-      {/* Before start  */}
-      {mode === modes.before &&
-        <GenericConfirmation text={truncate(deckData.deckName, 18)} >
-          <NumOfCardsInput onChange={onChange} settingNumCards={settingNumCards} max={Object.keys(flashcardData).length} />
-          <Button
-            text="Start"
-            buttonType='button'
-            onButtonClick={handleStart}
-          />
-          <Button
-            text="Cancel"
-            buttonType='button'
-            onButtonClick={() => navigate('/decklist')}
-          />
-        </GenericConfirmation>
-      }
-      {/* Before start */}
+    <PageLayout>
+      <Wrapper>
+        {/* Before start  */}
+        {mode === modes.before &&
+          <GenericConfirmation text={truncate(deckData.deckName, 18)} >
+            <NumOfCardsInput onChange={onChange} settingNumCards={settingNumCards} max={Object.keys(flashcardData).length} />
+            <Button
+              text="Start"
+              buttonType='button'
+              onButtonClick={handleStart}
+            />
+            <Button
+              text="Cancel"
+              buttonType='button'
+              onButtonClick={() => navigate('/decklist')}
+            />
+          </GenericConfirmation>
+        }
+        {/* Before start */}
 
-      {/* Answering cards */}
-      {displayCards() &&
-        <PracticeCards
-          deckName={deckData.deckName}
-          flashcardData={flashcardData}
-          setMode={setMode}
-          selectedCardIndices={selectedCardIndices}
-          isModalMode={isModalMode}
-          current={current}
-          loadedCards={loadedCards}
-          setCardProperty={setCardProperty}
-          addLoadedCards={addLoadedCards}
-          previousCard={previousCard}
-          nextCard={nextCard}
-        />
-      }
-      {/* Answering cards */}
-
-      {/* Finish Confirmation */}
-      {mode === modes.finishConfirmation &&
-        <GenericConfirmation text="Do you want to finish?">
-          <Button
-            text="Done"
-            buttonType="button"
-            onButtonClick={handleQuit}
+        {/* Answering cards */}
+        {displayCards() &&
+          <PracticeCards
+            deckName={deckData.deckName}
+            flashcardData={flashcardData}
+            setMode={setMode}
+            selectedCardIndices={selectedCardIndices}
+            isModalMode={isModalMode}
+            current={current}
+            loadedCards={loadedCards}
+            setCardProperty={setCardProperty}
+            addLoadedCards={addLoadedCards}
+            previousCard={previousCard}
+            nextCard={nextCard}
           />
-          <Button
-            text="Back to Deck"
-            buttonType="button"
-            onButtonClick={handleBackToDeck}
-          />
-        </GenericConfirmation>
-      }
-      {/* Finish Confirmation */}
+        }
+        {/* Answering cards */}
 
-      {/* finished */}
-      {mode === modes.finished &&
-        <Result
-          deckName={deckData.deckName}
-          numCards={loadedCards.length}
-          numLearning={numLearning}
-          loadedCards={loadedCards}
-          flashcarddata={flashcardData}
-          setCardProperty={setCardProperty}
-        />}
-    </Wrapper>
+        {/* Finish Confirmation */}
+        {mode === modes.finishConfirmation &&
+          <GenericConfirmation text="Do you want to finish?">
+            <Button
+              text="Done"
+              buttonType="button"
+              onButtonClick={handleQuit}
+            />
+            <Button
+              text="Back to Deck"
+              buttonType="button"
+              onButtonClick={handleBackToDeck}
+            />
+          </GenericConfirmation>
+        }
+        {/* Finish Confirmation */}
+
+        {/* finished */}
+        {mode === modes.finished &&
+          <Result
+            deckName={deckData.deckName}
+            numCards={loadedCards.length}
+            numLearning={numLearning}
+            loadedCards={loadedCards}
+            flashcarddata={flashcardData}
+            setCardProperty={setCardProperty}
+          />}
+      </Wrapper>
+    </PageLayout>
   )
 }
 

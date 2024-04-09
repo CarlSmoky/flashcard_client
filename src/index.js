@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App.jsx";
 import axios from "axios";
 import { Auth0ProviderWithNavigate } from "./auth0-provider-with-navigate";
+import ModalProvider from "./providers/ModalProvider.js"
 import { BrowserRouter } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -20,7 +21,9 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Auth0ProviderWithNavigate>
-        <App />
+        <ModalProvider>
+          <App />
+        </ModalProvider>
       </Auth0ProviderWithNavigate>
     </BrowserRouter>
   </React.StrictMode>
