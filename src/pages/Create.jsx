@@ -82,7 +82,7 @@ const Create = () => {
   );
 
   return (
-    // <PageLa/yout>
+    <PageLayout>
       <ModifyWrapper
         error={error}
         deckContents={newDeckContents}
@@ -95,7 +95,7 @@ const Create = () => {
         createNewCard={createNewCard}
         headerText="Create"
       />
-    // </PageLayout>
+    </PageLayout>
   )
 };
 
