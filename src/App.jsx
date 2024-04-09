@@ -11,13 +11,13 @@ const App = () => {
 
   return (
     <div className="App">
-      <GlobalStyles/>
+      <GlobalStyles />
       <Routes>
-        <Route path ="/" element={<Menu />}/>
-        <Route path ="/decklist" element={<DeckList />}/>
-        <Route path ="/deck/:id" element={<Practice />}/>
-        <Route path ="/edit/:id" element={<Edit />}/>
-        <Route path ="/create" element={<AuthenticationGuard component={Create}/>}/>
+        <Route path="/" element={<Menu />} />
+        <Route path="/decklist" element={<DeckList />} />
+        <Route path="/deck/:id" element={<Practice />} />
+        <Route path="/edit/:id" element={<AuthenticationGuard component={Edit} />} />
+        <Route path="/create" element={<AuthenticationGuard component={Create} />} />
       </Routes>
     </div>
   );
