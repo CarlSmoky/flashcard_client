@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 import { errorMessage } from "../helpers/messages";
 import { handleOnSaveValidation } from "../helpers/validation";
 import { updateStatus } from "../helpers/defaultEditableData";
 import { useModal } from "../providers/ModalProvider";
 import { scrollToTop } from "../helpers/utilities";
-import { updateDeckAndCards } from "../helpers/deckAndCardsHelpers";
+import { postUpdateDeckAndCards } from "../helpers/deckAndCardsHelpers";
 import useEditData from "../hooks/useEditData";
 import PageLayout from "../components/PageLayout";
 import CardForm from "../components/CardForm";
@@ -23,6 +24,7 @@ const Edit = () => {
   } = useEditData();
 
   let navigate = useNavigate();
+  const { getAccessTokenSilently } = useAuth0();
   const { id } = useParams();
   const { openModal, closeModal } = useModal();
   const [error, setError] = useState('');
@@ -90,15 +92,19 @@ const Edit = () => {
       scrollToTop();
       return;
     }
+
     setError("");
-    const updateResult = await updateDeckAndCards(updateDeckData, createdCardsData, updateCardsData, deleteCardsData, id);
-    if (updateResult.isUpdated) {
-      setEditDeckResult(updateResult.data)
+    const accessToken = await getAccessTokenSilently();
+    const {data, error} = await postUpdateDeckAndCards(accessToken, updateDeckData, createdCardsData, updateCardsData, deleteCardsData, id);
+    
+    if (data) {
+      setEditDeckResult(data)
       openModal();
-    } else {
-      setError(updateResult.error)
+    } 
+    if (error) {
+      setError(JSON.stringify(error.message, null, 2));
     }
-  };
+  }
 
   const handleOk = () => {
     closeModal();

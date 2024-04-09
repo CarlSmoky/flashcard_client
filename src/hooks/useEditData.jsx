@@ -1,6 +1,6 @@
-import { useState } from 'react'
-import { getDeckAndCardsDataById } from '../helpers/deckAndCardsHelpers'
-import { defaultEditableDeck, defaultEditableCard, updateStatus } from '../helpers/defaultEditableData'
+import { useState } from "react";
+import { getDeckAndCardsDataById } from "../helpers/deckAndCardsHelpers";
+import { defaultEditableDeck, defaultEditableCard, updateStatus } from "../helpers/defaultEditableData";
 
 const useEditData = () => {
   const [editableDeck, setEditableDeck] = useState({ ...defaultEditableDeck });
@@ -14,14 +14,18 @@ const useEditData = () => {
   }
   
   const initializeEditableDeckAndCardsById = async (id) => {
-    const { deckName, description, flashcardData } = await getDeckAndCardsDataById(id);
+    const { data, error } = await getDeckAndCardsDataById(id);
+    if (data) {
+      const formattedEditableDeck = formatEditableDeck(id, data.deck.deck_name, data.deck.description)
+        setEditableDeck(formattedEditableDeck);
+  
+        // make editableCards
+        const formattedEditableCards = formatEditableCards(data.cards)
+        setEditableCards(formattedEditableCards)
+    }
+    if (error) {
 
-    const formattedEditableDeck = formatEditableDeck(id, deckName, description)
-      setEditableDeck(formattedEditableDeck);
-
-      // make editableCards
-      const formattedEditableCards = formatEditableCards(flashcardData)
-      setEditableCards(formattedEditableCards)
+    }
   }
 
   const formatEditableDeck = (id, deckName, description) => {

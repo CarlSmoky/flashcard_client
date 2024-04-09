@@ -1,15 +1,20 @@
-import { useState } from 'react'
-import { getDeckAndCardsDataById } from '../helpers/deckAndCardsHelpers'
+import { useState } from "react";
+import { getDeckAndCardsDataById } from "../helpers/deckAndCardsHelpers";
 
 const usePracticeData = () => {
   const [flashcardData, setFlashcardData] = useState({});
   const [deckData, setDeckData] = useState({});
 
   const initializeDeckAndCardsDataById = async (id) => {
-      const { deckName, description, flashcardData } = await getDeckAndCardsDataById(id);
-      setDeckData({ deckName, description });
-      const formattedCardData = formatFlashcardData(flashcardData);
+    const { data, error } = await getDeckAndCardsDataById(id);
+    if (data) {
+      setDeckData({ deckName: data.deck.deck_name, description: data.deck.description });
+      const formattedCardData = formatFlashcardData(data.cards);
       setFlashcardData(formattedCardData);
+    }
+    if (error) {
+      console.log(error);
+    }
   }
 
   const formatFlashcardData = (rawAPIData) => {

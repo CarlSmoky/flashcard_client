@@ -56,8 +56,9 @@ const Create = () => {
     if (data) {
       SetUpdateResult(data);
       openModal();
-    } else {
-      setError(error)
+    } 
+    if (error) {
+      setError(JSON.stringify(error.message, null, 2));
     }
   };
 
