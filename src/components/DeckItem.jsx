@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 import { truncate } from "../helpers/utilities";
 import { AiOutlineEdit } from "react-icons/ai";
 
@@ -52,6 +53,7 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
+    height: 4rem;
   
     button {
       transition: transform .1s ease-out;
@@ -66,6 +68,10 @@ const Wrapper = styled.div`
   
     svg {
       font-size: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      height: 2.5rem;
     }
   `
 
@@ -101,17 +107,19 @@ const ClickArea = styled.div`
   }
 `
 
-const DeckItem = ({ id, deckName, description }) => {
-
+const DeckItem = ({ id, deckName, description, user_id }) => {
+  const { user } = useAuth0();
   let navigate = useNavigate();
 
   return (
     <Wrapper >
       <Header>
-        <button onClick={() => navigate(`/edit/${id}`)}>
-          <AiOutlineEdit />
-          <span className="visually-hidden">Edit Button</span>
-        </button>
+        {user_id === user?.sub &&
+          <button onClick={() => navigate(`/edit/${id}`)}>
+            <AiOutlineEdit />
+            <span className="visually-hidden">Edit Button</span>
+          </button>
+        }
       </Header>
       <Link to={`/deck/${id}`}>
         <ClickArea>
