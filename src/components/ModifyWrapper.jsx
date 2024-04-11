@@ -2,10 +2,8 @@ import styled, { css } from "styled-components";
 import { useModal } from "../providers/ModalProvider";
 import { GrAddCircle } from "react-icons/gr";
 import { defaultEditableDeck } from "../helpers/defaultEditableData";
-import { generateUpdateMsg } from "../helpers/utilities";
 import DeckDetailsForm from "./DeckDetailsForm";
 import CardFormHeader from "./CardFormHeader";
-import GenericConfirmation from "./GenericConfirmation";
 import Button from "./Button";
 
 const Title = styled.h1`
@@ -105,59 +103,45 @@ const ModifyWrapper = (
     deckContents,
     setDeckContents,
     cardFormItems,
-    updateResult,
     handleSaveClick,
     disableButton,
-    handleOk,
     createNewCard,
     headerText
   }
 ) => {
 
   const { modalActivated } = useModal();
-  const displayMsg = generateUpdateMsg((updateResult)).map(msg => <p>{msg}</p>);
 
   return (
-    <>
-      {modalActivated &&
-        <GenericConfirmation text="Updated" info={displayMsg}>
-          <Button
-            text='Ok'
-            buttonType="button"
-            onButtonClick={handleOk}
-          />
-        </GenericConfirmation>
-      }
-      <Wrapper className={modalActivated ? 'blur' : null}>
-        <Title>{headerText}</Title>
-        <div className='error'>
-          <p>{error}</p>
+    <Wrapper className={modalActivated ? 'blur' : null}>
+      <Title>{headerText}</Title>
+      <div className='error'>
+        <p>{error}</p>
+      </div>
+      <form>
+        <DeckDetailsForm
+          deckContents={deckContents || defaultEditableDeck}
+          setDeckContents={setDeckContents}
+        />
+        <CardFormHeader />
+        {cardFormItems}
+        <div className="addBtnContainer">
+          <AddButton
+            onClick={createNewCard}
+            type='button'
+            disabled={modalActivated}>
+            <GrAddCircle />
+            <span className="visually-hidden">Add Card Button</span>
+          </AddButton>
         </div>
-        <form>
-          <DeckDetailsForm
-            deckContents={deckContents || defaultEditableDeck}
-            setDeckContents={setDeckContents}
-          />
-          <CardFormHeader />
-          {cardFormItems}
-          <div className="addBtnContainer">
-            <AddButton
-              onClick={createNewCard}
-              type='button'
-              disabled={modalActivated}>
-              <GrAddCircle />
-              <span className="visually-hidden">Add Card Button</span>
-            </AddButton>
-          </div>
-          <Button
-            text='Save'
-            buttonType='submit'
-            onButtonClick={handleSaveClick}
-            disabled={disableButton() || modalActivated}
-          />
-        </form>
-      </Wrapper>
-    </>
+        <Button
+          text='Save'
+          buttonType='submit'
+          onButtonClick={handleSaveClick}
+          disabled={disableButton() || modalActivated}
+        />
+      </form>
+    </Wrapper>
   )
 }
 

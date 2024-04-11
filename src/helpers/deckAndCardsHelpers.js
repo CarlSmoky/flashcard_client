@@ -68,6 +68,25 @@ export const postCreateDeckAndCards = async (accessToken, newDeckContents, newCa
       error,
     };
   };
+  export const deleteDeckAndCards = async (accessToken, id) => {
+    const appendParamToEndPoint = endpoints.DELETE_DECK_AND_CARDS_BY_ID(id);
+  
+    const config = {
+      url: `${apiServerUrl}${appendParamToEndPoint}`,
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      }
+    };
+  
+    const { data, error } = await callExternalApi({ config });
+  
+    return {
+      data: data || null,
+      error,
+    };
+  };
 
   const getDeckContentsForInsertion = (newDeckContents) => {
     return {

@@ -8,7 +8,9 @@ import { defaultEditableDeck, defaultEditableCard } from '../helpers/defaultEdit
 import { postCreateDeckAndCards } from "../helpers/deckAndCardsHelpers";
 import PageLayout from '../components/PageLayout'
 import CardForm from '../components/CardForm'
-import ModifyWrapper from '../components/ModifyWrapper'
+import ModifyWrapper from '../components/ModifyWrapper';
+import GenericConfirmation from "../components/GenericConfirmation";
+import Button from "../components/Button";
 
 const Create = () => {
   const { getAccessTokenSilently } = useAuth0();
@@ -17,7 +19,7 @@ const Create = () => {
   const [newDeckContents, setNewDeckContents] = useState({ ...defaultEditableDeck });
   const [newCardContents, setNewCardContents] = useState([{ ...defaultEditableCard }]);
   const [updateResult, SetUpdateResult] = useState('');
-  const { openModal, closeModal } = useModal();
+  const { modalActivated, openModal, closeModal } = useModal();
 
   const currentDeck = {
     deckContents: newDeckContents,
@@ -82,8 +84,18 @@ const Create = () => {
     />
   );
 
+
   return (
     <PageLayout>
+      {modalActivated &&
+        <GenericConfirmation text="Created" info={`${updateResult.deckName} is successfully saved`}>
+          <Button
+            text='Ok'
+            buttonType="button"
+            onButtonClick={handleOk}
+          />
+        </GenericConfirmation>
+      }
       <ModifyWrapper
         error={error}
         deckContents={newDeckContents}

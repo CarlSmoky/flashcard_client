@@ -11,6 +11,9 @@ import useEditData from "../hooks/useEditData";
 import PageLayout from "../components/PageLayout";
 import CardForm from "../components/CardForm";
 import ModifyWrapper from "../components/ModifyWrapper";
+import { generateUpdateMsg } from "../helpers/utilities";
+import GenericConfirmation from "../components/GenericConfirmation";
+import Button from "../components/Button";
 
 const Edit = () => {
   const {
@@ -26,10 +29,10 @@ const Edit = () => {
   let navigate = useNavigate();
   const { getAccessTokenSilently } = useAuth0();
   const { id } = useParams();
-  const { openModal, closeModal } = useModal();
+  const { modalActivated, openModal, closeModal } = useModal();
   const [error, setError] = useState('');
   const [editDeckResult, setEditDeckResult] = useState({});
-
+  const displayMsg = generateUpdateMsg((editDeckResult)).map((msg, i) => <p key={i}>{msg}</p>);
   const displayedCardForm = editableCards.filter(card => card.updateStatus !== updateStatus.deleted);
 
   const deleteCardForm = (index) => {
@@ -120,6 +123,15 @@ const Edit = () => {
 
   return (
     <PageLayout>
+      {modalActivated &&
+        <GenericConfirmation text="Updated" info={displayMsg}>
+          <Button
+            text='Ok'
+            buttonType="button"
+            onButtonClick={handleOk}
+          />
+        </GenericConfirmation>
+      }
       <ModifyWrapper
         error={error}
         deckContents={editableDeck}

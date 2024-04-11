@@ -1,9 +1,12 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useModal } from "../providers/ModalProvider";
 import { truncate } from "../helpers/utilities";
 import { AiOutlineEdit } from "react-icons/ai";
+import { RiDeleteBin5Line } from "react-icons/ri";
+import IconButton from "./IconButton";
 
 const Wrapper = styled.div`
   width: calc(33% - 1rem);
@@ -13,28 +16,37 @@ const Wrapper = styled.div`
   transition: all 0.2s ease-in-out;
   position: relative;
 
-  &::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 4px;
-    transform: scaleX(0);
-    bottom: 0;
-    left: 0;
-    background-color: var(--white-primary);
-    transform-origin: bottom right;
-    color: var(--black-primary);
-    transition: transform .1s ease-out;
-  }
-  
-  &:hover::after {
-    transform: scaleX(1.0);
-    transform-origin: bottom left;
-  }
+  ${({ disabled }) => {
+  return disabled
+    ? css`
+      `
+    : css`
+      &::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 4px;
+      transform: scaleX(0);
+      bottom: 0;
+      left: 0;
+      background-color: var(--white-primary);
+      transform-origin: bottom right;
+      color: var(--black-primary);
+      transition: transform .1s ease-out;
+    }
     
-  &:active {
-    transform: translateY(4px);
-  }
+    &:hover::after {
+      transform: scaleX(1.0);
+      transform-origin: bottom left;
+    }
+      
+    &:active {
+      transform: translateY(4px);
+    }
+    `
+  }}
+
+  
 
   @media (max-width: 1200px) {
     width: calc(32% - 1rem);
@@ -48,27 +60,12 @@ const Wrapper = styled.div`
     width: 100%;
   }
 `
-  
-  const Header = styled.div`
+
+const Header = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     height: 4rem;
-  
-    button {
-      transition: transform .1s ease-out;
-      padding: .5rem;
-      color: var(--black-primary);
-  
-      &:hover {
-      cursor: pointer;
-      transform: scaleX(1.2) scaleY(1.2);
-      }
-    }
-  
-    svg {
-      font-size: 2rem;
-    }
 
     @media (max-width: 768px) {
       height: 2.5rem;
@@ -94,8 +91,17 @@ const ClickArea = styled.div`
     font-size: 1.6rem;
     font-family: var(--tertiary-font);
     overflow-wrap: break-word;
-
   }
+
+  ${({ disabled }) => {
+  return disabled
+  ? css`
+  cursor: not-allowed;
+  `
+  : css`
+  cursor: pointer;
+    `
+  }}
 
   @media (max-width: 768px) {
     h1 {
@@ -107,27 +113,44 @@ const ClickArea = styled.div`
   }
 `
 
-const DeckItem = ({ id, deckName, description, user_id }) => {
-  const { user } = useAuth0();
+const DeckItem = ({ id, deckName, description, user_id, setDeleteMode, setDeleteDeckId, setUserId }) => {
   let navigate = useNavigate();
+  const { user } = useAuth0();
+  const { modalActivated, openModal } = useModal();
+
+  const editClickHandler = () => {
+    const path = `/edit/${id}`;
+    navigate(path);
+  }
+
+  const deleteClickHandler = async () => {
+    openModal();
+    setDeleteMode("Warning");
+    setDeleteDeckId(id);
+    setUserId(user_id)
+  }
 
   return (
-    <Wrapper >
-      <Header>
-        {user_id === user?.sub &&
-          <button onClick={() => navigate(`/edit/${id}`)}>
-            <AiOutlineEdit />
-            <span className="visually-hidden">Edit Button</span>
-          </button>
-        }
-      </Header>
-      <Link to={`/deck/${id}`}>
-        <ClickArea>
-          <h1>{truncate(deckName, 35)}</h1>
-          <p>{truncate(description, 65)}</p>
-        </ClickArea>
-      </Link>
-    </Wrapper>
+      <Wrapper disabled={modalActivated}>
+        <Header>
+          {user_id === user?.sub &&
+            <>
+              <IconButton disabled={modalActivated} alt="Edit Button" onClick={editClickHandler}>
+                <AiOutlineEdit />
+              </IconButton>
+              <IconButton disabled={modalActivated} alt="Delete Button" onClick={deleteClickHandler}>
+                <RiDeleteBin5Line />
+              </IconButton>
+            </>
+          }
+        </Header>
+        <Link to={!modalActivated && `/deck/${id}`}>
+          <ClickArea disabled={modalActivated}>
+            <h1>{truncate(deckName, 35)}</h1>
+            <p>{truncate(description, 65)}</p>
+          </ClickArea>
+        </Link>
+      </Wrapper>
   )
 }
 

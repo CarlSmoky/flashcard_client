@@ -1,14 +1,24 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import DeckItem from "../components/DeckItem";
+import { useNavigate } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useModal } from "../providers/ModalProvider";
+import { deleteDeckAndCards } from "../helpers/deckAndCardsHelpers";
 import PageLayout from "../components/PageLayout";
+import DeckItem from "../components/DeckItem";
 import LoadingSpinner from "../components/LoadingSpinner";
+import GenericConfirmation from "../components/GenericConfirmation";
+import Button from "../components/Button";
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   min-height: calc(100vh - 9.3rem - 9.3rem);
+
+  &.blur {
+    filter: blur(.6rem);
+  }
 
   @media (max-width: 768px) {
     min-height: calc(100vh - 6rem - 6rem);
@@ -21,10 +31,6 @@ const Title = styled.h1`
   padding: 1.3rem;
   font-weight: 600;
   text-transform: uppercase;
-
-  &.blur {
-    filter: blur(.6rem);
-  }
 
   @media (max-width: 768px) {
     font-size: 1.4rem;
@@ -43,8 +49,15 @@ const Content = styled.div`
 `
 
 const DeckList = () => {
+  let navigate = useNavigate();
+  const { user, getAccessTokenSilently } = useAuth0();
   const [decks, setDecks] = useState([]);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const { modalActivated, openModal, closeModal } = useModal();
+  const [deleteMode, setDeleteMode] = useState("Before");
+  const [displayMsg, setDisplayMsg] = useState("");
+  const [deleteDeckId, setDeleteDeckId] = useState(0);
+  const [userId, setUserId] = useState("");
 
   useEffect(() => {
     setLoading(true);
@@ -59,6 +72,61 @@ const DeckList = () => {
       })
   }, []);
 
+  const handleYes = () => {
+    openModal();
+    setDeleteMode("Delete");
+  }
+
+  const handleCancel = () => {
+    setDeleteMode("Before");
+    const path = `/decklist`;
+    navigate(path);
+    closeModal();
+  }
+
+  const handleOk = () => {
+    setDeleteMode("Before");
+    const path = `/decklist`;
+    navigate(0);
+    navigate(path);
+    closeModal();
+  }
+
+  const deleteDeck = async (id) => {
+    const accessToken = await getAccessTokenSilently();
+    if (userId !== user.sub) {
+      closeModal();
+      throw new Error(`You are not allowed to delete this deck and cards.`);
+    }
+    const { data, error } = await deleteDeckAndCards(accessToken, id);
+
+    if (data) {
+      setDeleteMode("Deleted");
+      setDisplayMsg(`Deck and cards successfully deleted.`);
+    }
+    if (error) {
+      console.log(error)
+    }
+  }
+
+  const setMessage = () => {
+    if (deleteMode === "Warning") {
+      setDisplayMsg(`After deleting, you cannot restore all deck and cards data. Are you sure?`)
+    } else {
+      setDisplayMsg("you are not login.")
+    }
+  }
+
+  useEffect(() => {
+    if (deleteMode === "Delete") {
+      deleteDeck(deleteDeckId);
+    }
+    if (deleteMode === "Warning") {
+      setMessage();
+    }
+  }, [deleteMode])
+
+
   const allDecks = decks.map(deck => {
     return (
       <DeckItem
@@ -67,13 +135,43 @@ const DeckList = () => {
         deckName={deck.deck_name}
         description={deck.description}
         user_id={deck.user_id}
+        disabled={modalActivated}
+        setDeleteMode={setDeleteMode}
+        setDisplayMsg={setDisplayMsg}
+        deleteMode={deleteMode}
+        setDeleteDeckId={setDeleteDeckId}
+        setUserId={setUserId}
       />
     )
   });
 
+
   return (
     <PageLayout>
-      <Wrapper>
+      {modalActivated && deleteMode === "Warning" &&
+        <GenericConfirmation text={`Do you want to delete ?`} info={displayMsg}>
+          <Button
+            text='Yes'
+            buttonType="button"
+            onButtonClick={handleYes}
+          />
+          <Button
+            text='Cancel'
+            buttonType="button"
+            onButtonClick={handleCancel}
+          />
+        </GenericConfirmation>
+      }
+      {modalActivated && deleteMode === "Deleted" &&
+        <GenericConfirmation text="Deleted Successfully" info={displayMsg}>
+          <Button
+            text='Ok'
+            buttonType="button"
+            onButtonClick={(handleOk)}
+          />
+        </GenericConfirmation>
+      }
+      <Wrapper className={modalActivated ? 'blur' : null}>
         <Title>Deck List</Title>
         {loading ? <LoadingSpinner /> : <Content>{allDecks}</Content>}
       </Wrapper>
