@@ -51,9 +51,9 @@ const Content = styled.div`
 const DeckList = () => {
   let navigate = useNavigate();
   const { user, getAccessTokenSilently } = useAuth0();
+  const { modalActivated, openModal, closeModal } = useModal();
   const [decks, setDecks] = useState([]);
   const [loading, setLoading] = useState(false);
-  const { modalActivated, openModal, closeModal } = useModal();
   const [deleteMode, setDeleteMode] = useState("Before");
   const [displayMsg, setDisplayMsg] = useState("");
   const [deleteDeckId, setDeleteDeckId] = useState(0);
@@ -99,21 +99,22 @@ const DeckList = () => {
       throw new Error(`You are not allowed to delete this deck and cards.`);
     }
     const { data, error } = await deleteDeckAndCards(accessToken, id);
-
+    
     if (data) {
       setDeleteMode("Deleted");
-      setDisplayMsg(`Deck and cards successfully deleted.`);
+      setDisplayMsg("Deck and cards successfully deleted.");
     }
     if (error) {
-      console.log(error)
+      setDeleteMode("Error");
     }
   }
 
   const setMessage = () => {
     if (deleteMode === "Warning") {
-      setDisplayMsg(`After deleting, you cannot restore all deck and cards data. Are you sure?`)
-    } else {
-      setDisplayMsg("you are not login.")
+      setDisplayMsg("After deleting, you cannot restore all deck and cards data. Are you sure?")
+    }
+    if (deleteMode === "Error") {
+      setDisplayMsg("Something went wrong...")
     }
   }
 
@@ -124,7 +125,12 @@ const DeckList = () => {
     if (deleteMode === "Warning") {
       setMessage();
     }
+    if (deleteMode === "Error") {
+      setMessage();
+    }
   }, [deleteMode])
+
+  console.log(displayMsg)
 
 
   const allDecks = decks.map(deck => {
@@ -164,6 +170,15 @@ const DeckList = () => {
       }
       {modalActivated && deleteMode === "Deleted" &&
         <GenericConfirmation text="Deleted Successfully" info={displayMsg}>
+          <Button
+            text='Ok'
+            buttonType="button"
+            onButtonClick={(handleOk)}
+          />
+        </GenericConfirmation>
+      }
+      {modalActivated && deleteMode === "Error" &&
+        <GenericConfirmation text="Error" info={displayMsg}>
           <Button
             text='Ok'
             buttonType="button"
