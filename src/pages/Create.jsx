@@ -12,6 +12,7 @@ import CardForm from '../components/CardForm'
 import ModifyWrapper from '../components/ModifyWrapper';
 import GenericConfirmation from "../components/GenericConfirmation";
 import Button from "../components/Button";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const Create = () => {
   const { getAccessTokenSilently } = useAuth0();
@@ -106,6 +107,11 @@ const Create = () => {
 
   return (
     <PageLayout>
+      {mode === Createmodes.creating &&
+        <GenericConfirmation text="Creating" info={'Processing'}>
+          <LoadingSpinner/>
+        </GenericConfirmation>
+      }
       {mode === Createmodes.finished &&
         <GenericConfirmation text="Created" info={`${updateResult.deckName} is successfully saved`}>
           <Button
