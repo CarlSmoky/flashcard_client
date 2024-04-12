@@ -6,6 +6,7 @@ import { useModal } from "../providers/ModalProvider";
 import { truncate } from "../helpers/utilities";
 import { AiOutlineEdit } from "react-icons/ai";
 import { RiDeleteBin5Line } from "react-icons/ri";
+import { Deletemodes } from "../helpers/modes";
 import IconButton from "./IconButton";
 
 const Wrapper = styled.div`
@@ -113,7 +114,7 @@ const ClickArea = styled.div`
   }
 `
 
-const DeckItem = ({ id, deckName, description, user_id, setDeleteMode, setDeleteDeckId, setUserId }) => {
+const DeckItem = ({ id, deckName, description, user_id, setMode, setDeleteDeckId, setUserId }) => {
   let navigate = useNavigate();
   const { user } = useAuth0();
   const { modalActivated, openModal } = useModal();
@@ -125,9 +126,9 @@ const DeckItem = ({ id, deckName, description, user_id, setDeleteMode, setDelete
 
   const deleteClickHandler = async () => {
     openModal();
-    setDeleteMode("Warning");
+    setMode(Deletemodes.warning);
     setDeleteDeckId(id);
-    setUserId(user_id)
+    setUserId(user_id);
   }
 
   return (

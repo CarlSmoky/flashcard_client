@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom"
 import { useModal } from '../providers/ModalProvider'
@@ -6,6 +6,7 @@ import { errorMessage } from '../helpers/messages'
 import { handleOnSaveValidation } from '../helpers/validation'
 import { defaultEditableDeck, defaultEditableCard } from '../helpers/defaultEditableData'
 import { postCreateDeckAndCards } from "../helpers/deckAndCardsHelpers";
+import { Createmodes } from "../helpers/modes";
 import PageLayout from '../components/PageLayout'
 import CardForm from '../components/CardForm'
 import ModifyWrapper from '../components/ModifyWrapper';
@@ -15,11 +16,12 @@ import Button from "../components/Button";
 const Create = () => {
   const { getAccessTokenSilently } = useAuth0();
   let navigate = useNavigate();
+  const { openModal, closeModal } = useModal();
   const [error, setError] = useState('');
+  const [mode, setMode] = useState(Createmodes.before)
   const [newDeckContents, setNewDeckContents] = useState({ ...defaultEditableDeck });
   const [newCardContents, setNewCardContents] = useState([{ ...defaultEditableCard }]);
   const [updateResult, SetUpdateResult] = useState('');
-  const { modalActivated, openModal, closeModal } = useModal();
 
   const currentDeck = {
     deckContents: newDeckContents,
@@ -45,22 +47,32 @@ const Create = () => {
     setNewCardContents([...prev]);
   }
 
+  useEffect(() => {
+    if (mode === Createmodes.before) {
+      closeModal();
+    }
+  }, [mode])
+
   const handleSaveClick = async (e) => {
+    openModal();
+    setMode(Createmodes.creating)
     // handleOnSaveValidation will return true if there is a problem
     if (handleOnSaveValidation(currentDeck)) {
       setError(errorMessage.inputError);
       return;
     }
-    setError("");
+    
     const accessToken = await getAccessTokenSilently();
     const { data, error } = await postCreateDeckAndCards(accessToken, newDeckContents, newCardContents);
     
     if (data) {
       SetUpdateResult(data);
-      openModal();
+      setMode(Createmodes.finished)
     } 
     if (error) {
-      setError(JSON.stringify(error.message, null, 2));
+      setMode(Createmodes.error)
+      const isStatusCode409 = error.message.split(" ").indexOf("409") !== -1;
+      isStatusCode409 ? setError("The deck title already exists. Tyr something else.") : setError("Something went wrong.")
     }
   };
 
@@ -68,6 +80,13 @@ const Create = () => {
     closeModal();
     const path = `/deck/${updateResult.deckId}`;
     navigate(path);
+  }
+
+  const handleGoback = () => {
+    setMode(Createmodes.before);
+    const path = `/create`;
+    navigate(path);
+    closeModal();
   }
 
   const disableButton = () => {
@@ -87,12 +106,21 @@ const Create = () => {
 
   return (
     <PageLayout>
-      {modalActivated &&
+      {mode === Createmodes.finished &&
         <GenericConfirmation text="Created" info={`${updateResult.deckName} is successfully saved`}>
           <Button
             text='Ok'
             buttonType="button"
             onButtonClick={handleOk}
+          />
+        </GenericConfirmation>
+      }
+      {mode === Createmodes.error &&
+        <GenericConfirmation text="Error" info={error}>
+          <Button
+            text='Ok'
+            buttonType="button"
+            onButtonClick={handleGoback}
           />
         </GenericConfirmation>
       }

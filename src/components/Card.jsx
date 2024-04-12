@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import CardWrapper from "./CardWrapper";
-import { modes } from "../helpers/modes";
+import { Practicemodes } from "../helpers/modes";
 
 const CardInner = styled.div`
   position: relative;
@@ -85,7 +85,7 @@ const Card = ({
     if (!isEndCard) {
       nextCard();
     } else {
-      setMode(modes.finishConfirmation);
+      setMode(Practicemodes.finishConfirmation);
       addLoadedCards(current)
     }
       

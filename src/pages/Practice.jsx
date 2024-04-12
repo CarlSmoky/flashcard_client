@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useParams, useNavigate } from "react-router-dom";
 import usePracticeData from "../hooks/usePracticeData";
-import { modes } from "../helpers/modes";
+import { Practicemodes } from "../helpers/modes";
 import { truncate } from "../helpers/utilities";
 import GenericConfirmation from "../components/GenericConfirmation";
 import PracticeCards from "../components/PracticeCards";
@@ -33,7 +33,7 @@ const Practice = () => {
   const { id } = useParams();
   let navigate = useNavigate();
 
-  const [mode, setMode] = useState(modes.before);
+  const [mode, setMode] = useState(Practicemodes.before);
   const [selectedCardIndices, setSelectedCardIndices] = useState([]);
   const [numCards, setNumCards] = useState([]);
   const [loadedCards, setLoadedCards] = useState([]);
@@ -72,13 +72,13 @@ const Practice = () => {
   }
 
   const isModalMode = () => {
-    if (mode === modes.before || mode === modes.finishConfirmation) {
+    if (mode === Practicemodes.before || mode === Practicemodes.finishConfirmation) {
       return true;
     }
   }
 
   const displayCards = () => {
-    if (mode === modes.before || mode === modes.answering || mode === modes.finishConfirmation) {
+    if (mode === Practicemodes.before || mode === Practicemodes.answering || mode === Practicemodes.finishConfirmation) {
       return true;
     }
   }
@@ -101,22 +101,22 @@ const Practice = () => {
 
   const handleStart = () => {
     setNumCards(settingNumCards);
-    setMode(modes.answering);
+    setMode(Practicemodes.answering);
   }
 
   const handleQuit = () => {
     addLoadedCards(current);
-    setMode(modes.finished);
+    setMode(Practicemodes.finished);
   }
   const handleBackToDeck = () => {
-    setMode(modes.answering);
+    setMode(Practicemodes.answering);
   }
 
   return (
     <PageLayout>
       <Wrapper>
         {/* Before start  */}
-        {mode === modes.before &&
+        {mode === Practicemodes.before &&
           <GenericConfirmation text={truncate(deckData.deckName, 18)} >
             <NumOfCardsInput onChange={onChange} settingNumCards={settingNumCards} max={Object.keys(flashcardData).length} />
             <Button
@@ -152,7 +152,7 @@ const Practice = () => {
         {/* Answering cards */}
 
         {/* Finish Confirmation */}
-        {mode === modes.finishConfirmation &&
+        {mode === Practicemodes.finishConfirmation &&
           <GenericConfirmation text="Do you want to finish?">
             <Button
               text="Done"
@@ -169,7 +169,7 @@ const Practice = () => {
         {/* Finish Confirmation */}
 
         {/* finished */}
-        {mode === modes.finished &&
+        {mode === Practicemodes.finished &&
           <Result
             deckName={deckData.deckName}
             numCards={loadedCards.length}
