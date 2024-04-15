@@ -8,7 +8,8 @@ export const errorMessage = {
 export const confirmationMessage = {
   practice: {
     before: {
-      header: (deckName) => `${truncate(deckName, 18)}`
+      header: (deckName) => `${truncate(deckName, 18)}`,
+      text: "Set number of cards below. Ready to start?"
     },
     warning: {
       header: "Do you want to finish?"
@@ -16,8 +17,7 @@ export const confirmationMessage = {
   },
   create: {
     process: {
-      header: "Create",
-      text: "Processing"
+      header: "Processing"
     },
     updated: {
       header: "Create Success",

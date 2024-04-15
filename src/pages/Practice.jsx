@@ -4,11 +4,10 @@ import styled from "styled-components";
 import { modes } from "../helpers/modes";
 import { confirmationMessage } from "../helpers/messages";
 import usePracticeData from "../hooks/usePracticeData";
-import GenericConfirmation from "../components/GenericConfirmation";
-import PracticeCards from "../components/PracticeCards";
-import NumOfCardsInput from "../components/NumOfCardsInput";
-import Button from "../components/Button";
 import PageLayout from "../components/PageLayout";
+import ConfirmationwithYesAndCancel from "../components/ConfirmationwithYesAndCancel";
+import NumOfCardsInput from "../components/NumOfCardsInput";
+import PracticeCards from "../components/PracticeCards";
 import Result from "./Result";
 
 const Wrapper = styled.div`
@@ -34,7 +33,7 @@ const Practice = () => {
   let navigate = useNavigate();
 
   const [mode, setMode] = useState(modes.practice.before);
-  const [confirmationMsg, setConfirmationMsg] = useState({header: "", text: ""});
+  const [confirmationMsg, setConfirmationMsg] = useState({ header: "", text: "" });
   const [selectedCardIndices, setSelectedCardIndices] = useState([]);
   const [numCards, setNumCards] = useState([]);
   const [loadedCards, setLoadedCards] = useState([]);
@@ -53,10 +52,14 @@ const Practice = () => {
   }, [numCards]);
 
   useEffect(() => {
-    setsettingNumCards(Object.keys(flashcardData).length);
-    setConfirmationMsg({
-      header: confirmationMessage.practice.before.header(deckData.deckName)
-    })
+    if(mode === modes.practice.before) {
+      setsettingNumCards(Object.keys(flashcardData).length);
+      setConfirmationMsg({
+        header: confirmationMessage.practice.before.header(deckData.deckName),
+        text : confirmationMessage.practice.before.text
+      })
+
+    }
   }, [flashcardData, deckData]);
 
   const addLoadedCards = (current) => {
@@ -103,16 +106,20 @@ const Practice = () => {
     setsettingNumCards(e.target.value)
   };
 
-  const handleStart = () => {
+  const startYesHandler = () => {
     setNumCards(settingNumCards);
     setMode(modes.practice.answering);
   }
 
-  const handleQuit = () => {
+  const startCancelHandler = () => {
+    navigate('/decklist');
+  }
+
+  const finishYesHandler = () => {
     addLoadedCards(current);
     setMode(modes.practice.finished);
   }
-  const handleBackToDeck = () => {
+  const finishCancelHandler = () => {
     setMode(modes.practice.answering);
   }
 
@@ -121,19 +128,9 @@ const Practice = () => {
       <Wrapper>
         {/* Before start  */}
         {mode === modes.practice.before &&
-          <GenericConfirmation header={confirmationMsg.header} >
+          <ConfirmationwithYesAndCancel header={confirmationMsg.header} text={confirmationMsg.text} handleYes={startYesHandler} handleCancel={startCancelHandler}>
             <NumOfCardsInput onChange={onChange} settingNumCards={settingNumCards} max={Object.keys(flashcardData).length} />
-            <Button
-              text="Start"
-              buttonType='button'
-              onButtonClick={handleStart}
-            />
-            <Button
-              text="Cancel"
-              buttonType='button'
-              onButtonClick={() => navigate('/decklist')}
-            />
-          </GenericConfirmation>
+          </ConfirmationwithYesAndCancel>
         }
         {/* Before start */}
 
@@ -158,18 +155,7 @@ const Practice = () => {
 
         {/* Finish Confirmation */}
         {mode === modes.practice.warning &&
-          <GenericConfirmation header={confirmationMsg.header}>
-            <Button
-              text="Done"
-              buttonType="button"
-              onButtonClick={handleQuit}
-            />
-            <Button
-              text="Back to Deck"
-              buttonType="button"
-              onButtonClick={handleBackToDeck}
-            />
-          </GenericConfirmation>
+          <ConfirmationwithYesAndCancel header={confirmationMsg.header} handleYes={finishYesHandler} handleCancel={finishCancelHandler}/>
         }
         {/* Finish Confirmation */}
 

@@ -9,11 +9,10 @@ import { postCreateDeckAndCards } from "../helpers/deckAndCardsHelpers";
 import { modes } from "../helpers/modes";
 import { confirmationMessage } from "../helpers/messages";
 import PageLayout from '../components/PageLayout'
+import Process from "../components/Process";
+import ConfirmationwithOk from "../components/ConfirmationwithOk";
 import CardForm from '../components/CardForm'
 import ModifyWrapper from '../components/ModifyWrapper';
-import GenericConfirmation from "../components/GenericConfirmation";
-import Button from "../components/Button";
-import LoadingSpinner from "../components/LoadingSpinner";
 
 const Create = () => {
   const { getAccessTokenSilently } = useAuth0();
@@ -21,7 +20,7 @@ const Create = () => {
   const { openModal, closeModal } = useModal();
   const [error, setError] = useState('');
   const [mode, setMode] = useState(modes.create.before);
-  const [confirmationMsg, setConfirmationMsg] = useState({header: "",text: ""});
+  const [confirmationMsg, setConfirmationMsg] = useState({ header: "", text: "" });
   const [newDeckContents, setNewDeckContents] = useState({ ...defaultEditableDeck });
   const [newCardContents, setNewCardContents] = useState([{ ...defaultEditableCard }]);
   const [updateResult, SetUpdateResult] = useState('');
@@ -61,17 +60,16 @@ const Create = () => {
     setMode(modes.create.process);
     setConfirmationMsg({
       header: confirmationMessage.create.process.header,
-      text: confirmationMessage.create.process.text
     })
     // handleOnSaveValidation will return true if there is a problem
     if (handleOnSaveValidation(currentDeck)) {
       setError(errorMessage.inputError);
       return;
     }
-    
+
     const accessToken = await getAccessTokenSilently();
     const { data, error } = await postCreateDeckAndCards(accessToken, newDeckContents, newCardContents);
-    
+
     if (data) {
       SetUpdateResult(data);
       setMode(modes.create.updated);
@@ -79,7 +77,7 @@ const Create = () => {
         header: confirmationMessage.create.updated.header,
         text: confirmationMessage.create.updated.text
       })
-    } 
+    }
     if (error) {
       const isStatusCode409 = error.message.split(" ").indexOf("409") !== -1;
       setMode(modes.create.error)
@@ -92,14 +90,8 @@ const Create = () => {
   };
 
   const handleOk = () => {
-    closeModal();
-    const path = `/deck/${updateResult.deckId}`;
-    navigate(path);
-  }
-
-  const handleGoback = () => {
     setMode(modes.create.before);
-    const path = `/create`;
+    const path = mode === modes.create.updated ? `/deck/${updateResult.deckId}` : "/create";
     navigate(path);
     closeModal();
   }
@@ -121,28 +113,9 @@ const Create = () => {
 
   return (
     <PageLayout>
-      {mode === modes.create.process &&
-        <GenericConfirmation header={confirmationMsg.header} text={confirmationMsg.text}>
-          <LoadingSpinner/>
-        </GenericConfirmation>
-      }
-      {mode === modes.create.updated &&
-        <GenericConfirmation header={confirmationMsg.header} text={confirmationMsg.text}>
-          <Button
-            text='Ok'
-            buttonType="button"
-            onButtonClick={handleOk}
-          />
-        </GenericConfirmation>
-      }
-      {mode === modes.create.error &&
-        <GenericConfirmation header={confirmationMsg.header} text={confirmationMsg.text}>
-          <Button
-            text='Ok'
-            buttonType="button"
-            onButtonClick={handleGoback}
-          />
-        </GenericConfirmation>
+      {mode === modes.create.process && <Process header={confirmationMsg.header}/>}
+      {(mode === modes.create.updated || mode === modes.create.error) && 
+        <ConfirmationwithOk header={confirmationMsg.header} text={confirmationMsg.text} handleOk={handleOk} />
       }
       <ModifyWrapper
         error={error}
@@ -150,7 +123,6 @@ const Create = () => {
         setDeckContents={setNewDeckContents}
         cardFormItems={cardFormItems}
         updateResult={updateResult}
-        handleOk={handleOk}
         handleSaveClick={handleSaveClick}
         disableButton={disableButton}
         createNewCard={createNewCard}

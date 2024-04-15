@@ -10,8 +10,9 @@ import { deleteDeckAndCards } from "../helpers/deckAndCardsHelpers";
 import PageLayout from "../components/PageLayout";
 import DeckItem from "../components/DeckItem";
 import LoadingSpinner from "../components/LoadingSpinner";
-import GenericConfirmation from "../components/GenericConfirmation";
-import Button from "../components/Button";
+import ConfirmationwithOk from "../components/ConfirmationwithOk";
+import Process from "../components/Process";
+import ConfirmationwithYesAndCancel from "../components/ConfirmationwithYesAndCancel";
 
 const Wrapper = styled.div`
   display: flex;
@@ -62,7 +63,6 @@ const DeckList = () => {
   const [userId, setUserId] = useState("");
 
   useEffect(() => {
-    closeModal();
     setLoading(true);
     axios.get(`api/deck/`)
       .then(res => {
@@ -73,25 +73,25 @@ const DeckList = () => {
       .catch(err => {
         console.log(err)
       })
-  }, []);
+  }, [mode]);
 
-  const handleYes = () => {
+  const deleteYesHandler = () => {
     openModal();
     setMode(modes.delete.process);
     deleteDeck(deleteDeckId);
   }
 
-  const handleCancel = () => {
+  const deleteCancelhandler = () => {
     setMode(modes.delete.before);
     const path = `/decklist`;
     navigate(path);
     closeModal();
   }
 
-  const handleOk = () => {
+  const okHandler = () => {
     navigate(0);
     setMode(modes.delete.before);
-    const path = `/decklist`;
+    const path = "/decklist";
     navigate(path);
     closeModal();
   }
@@ -139,41 +139,11 @@ const DeckList = () => {
   return (
     <PageLayout>
       {mode === modes.delete.warning &&
-        <GenericConfirmation header={confirmationMsg.header} text={confirmationMsg.text}>
-          <Button
-            text='Yes'
-            buttonType="button"
-            onButtonClick={handleYes}
-          />
-          <Button
-            text='Cancel'
-            buttonType="button"
-            onButtonClick={handleCancel}
-          />
-        </GenericConfirmation>
+        <ConfirmationwithYesAndCancel header={confirmationMsg.header} text={confirmationMsg.text} handleYes={deleteYesHandler} handleCancel={deleteCancelhandler}/>
       }
-      {mode === modes.delete.process &&
-        <GenericConfirmation header={confirmationMsg.header} >
-          <LoadingSpinner/>
-        </GenericConfirmation>
-      }
-      {mode === modes.delete.updated &&
-        <GenericConfirmation header={confirmationMsg.header} text={confirmationMsg.text}>
-          <Button
-            text='Ok'
-            buttonType="button"
-            onButtonClick={(handleOk)}
-          />
-        </GenericConfirmation>
-      }
-      {mode === modes.delete.error &&
-        <GenericConfirmation header={confirmationMessage.delete.error} text={confirmationMsg.text}>
-          <Button
-            text='Ok'
-            buttonType="button"
-            onButtonClick={(handleOk)}
-          />
-        </GenericConfirmation>
+      {mode === modes.delete.process && <Process header={confirmationMsg.header}/>}
+      {(mode === modes.delete.updated || mode === modes.delete.error) && 
+      <ConfirmationwithOk header={confirmationMsg.header} text={confirmationMsg.text} handleOk={okHandler}/>
       }
       <Wrapper className={modalActivated ? 'blur' : null}>
         <Title>Deck List</Title>

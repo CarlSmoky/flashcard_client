@@ -11,11 +11,10 @@ import { confirmationMessage } from "../helpers/messages";
 import { postUpdateDeckAndCards } from "../helpers/deckAndCardsHelpers";
 import useEditData from "../hooks/useEditData";
 import PageLayout from "../components/PageLayout";
-import CardForm from "../components/CardForm";
-import LoadingSpinner from "../components/LoadingSpinner";
+import ConfirmationwithOk from "../components/ConfirmationwithOk";
+import Process from "../components/Process";
 import ModifyWrapper from "../components/ModifyWrapper";
-import GenericConfirmation from "../components/GenericConfirmation";
-import Button from "../components/Button";
+import CardForm from "../components/CardForm";
 
 const Edit = () => {
   const {
@@ -126,15 +125,9 @@ const Edit = () => {
     }
   }
 
-  const updatedConfirmationHandler = () => {
-    const path = `/deck/${id}`;
-    navigate(path);
-    closeModal();
-  }
-
-  const errorConfirmationHandler = () => {
+  const handleOk = () => {
     setMode(modes.edit.before)
-    const path = `/edit/${id}`;
+    const path = mode === modes.edit.updated ? `/deck/${id}` : `/edit/${id}`;
     navigate(path);
     closeModal();
   }
@@ -146,35 +139,16 @@ const Edit = () => {
 
   return (
     <PageLayout>
-      {mode === modes.edit.process &&
-        <GenericConfirmation header={confirmationMsg.header} text={confirmationMsg.text}>
-          <LoadingSpinner/>
-        </GenericConfirmation>
-      }
-      {mode === modes.edit.updated &&
-        <GenericConfirmation header={confirmationMsg.header} text={confirmationMsg.text}>
-          <Button
-            text='Ok'
-            buttonType="button"
-            onButtonClick={updatedConfirmationHandler}
-          />
-        </GenericConfirmation>
-      }
-      {mode === modes.create.error &&
-        <GenericConfirmation header={confirmationMsg.header} text={confirmationMsg.text}>
-          <Button
-            text='Ok'
-            buttonType="button"
-            onButtonClick={errorConfirmationHandler}
-          />
-        </GenericConfirmation>
+      {mode === modes.edit.process && <Process header={confirmationMsg.header}/>}
+      {(mode === modes.edit.updated || mode === modes.edit.error) && 
+      <ConfirmationwithOk header={confirmationMsg.header} text={confirmationMsg.text} handleOk={handleOk}/>
       }
       <ModifyWrapper
         error={error}
         deckContents={editableDeck}
         setDeckContents={setEditableDeck}
         cardFormItems={cardFormItems}
-        handleOk={updatedConfirmationHandler}
+        handleOk={handleOk}
         handleSaveClick={handleSaveClick}
         disableButton={disableButton}
         createNewCard={createNewCard}
