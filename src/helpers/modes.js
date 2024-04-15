@@ -11,6 +11,12 @@ const modes = {
     updated: "updated",
     error: "error"
   },
+  edit: {
+    before: "before",
+    process: "process",
+    updated: "updated",
+    error: "error"
+  },
   delete : {
     before: "before",
     warning: "warning",

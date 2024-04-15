@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
-import CardWrapper from "./CardWrapper";
 import { modes } from "../helpers/modes";
+import { confirmationMessage } from "../helpers/messages";
+import CardWrapper from "./CardWrapper";
 
 const CardInner = styled.div`
   position: relative;
@@ -70,6 +71,7 @@ const Card = ({
   isEndCard,
   setCardProperty,
   setMode,
+  setConfirmationMsg,
   addLoadedCards,
   current
 }) => {
@@ -86,6 +88,9 @@ const Card = ({
       nextCard();
     } else {
       setMode(modes.practice.warning);
+      setConfirmationMsg({
+        header: confirmationMessage.practice.warning.header
+      })
       addLoadedCards(current)
     }
       

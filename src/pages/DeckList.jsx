@@ -4,8 +4,9 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useModal } from "../providers/ModalProvider";
+import { modes } from "../helpers/modes";
+import { confirmationMessage } from "../helpers/messages";
 import { deleteDeckAndCards } from "../helpers/deckAndCardsHelpers";
-import { modes } from "../helpers/modes"
 import PageLayout from "../components/PageLayout";
 import DeckItem from "../components/DeckItem";
 import LoadingSpinner from "../components/LoadingSpinner";
@@ -56,7 +57,7 @@ const DeckList = () => {
   const [decks, setDecks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [mode, setMode] = useState(modes.delete.before);
-  const [displayMsg, setDisplayMsg] = useState("");
+  const [confirmationMsg, setConfirmationMsg] = useState({header: "",text: ""});
   const [deleteDeckId, setDeleteDeckId] = useState(0);
   const [userId, setUserId] = useState("");
 
@@ -77,6 +78,7 @@ const DeckList = () => {
   const handleYes = () => {
     openModal();
     setMode(modes.delete.process);
+    deleteDeck(deleteDeckId);
   }
 
   const handleCancel = () => {
@@ -104,26 +106,19 @@ const DeckList = () => {
     
     if (data) {
       setMode(modes.delete.updated);
+      setConfirmationMsg({
+        header: confirmationMessage.delete.updated.header,
+        text: confirmationMessage.delete.updated.text
+      })
     }
     if (error) {
       setMode(modes.delete.error);
+      setConfirmationMsg({
+        header: confirmationMessage.delete.error.header,
+        text: confirmationMessage.delete.error.text
+      })
     }
   }
-
-  useEffect(() => {
-    if (mode === modes.delete.process) {
-      deleteDeck(deleteDeckId);
-    }
-    if (mode === modes.delete.warning) {
-      setDisplayMsg("After deleting, you cannot restore all deck and cards data. Are you sure?")
-    }
-    if (mode === modes.delete.error) {
-      setDisplayMsg("Something went wrong...")
-    }
-    if (mode === modes.delete.updated) {
-      setDisplayMsg("Deck and cards are deleted.");
-    }
-  }, [mode])
 
   const allDecks = decks.map(deck => {
     return (
@@ -134,7 +129,7 @@ const DeckList = () => {
         description={deck.description}
         user_id={deck.user_id}
         setMode={setMode}
-        setDisplayMsg={setDisplayMsg}
+        setConfirmationMsg={setConfirmationMsg}
         setDeleteDeckId={setDeleteDeckId}
         setUserId={setUserId}
       />
@@ -144,7 +139,7 @@ const DeckList = () => {
   return (
     <PageLayout>
       {mode === modes.delete.warning &&
-        <GenericConfirmation text={`Do you want to delete?`} info={displayMsg}>
+        <GenericConfirmation header={confirmationMsg.header} text={confirmationMsg.text}>
           <Button
             text='Yes'
             buttonType="button"
@@ -158,12 +153,12 @@ const DeckList = () => {
         </GenericConfirmation>
       }
       {mode === modes.delete.process &&
-        <GenericConfirmation text={"Processing"} >
+        <GenericConfirmation header={confirmationMsg.header} >
           <LoadingSpinner/>
         </GenericConfirmation>
       }
       {mode === modes.delete.updated &&
-        <GenericConfirmation text={`Delete Success`} info={displayMsg}>
+        <GenericConfirmation header={confirmationMsg.header} text={confirmationMsg.text}>
           <Button
             text='Ok'
             buttonType="button"
@@ -172,7 +167,7 @@ const DeckList = () => {
         </GenericConfirmation>
       }
       {mode === modes.delete.error &&
-        <GenericConfirmation text="Error" info={displayMsg}>
+        <GenericConfirmation header={confirmationMessage.delete.error} text={confirmationMsg.text}>
           <Button
             text='Ok'
             buttonType="button"

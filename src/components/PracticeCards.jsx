@@ -1,8 +1,9 @@
 import React from "react";
 import styled, { css } from "styled-components";
+import { modes } from "../helpers/modes";
+import { confirmationMessage } from "../helpers/messages"
 import Card from "../components/Card";
 import Arrow from "../components/Arrow";
-import { modes } from "../helpers/modes";
 import { RxCross2 } from "react-icons/rx";
 
 const CardsHeaderStyle = styled.div`
@@ -86,6 +87,7 @@ const PracticeCards = ({
   deckName,
   flashcardData,
   setMode,
+  setConfirmationMsg,
   selectedCardIndices,
   isModalMode,
   loadedCards,
@@ -133,6 +135,7 @@ const PracticeCards = ({
         isEndCard={current === selectedCardIndices.length - 1}
         setCardProperty={setCardProperty}
         setMode={setMode}
+        setConfirmationMsg={setConfirmationMsg}
         addLoadedCards={addLoadedCards}
         current={current}
       />;
@@ -142,6 +145,14 @@ const PracticeCards = ({
 
   const cards = setDeckFromIds();
   const defaultCard = setDefaultDeck();
+
+  const clickHandler = () => {
+    setMode(modes.practice.warning);
+    setConfirmationMsg({
+      header: confirmationMessage.practice.warning.header
+    })
+
+  }
 
   return (
     <>
@@ -155,7 +166,7 @@ const PracticeCards = ({
             </span>
           )}
         </div>
-        <CrossButton disabled={isModalMode()} onClick={() => setMode(modes.practice.warning)}>
+        <CrossButton disabled={isModalMode()} onClick={clickHandler}>
           <RxCross2 size={25} />
           <span className="visually-hidden">Cancel Button</span>
         </CrossButton>

@@ -7,6 +7,7 @@ import { handleOnSaveValidation } from '../helpers/validation'
 import { defaultEditableDeck, defaultEditableCard } from '../helpers/defaultEditableData'
 import { postCreateDeckAndCards } from "../helpers/deckAndCardsHelpers";
 import { modes } from "../helpers/modes";
+import { confirmationMessage } from "../helpers/messages";
 import PageLayout from '../components/PageLayout'
 import CardForm from '../components/CardForm'
 import ModifyWrapper from '../components/ModifyWrapper';
@@ -19,7 +20,8 @@ const Create = () => {
   let navigate = useNavigate();
   const { openModal, closeModal } = useModal();
   const [error, setError] = useState('');
-  const [mode, setMode] = useState(modes.create.before)
+  const [mode, setMode] = useState(modes.create.before);
+  const [confirmationMsg, setConfirmationMsg] = useState({header: "",text: ""});
   const [newDeckContents, setNewDeckContents] = useState({ ...defaultEditableDeck });
   const [newCardContents, setNewCardContents] = useState([{ ...defaultEditableCard }]);
   const [updateResult, SetUpdateResult] = useState('');
@@ -56,7 +58,11 @@ const Create = () => {
 
   const handleSaveClick = async (e) => {
     openModal();
-    setMode(modes.create.process)
+    setMode(modes.create.process);
+    setConfirmationMsg({
+      header: confirmationMessage.create.process.header,
+      text: confirmationMessage.create.process.text
+    })
     // handleOnSaveValidation will return true if there is a problem
     if (handleOnSaveValidation(currentDeck)) {
       setError(errorMessage.inputError);
@@ -68,12 +74,20 @@ const Create = () => {
     
     if (data) {
       SetUpdateResult(data);
-      setMode(modes.create.updated)
+      setMode(modes.create.updated);
+      setConfirmationMsg({
+        header: confirmationMessage.create.updated.header,
+        text: confirmationMessage.create.updated.text
+      })
     } 
     if (error) {
-      setMode(modes.create.error)
       const isStatusCode409 = error.message.split(" ").indexOf("409") !== -1;
-      isStatusCode409 ? setError("The deck title already exists. Tyr something else.") : setError("Something went wrong.")
+      setMode(modes.create.error)
+      setError(confirmationMessage.create.error.text(isStatusCode409));
+      setConfirmationMsg({
+        header: confirmationMessage.create.error.header,
+        text: confirmationMessage.create.error.text(isStatusCode409)
+      })
     }
   };
 
@@ -108,12 +122,12 @@ const Create = () => {
   return (
     <PageLayout>
       {mode === modes.create.process &&
-        <GenericConfirmation text="Creating" info={'Processing'}>
+        <GenericConfirmation header={confirmationMsg.header} text={confirmationMsg.text}>
           <LoadingSpinner/>
         </GenericConfirmation>
       }
       {mode === modes.create.updated &&
-        <GenericConfirmation text="Created" info={`${updateResult.deckName} is successfully saved`}>
+        <GenericConfirmation header={confirmationMsg.header} text={confirmationMsg.text}>
           <Button
             text='Ok'
             buttonType="button"
@@ -122,7 +136,7 @@ const Create = () => {
         </GenericConfirmation>
       }
       {mode === modes.create.error &&
-        <GenericConfirmation text="Error" info={error}>
+        <GenericConfirmation header={confirmationMsg.header} text={confirmationMsg.text}>
           <Button
             text='Ok'
             buttonType="button"

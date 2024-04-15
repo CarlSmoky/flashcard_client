@@ -6,12 +6,14 @@ import { handleOnSaveValidation } from "../helpers/validation";
 import { updateStatus } from "../helpers/defaultEditableData";
 import { useModal } from "../providers/ModalProvider";
 import { scrollToTop } from "../helpers/utilities";
+import { modes } from "../helpers/modes";
+import { confirmationMessage } from "../helpers/messages";
 import { postUpdateDeckAndCards } from "../helpers/deckAndCardsHelpers";
 import useEditData from "../hooks/useEditData";
 import PageLayout from "../components/PageLayout";
 import CardForm from "../components/CardForm";
+import LoadingSpinner from "../components/LoadingSpinner";
 import ModifyWrapper from "../components/ModifyWrapper";
-import { generateUpdateMsg } from "../helpers/utilities";
 import GenericConfirmation from "../components/GenericConfirmation";
 import Button from "../components/Button";
 
@@ -29,10 +31,10 @@ const Edit = () => {
   let navigate = useNavigate();
   const { getAccessTokenSilently } = useAuth0();
   const { id } = useParams();
-  const { modalActivated, openModal, closeModal } = useModal();
+  const { openModal, closeModal } = useModal();
+  const [mode, setMode] = useState(modes.edit.before);
+  const [confirmationMsg, setConfirmationMsg] = useState({header: "",text: ""});
   const [error, setError] = useState('');
-  const [editDeckResult, setEditDeckResult] = useState({});
-  const displayMsg = generateUpdateMsg((editDeckResult)).map((msg, i) => <p key={i}>{msg}</p>);
   const displayedCardForm = editableCards.filter(card => card.updateStatus !== updateStatus.deleted);
 
   const deleteCardForm = (index) => {
@@ -90,30 +92,51 @@ const Edit = () => {
   }
 
   const handleSaveClick = async (e) => {
+  
     if (handleOnSaveValidation(currentDeck)) {
       setError(errorMessage.inputError);
       scrollToTop();
       return;
     }
+    openModal()
+    setMode(modes.edit.process);
+    setConfirmationMsg({
+      header: confirmationMessage.edit.process.header,
+      text: confirmationMessage.edit.process.text
+    })
 
-    setError("");
     const accessToken = await getAccessTokenSilently();
     const {data, error} = await postUpdateDeckAndCards(accessToken, updateDeckData, createdCardsData, updateCardsData, deleteCardsData, id);
     
     if (data) {
-      setEditDeckResult(data)
-      openModal();
+      setMode(modes.edit.updated);
+      setConfirmationMsg({
+        header: confirmationMessage.edit.updated.header,
+        text: confirmationMessage.edit.updated.text(data)
+      })
+      
     } 
     if (error) {
-      setError(JSON.stringify(error.message, null, 2));
+      const isStatusCode409 = error.message.split(" ").indexOf("409") !== -1;
+      setMode(modes.edit.error);
+      setConfirmationMsg({
+        header: confirmationMessage.edit.error.header,
+        text: confirmationMessage.edit.error.text(isStatusCode409)
+      })
     }
   }
 
-  const handleOk = () => {
-    closeModal();
+  const updatedConfirmationHandler = () => {
     const path = `/deck/${id}`;
     navigate(path);
-    setEditDeckResult({});
+    closeModal();
+  }
+
+  const errorConfirmationHandler = () => {
+    setMode(modes.edit.before)
+    const path = `/edit/${id}`;
+    navigate(path);
+    closeModal();
   }
 
   useEffect(() => {
@@ -123,12 +146,26 @@ const Edit = () => {
 
   return (
     <PageLayout>
-      {modalActivated &&
-        <GenericConfirmation text="Updated" info={displayMsg}>
+      {mode === modes.edit.process &&
+        <GenericConfirmation header={confirmationMsg.header} text={confirmationMsg.text}>
+          <LoadingSpinner/>
+        </GenericConfirmation>
+      }
+      {mode === modes.edit.updated &&
+        <GenericConfirmation header={confirmationMsg.header} text={confirmationMsg.text}>
           <Button
             text='Ok'
             buttonType="button"
-            onButtonClick={handleOk}
+            onButtonClick={updatedConfirmationHandler}
+          />
+        </GenericConfirmation>
+      }
+      {mode === modes.create.error &&
+        <GenericConfirmation header={confirmationMsg.header} text={confirmationMsg.text}>
+          <Button
+            text='Ok'
+            buttonType="button"
+            onButtonClick={errorConfirmationHandler}
           />
         </GenericConfirmation>
       }
@@ -137,8 +174,7 @@ const Edit = () => {
         deckContents={editableDeck}
         setDeckContents={setEditableDeck}
         cardFormItems={cardFormItems}
-        updateResult={editDeckResult}
-        handleOk={handleOk}
+        handleOk={updatedConfirmationHandler}
         handleSaveClick={handleSaveClick}
         disableButton={disableButton}
         createNewCard={createNewCard}

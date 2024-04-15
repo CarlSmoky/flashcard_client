@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
 import { useParams, useNavigate } from "react-router-dom";
-import usePracticeData from "../hooks/usePracticeData";
+import styled from "styled-components";
 import { modes } from "../helpers/modes";
-import { truncate } from "../helpers/utilities";
+import { confirmationMessage } from "../helpers/messages";
+import usePracticeData from "../hooks/usePracticeData";
 import GenericConfirmation from "../components/GenericConfirmation";
 import PracticeCards from "../components/PracticeCards";
 import NumOfCardsInput from "../components/NumOfCardsInput";
@@ -34,6 +34,7 @@ const Practice = () => {
   let navigate = useNavigate();
 
   const [mode, setMode] = useState(modes.practice.before);
+  const [confirmationMsg, setConfirmationMsg] = useState({header: "", text: ""});
   const [selectedCardIndices, setSelectedCardIndices] = useState([]);
   const [numCards, setNumCards] = useState([]);
   const [loadedCards, setLoadedCards] = useState([]);
@@ -53,7 +54,10 @@ const Practice = () => {
 
   useEffect(() => {
     setsettingNumCards(Object.keys(flashcardData).length);
-  }, [flashcardData]);
+    setConfirmationMsg({
+      header: confirmationMessage.practice.before.header(deckData.deckName)
+    })
+  }, [flashcardData, deckData]);
 
   const addLoadedCards = (current) => {
     const currentCardId = selectedCardIndices[current];
@@ -117,7 +121,7 @@ const Practice = () => {
       <Wrapper>
         {/* Before start  */}
         {mode === modes.practice.before &&
-          <GenericConfirmation text={truncate(deckData.deckName, 18)} >
+          <GenericConfirmation header={confirmationMsg.header} >
             <NumOfCardsInput onChange={onChange} settingNumCards={settingNumCards} max={Object.keys(flashcardData).length} />
             <Button
               text="Start"
@@ -139,6 +143,7 @@ const Practice = () => {
             deckName={deckData.deckName}
             flashcardData={flashcardData}
             setMode={setMode}
+            setConfirmationMsg={setConfirmationMsg}
             selectedCardIndices={selectedCardIndices}
             isModalMode={isModalMode}
             current={current}
@@ -153,7 +158,7 @@ const Practice = () => {
 
         {/* Finish Confirmation */}
         {mode === modes.practice.warning &&
-          <GenericConfirmation text="Do you want to finish?">
+          <GenericConfirmation header={confirmationMsg.header}>
             <Button
               text="Done"
               buttonType="button"

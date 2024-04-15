@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useModal } from "../providers/ModalProvider";
 import { truncate } from "../helpers/utilities";
+import { confirmationMessage } from "../helpers/messages";
 import { AiOutlineEdit } from "react-icons/ai";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { modes } from "../helpers/modes";
@@ -114,7 +115,7 @@ const ClickArea = styled.div`
   }
 `
 
-const DeckItem = ({ id, deckName, description, user_id, setMode, setDeleteDeckId, setUserId }) => {
+const DeckItem = ({ id, deckName, description, user_id, setMode, setConfirmationMsg,  setDeleteDeckId, setUserId }) => {
   let navigate = useNavigate();
   const { user } = useAuth0();
   const { modalActivated, openModal } = useModal();
@@ -127,6 +128,10 @@ const DeckItem = ({ id, deckName, description, user_id, setMode, setDeleteDeckId
   const deleteClickHandler = async () => {
     openModal();
     setMode(modes.delete.warning);
+    setConfirmationMsg({
+      header : confirmationMessage.delete.warning.header(deckName),
+      text: confirmationMessage.delete.warning.text
+    })
     setDeleteDeckId(id);
     setUserId(user_id);
   }
