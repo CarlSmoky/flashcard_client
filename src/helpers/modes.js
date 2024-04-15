@@ -1,24 +1,24 @@
-const Practicemodes = {
-  before: "before",
-  answering: "answering",
-  finishConfirmation: "finishConfirmation",
-  finished: "finished"
-};
+const modes = {
+  practice : {
+    before: "before",
+    answering: "answering",
+    warning: "warning",
+    finished: "finished"
+  },
+  create: {
+    before: "before",
+    process: "process",
+    updated: "updated",
+    error: "error"
+  },
+  delete : {
+    before: "before",
+    warning: "warning",
+    process: "process",
+    updated: "updated",
+    error: "error"
+  }
+}
 
-const Createmodes = {
-  before: "before",
-  creating: "creating",
-  finished: "finished",
-  error: "error"
-};
 
-const Deletemodes = {
-  before: "before",
-  warning: "warning",
-  deleting: "deleting",
-  finished: "finished",
-  error: "error"
-};
-
-
-export { Practicemodes, Createmodes, Deletemodes };
+export { modes };

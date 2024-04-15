@@ -2,7 +2,7 @@ import React from "react";
 import styled, { css } from "styled-components";
 import Card from "../components/Card";
 import Arrow from "../components/Arrow";
-import { Practicemodes } from "../helpers/modes";
+import { modes } from "../helpers/modes";
 import { RxCross2 } from "react-icons/rx";
 
 const CardsHeaderStyle = styled.div`
@@ -155,7 +155,7 @@ const PracticeCards = ({
             </span>
           )}
         </div>
-        <CrossButton disabled={isModalMode()} onClick={() => setMode(Practicemodes.finishConfirmation)}>
+        <CrossButton disabled={isModalMode()} onClick={() => setMode(modes.practice.warning)}>
           <RxCross2 size={25} />
           <span className="visually-hidden">Cancel Button</span>
         </CrossButton>

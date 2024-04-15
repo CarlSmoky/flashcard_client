@@ -6,7 +6,7 @@ import { errorMessage } from '../helpers/messages'
 import { handleOnSaveValidation } from '../helpers/validation'
 import { defaultEditableDeck, defaultEditableCard } from '../helpers/defaultEditableData'
 import { postCreateDeckAndCards } from "../helpers/deckAndCardsHelpers";
-import { Createmodes } from "../helpers/modes";
+import { modes } from "../helpers/modes";
 import PageLayout from '../components/PageLayout'
 import CardForm from '../components/CardForm'
 import ModifyWrapper from '../components/ModifyWrapper';
@@ -19,7 +19,7 @@ const Create = () => {
   let navigate = useNavigate();
   const { openModal, closeModal } = useModal();
   const [error, setError] = useState('');
-  const [mode, setMode] = useState(Createmodes.before)
+  const [mode, setMode] = useState(modes.create.before)
   const [newDeckContents, setNewDeckContents] = useState({ ...defaultEditableDeck });
   const [newCardContents, setNewCardContents] = useState([{ ...defaultEditableCard }]);
   const [updateResult, SetUpdateResult] = useState('');
@@ -49,14 +49,14 @@ const Create = () => {
   }
 
   useEffect(() => {
-    if (mode === Createmodes.before) {
+    if (mode === modes.create.before) {
       closeModal();
     }
   }, [mode])
 
   const handleSaveClick = async (e) => {
     openModal();
-    setMode(Createmodes.creating)
+    setMode(modes.create.process)
     // handleOnSaveValidation will return true if there is a problem
     if (handleOnSaveValidation(currentDeck)) {
       setError(errorMessage.inputError);
@@ -68,10 +68,10 @@ const Create = () => {
     
     if (data) {
       SetUpdateResult(data);
-      setMode(Createmodes.finished)
+      setMode(modes.create.updated)
     } 
     if (error) {
-      setMode(Createmodes.error)
+      setMode(modes.create.error)
       const isStatusCode409 = error.message.split(" ").indexOf("409") !== -1;
       isStatusCode409 ? setError("The deck title already exists. Tyr something else.") : setError("Something went wrong.")
     }
@@ -84,7 +84,7 @@ const Create = () => {
   }
 
   const handleGoback = () => {
-    setMode(Createmodes.before);
+    setMode(modes.create.before);
     const path = `/create`;
     navigate(path);
     closeModal();
@@ -107,12 +107,12 @@ const Create = () => {
 
   return (
     <PageLayout>
-      {mode === Createmodes.creating &&
+      {mode === modes.create.process &&
         <GenericConfirmation text="Creating" info={'Processing'}>
           <LoadingSpinner/>
         </GenericConfirmation>
       }
-      {mode === Createmodes.finished &&
+      {mode === modes.create.updated &&
         <GenericConfirmation text="Created" info={`${updateResult.deckName} is successfully saved`}>
           <Button
             text='Ok'
@@ -121,7 +121,7 @@ const Create = () => {
           />
         </GenericConfirmation>
       }
-      {mode === Createmodes.error &&
+      {mode === modes.create.error &&
         <GenericConfirmation text="Error" info={error}>
           <Button
             text='Ok'

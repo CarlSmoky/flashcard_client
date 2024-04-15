@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useModal } from "../providers/ModalProvider";
 import { deleteDeckAndCards } from "../helpers/deckAndCardsHelpers";
-import { Deletemodes } from "../helpers/modes"
+import { modes } from "../helpers/modes"
 import PageLayout from "../components/PageLayout";
 import DeckItem from "../components/DeckItem";
 import LoadingSpinner from "../components/LoadingSpinner";
@@ -55,7 +55,7 @@ const DeckList = () => {
   const { modalActivated, openModal, closeModal } = useModal();
   const [decks, setDecks] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [mode, setMode] = useState(Deletemodes.before);
+  const [mode, setMode] = useState(modes.delete.before);
   const [displayMsg, setDisplayMsg] = useState("");
   const [deleteDeckId, setDeleteDeckId] = useState(0);
   const [userId, setUserId] = useState("");
@@ -76,11 +76,11 @@ const DeckList = () => {
 
   const handleYes = () => {
     openModal();
-    setMode(Deletemodes.deleting);
+    setMode(modes.delete.process);
   }
 
   const handleCancel = () => {
-    setMode(Deletemodes.before);
+    setMode(modes.delete.before);
     const path = `/decklist`;
     navigate(path);
     closeModal();
@@ -88,7 +88,7 @@ const DeckList = () => {
 
   const handleOk = () => {
     navigate(0);
-    setMode(Deletemodes.before);
+    setMode(modes.delete.before);
     const path = `/decklist`;
     navigate(path);
     closeModal();
@@ -97,30 +97,30 @@ const DeckList = () => {
   const deleteDeck = async (id) => {
     const accessToken = await getAccessTokenSilently();
     if (userId !== user.sub) {
-      setMode(Deletemodes.error);
+      setMode(modes.delete.error);
       throw new Error(`You are not allowed to delete this deck and cards.`);
     }
     const { data, error } = await deleteDeckAndCards(accessToken, id);
     
     if (data) {
-      setMode(Deletemodes.finished);
+      setMode(modes.delete.updated);
     }
     if (error) {
-      setMode(Deletemodes.error);
+      setMode(modes.delete.error);
     }
   }
 
   useEffect(() => {
-    if (mode === Deletemodes.deleting) {
+    if (mode === modes.delete.process) {
       deleteDeck(deleteDeckId);
     }
-    if (mode === Deletemodes.warning) {
+    if (mode === modes.delete.warning) {
       setDisplayMsg("After deleting, you cannot restore all deck and cards data. Are you sure?")
     }
-    if (mode === Deletemodes.error) {
+    if (mode === modes.delete.error) {
       setDisplayMsg("Something went wrong...")
     }
-    if (mode === Deletemodes.finished) {
+    if (mode === modes.delete.updated) {
       setDisplayMsg("Deck and cards are deleted.");
     }
   }, [mode])
@@ -143,8 +143,8 @@ const DeckList = () => {
 
   return (
     <PageLayout>
-      {mode === Deletemodes.warning &&
-        <GenericConfirmation text={`Do you want to delete ?`} info={displayMsg}>
+      {mode === modes.delete.warning &&
+        <GenericConfirmation text={`Do you want to delete?`} info={displayMsg}>
           <Button
             text='Yes'
             buttonType="button"
@@ -157,12 +157,12 @@ const DeckList = () => {
           />
         </GenericConfirmation>
       }
-      {mode === Deletemodes.deleting &&
+      {mode === modes.delete.process &&
         <GenericConfirmation text={"Processing"} >
           <LoadingSpinner/>
         </GenericConfirmation>
       }
-      {mode === Deletemodes.finished &&
+      {mode === modes.delete.updated &&
         <GenericConfirmation text={`Delete Success`} info={displayMsg}>
           <Button
             text='Ok'
@@ -171,7 +171,7 @@ const DeckList = () => {
           />
         </GenericConfirmation>
       }
-      {mode === Deletemodes.error &&
+      {mode === modes.delete.error &&
         <GenericConfirmation text="Error" info={displayMsg}>
           <Button
             text='Ok'

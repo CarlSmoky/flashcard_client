@@ -6,7 +6,7 @@ import { useModal } from "../providers/ModalProvider";
 import { truncate } from "../helpers/utilities";
 import { AiOutlineEdit } from "react-icons/ai";
 import { RiDeleteBin5Line } from "react-icons/ri";
-import { Deletemodes } from "../helpers/modes";
+import { modes } from "../helpers/modes";
 import IconButton from "./IconButton";
 
 const Wrapper = styled.div`
@@ -126,7 +126,7 @@ const DeckItem = ({ id, deckName, description, user_id, setMode, setDeleteDeckId
 
   const deleteClickHandler = async () => {
     openModal();
-    setMode(Deletemodes.warning);
+    setMode(modes.delete.warning);
     setDeleteDeckId(id);
     setUserId(user_id);
   }
