@@ -90,7 +90,7 @@ export const postCreateDeckAndCards = async (accessToken, newDeckContents, newCa
 
   const getDeckContentsForInsertion = (newDeckContents) => {
     return {
-      deckName: newDeckContents.deckName,
+      deckName: newDeckContents.deckName.toLowerCase(),
       description: newDeckContents.description
     }
   };
