@@ -26,6 +26,7 @@ const modes = {
   },
   stat : {
     before: "before",
+    warning: "warning",
     process: "process",
     updated: "updated",
     error: "error"

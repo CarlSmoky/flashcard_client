@@ -9,6 +9,7 @@ import { confirmationMessage } from "../helpers/messages";
 import ResultHeader from "../components/ResultHeader";
 import ResultItem from "../components/ResultItem";
 import ConfirmationwithOk from "../components/ConfirmationwithOk";
+import ConfirmationwithYesAndCancel from "../components/ConfirmationwithYesAndCancel";
 import Process from "../components/Process";
 import Button from "../components/Button"
 
@@ -46,11 +47,14 @@ const Result = ({
     }
 
     openModal()
-    setMode(modes.stat.process);
+    setMode(modes.stat.warning);
     setConfirmationMsg({
-      header: confirmationMessage.stat.process.header,
-      text: confirmationMessage.stat.process.text
+      header: confirmationMessage.stat.warning.header,
     })
+  }
+  
+  const saveStats = async () => {
+    const accessToken = await getAccessTokenSilently();
 
     const stats = loadedCards.map((id) => {
       let stat = flashcarddata[id];
@@ -94,6 +98,23 @@ const Result = ({
     })
   }
 
+  const statSaveYesHandler = () => {
+    openModal();
+    setMode(modes.stat.process);
+    setConfirmationMsg({
+      header: confirmationMessage.stat.process.header,
+      text: confirmationMessage.stat.process.text
+    })
+    saveStats();
+  }
+
+  const statSaveCancelhandler = () => {
+    setMode(modes.delete.before);
+    const path = `/deck/${id}`;
+    navigate(path);
+    closeModal();
+  }
+
   const handleOk = () => {
     setMode(modes.edit.before)
     const path = mode === modes.stat.updated ? `/decklist/` : `/deck/${id}`;
@@ -105,6 +126,9 @@ const Result = ({
 
   return (
     <>
+     {mode === modes.stat.warning &&
+        <ConfirmationwithYesAndCancel header={confirmationMsg.header} handleYes={statSaveYesHandler} handleCancel={statSaveCancelhandler}/>
+      }
       {mode === modes.stat.process && <Process header={confirmationMsg.header} />}
       {(mode === modes.stat.updated || mode === modes.stat.error) &&
         <ConfirmationwithOk header={confirmationMsg.header} text={confirmationMsg.text} handleOk={handleOk} />

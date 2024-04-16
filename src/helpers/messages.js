@@ -60,6 +60,9 @@ export const confirmationMessage = {
     }
   },
   stat: {
+    warning: {
+      header: `Do you want to save the result?`
+    },
     process: {
       header: "Processing"
     },
