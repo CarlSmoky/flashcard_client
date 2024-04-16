@@ -14,10 +14,6 @@ const Title = styled.h1`
   font-weight: 600;
   text-transform: uppercase;
 
-  &.blur {
-    filter: blur(.6rem);
-  }
-
   @media (max-width: 768px) {
     font-size: 1.4rem;
     margin: 1rem;

@@ -58,5 +58,18 @@ export const confirmationMessage = {
       header: "Error",
       text: "Something went wrong.",
     }
+  },
+  stat: {
+    process: {
+      header: "Processing"
+    },
+    updated: {
+      header: "Updated",
+      text: (numOfItem) => numOfItem.length > 0 ? `${numOfItem} item saved.` : `${numOfItem} items saved.`
+    },
+    error: {
+      header: "Error",
+      text: "Something went wrong.",
+    }
   }
 }

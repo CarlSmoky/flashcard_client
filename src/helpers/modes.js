@@ -23,6 +23,12 @@ const modes = {
     process: "process",
     updated: "updated",
     error: "error"
+  },
+  stat : {
+    before: "before",
+    process: "process",
+    updated: "updated",
+    error: "error"
   }
 }
 
