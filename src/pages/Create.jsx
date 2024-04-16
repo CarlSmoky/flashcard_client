@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useNavigate } from "react-router-dom"
-import { useModal } from '../providers/ModalProvider'
-import { errorMessage } from '../helpers/messages'
-import { handleOnSaveValidation } from '../helpers/validation'
-import { defaultEditableDeck, defaultEditableCard } from '../helpers/defaultEditableData'
+import { useNavigate } from "react-router-dom";
+import { useModal } from "../providers/ModalProvider";
+import { errorMessage } from "../helpers/messages";
+import { handleOnSaveValidation } from "../helpers/validation";
+import { defaultEditableDeck, defaultEditableCard } from "../helpers/defaultEditableData";
 import { postCreateDeckAndCards } from "../helpers/deckAndCardsHelpers";
 import { modes } from "../helpers/modes";
 import { confirmationMessage } from "../helpers/messages";
-import PageLayout from '../components/PageLayout'
+import PageLayout from "../components/PageLayout";
 import Process from "../components/Process";
 import ConfirmationwithOk from "../components/ConfirmationwithOk";
-import CardForm from '../components/CardForm'
-import ModifyWrapper from '../components/ModifyWrapper';
+import CardForm from "../components/CardForm";
+import ModifyWrapper from "../components/ModifyWrapper";
 
 const Create = () => {
-  const { getAccessTokenSilently } = useAuth0();
   let navigate = useNavigate();
+  const { getAccessTokenSilently } = useAuth0();
   const { openModal, closeModal } = useModal();
   const [error, setError] = useState('');
   const [mode, setMode] = useState(modes.create.before);
