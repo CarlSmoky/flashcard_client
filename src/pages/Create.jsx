@@ -56,16 +56,16 @@ const Create = () => {
   }, [mode])
 
   const handleSaveClick = async (e) => {
+    if (handleOnSaveValidation(currentDeck)) {
+      setError(errorMessage.inputError);
+      return;
+    }
     openModal();
     setMode(modes.create.process);
     setConfirmationMsg({
       header: confirmationMessage.create.process.header,
     })
     // handleOnSaveValidation will return true if there is a problem
-    if (handleOnSaveValidation(currentDeck)) {
-      setError(errorMessage.inputError);
-      return;
-    }
 
     const accessToken = await getAccessTokenSilently();
     const { data, error } = await postCreateDeckAndCards(accessToken, newDeckContents, newCardContents);
