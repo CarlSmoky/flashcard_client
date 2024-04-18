@@ -71,7 +71,7 @@ const Result = ({
       setMode(modes.stat.updated);
       setConfirmationMsg({
         header: confirmationMessage.stat.updated.header,
-        text: confirmationMessage.stat.updated.text(data.res)
+        text: confirmationMessage.stat.updated.text(data.numOfItem)
       })
     }
     if (error) {
