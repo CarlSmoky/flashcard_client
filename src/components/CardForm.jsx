@@ -8,6 +8,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   width: 98%;
+  height: 15rem;
   margin: 1rem auto 1rem;
   border: 2px solid var(--black-primary);
   background: var(--tertiary-color);
