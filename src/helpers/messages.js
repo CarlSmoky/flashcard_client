@@ -35,7 +35,7 @@ export const confirmationMessage = {
     },
     updated: {
       header: "Edit Success",
-      text: (data) => generateUpdateMsg((data)).map((msg, i) => <p key={i}>{msg}</p>)
+      text: (data) => generateUpdateMsg((data)).map((msg, i) => <p key={i}>{truncate(msg,40 )}</p>)
     },
     error: {
       header: "Error",

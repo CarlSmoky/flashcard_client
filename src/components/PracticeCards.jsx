@@ -1,6 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { modes } from "../helpers/modes";
+import { truncate } from "../helpers/utilities";
 import { confirmationMessage } from "../helpers/messages"
 import Card from "../components/Card";
 import Arrow from "../components/Arrow";
@@ -159,7 +160,7 @@ const PracticeCards = ({
       <CardsHeaderStyle className={isModalMode() && 'blur'}>
         <div></div>
         <div>
-          <h2>{deckName}</h2>
+          <h2>{truncate(deckName, 40)}</h2>
           {(selectedCardIndices && selectedCardIndices.length > 0) && (
             <span>
               {current + 1} / {selectedCardIndices.length}
