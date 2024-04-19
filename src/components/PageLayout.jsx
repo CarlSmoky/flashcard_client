@@ -34,7 +34,6 @@ const Wrapper = styled.div`
 
   .center {
     width: 100%;
-    position: relative;
   }
 
   .right {
