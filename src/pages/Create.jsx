@@ -11,7 +11,7 @@ import { confirmationMessage } from "../helpers/messages";
 import { scrollToTop } from "../helpers/utilities";
 import PageLayout from "../components/PageLayout";
 import Process from "../components/Process";
-import ConfirmationwithOk from "../components/ConfirmationwithOk";
+import ConfirmationWithOk from "../components/ConfirmationWithOk";
 import CardForm from "../components/CardForm";
 import ModifyWrapper from "../components/ModifyWrapper";
 
@@ -117,7 +117,7 @@ const Create = () => {
     <PageLayout>
       {mode === modes.create.process && <Process header={confirmationMsg.header}/>}
       {(mode === modes.create.updated || mode === modes.create.error) && 
-        <ConfirmationwithOk header={confirmationMsg.header} text={confirmationMsg.text} handleOk={handleOk} />
+        <ConfirmationWithOk header={confirmationMsg.header} text={confirmationMsg.text} handleOk={handleOk} />
       }
       <ModifyWrapper
         error={error}

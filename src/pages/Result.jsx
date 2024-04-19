@@ -8,8 +8,8 @@ import { modes } from "../helpers/modes";
 import { confirmationMessage } from "../helpers/messages";
 import ResultHeader from "../components/ResultHeader";
 import ResultItem from "../components/ResultItem";
-import ConfirmationwithOk from "../components/ConfirmationwithOk";
-import ConfirmationwithYesAndCancel from "../components/ConfirmationwithYesAndCancel";
+import ConfirmationWithOk from "../components/ConfirmationWithOk";
+import ConfirmationWithYesAndCancel from "../components/ConfirmationWithYesAndCancel";
 import Process from "../components/Process";
 import Button from "../components/Button"
 
@@ -127,11 +127,11 @@ const Result = ({
   return (
     <>
      {mode === modes.stat.warning &&
-        <ConfirmationwithYesAndCancel header={confirmationMsg.header} handleYes={statSaveYesHandler} handleCancel={statSaveCancelhandler}/>
+        <ConfirmationWithYesAndCancel header={confirmationMsg.header} handleYes={statSaveYesHandler} handleCancel={statSaveCancelhandler}/>
       }
       {mode === modes.stat.process && <Process header={confirmationMsg.header} />}
       {(mode === modes.stat.updated || mode === modes.stat.error) &&
-        <ConfirmationwithOk header={confirmationMsg.header} text={confirmationMsg.text} handleOk={handleOk} />
+        <ConfirmationWithOk header={confirmationMsg.header} text={confirmationMsg.text} handleOk={handleOk} />
       }
       <Wrapper className={modalActivated ? 'blur' : null}>
         <ResultHeader

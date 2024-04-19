@@ -5,7 +5,7 @@ import { modes } from "../helpers/modes";
 import { confirmationMessage } from "../helpers/messages";
 import usePracticeData from "../hooks/usePracticeData";
 import PageLayout from "../components/PageLayout";
-import ConfirmationwithYesAndCancel from "../components/ConfirmationwithYesAndCancel";
+import ConfirmationWithYesAndCancel from "../components/ConfirmationWithYesAndCancel";
 import NumOfCardsInput from "../components/NumOfCardsInput";
 import PracticeCards from "../components/PracticeCards";
 import Result from "./Result";
@@ -128,9 +128,9 @@ const Practice = () => {
       <Wrapper>
         {/* Before start  */}
         {mode === modes.practice.before &&
-          <ConfirmationwithYesAndCancel header={confirmationMsg.header} text={confirmationMsg.text} handleYes={startYesHandler} handleCancel={startCancelHandler}>
+          <ConfirmationWithYesAndCancel header={confirmationMsg.header} text={confirmationMsg.text} handleYes={startYesHandler} handleCancel={startCancelHandler}>
             <NumOfCardsInput onChange={onChange} settingNumCards={settingNumCards} max={Object.keys(flashcardData).length} />
-          </ConfirmationwithYesAndCancel>
+          </ConfirmationWithYesAndCancel>
         }
         {/* Before start */}
 
@@ -155,7 +155,7 @@ const Practice = () => {
 
         {/* Finish Confirmation */}
         {mode === modes.practice.warning &&
-          <ConfirmationwithYesAndCancel header={confirmationMsg.header} handleYes={finishYesHandler} handleCancel={finishCancelHandler}/>
+          <ConfirmationWithYesAndCancel header={confirmationMsg.header} handleYes={finishYesHandler} handleCancel={finishCancelHandler}/>
         }
         {/* Finish Confirmation */}
 

@@ -1,7 +1,7 @@
 import GenericConfirmation from "./GenericConfirmation";
 import Button from "./Button";
 
-const ConfirmationwithOk = ({ header, text, handleOk }) => {
+const ConfirmationWithOk = ({ header, text, handleOk }) => {
   return (
     <GenericConfirmation header={header} text={text}>
       <Button
@@ -13,4 +13,4 @@ const ConfirmationwithOk = ({ header, text, handleOk }) => {
   )
 }
 
-export default ConfirmationwithOk
+export default ConfirmationWithOk

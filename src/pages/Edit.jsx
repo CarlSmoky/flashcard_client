@@ -11,7 +11,7 @@ import { confirmationMessage } from "../helpers/messages";
 import { postUpdateDeckAndCards } from "../helpers/deckAndCardsHelpers";
 import useEditData from "../hooks/useEditData";
 import PageLayout from "../components/PageLayout";
-import ConfirmationwithOk from "../components/ConfirmationwithOk";
+import ConfirmationWithOk from "../components/ConfirmationWithOk";
 import Process from "../components/Process";
 import ModifyWrapper from "../components/ModifyWrapper";
 import CardForm from "../components/CardForm";
@@ -141,7 +141,7 @@ const Edit = () => {
     <PageLayout>
       {mode === modes.edit.process && <Process header={confirmationMsg.header}/>}
       {(mode === modes.edit.updated || mode === modes.edit.error) && 
-      <ConfirmationwithOk header={confirmationMsg.header} text={confirmationMsg.text} handleOk={handleOk}/>
+      <ConfirmationWithOk header={confirmationMsg.header} text={confirmationMsg.text} handleOk={handleOk}/>
       }
       <ModifyWrapper
         error={error}

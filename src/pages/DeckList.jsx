@@ -10,9 +10,9 @@ import { deleteDeckAndCards } from "../helpers/deckAndCardsHelpers";
 import PageLayout from "../components/PageLayout";
 import DeckItem from "../components/DeckItem";
 import LoadingSpinner from "../components/LoadingSpinner";
-import ConfirmationwithOk from "../components/ConfirmationwithOk";
+import ConfirmationWithOk from "../components/ConfirmationWithOk";
 import Process from "../components/Process";
-import ConfirmationwithYesAndCancel from "../components/ConfirmationwithYesAndCancel";
+import ConfirmationWithYesAndCancel from "../components/ConfirmationWithYesAndCancel";
 
 const Wrapper = styled.div`
   display: flex;
@@ -139,11 +139,11 @@ const DeckList = () => {
   return (
     <PageLayout>
       {mode === modes.delete.warning &&
-        <ConfirmationwithYesAndCancel header={confirmationMsg.header} text={confirmationMsg.text} handleYes={deleteYesHandler} handleCancel={deleteCancelhandler}/>
+        <ConfirmationWithYesAndCancel header={confirmationMsg.header} text={confirmationMsg.text} handleYes={deleteYesHandler} handleCancel={deleteCancelhandler}/>
       }
       {mode === modes.delete.process && <Process header={confirmationMsg.header}/>}
       {(mode === modes.delete.updated || mode === modes.delete.error) && 
-      <ConfirmationwithOk header={confirmationMsg.header} text={confirmationMsg.text} handleOk={okHandler}/>
+      <ConfirmationWithOk header={confirmationMsg.header} text={confirmationMsg.text} handleOk={okHandler}/>
       }
       <Wrapper className={modalActivated ? 'blur' : null}>
         <Title>Deck List</Title>
