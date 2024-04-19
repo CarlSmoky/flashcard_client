@@ -44,7 +44,7 @@ export const confirmationMessage = {
   },
   delete: {
     warning: {
-      header: (deckName) => `Do you want to delete "${deckName}"?`,
+      header: (deckName) => `Do you want to delete "${truncate(deckName, 18)}"?`,
       text: "After deleting, you cannot restore the deck and all cards data."
     },
     process: {

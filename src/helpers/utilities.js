@@ -72,11 +72,11 @@ const formatPluralText = (count, baseText) => {
 const generateUpdateMsg = (updateResult) => {
   let msg = [];
   if (updateResult.updateDeckName) msg = [...msg, `Deck: ${updateResult.updateDeckName}`];
-  if (updateResult.updateDescription && updateResult.updateDescription.length > 0) msg = [...msg, `Description: ${updateResult.updateDescription}`];
+  if (updateResult.updateDescription && updateResult.updateDescription.length > 0) msg = [...msg, `Description: ${truncate(updateResult.updateDescription, 20)}`];
   if (updateResult.numOfUpdatedCard && updateResult.numOfUpdatedCard > 0) msg = [...msg, `${updateResult.numOfUpdatedCard} ${formatPluralText(updateResult.numOfUpdatedCard, 'card')} changed`];
   if (updateResult.numOfDeletedCards && updateResult.numOfDeletedCards > 0) msg = [...msg, `${updateResult.numOfDeletedCards} ${formatPluralText(updateResult.numOfDeletedCards, 'card')} deleted`];
   if (updateResult.numOfCreatedCard && updateResult.numOfCreatedCard > 0) msg = [...msg, `${updateResult.numOfCreatedCard} ${formatPluralText(updateResult.numOfCreatedCard, 'card')} created`];
-  if (updateResult.deckName) msg = [...msg, `New deck: ${updateResult.deckName}`]
+  if (updateResult.deckName) msg = [...msg, `New deck: ${truncate(updateResult.deckName,18 )}`]
   if (updateResult.numOfCards && updateResult.numOfCards > 0) msg = [...msg, `${updateResult.numOfCards} ${formatPluralText(updateResult.numOfCards, 'card')} saved.`];
   return msg;
 }
