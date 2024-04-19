@@ -1,20 +1,30 @@
-import React, { useState } from 'react'
-import { useNavigate } from "react-router-dom"
-import { useModal } from '../providers/ModalProvider'
-import { errorMessage } from '../helpers/messages'
-import { handleOnSaveValidation } from '../helpers/validation'
-import { defaultEditableDeck, defaultEditableCard } from '../helpers/defaultEditableData'
-import { createDeckAndCards } from '../helpers/deckAndCardsHelpers'
-import CardForm from '../components/CardForm'
-import ModifyWrapper from '../components/ModifyWrapper'
+import React, { useEffect, useState } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useNavigate } from "react-router-dom";
+import { useModal } from "../providers/ModalProvider";
+import { errorMessage } from "../helpers/messages";
+import { handleOnSaveValidation } from "../helpers/validation";
+import { defaultEditableDeck, defaultEditableCard } from "../helpers/defaultEditableData";
+import { postCreateDeckAndCards } from "../helpers/deckAndCardsHelpers";
+import { modes } from "../helpers/modes";
+import { confirmationMessage } from "../helpers/messages";
+import { scrollToTop } from "../helpers/utilities";
+import PageLayout from "../components/PageLayout";
+import Process from "../components/Process";
+import ConfirmationWithOk from "../components/ConfirmationWithOk";
+import CardForm from "../components/CardForm";
+import ModifyWrapper from "../components/ModifyWrapper";
 
 const Create = () => {
   let navigate = useNavigate();
+  const { getAccessTokenSilently } = useAuth0();
+  const { openModal, closeModal } = useModal();
   const [error, setError] = useState('');
+  const [mode, setMode] = useState(modes.create.before);
+  const [confirmationMsg, setConfirmationMsg] = useState({ header: "", text: "" });
   const [newDeckContents, setNewDeckContents] = useState({ ...defaultEditableDeck });
   const [newCardContents, setNewCardContents] = useState([{ ...defaultEditableCard }]);
   const [updateResult, SetUpdateResult] = useState('');
-  const { openModal, closeModal } = useModal();
 
   const currentDeck = {
     deckContents: newDeckContents,
@@ -40,26 +50,52 @@ const Create = () => {
     setNewCardContents([...prev]);
   }
 
+  useEffect(() => {
+    if (mode === modes.create.before) {
+      closeModal();
+    }
+  }, [mode])
+
   const handleSaveClick = async (e) => {
-    // handleOnSaveValidation will return true if there is a problem
     if (handleOnSaveValidation(currentDeck)) {
       setError(errorMessage.inputError);
       return;
     }
-    setError("");
-    const updateResult = await createDeckAndCards(newDeckContents, newCardContents);
-    if (updateResult.isUpdated) {
-      SetUpdateResult(updateResult.data);
-      openModal();
-    } else {
-      setError(updateResult.error)
+    openModal();
+    setMode(modes.create.process);
+    setConfirmationMsg({
+      header: confirmationMessage.create.process.header,
+    })
+    // handleOnSaveValidation will return true if there is a problem
+
+    const accessToken = await getAccessTokenSilently();
+    const { data, error } = await postCreateDeckAndCards(accessToken, newDeckContents, newCardContents);
+
+    if (data) {
+      SetUpdateResult(data);
+      setMode(modes.create.updated);
+      setConfirmationMsg({
+        header: confirmationMessage.create.updated.header,
+        text: confirmationMessage.create.updated.text
+      })
+      scrollToTop();
+    }
+    if (error) {
+      const isStatusCode409 = error.message.split(" ").indexOf("409") !== -1;
+      setMode(modes.create.error)
+      setError(confirmationMessage.create.error.text(isStatusCode409));
+      setConfirmationMsg({
+        header: confirmationMessage.create.error.header,
+        text: confirmationMessage.create.error.text(isStatusCode409)
+      })
     }
   };
 
   const handleOk = () => {
-    closeModal();
-    const path = `/deck/${updateResult.deckId}`;
+    setMode(modes.create.before);
+    const path = mode === modes.create.updated ? `/deck/${updateResult.deckId}` : "/create";
     navigate(path);
+    closeModal();
   }
 
   const disableButton = () => {
@@ -76,19 +112,25 @@ const Create = () => {
     />
   );
 
+
   return (
-    <ModifyWrapper
+    <PageLayout>
+      {mode === modes.create.process && <Process header={confirmationMsg.header}/>}
+      {(mode === modes.create.updated || mode === modes.create.error) && 
+        <ConfirmationWithOk header={confirmationMsg.header} text={confirmationMsg.text} handleOk={handleOk} />
+      }
+      <ModifyWrapper
         error={error}
         deckContents={newDeckContents}
         setDeckContents={setNewDeckContents}
         cardFormItems={cardFormItems}
         updateResult={updateResult}
-        handleOk={handleOk}
         handleSaveClick={handleSaveClick}
         disableButton={disableButton}
         createNewCard={createNewCard}
         headerText="Create"
       />
+    </PageLayout>
   )
 };
 

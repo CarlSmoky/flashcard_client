@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { links } from "../helpers/links";
+import LoginButton from "./LoginButton";
+import LogoutButton from "./LogoutButton";
 
 const Ul = styled.ul`
   list-style: none;
@@ -52,6 +54,8 @@ const RightNav = ({ open, closeNav }) => {
           <Link to={link.link} onClick={closeNav}>{link.name}</Link>
         </li>
       ))}
+      <LoginButton/>
+      <LogoutButton closeNav={closeNav}/>
     </Ul>
   )
 }

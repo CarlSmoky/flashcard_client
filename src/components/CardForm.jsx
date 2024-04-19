@@ -8,6 +8,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   width: 98%;
+  height: 15rem;
   margin: 1rem auto 1rem;
   border: 2px solid var(--black-primary);
   background: var(--tertiary-color);
@@ -32,6 +33,7 @@ const Wrapper = styled.div`
 
   textarea {
     width: 100%;
+    height: 11rem;
     border-top-style: hidden;
     border-right-style: hidden;
     border-left-style: hidden;
@@ -93,7 +95,6 @@ const CardForm = ({
   index,
   deleteCardForm
 }) => {
-  console.log(card.length)
   const { modalActivated } = useModal()
 
   const onChangeCard = (e) => {

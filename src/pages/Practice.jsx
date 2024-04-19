@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
 import { useParams, useNavigate } from "react-router-dom";
-import usePracticeData from "../hooks/usePracticeData";
+import styled from "styled-components";
 import { modes } from "../helpers/modes";
-import { truncate } from "../helpers/utilities";
-import GenericConfirmation from "../components/GenericConfirmation";
-import PracticeCards from "../components/PracticeCards";
+import { confirmationMessage } from "../helpers/messages";
+import usePracticeData from "../hooks/usePracticeData";
+import PageLayout from "../components/PageLayout";
+import ConfirmationWithYesAndCancel from "../components/ConfirmationWithYesAndCancel";
 import NumOfCardsInput from "../components/NumOfCardsInput";
-import Button from "../components/Button";
+import PracticeCards from "../components/PracticeCards";
 import Result from "./Result";
 
 const Wrapper = styled.div`
@@ -32,7 +32,8 @@ const Practice = () => {
   const { id } = useParams();
   let navigate = useNavigate();
 
-  const [mode, setMode] = useState(modes.before);
+  const [mode, setMode] = useState(modes.practice.before);
+  const [confirmationMsg, setConfirmationMsg] = useState({ header: "", text: "" });
   const [selectedCardIndices, setSelectedCardIndices] = useState([]);
   const [numCards, setNumCards] = useState([]);
   const [loadedCards, setLoadedCards] = useState([]);
@@ -51,8 +52,15 @@ const Practice = () => {
   }, [numCards]);
 
   useEffect(() => {
-    setsettingNumCards(Object.keys(flashcardData).length);
-  }, [flashcardData]);
+    if(mode === modes.practice.before) {
+      setsettingNumCards(Object.keys(flashcardData).length);
+      setConfirmationMsg({
+        header: confirmationMessage.practice.before.header(deckData.deckName),
+        text : confirmationMessage.practice.before.text
+      })
+
+    }
+  }, [flashcardData, deckData]);
 
   const addLoadedCards = (current) => {
     const currentCardId = selectedCardIndices[current];
@@ -71,13 +79,13 @@ const Practice = () => {
   }
 
   const isModalMode = () => {
-    if (mode === modes.before || mode === modes.finishConfirmation) {
+    if (mode === modes.practice.before || mode === modes.practice.warning) {
       return true;
     }
   }
 
   const displayCards = () => {
-    if (mode === modes.before || mode === modes.answering || mode === modes.finishConfirmation) {
+    if (mode === modes.practice.before || mode === modes.practice.answering || mode === modes.practice.warning) {
       return true;
     }
   }
@@ -98,85 +106,71 @@ const Practice = () => {
     setsettingNumCards(e.target.value)
   };
 
-  const handleStart = () => {
+  const startYesHandler = () => {
     setNumCards(settingNumCards);
-    setMode(modes.answering);
+    setMode(modes.practice.answering);
   }
 
-  const handleQuit = () => {
-    addLoadedCards(current);
-    setMode(modes.finished);
+  const startCancelHandler = () => {
+    navigate('/decklist');
   }
-  const handleBackToDeck = () => {
-    setMode(modes.answering);
+
+  const finishYesHandler = () => {
+    addLoadedCards(current);
+    setMode(modes.practice.finished);
+  }
+  const finishCancelHandler = () => {
+    setMode(modes.practice.answering);
   }
 
   return (
-    <Wrapper>
-      {/* Before start  */}
-      {mode === modes.before &&
-        <GenericConfirmation text={truncate(deckData.deckName, 18)} >
-          <NumOfCardsInput onChange={onChange} settingNumCards={settingNumCards} max={Object.keys(flashcardData).length} />
-          <Button
-            text="Start"
-            buttonType='button'
-            onButtonClick={handleStart}
-          />
-          <Button
-            text="Cancel"
-            buttonType='button'
-            onButtonClick={() => navigate('/decklist')}
-          />
-        </GenericConfirmation>
-      }
-      {/* Before start */}
+    <PageLayout>
+      <Wrapper>
+        {/* Before start  */}
+        {mode === modes.practice.before &&
+          <ConfirmationWithYesAndCancel header={confirmationMsg.header} text={confirmationMsg.text} handleYes={startYesHandler} handleCancel={startCancelHandler}>
+            <NumOfCardsInput onChange={onChange} settingNumCards={settingNumCards} max={Object.keys(flashcardData).length} />
+          </ConfirmationWithYesAndCancel>
+        }
+        {/* Before start */}
 
-      {/* Answering cards */}
-      {displayCards() &&
-        <PracticeCards
-          deckName={deckData.deckName}
-          flashcardData={flashcardData}
-          setMode={setMode}
-          selectedCardIndices={selectedCardIndices}
-          isModalMode={isModalMode}
-          current={current}
-          loadedCards={loadedCards}
-          setCardProperty={setCardProperty}
-          addLoadedCards={addLoadedCards}
-          previousCard={previousCard}
-          nextCard={nextCard}
-        />
-      }
-      {/* Answering cards */}
-
-      {/* Finish Confirmation */}
-      {mode === modes.finishConfirmation &&
-        <GenericConfirmation text="Do you want to finish?">
-          <Button
-            text="Done"
-            buttonType="button"
-            onButtonClick={handleQuit}
+        {/* Answering cards */}
+        {displayCards() &&
+          <PracticeCards
+            deckName={deckData.deckName}
+            flashcardData={flashcardData}
+            setMode={setMode}
+            setConfirmationMsg={setConfirmationMsg}
+            selectedCardIndices={selectedCardIndices}
+            isModalMode={isModalMode}
+            current={current}
+            loadedCards={loadedCards}
+            setCardProperty={setCardProperty}
+            addLoadedCards={addLoadedCards}
+            previousCard={previousCard}
+            nextCard={nextCard}
           />
-          <Button
-            text="Back to Deck"
-            buttonType="button"
-            onButtonClick={handleBackToDeck}
-          />
-        </GenericConfirmation>
-      }
-      {/* Finish Confirmation */}
+        }
+        {/* Answering cards */}
 
-      {/* finished */}
-      {mode === modes.finished &&
-        <Result
-          deckName={deckData.deckName}
-          numCards={loadedCards.length}
-          numLearning={numLearning}
-          loadedCards={loadedCards}
-          flashcarddata={flashcardData}
-          setCardProperty={setCardProperty}
-        />}
-    </Wrapper>
+        {/* Finish Confirmation */}
+        {mode === modes.practice.warning &&
+          <ConfirmationWithYesAndCancel header={confirmationMsg.header} handleYes={finishYesHandler} handleCancel={finishCancelHandler}/>
+        }
+        {/* Finish Confirmation */}
+
+        {/* finished */}
+        {mode === modes.practice.finished &&
+          <Result
+            deckName={deckData.deckName}
+            numCards={loadedCards.length}
+            numLearning={numLearning}
+            loadedCards={loadedCards}
+            flashcarddata={flashcardData}
+            setCardProperty={setCardProperty}
+          />}
+      </Wrapper>
+    </PageLayout>
   )
 }
 

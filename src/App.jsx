@@ -1,21 +1,24 @@
 import GlobalStyles from "./global-style"
-import Frame from "./components/Frame"
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
+import { AuthenticationGuard } from "./components/AuthenticationGuard";
+import Menu from "./pages/Menu";
+import Create from "./pages/Create";
+import DeckList from "./pages/DeckList";
+import Practice from "./pages/Practice";
+import Edit from "./pages/Edit";
 
 const App = () => {
 
   return (
     <div className="App">
-      <BrowserRouter>
-      <GlobalStyles/>
+      <GlobalStyles />
       <Routes>
-        <Route path ="/" element={<Frame content='menu'/>}/>
-        <Route path ="/decklist" element={<Frame content='decklist'/>}/>
-        <Route path ="/deck/:id" element={<Frame content='practice'/>}/>
-        <Route path ="/edit/:id" element={<Frame content='edit'/>}/>
-        <Route path ="/create" element={<Frame content='create'/>}/>
+        <Route path="/" element={<Menu />} />
+        <Route path="/decklist" element={<DeckList />} />
+        <Route path="/deck/:id" element={<Practice />} />
+        <Route path="/edit/:id" element={<AuthenticationGuard component={Edit} />} />
+        <Route path="/create" element={<AuthenticationGuard component={Create} />} />
       </Routes>
-      </BrowserRouter>
     </div>
   );
 }

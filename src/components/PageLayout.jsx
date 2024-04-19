@@ -1,45 +1,6 @@
 import styled from 'styled-components'
 import Navbar from './Navbar'
-import Menu from '../pages/Menu'
-import DeckList from '../pages/DeckList'
-import Practice from '../pages/Practice'
-import Edit from '../pages/Edit'
-import Create from '../pages/Create'
 import Footer from './Footer'
-import ModalProvider from '../providers/ModalProvider'
-
-
-const Frame = ({ content }) => {
-
-  return (
-    <Wrapper >
-      <div className="left">
-        <div className="logo">
-        </div>
-        <div className="middle"></div>
-        <div className="bottom"></div>
-      </div>
-      <div className="center">
-        <Navbar/>
-        <ModalProvider>
-          {content === "menu" && <Menu />}
-          {content === "decklist" && <DeckList />}
-          {content === "practice" && <Practice />}
-          {content === "edit" && <Edit />}
-          {content === "create" && <Create />}
-        </ModalProvider>
-        <Footer />
-      </div>
-      <div className="right">
-        <div className="search">
-        </div>
-        <div className="middle">
-        </div>
-        <div className="bottom"></div>
-      </div>
-    </Wrapper>
-  )
-}
 
 const Wrapper = styled.div`
   display: flex;
@@ -73,7 +34,6 @@ const Wrapper = styled.div`
 
   .center {
     width: 100%;
-    position: relative;
   }
 
   .right {
@@ -123,7 +83,32 @@ const Wrapper = styled.div`
       }
     }
   }
-  
 `
 
-export default Frame
+const PageLayout = ({ children }) => {
+
+  return (
+    <Wrapper >
+      <div className="left">
+        <div className="logo">
+        </div>
+        <div className="middle"></div>
+        <div className="bottom"></div>
+      </div>
+      <div className="center">
+        <Navbar/>
+        {children}
+        <Footer />
+      </div>
+      <div className="right">
+        <div className="search">
+        </div>
+        <div className="middle">
+        </div>
+        <div className="bottom"></div>
+      </div>
+    </Wrapper>
+  )
+}
+
+export default PageLayout

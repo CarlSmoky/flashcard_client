@@ -67,15 +67,15 @@ const Wrapper = styled.div`
   }
 `
 
-const GenericConfirmation = ({ text, info, children }) => {
+const GenericConfirmation = ({ header, text, children }) => {
   return (
     <Wrapper>
-      {!text ? <LoadingSpinner/> : 
+      {!header ? <LoadingSpinner/> : 
       <form>
-        <h2>{text}</h2>
-        {info &&
+        <h2>{header}</h2>
+        {text &&
           <div>
-            {info}
+            {text}
           </div>
         }
         {children}

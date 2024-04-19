@@ -1,14 +1,20 @@
-import React, { useState, useEffect } from 'react'
-import { useNavigate, useParams } from "react-router-dom"
-import { errorMessage } from '../helpers/messages'
-import { handleOnSaveValidation } from '../helpers/validation'
-import { updateStatus } from '../helpers/defaultEditableData'
-import { useModal } from '../providers/ModalProvider'
-import { scrollToTop } from '../helpers/utilities'
-import { updateDeckAndCards } from '../helpers/deckAndCardsHelpers'
-import useEditData from '../hooks/useEditData'
-import CardForm from '../components/CardForm'
-import ModifyWrapper from '../components/ModifyWrapper'
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
+import { errorMessage } from "../helpers/messages";
+import { handleOnSaveValidation } from "../helpers/validation";
+import { updateStatus } from "../helpers/defaultEditableData";
+import { useModal } from "../providers/ModalProvider";
+import { scrollToTop } from "../helpers/utilities";
+import { modes } from "../helpers/modes";
+import { confirmationMessage } from "../helpers/messages";
+import { postUpdateDeckAndCards } from "../helpers/deckAndCardsHelpers";
+import useEditData from "../hooks/useEditData";
+import PageLayout from "../components/PageLayout";
+import ConfirmationWithOk from "../components/ConfirmationWithOk";
+import Process from "../components/Process";
+import ModifyWrapper from "../components/ModifyWrapper";
+import CardForm from "../components/CardForm";
 
 const Edit = () => {
   const {
@@ -20,13 +26,14 @@ const Edit = () => {
     editableCards,
     currentDeck
   } = useEditData();
-  
+
   let navigate = useNavigate();
+  const { getAccessTokenSilently } = useAuth0();
   const { id } = useParams();
   const { openModal, closeModal } = useModal();
+  const [mode, setMode] = useState(modes.edit.before);
+  const [confirmationMsg, setConfirmationMsg] = useState({header: "",text: ""});
   const [error, setError] = useState('');
-  const [editDeckResult, setEditDeckResult] = useState({});
-  
   const displayedCardForm = editableCards.filter(card => card.updateStatus !== updateStatus.deleted);
 
   const deleteCardForm = (index) => {
@@ -84,46 +91,70 @@ const Edit = () => {
   }
 
   const handleSaveClick = async (e) => {
+  
     if (handleOnSaveValidation(currentDeck)) {
       setError(errorMessage.inputError);
       scrollToTop();
       return;
     }
-    setError("");
-    const updateResult = await updateDeckAndCards(updateDeckData, createdCardsData, updateCardsData, deleteCardsData, id);
-    if (updateResult.isUpdated) {
-      setEditDeckResult(updateResult.data)
-      openModal();
-    } else {
-      setError(updateResult.error)
+    openModal()
+    setMode(modes.edit.process);
+    setConfirmationMsg({
+      header: confirmationMessage.edit.process.header,
+      text: confirmationMessage.edit.process.text
+    })
+
+    const accessToken = await getAccessTokenSilently();
+    const {data, error} = await postUpdateDeckAndCards(accessToken, updateDeckData, createdCardsData, updateCardsData, deleteCardsData, id);
+    
+    if (data) {
+      setMode(modes.edit.updated);
+      setConfirmationMsg({
+        header: confirmationMessage.edit.updated.header,
+        text: confirmationMessage.edit.updated.text(data)
+      })
+      scrollToTop();
+    } 
+    if (error) {
+      const isStatusCode409 = error.message.split(" ").indexOf("409") !== -1;
+      setMode(modes.edit.error);
+      setConfirmationMsg({
+        header: confirmationMessage.edit.error.header,
+        text: confirmationMessage.edit.error.text(isStatusCode409)
+      })
     }
-  };
+  }
 
   const handleOk = () => {
-    closeModal();
-    const path = `/deck/${id}`;
+    setMode(modes.edit.before)
+    const path = mode === modes.edit.updated ? `/deck/${id}` : `/edit/${id}`;
     navigate(path);
-    setEditDeckResult({});
+    closeModal();
   }
 
   useEffect(() => {
     initializeEditableDeckAndCardsById(id);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   return (
+    <PageLayout>
+      {mode === modes.edit.process && <Process header={confirmationMsg.header}/>}
+      {(mode === modes.edit.updated || mode === modes.edit.error) && 
+      <ConfirmationWithOk header={confirmationMsg.header} text={confirmationMsg.text} handleOk={handleOk}/>
+      }
       <ModifyWrapper
         error={error}
         deckContents={editableDeck}
         setDeckContents={setEditableDeck}
         cardFormItems={cardFormItems}
-        updateResult={editDeckResult}
         handleOk={handleOk}
         handleSaveClick={handleSaveClick}
         disableButton={disableButton}
         createNewCard={createNewCard}
         headerText="Edit"
       />
+    </PageLayout>
   )
 }
 
