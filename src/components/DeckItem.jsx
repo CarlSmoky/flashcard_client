@@ -105,7 +105,7 @@ const ClickArea = styled.div`
     `
   }}
 
-  @media (max-width: 768px) {
+  @media (max-width: 976px) {
     h1 {
       font-size: 1.6rem;
     }
@@ -152,8 +152,8 @@ const DeckItem = ({ id, deckName, description, user_id, setMode, setConfirmation
         </Header>
         <Link to={!modalActivated && `/deck/${id}`}>
           <ClickArea disabled={modalActivated}>
-            <h1>{truncate(deckName, 35)}</h1>
-            <p>{truncate(description, 65)}</p>
+            <h1>{truncate(deckName, 20)}</h1>
+            <p>{truncate(description, 40)}</p>
           </ClickArea>
         </Link>
       </Wrapper>
