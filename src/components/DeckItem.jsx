@@ -152,7 +152,7 @@ const DeckItem = ({ id, deckName, description, user_id, setMode, setConfirmation
         </Header>
         <Link to={!modalActivated && `/deck/${id}`}>
           <ClickArea disabled={modalActivated}>
-            <h1>{truncate(deckName, 20)}</h1>
+            <h1>{truncate(deckName, 18)}</h1>
             <p>{truncate(description, 40)}</p>
           </ClickArea>
         </Link>
