@@ -113,7 +113,7 @@ const Edit = () => {
         header: confirmationMessage.edit.updated.header,
         text: confirmationMessage.edit.updated.text(data)
       })
-      
+      scrollToTop();
     } 
     if (error) {
       const isStatusCode409 = error.message.split(" ").indexOf("409") !== -1;

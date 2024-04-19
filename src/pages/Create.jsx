@@ -8,6 +8,7 @@ import { defaultEditableDeck, defaultEditableCard } from "../helpers/defaultEdit
 import { postCreateDeckAndCards } from "../helpers/deckAndCardsHelpers";
 import { modes } from "../helpers/modes";
 import { confirmationMessage } from "../helpers/messages";
+import { scrollToTop } from "../helpers/utilities";
 import PageLayout from "../components/PageLayout";
 import Process from "../components/Process";
 import ConfirmationwithOk from "../components/ConfirmationwithOk";
@@ -77,6 +78,7 @@ const Create = () => {
         header: confirmationMessage.create.updated.header,
         text: confirmationMessage.create.updated.text
       })
+      scrollToTop();
     }
     if (error) {
       const isStatusCode409 = error.message.split(" ").indexOf("409") !== -1;
