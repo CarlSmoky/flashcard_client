@@ -33,6 +33,7 @@ const Wrapper = styled.div`
 
   textarea {
     width: 100%;
+    height: 11rem;
     border-top-style: hidden;
     border-right-style: hidden;
     border-left-style: hidden;
