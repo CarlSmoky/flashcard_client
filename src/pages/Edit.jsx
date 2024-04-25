@@ -116,11 +116,10 @@ const Edit = () => {
       scrollToTop();
     } 
     if (error) {
-      const isStatusCode409 = error.message.split(" ").indexOf("409") !== -1;
       setMode(modes.edit.error);
       setConfirmationMsg({
         header: confirmationMessage.edit.error.header,
-        text: confirmationMessage.edit.error.text(isStatusCode409)
+        text: confirmationMessage.edit.error.text(error.message)
       })
     }
   }

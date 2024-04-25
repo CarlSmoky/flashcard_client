@@ -39,7 +39,7 @@ export const confirmationMessage = {
     },
     error: {
       header: "Error",
-      text: (isExist) => isExist ? "The deck title already exists. Tyr something else." : "Something went wrong."
+      text: (errorMessage) => `${errorMessage}`
     }
   },
   delete: {

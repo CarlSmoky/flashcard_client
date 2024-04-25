@@ -1,4 +1,4 @@
-const errorMessage = (name, value, maxLength = 255) => {
+const errorMessage = (name, value, maxLength = 500 ) => {
   const deckNameMinLength = 3;
   const deckLengthMessage = `Must be more than ${deckNameMinLength} characters and less than ${maxLength} charactors long!`;
   const exceedLengthMessage = `Must be less than ${maxLength} charactors long!`;
