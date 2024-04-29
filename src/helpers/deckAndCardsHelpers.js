@@ -17,6 +17,23 @@ const getCardsContentsForInsertion = (newCardContents) => newCardContents.map((c
   }
 });
 
+export const getAllDecks = async () => {
+  const config = {
+    url: `${apiServerUrl}${endpoints.GET_ALL_DECKS}`,
+    method: "GET",
+    headers: {
+      "content-type": "application/json"
+    }
+  }
+
+  const { data, error } = await callExternalApi({ config });
+
+  return {
+    data,
+    error,
+  };
+}
+
 export const getDeckAndCardsDataById = async (id) => {
   const config = {
     url: `${apiServerUrl}${endpoints.GET_DECK_BY_ID(id)}`,

@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useModal } from "../providers/ModalProvider";
 import { modes } from "../helpers/modes";
 import { confirmationMessage } from "../helpers/messages";
-import { deleteDeckAndCards } from "../helpers/deckAndCardsHelpers";
+import { getAllDecks, deleteDeckAndCards } from "../helpers/deckAndCardsHelpers";
 import PageLayout from "../components/PageLayout";
 import DeckItem from "../components/DeckItem";
 import LoadingSpinner from "../components/LoadingSpinner";
@@ -63,16 +62,11 @@ const DeckList = () => {
   const [userId, setUserId] = useState("");
 
   useEffect(() => {
-    setLoading(true);
-    axios.get(`api/deck/`)
-      .then(res => {
-        const allDecks = res.data;
-        setDecks(allDecks);
-        setLoading(false)
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    if (mode === modes.practice.before) {
+      closeModal();
+    }
+
+    getDeckList();
   }, [mode]);
 
   const deleteYesHandler = () => {
@@ -83,7 +77,7 @@ const DeckList = () => {
 
   const deleteCancelhandler = () => {
     setMode(modes.delete.before);
-    const path = `/decklist`;
+    const path = "/decklist";
     navigate(path);
     closeModal();
   }
@@ -96,14 +90,40 @@ const DeckList = () => {
     closeModal();
   }
 
+  const handler = () => {
+    setMode(modes.practice.before);
+    const path = "/";
+    navigate(path);
+    closeModal();
+  }
+
+  const getDeckList = async() => {
+    setLoading(true);
+    const { data, error } =  await getAllDecks();
+    
+    if (data) {
+      setDecks(data);
+      setLoading(false);
+    }
+
+    if (error) {
+      setMode(modes.practice.error);
+      setConfirmationMsg({
+        header: confirmationMessage.practice.error.header,
+        text: confirmationMessage.practice.error.text(error.message)
+      })
+    }
+  
+  }
+
   const deleteDeck = async (id) => {
     const accessToken = await getAccessTokenSilently();
     if (userId !== user.sub) {
       setMode(modes.delete.error);
       throw new Error(`You are not allowed to delete this deck and cards.`);
     }
+
     const { data, error } = await deleteDeckAndCards(accessToken, id);
-    
     if (data) {
       setMode(modes.delete.updated);
       setConfirmationMsg({
@@ -136,8 +156,13 @@ const DeckList = () => {
     )
   });
 
+  console.log(mode)
+
   return (
     <PageLayout>
+      {mode === modes.practice.error && 
+      <ConfirmationWithOk header={confirmationMsg.header} text={confirmationMsg.text} handleOk={handler}/>
+      }
       {mode === modes.delete.warning &&
         <ConfirmationWithYesAndCancel header={confirmationMsg.header} text={confirmationMsg.text} handleYes={deleteYesHandler} handleCancel={deleteCancelhandler}/>
       }
