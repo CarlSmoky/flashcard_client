@@ -115,7 +115,7 @@ const DeckList = () => {
       setMode(modes.delete.error);
       setConfirmationMsg({
         header: confirmationMessage.delete.error.header,
-        text: confirmationMessage.delete.error.text
+        text: confirmationMessage.delete.error.text(error.message)
       })
     }
   }

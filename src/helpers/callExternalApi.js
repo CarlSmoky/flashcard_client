@@ -30,6 +30,7 @@ export const callExternalApi = async (options) => {
         message = response.data.message;
       }
 
+      // Get error message from backend
       if (response && response.data && response.data.error) {
         message = response.data.error;
       }
