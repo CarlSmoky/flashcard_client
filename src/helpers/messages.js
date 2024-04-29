@@ -1,7 +1,6 @@
 import { generateUpdateMsg, truncate } from "../helpers/utilities";
 
 export const errorMessage = {
-  titleExists: 'This title alredy exits. Try other title',
   inputError: 'Please see the error below'
 }
 
@@ -13,6 +12,10 @@ export const confirmationMessage = {
     },
     warning: {
       header: "Do you want to finish?"
+    },
+    error: {
+      header: "Error",
+      text: (error) => `${error}`
     }
   },
   create: {
@@ -25,7 +28,7 @@ export const confirmationMessage = {
     },
     error: {
       header: "Error",
-      text: (isExist) => isExist ? "The deck title already exists. Tyr something else." : "Something went wrong."
+      text: (error) => `${error}`
     }
   },
   edit: {
@@ -39,7 +42,7 @@ export const confirmationMessage = {
     },
     error: {
       header: "Error",
-      text: (errorMessage) => `${errorMessage}`
+      text: (error) => `${error}`
     }
   },
   delete: {
@@ -56,7 +59,7 @@ export const confirmationMessage = {
     },
     error: {
       header: "Error",
-      text: (errorMessage) => `${errorMessage}`
+      text: (error) => `${error}`
     }
   },
   stat: {

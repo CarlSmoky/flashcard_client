@@ -3,7 +3,8 @@ const modes = {
     before: "before",
     answering: "answering",
     warning: "warning",
-    finished: "finished"
+    finished: "finished",
+    error: "error"
   },
   create: {
     before: "before",

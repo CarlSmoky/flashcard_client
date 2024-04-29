@@ -72,7 +72,7 @@ const Create = () => {
     const { data, error } = await postCreateDeckAndCards(accessToken, newDeckContents, newCardContents);
 
     if (data) {
-      SetUpdateResult(data);
+      SetUpdateResult(data.results);
       setMode(modes.create.updated);
       setConfirmationMsg({
         header: confirmationMessage.create.updated.header,
@@ -81,12 +81,11 @@ const Create = () => {
       scrollToTop();
     }
     if (error) {
-      const isStatusCode409 = error.message.split(" ").indexOf("409") !== -1;
       setMode(modes.create.error)
-      setError(confirmationMessage.create.error.text(isStatusCode409));
+      setError(confirmationMessage.create.error.text(error.message));
       setConfirmationMsg({
         header: confirmationMessage.create.error.header,
-        text: confirmationMessage.create.error.text(isStatusCode409)
+        text: confirmationMessage.create.error.text(error.message)
       })
     }
   };
@@ -111,6 +110,8 @@ const Create = () => {
       deleteCardForm={deleteCardForm}
     />
   );
+
+  console.log(updateResult)
 
 
   return (
