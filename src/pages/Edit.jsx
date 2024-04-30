@@ -103,10 +103,12 @@ const Edit = () => {
       header: confirmationMessage.edit.process.header,
       text: confirmationMessage.edit.process.text
     })
+  }
 
+  const update = async () => {
     const accessToken = await getAccessTokenSilently();
-    const {data, error} = await postUpdateDeckAndCards(accessToken, updateDeckData, createdCardsData, updateCardsData, deleteCardsData, id);
-    
+    const { data, error } = await postUpdateDeckAndCards(accessToken, updateDeckData, createdCardsData, updateCardsData, deleteCardsData, id);
+
     if (data) {
       setMode(modes.edit.updated);
       setConfirmationMsg({
@@ -114,15 +116,23 @@ const Edit = () => {
         text: confirmationMessage.edit.updated.text(data)
       })
       scrollToTop();
-    } 
+    }
+
     if (error) {
       setMode(modes.edit.error);
       setConfirmationMsg({
         header: confirmationMessage.edit.error.header,
         text: confirmationMessage.edit.error.text(error.message)
       })
+      scrollToTop();
     }
   }
+
+  useEffect(() => {
+    if (mode === modes.edit.process) {
+      update();
+    }
+  }, [mode])
 
   const handleOk = () => {
     setMode(modes.edit.before)

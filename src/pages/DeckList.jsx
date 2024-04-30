@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useModal } from "../providers/ModalProvider";
 import { modes } from "../helpers/modes";
+import { scrollToTop } from "../helpers/utilities";
 import { confirmationMessage } from "../helpers/messages";
 import { getAllDecks, deleteDeckAndCards } from "../helpers/deckAndCardsHelpers";
 import PageLayout from "../components/PageLayout";
@@ -130,6 +131,7 @@ const DeckList = () => {
         header: confirmationMessage.delete.updated.header,
         text: confirmationMessage.delete.updated.text
       })
+      scrollToTop();
     }
     if (error) {
       setMode(modes.delete.error);
@@ -137,6 +139,7 @@ const DeckList = () => {
         header: confirmationMessage.delete.error.header,
         text: confirmationMessage.delete.error.text(error.message)
       })
+      scrollToTop();
     }
   }
 
@@ -155,8 +158,6 @@ const DeckList = () => {
       />
     )
   });
-
-  console.log(mode)
 
   return (
     <PageLayout>
