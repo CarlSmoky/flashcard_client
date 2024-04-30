@@ -78,7 +78,7 @@ const Result = ({
       setMode(modes.stat.error)
       setConfirmationMsg({
         header: confirmationMessage.stat.error.header,
-        text: confirmationMessage.stat.error.text
+        text: confirmationMessage.stat.error.text(error.message)
       })
     }
   }

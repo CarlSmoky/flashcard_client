@@ -75,7 +75,7 @@ export const confirmationMessage = {
     },
     error: {
       header: "Error",
-      text: "Something went wrong.",
+      text: (error) => `${error}`
     }
   }
 }
