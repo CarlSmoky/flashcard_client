@@ -111,9 +111,6 @@ const Create = () => {
     />
   );
 
-  console.log(updateResult)
-
-
   return (
     <PageLayout>
       {mode === modes.create.process && <Process header={confirmationMsg.header}/>}
