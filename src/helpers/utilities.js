@@ -1,4 +1,4 @@
-const errorMessage = (name, value, maxLength = 255) => {
+const generateErrorMessage = (name, value, maxLength = 255 ) => {
   const deckNameMinLength = 3;
   const deckLengthMessage = `Must be more than ${deckNameMinLength} characters and less than ${maxLength} charactors long!`;
   const exceedLengthMessage = `Must be less than ${maxLength} charactors long!`;
@@ -71,13 +71,15 @@ const formatPluralText = (count, baseText) => {
 
 const generateUpdateMsg = (updateResult) => {
   let msg = [];
-  if (updateResult.updateDeckName) msg = [...msg, `Deck: ${updateResult.updateDeckName}`];
-  if (updateResult.updateDescription && updateResult.updateDescription.length > 0) msg = [...msg, `Description: ${truncate(updateResult.updateDescription, 20)}`];
-  if (updateResult.numOfUpdatedCard && updateResult.numOfUpdatedCard > 0) msg = [...msg, `${updateResult.numOfUpdatedCard} ${formatPluralText(updateResult.numOfUpdatedCard, 'card')} changed`];
-  if (updateResult.numOfDeletedCards && updateResult.numOfDeletedCards > 0) msg = [...msg, `${updateResult.numOfDeletedCards} ${formatPluralText(updateResult.numOfDeletedCards, 'card')} deleted`];
-  if (updateResult.numOfCreatedCard && updateResult.numOfCreatedCard > 0) msg = [...msg, `${updateResult.numOfCreatedCard} ${formatPluralText(updateResult.numOfCreatedCard, 'card')} created`];
-  if (updateResult.deckName) msg = [...msg, `New deck: ${truncate(updateResult.deckName,18 )}`]
-  if (updateResult.numOfCards && updateResult.numOfCards > 0) msg = [...msg, `${updateResult.numOfCards} ${formatPluralText(updateResult.numOfCards, 'card')} saved.`];
+  // Deck
+  if (updateResult.updateDeckData && updateResult.updateDeckData.deck_name) msg = [...msg, `Deck name: ${updateResult.updateDeckData.deck_name}`];
+  if (updateResult.updateDeckData && updateResult.updateDeckData.description.length > 0) msg = [...msg, `Description: ${truncate(updateResult.updateDeckData.description, 20)}`];
+
+  // Card
+  if (updateResult.updateCardsData && updateResult.updateCardsData.length > 0) msg = [...msg, `${updateResult.updateCardsData.length} ${formatPluralText(updateResult.updateCardsData.length, 'card')} changed`];
+  if (updateResult.deleteCardsData && updateResult.deleteCardsData.length > 0) msg = [...msg, `${updateResult.deleteCardsData.length} ${formatPluralText(updateResult.deleteCardsData.length, 'card')} deleted`];
+  if (updateResult.createdCardsData && updateResult.createdCardsData.length > 0) msg = [...msg, `${updateResult.createdCardsData.length} ${formatPluralText(updateResult.createdCardsData.length, 'card')} created`];
+
   return msg;
 }
 
@@ -86,4 +88,4 @@ const scrollToTop = () => {
 };
 
 
-export { errorMessage, truncate, generateUpdateMsg, scrollToTop };
+export { generateErrorMessage, truncate, generateUpdateMsg, scrollToTop };

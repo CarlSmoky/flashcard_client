@@ -10,6 +10,7 @@ export const callExternalApi = async (options) => {
       error: null,
     };
   } catch (error) {
+    
     if (axios.isAxiosError(error)) {
       const axiosError = error;
 
@@ -27,6 +28,11 @@ export const callExternalApi = async (options) => {
 
       if (response && response.data && response.data.message) {
         message = response.data.message;
+      }
+
+      // Get error message from backend
+      if (response && response.data && response.data.error) {
+        message = response.data.error;
       }
 
       return {

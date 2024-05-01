@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { errorMessage } from "../helpers/utilities";
+import { generateErrorMessage } from "../helpers/utilities";
 import { updateStatus } from "../helpers/defaultEditableData";
 import { useModal } from "../providers/ModalProvider";
 
@@ -74,7 +74,7 @@ const DeckDetailsForm = ({
   const { modalActivated } = useModal()
 
   const onChangeDeck = (e) => {
-    const returnedError = errorMessage(e.target.name, e.target.value);
+    const returnedError = generateErrorMessage(e.target.name, e.target.value);
 
     const updatedDeck = {
       ...deckContents,
