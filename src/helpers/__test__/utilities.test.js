@@ -1,4 +1,4 @@
-import { errorMessage, truncate } from '../utilities';
+import { generateErrorMessage, truncate } from '../utilities';
 
 describe('truncate text with maxLength', () => {
   test('should return text with ...', () => {
@@ -50,21 +50,21 @@ describe('errorMessage', () => {
     const name = 'deckName';
     const value = '';
 
-    expect(errorMessage(name, value, maxLength)).toEqual(errorFactory(name, errorStrings.required));
+    expect(generateErrorMessage(name, value, maxLength)).toEqual(errorFactory(name, errorStrings.required));
   });
 
   test('should give decknameError when deckName is uses leading white space to meet min length', () => {
     const name = 'deckName';
     const value = '  hi';
 
-    expect(errorMessage(name, value, maxLength)).toEqual(errorFactory(name, errorStrings.deckLengthMessage))
+    expect(generateErrorMessage(name, value, maxLength)).toEqual(errorFactory(name, errorStrings.deckLengthMessage))
   })
 
   test('should give decknameError when deckName is uses trailing white space to meet min length', () => {
     const name = 'deckName';
     const value = 'hi  ';
 
-    expect(errorMessage(name, value, maxLength)).toEqual(errorFactory(name, errorStrings.deckLengthMessage))
+    expect(generateErrorMessage(name, value, maxLength)).toEqual(errorFactory(name, errorStrings.deckLengthMessage))
   })
 })
 

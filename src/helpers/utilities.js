@@ -1,4 +1,4 @@
-const errorMessage = (name, value, maxLength = 500 ) => {
+const generateErrorMessage = (name, value, maxLength = 255 ) => {
   const deckNameMinLength = 3;
   const deckLengthMessage = `Must be more than ${deckNameMinLength} characters and less than ${maxLength} charactors long!`;
   const exceedLengthMessage = `Must be less than ${maxLength} charactors long!`;
@@ -79,7 +79,7 @@ const generateUpdateMsg = (updateResult) => {
   if (updateResult.updateCardsData && updateResult.updateCardsData.length > 0) msg = [...msg, `${updateResult.updateCardsData.length} ${formatPluralText(updateResult.updateCardsData.length, 'card')} changed`];
   if (updateResult.deleteCardsData && updateResult.deleteCardsData.length > 0) msg = [...msg, `${updateResult.deleteCardsData.length} ${formatPluralText(updateResult.deleteCardsData.length, 'card')} deleted`];
   if (updateResult.createdCardsData && updateResult.createdCardsData.length > 0) msg = [...msg, `${updateResult.createdCardsData.length} ${formatPluralText(updateResult.createdCardsData.length, 'card')} created`];
-  
+
   return msg;
 }
 
@@ -88,4 +88,4 @@ const scrollToTop = () => {
 };
 
 
-export { errorMessage, truncate, generateUpdateMsg, scrollToTop };
+export { generateErrorMessage, truncate, generateUpdateMsg, scrollToTop };

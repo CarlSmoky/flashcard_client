@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { errorMessage } from "../helpers/utilities";
+import { generateErrorMessage } from "../helpers/utilities";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { updateStatus } from "../helpers/defaultEditableData";
 import { useModal } from "../providers/ModalProvider";
@@ -96,9 +96,10 @@ const CardForm = ({
   deleteCardForm
 }) => {
   const { modalActivated } = useModal()
+  const maxLength = 500;
 
   const onChangeCard = (e) => {
-    const returnedError = errorMessage(e.target.name, e.target.value);
+    const returnedError = generateErrorMessage(e.target.name, e.target.value, maxLength);
 
     const updatedCard = {
       ...card,
