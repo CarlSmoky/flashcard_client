@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useModal } from "../providers/ModalProvider";
 import { modes } from "../helpers/modes";
@@ -55,20 +55,21 @@ const DeckList = () => {
   let navigate = useNavigate();
   const { user, getAccessTokenSilently } = useAuth0();
   const { modalActivated, openModal, closeModal } = useModal();
-  const [decks, setDecks] = useState([]);
+  const [displayDecks, setDisplayDecks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [mode, setMode] = useState(modes.delete.before);
-  const [confirmationMsg, setConfirmationMsg] = useState({header: "",text: ""});
+  const [confirmationMsg, setConfirmationMsg] = useState({ header: "", text: "" });
   const [deleteDeckId, setDeleteDeckId] = useState(0);
   const [userId, setUserId] = useState("");
+  const { param } = useParams();
 
   useEffect(() => {
     if (mode === modes.practice.before) {
       closeModal();
     }
-
+    
     getDeckList();
-  }, [mode]);
+  }, [mode, user, param]);
 
   const deleteYesHandler = () => {
     openModal();
@@ -78,7 +79,7 @@ const DeckList = () => {
 
   const deleteCancelhandler = () => {
     setMode(modes.delete.before);
-    const path = "/decklist";
+    const path = "/decklist/mydeck";
     navigate(path);
     closeModal();
   }
@@ -86,7 +87,7 @@ const DeckList = () => {
   const okHandler = () => {
     navigate(0);
     setMode(modes.delete.before);
-    const path = "/decklist";
+    const path = "/decklist/mydeck";
     navigate(path);
     closeModal();
   }
@@ -98,12 +99,31 @@ const DeckList = () => {
     closeModal();
   }
 
-  const getDeckList = async() => {
+  const isLoggedIn = () => param === "mydeck" && user;
+  const filterDeckDataByUser = deckData => deckData.filter(deck => deck.user_id === user.sub);
+  const mapDecks = (deck) => {
+    return (
+      <DeckItem
+      key={deck.id}
+      id={deck.id}
+      deckName={deck.deck_name}
+      description={deck.description}
+      user_id={deck.user_id}
+      setMode={setMode}
+      setConfirmationMsg={setConfirmationMsg}
+      setDeleteDeckId={setDeleteDeckId}
+      setUserId={setUserId}
+      />
+    )
+  }
+
+  const getDeckList = async () => {
     setLoading(true);
-    const { data, error } =  await getAllDecks();
-    
+    const { data, error } = await getAllDecks();
+
     if (data) {
-      setDecks(data);
+      const filteredData = isLoggedIn() ? filterDeckDataByUser(data) : data
+      setDisplayDecks(filteredData.map(mapDecks));
       setLoading(false);
     }
 
@@ -114,8 +134,9 @@ const DeckList = () => {
         text: confirmationMessage.practice.error.text(error.message)
       })
     }
-  
   }
+
+
 
   const deleteDeck = async (id) => {
     const accessToken = await getAccessTokenSilently();
@@ -130,7 +151,7 @@ const DeckList = () => {
       setConfirmationMsg({
         header: confirmationMessage.delete.updated.header,
         text: confirmationMessage.delete.updated.text
-      })
+      });
       scrollToTop();
     }
     if (error) {
@@ -143,37 +164,21 @@ const DeckList = () => {
     }
   }
 
-  const allDecks = decks.map(deck => {
-    return (
-      <DeckItem
-        key={deck.id}
-        id={deck.id}
-        deckName={deck.deck_name}
-        description={deck.description}
-        user_id={deck.user_id}
-        setMode={setMode}
-        setConfirmationMsg={setConfirmationMsg}
-        setDeleteDeckId={setDeleteDeckId}
-        setUserId={setUserId}
-      />
-    )
-  });
-
   return (
     <PageLayout>
-      {mode === modes.practice.error && 
-      <ConfirmationWithOk header={confirmationMsg.header} text={confirmationMsg.text} handleOk={handler}/>
+      {mode === modes.practice.error &&
+        <ConfirmationWithOk header={confirmationMsg.header} text={confirmationMsg.text} handleOk={handler} />
       }
       {mode === modes.delete.warning &&
-        <ConfirmationWithYesAndCancel header={confirmationMsg.header} text={confirmationMsg.text} handleYes={deleteYesHandler} handleCancel={deleteCancelhandler}/>
+        <ConfirmationWithYesAndCancel header={confirmationMsg.header} text={confirmationMsg.text} handleYes={deleteYesHandler} handleCancel={deleteCancelhandler} />
       }
-      {mode === modes.delete.process && <Process header={confirmationMsg.header}/>}
-      {(mode === modes.delete.updated || mode === modes.delete.error) && 
-      <ConfirmationWithOk header={confirmationMsg.header} text={confirmationMsg.text} handleOk={okHandler}/>
+      {mode === modes.delete.process && <Process header={confirmationMsg.header} />}
+      {(mode === modes.delete.updated || mode === modes.delete.error) &&
+        <ConfirmationWithOk header={confirmationMsg.header} text={confirmationMsg.text} handleOk={okHandler} />
       }
       <Wrapper className={modalActivated ? 'blur' : null}>
-        <Title>Deck List</Title>
-        {loading ? <LoadingSpinner /> : <Content>{allDecks}</Content>}
+        <Title>{isLoggedIn() ? "My Deck List" : "Deck List"}</Title>
+        {loading ? <LoadingSpinner /> : <Content>{displayDecks.length !== 0 ? displayDecks : <div><p>Decks that you have created will be found here.</p></div>}</Content>}
       </Wrapper>
     </PageLayout>
   )

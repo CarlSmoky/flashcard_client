@@ -14,6 +14,7 @@ const App = () => {
       <GlobalStyles />
       <Routes>
         <Route path="/" element={<Menu />} />
+        <Route path="/decklist/:param" element={<AuthenticationGuard component={DeckList} />} />
         <Route path="/decklist" element={<DeckList />} />
         <Route path="/deck/:id" element={<Practice />} />
         <Route path="/edit/:id" element={<AuthenticationGuard component={Edit} />} />
