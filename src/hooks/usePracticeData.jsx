@@ -1,20 +1,36 @@
 import { useState } from "react";
-import { getDeckAndCardsDataById } from "../helpers/deckAndCardsHelpers";
+import { getDeckAndCardsDataById, postDeckAndOrderedCardsDataById } from "../helpers/deckAndCardsHelpers";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const usePracticeData = () => {
   const [flashcardData, setFlashcardData] = useState({});
   const [deckData, setDeckData] = useState({});
+  // const { getAccessTokenSilently, user } = useAuth0();
 
   const initializeDeckAndCardsDataById = async (id) => {
-    const { data, error } = await getDeckAndCardsDataById(id);
-    if (data) {
-      setDeckData({ deckName: data.deck.deck_name, description: data.deck.description });
-      const formattedCardData = formatFlashcardData(data.cards);
-      setFlashcardData(formattedCardData);
-    }
-    if (error) {
-      console.log(error);
-    }
+    // const accessToken = await getAccessTokenSilently();
+    
+    // if (user) {
+    //   const { data, error } = await postDeckAndOrderedCardsDataById(accessToken, id);
+    //   if (data) {
+    //     setDeckData({ deckName: data.deck.deck_name, description: data.deck.description });
+    //     const formattedCardData = formatFlashcardData(data.cards);
+    //     setFlashcardData(formattedCardData);
+    //   }
+    //   if (error) {
+    //     console.log(error);
+    //   }
+    // } else {
+      const { data, error } = await getDeckAndCardsDataById(id);
+      if (data) {
+        setDeckData({ deckName: data.deck.deck_name, description: data.deck.description });
+        const formattedCardData = formatFlashcardData(data.cards);
+        setFlashcardData(formattedCardData);
+      }
+      if (error) {
+        console.log(error);
+      }
+    // }
   }
 
   const formatFlashcardData = (rawAPIData) => {
