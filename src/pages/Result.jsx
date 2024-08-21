@@ -117,7 +117,7 @@ const Result = ({
 
   const handleOk = () => {
     setMode(modes.edit.before)
-    const path = mode === modes.stat.updated ? `/decklist/mydeck` : `/deck/${id}`;
+    const path = mode === modes.stat.updated ? `/decklist` : `/deck/${id}`;
     navigate(path);
     closeModal();
   }

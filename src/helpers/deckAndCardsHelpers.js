@@ -51,6 +51,24 @@ export const getDeckAndCardsDataById = async (id) => {
   };
 }
 
+export const getDeckAndSortedCardsDataById = async (accessToken, id) => {
+  const config = {
+    url: `${apiServerUrl}${endpoints.POST_DECK_AND_OREDERD_CARDS_BY_ID(id)}`,
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+  }
+
+  const { data, error } = await callExternalApi({ config });
+
+  return {
+    data,
+    error,
+  };
+}
+
 export const postUpdateDeckAndCards = async (accessToken, updateDeckData, createdCardsData, updateCardsData, deleteCardsData, id) => {
   const appendParamToEndPoint = endpoints.UPDATE_DECK(id);
 
