@@ -51,7 +51,7 @@ export const getDeckAndCardsDataById = async (id) => {
   };
 }
 
-export const postDeckAndOrderedCardsDataById = async (accessToken, id) => {
+export const getDeckAndSortedCardsDataById = async (accessToken, id) => {
   const config = {
     url: `${apiServerUrl}${endpoints.POST_DECK_AND_OREDERD_CARDS_BY_ID(id)}`,
     method: "POST",

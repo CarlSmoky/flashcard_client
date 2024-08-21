@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 import styled from "styled-components";
 import { modes } from "../helpers/modes";
 import { confirmationMessage } from "../helpers/messages";
@@ -25,13 +26,14 @@ const Practice = () => {
   const {
     deckData,
     flashcardData,
+    sortedCardId,
     setCardProperty,
     initializeDeckAndCardsDataById
   } = usePracticeData();
 
-  const { id } = useParams();
   let navigate = useNavigate();
-
+  const { id } = useParams();
+  const { getAccessTokenSilently } = useAuth0();
   const [mode, setMode] = useState(modes.practice.before);
   const [confirmationMsg, setConfirmationMsg] = useState({ header: "", text: "" });
   const [selectedCardIndices, setSelectedCardIndices] = useState([]);
@@ -40,13 +42,19 @@ const Practice = () => {
   const [current, setCurrent] = useState(0);
   const [settingNumCards, setsettingNumCards] = useState(0);
 
+  
   useEffect(() => {
-    initializeDeckAndCardsDataById(id);
+    initializeData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
+  
+  const initializeData = async () => {
+    const accessToken = await getAccessTokenSilently();
+      initializeDeckAndCardsDataById(accessToken, id)
+  }
 
   useEffect(() => {
-    const keys = Object.keys(flashcardData).sort(() => Math.random() - 0.5).slice(0, numCards);
+    const keys = sortedCardId.slice(0, numCards).sort(() => Math.random() - 0.5);
     setSelectedCardIndices(keys);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [numCards]);

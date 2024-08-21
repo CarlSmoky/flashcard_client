@@ -115,7 +115,7 @@ const ClickArea = styled.div`
   }
 `
 
-const DeckItem = ({ id, deckName, description, user_id, setMode, setConfirmationMsg,  setDeleteDeckId, setUserId }) => {
+const DeckItem = ({ id, deckName, description, user_id, setMode, setConfirmationMsg, setDeleteDeckId, setUserId }) => {
   let navigate = useNavigate();
   const { user } = useAuth0();
   const { modalActivated, openModal } = useModal();

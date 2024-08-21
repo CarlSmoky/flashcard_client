@@ -1,28 +1,20 @@
 import { useState } from "react";
-import { getDeckAndCardsDataById, postDeckAndOrderedCardsDataById } from "../helpers/deckAndCardsHelpers";
-import { useAuth0 } from "@auth0/auth0-react";
+import { getDeckAndSortedCardsDataById } from "../helpers/deckAndCardsHelpers";
 
 const usePracticeData = () => {
   const [flashcardData, setFlashcardData] = useState({});
   const [deckData, setDeckData] = useState({});
-  // const { getAccessTokenSilently, user } = useAuth0();
+  const [sortedCardId, setSortedCardId] = useState([]);
 
-  const initializeDeckAndCardsDataById = async (id) => {
-    // const accessToken = await getAccessTokenSilently();
-    
-    // if (user) {
-    //   const { data, error } = await postDeckAndOrderedCardsDataById(accessToken, id);
-    //   if (data) {
-    //     setDeckData({ deckName: data.deck.deck_name, description: data.deck.description });
-    //     const formattedCardData = formatFlashcardData(data.cards);
-    //     setFlashcardData(formattedCardData);
-    //   }
-    //   if (error) {
-    //     console.log(error);
-    //   }
-    // } else {
-      const { data, error } = await getDeckAndCardsDataById(id);
+  // console.log("flashcardData", flashcardData)
+  
+
+  const initializeDeckAndCardsDataById = async (accessToken, id) => {
+
+      const { data, error } = await getDeckAndSortedCardsDataById(accessToken, id);
       if (data) {
+        const ids = Object.keys(data.cards).map(el => data.cards[el].id);
+        setSortedCardId(ids);
         setDeckData({ deckName: data.deck.deck_name, description: data.deck.description });
         const formattedCardData = formatFlashcardData(data.cards);
         setFlashcardData(formattedCardData);
@@ -30,7 +22,6 @@ const usePracticeData = () => {
       if (error) {
         console.log(error);
       }
-    // }
   }
 
   const formatFlashcardData = (rawAPIData) => {
@@ -44,8 +35,8 @@ const usePracticeData = () => {
           term: card.term,
           definition: card.definition,
           createdAt: card.created_at,
-          fillStar: false,
-          isLearning: true
+          fillStar: card.star,
+          isLearning: card.learning
         }
       };
     }, initialValue);
@@ -61,6 +52,7 @@ const usePracticeData = () => {
   return {
     deckData,
     flashcardData,
+    sortedCardId,
     setCardProperty,
     initializeDeckAndCardsDataById
   };
