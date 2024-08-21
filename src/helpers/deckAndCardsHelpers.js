@@ -1,7 +1,7 @@
 import { endpoints } from "./endpoints";
 import { callExternalApi } from "./callExternalApi";
 
-const apiServerUrl = process.env.REACT_APP_API_SERVER_URL;
+const apiServerUrl = process.env.REACT_APP_API_BASE_URL;
 
 const getDeckContentsForInsertion = (newDeckContents) => {
   return {
