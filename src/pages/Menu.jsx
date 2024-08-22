@@ -130,7 +130,7 @@ const Menu = () => {
             <h2>My Deck</h2>
           </div>
           <Link className="card-middle" to={`/decklist`}>
-            <h2>Practice</h2>
+            <h2>Quiz</h2>
           </Link>
           <Link className="card-side" to={`/create`}>
             <h2>Create</h2>
