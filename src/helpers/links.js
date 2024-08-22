@@ -6,7 +6,13 @@ export const links = [
     sublinks: [],
   },
   {
-    name: "Decks",
+    name: "My Deck",
+    link: "/decklist/mydeck",
+    submenu: false,
+    sublinks: [],
+  },
+  {
+    name: "Quiz",
     link: "/decklist",
     submenu: false,
     sublinks: [],

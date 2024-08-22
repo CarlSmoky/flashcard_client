@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import PageLayout from "../components/PageLayout";
 
 
@@ -114,7 +114,6 @@ const Wrapper = styled.div`
 `
 
 const Menu = () => {
-  let navigate = useNavigate();
 
   return (
     <PageLayout>
@@ -126,11 +125,11 @@ const Menu = () => {
           </div>
         </div>
         <div className="cards">
-          <div className="card-side" onClick={() => navigate(`/decklist/mydeck`)}>
+          <Link className="card-side" to={`/decklist/mydeck`}>
             <h2>My Deck</h2>
-          </div>
+          </Link>
           <Link className="card-middle" to={`/decklist`}>
-            <h2>Practice</h2>
+            <h2>Quiz</h2>
           </Link>
           <Link className="card-side" to={`/create`}>
             <h2>Create</h2>
