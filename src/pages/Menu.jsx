@@ -22,7 +22,6 @@ const Wrapper = styled.div`
 
     p {
       font-size: 1.5rem;
-      margin: 2rem;
       font-family: var(--tertiary-font);
     }
   }
