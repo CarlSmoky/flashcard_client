@@ -29,7 +29,7 @@ const Ul = styled.ul`
 
   @media (max-width: 850px) {
     li {
-      padding: 2rem 2rem;
+      padding: 2rem;
     }
   }
 
