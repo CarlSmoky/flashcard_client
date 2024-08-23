@@ -15,6 +15,13 @@ const Nav = styled.nav`
     white-space: nowrap;
   }
 
+  @media (max-width: 850px) {
+    .logo {
+      padding: 1.3rem;
+      font-size: 2rem;
+    }
+  }
+
   @media (max-width: 768px) {
     height: 6rem;
 
