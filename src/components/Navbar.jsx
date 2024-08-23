@@ -12,6 +12,7 @@ const Nav = styled.nav`
     margin: auto 0;
     font-size: 2.2rem;
     font-weight: 600;
+    white-space: nowrap;
   }
 
   @media (max-width: 768px) {
