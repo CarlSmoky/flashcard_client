@@ -14,7 +14,7 @@ const Ul = styled.ul`
 
   li {
     margin: auto;
-    padding: 2rem 2.3rem;
+    padding: 2rem 2.5rem;
     font-size: 1.4rem;
     font-family: var(--tertiary-font);
     font-weight: 300;
@@ -24,6 +24,12 @@ const Ul = styled.ul`
     &:hover {
       cursor: pointer;
       transform: scaleX(1.1) scaleY(1.1);
+    }
+  }
+
+  @media (max-width: 850px) {
+    li {
+      padding: 2rem;
     }
   }
 
