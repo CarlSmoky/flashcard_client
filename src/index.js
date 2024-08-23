@@ -7,13 +7,13 @@ import "./index.css";
 import { Auth0ProviderWithNavigate } from "./auth0-provider-with-navigate";
 import ModalProvider from "./providers/ModalProvider.js";
 
-const {REACT_APP_GTM_ID} = process.env;
-if (!REACT_APP_GTM_ID) {
+const gtmId = process.env.REACT_APP_GTM_ID;
+if (!gtmId) {
   throw new Error("Google Tag Manager ID is not defined");
 }
 
 const tagManagerArgs = {
-  gtmId: REACT_APP_GTM_ID
+  gtmId: gtmId
 }
 
 TagManager.initialize(tagManagerArgs)
