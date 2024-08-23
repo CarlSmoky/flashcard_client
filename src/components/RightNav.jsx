@@ -10,7 +10,7 @@ const Ul = styled.ul`
   flex-flow: row nowrap;
   background-color: var(--secondary-color);
   border-left: var(--side-column-border) solid var(--black-primary);
-  z-index: 20;
+  z-index: 0;
 
   li {
     margin: auto;
@@ -45,6 +45,7 @@ const Ul = styled.ul`
     width: 100vw;
     padding-top: 3.5rem;
     transition: transform 0.3s ease-in-out;
+    z-index: 20;
 
     li {
       color: var(--black-primary);
