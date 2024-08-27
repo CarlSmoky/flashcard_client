@@ -1,5 +1,5 @@
 # Dokodemo Card
-"Dokodemo Card" is a responsive app for collaboratively documenting with photos and geolocation data “Little Libraries” (neigbourhood free book exchanges), with secure login, search, and multiple view options
+"Dokodemo Card" is an innovative learning app designed to make memorization not just effective but also engaging. With Dokodemo Card, the power to learn is always at your fingertips, transforming downtime into productive study sessions.
 
 - Please click here for the website: [Live Demo: Dokodemo Card](https://dokodemocard.vercel.app/)
 - Check out server code here: [Server](https://github.com/CarlSmoky/flashcard_server)
@@ -7,11 +7,11 @@
 ## Features
 - Create Deck and Card
 - Practice
-- Secure Sign in with Auth0
 - Record result
-- Customised quiz based on result
-- Responsive design
+- Customise orderd quiz based on result
 - Personalized user display
+- Secure Sign in with Auth0
+- Responsive design
 
 ## Final Product
 <div>
