@@ -5,8 +5,7 @@
 - Check out server code here: [Server](https://github.com/CarlSmoky/flashcard_server)
 
 ## Features
-- Create Deck and Card
-- Practice
+- Create/Edit/Practice Deck and Card
 - Record result
 - Customise orderd quiz based on result
 - Personalized user display
