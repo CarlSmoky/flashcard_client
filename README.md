@@ -7,7 +7,7 @@
 ## Features
 - Create/Edit/Practice Deck and Card
 - Record result
-- Customise orderd quiz based on result
+- Customise quiz order based on result
 - Personalized user display
 - Secure Sign in with Auth0
 - Responsive design
