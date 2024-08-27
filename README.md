@@ -19,7 +19,7 @@
 <img src="https://github.com/CarlSmoky/flashcard_client/blob/main/doc/Dokodemo_Card_quiz_desktop.png" alt="quiz desktop" width="500px">
 </div>
 <div>
-<img src="https://github.com/CarlSmoky/flashcard_client/blob/main/doc/Dokodemo_Card_quiz_desktop.png" alt="home mobile" height="400px">
+<img src="https://github.com/CarlSmoky/flashcard_client/blob/main/doc/Dokodemo_Card_home_mobile.png" alt="home mobile" height="400px">
 <img src="https://github.com/CarlSmoky/flashcard_client/blob/main/doc/Dokodemo_Card_quiz_mobile.png" alt="quiz mobile" height="400px">
 </div>
 
