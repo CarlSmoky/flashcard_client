@@ -2,7 +2,7 @@
 "Dokodemo Card" is an innovative learning app designed to make memorization not just effective but also engaging. With Dokodemo Card, the power to learn is always at your fingertips, transforming downtime into productive study sessions.
 
 - Please click here for the website: [Live Demo: Dokodemo Card](https://dokodemocard.vercel.app/)
-- Check out server code here: [Server](https://github.com/CarlSmoky/flashcard_server)
+- Check out server code here: [Dokodemo Card Server](https://github.com/CarlSmoky/flashcard_server)
 
 ## Features
 - Create/Edit/Practice Deck and Card
