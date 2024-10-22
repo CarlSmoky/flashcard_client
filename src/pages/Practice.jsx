@@ -10,6 +10,14 @@ import ConfirmationWithYesAndCancel from "../components/ConfirmationWithYesAndCa
 import NumOfCardsInput from "../components/NumOfCardsInput";
 import PracticeCards from "../components/PracticeCards";
 import Result from "./Result";
+import { useModal } from "../providers/ModalProvider";
+import { scrollToTop } from "../helpers/utilities";
+import { updateStats } from "../helpers/deckAndCardsHelpers";
+import ResultItem from "../components/ResultItem";
+import Process from "../components/Process";
+import ConfirmationWithOk from "../components/ConfirmationWithOk";
+
+
 
 const Wrapper = styled.div`
   display: flex;
@@ -33,7 +41,7 @@ const Practice = () => {
 
   let navigate = useNavigate();
   const { id } = useParams();
-  const { getAccessTokenSilently } = useAuth0();
+  const { getAccessTokenSilently, user } = useAuth0();
   const [mode, setMode] = useState(modes.practice.before);
   const [confirmationMsg, setConfirmationMsg] = useState({ header: "", text: "" });
   const [selectedCardIndices, setSelectedCardIndices] = useState([]);
@@ -41,16 +49,17 @@ const Practice = () => {
   const [loadedCards, setLoadedCards] = useState([]);
   const [current, setCurrent] = useState(0);
   const [settingNumCards, setsettingNumCards] = useState(0);
+  const { openModal, closeModal } = useModal();
 
-  
+
   useEffect(() => {
     initializeData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
-  
+
   const initializeData = async () => {
     const accessToken = await getAccessTokenSilently();
-      initializeDeckAndCardsDataById(accessToken, id)
+    initializeDeckAndCardsDataById(accessToken, id)
   }
 
   useEffect(() => {
@@ -60,15 +69,15 @@ const Practice = () => {
   }, [numCards]);
 
   useEffect(() => {
-    if(mode === modes.practice.before) {
+    if (mode === modes.practice.before) {
       setsettingNumCards(Object.keys(flashcardData).length);
       setConfirmationMsg({
         header: confirmationMessage.practice.before.header(deckData.deckName),
-        text : confirmationMessage.practice.before.text
+        text: confirmationMessage.practice.before.text
       })
 
     }
-  }, [flashcardData, deckData]);
+  }, [flashcardData, deckData, mode]);
 
   const addLoadedCards = (current) => {
     const currentCardId = selectedCardIndices[current];
@@ -99,6 +108,7 @@ const Practice = () => {
   }
 
   const getNumLeaning = () => {
+    // eslint-disable-next-line array-callback-return
     const numLearning = loadedCards.filter(id => {
       let stat = flashcardData[id];
       if (stat.isLearning === true) {
@@ -129,6 +139,69 @@ const Practice = () => {
   }
   const finishCancelHandler = () => {
     setMode(modes.practice.answering);
+  }
+
+  const handleSaveClick = async () => {
+    const accessToken = await getAccessTokenSilently();
+    if (!accessToken || !user.sub) {
+      throw new Error(`You are not login.`);
+    }
+
+    openModal();
+    saveStats();
+    scrollToTop();
+  }
+
+  const saveStats = async () => {
+    const accessToken = await getAccessTokenSilently();
+
+    const stats = loadedCards.map((id) => {
+      let stat = flashcardData[id];
+      return {
+        cardId: stat.id,
+        isLearning: stat.isLearning,
+        star: stat.fillStar
+      }
+    })
+
+    const { data, error } = await updateStats(accessToken, stats);
+
+    if (data) {
+      setMode(modes.stat.updated);
+      setConfirmationMsg({
+        header: confirmationMessage.stat.updated.header,
+        text: confirmationMessage.stat.updated.text(data.numOfItem)
+      })
+    }
+    if (error) {
+      setMode(modes.stat.error)
+      setConfirmationMsg({
+        header: confirmationMessage.stat.error.header,
+        text: confirmationMessage.stat.error.text(error.message)
+      })
+    }
+  }
+
+  const setResults = () => {
+    return loadedCards.map((id) => {
+      let stat = flashcardData[id];
+      return <ResultItem
+        key={id}
+        term={stat.term}
+        definition={stat.definition}
+        isLearning={stat.isLearning}
+        fillStar={stat.fillStar}
+        setCardProperty={setCardProperty}
+        cardId={id}
+      />
+    })
+  }
+
+  const handleOk = () => {
+    setMode(modes.edit.before)
+    const path = mode === modes.stat.updated ? `/decklist` : `/deck/${id}`;
+    navigate(path);
+    closeModal();
   }
 
   return (
@@ -163,20 +236,32 @@ const Practice = () => {
 
         {/* Finish Confirmation */}
         {mode === modes.practice.warning &&
-          <ConfirmationWithYesAndCancel header={confirmationMsg.header} handleYes={finishYesHandler} handleCancel={finishCancelHandler}/>
+          <ConfirmationWithYesAndCancel header={confirmationMsg.header} handleYes={finishYesHandler} handleCancel={finishCancelHandler} />
         }
         {/* Finish Confirmation */}
 
-        {/* finished */}
+        {/* Finished */}
         {mode === modes.practice.finished &&
           <Result
             deckName={deckData.deckName}
             numCards={loadedCards.length}
             numLearning={numLearning}
             loadedCards={loadedCards}
-            flashcarddata={flashcardData}
             setCardProperty={setCardProperty}
+            handleSaveClick={handleSaveClick}
+            saveStats={saveStats}
+            setResults={setResults}
+            handleOk={handleOk}
           />}
+        {/* Finished */}
+        {/* Save Process */}
+        {mode === modes.stat.process && <Process header={confirmationMsg.header} />}
+        {/* Save Process */}
+        {/* updated or error */}
+        {(mode === modes.stat.updated || mode === modes.stat.error) &&
+          <ConfirmationWithOk header={confirmationMsg.header} text={confirmationMsg.text} handleOk={handleOk} />
+        }
+        {/* updated or error */}
       </Wrapper>
     </PageLayout>
   )

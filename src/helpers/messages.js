@@ -63,14 +63,11 @@ export const confirmationMessage = {
     }
   },
   stat: {
-    warning: {
-      header: `Do you want to save the result?`
-    },
     process: {
       header: "Processing"
     },
     updated: {
-      header: "Updated",
+      header: "Save Success",
       text: (numOfItem) => numOfItem.length > 0 ? `${numOfItem} item saved.` : `${numOfItem} items saved.`
     },
     error: {
