@@ -65,7 +65,7 @@ const useEditData = () => {
   }
 
   const createNewCard = () => {
-    setEditableCards(prev => ([...prev, { ...defaultEditableCard }]));
+    setEditableCards(prev => ([{ ...defaultEditableCard }, ...prev]));
   };
 
   const editCardContents = (index, cardContents) => {

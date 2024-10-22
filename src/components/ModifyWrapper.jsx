@@ -119,8 +119,12 @@ const ModifyWrapper = (
           deckContents={deckContents || defaultEditableDeck}
           setDeckContents={setDeckContents}
         />
-        <CardFormHeader />
-        {cardFormItems}
+        <Button
+          text='Save'
+          buttonType='submit'
+          onButtonClick={handleSaveClick}
+          disabled={disableButton() || modalActivated}
+        />
         <div className="addBtnContainer">
           <AddButton
             onClick={createNewCard}
@@ -130,6 +134,8 @@ const ModifyWrapper = (
             <span className="visually-hidden">Add Card Button</span>
           </AddButton>
         </div>
+        <CardFormHeader />
+        {cardFormItems}
         <Button
           text='Save'
           buttonType='submit'
