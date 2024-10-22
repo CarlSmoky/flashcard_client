@@ -44,7 +44,6 @@ const Result = ({
           text="save"
           onButtonClick={handleSaveClick}
           disabled={modalActivated}
-          style={{margin: `auto`}}
         />
       
       }
